@@ -1,0 +1,289 @@
+<!DOCTYPE html> 
+   <html lang="es"> 
+        <head> 
+            <meta charset="UTF-8"> 
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+             <title>Operación Libertad - Yorvis Tech</title>
+              <style>
+                  /*section para títulos */
+                  .titulo-yorvis {
+    font-family: 'Orbitron', sans-serif;
+    color: #00f2ff;
+    text-shadow: 0 0 15px #00f2ff;
+    letter-spacing: 3px;
+}
+.linea-neon {
+    width: 100px;
+    height: 3px;
+    background: #00f2ff;
+    margin: 10px auto;
+    box-shadow: 0 0 10px #00f2ff;
+}
+.btn-seguro {
+    background: #1e293b;
+    color: #00f2ff;
+    border: 2px solid #00f2ff;
+    padding: 15px 30px;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.btn-seguro:hover {
+    background: #00f2ff;
+    color: #000;
+}
+
+                  @import url('https://fonts.googleapis.com');
+
+h1, h2 {
+    font-family: 'Orbitron', sans-serif; /* Fuente tipo NASA/Meta */
+    letter-spacing: 2px;
+}
+
+                  body {
+    background: #0f172a; /* Azul oscuro tech */
+    color: #f8fafc;
+    font-family: 'Segoe UI', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+header {
+    margin-top: 50px;
+    text-align: center;
+}
+
+/* ANIMACIÓN PARA EL TÍTULO */
+.animado {
+    font-size: 3rem;
+    background: linear-gradient(90deg, #38bdf8, #818cf8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: brillo 3s infinite;
+}
+
+@keyframes brillo {
+    0% { filter: hue-rotate(0deg); }
+    100% { filter: hue-rotate(360deg); }
+}
+
+section {
+    background: #1e293b;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    border: 1px solid #334155;
+}
+          
+                  .btn-whatsapp {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #25d366;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 50px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    font-weight: bold;
+    transition: transform 0.3s;
+}
+
+.btn-whatsapp:hover {
+    transform: scale(1.1); /* Efecto de crecimiento al tocarlo */
+}
+
+.btn-whatsapp img {
+    width: 30px;
+}
+body {
+    background: radial-gradient(circle, #0f172a 0%, #020617 100%);
+    overflow-x: hidden;
+}
+
+/*Sección de Donaciones / Apoyo (Ingreso Directo)*/
+.tarjeta-servicio {
+    background: rgba(255, 255, 255, 0.05);
+    border-left: 4px solid #00f2ff;
+    padding: 15px;
+    margin: 15px 0;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+.tarjeta-servicio:hover {
+    background: rgba(0, 242, 255, 0.1);
+    transform: translateX(10px);
+}
+.precio {
+    color: #4ade80;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+.btn-pago {
+    background: #4ade80; /* Verde Dinero */
+    color: #000;
+    border: none;
+    padding: 15px 25px;
+    border-radius: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 0 15px rgba(74, 222, 128, 0.4);
+    transition: 0.3s;
+}
+.btn-pago:hover {
+    transform: scale(1.05);
+    background: #22c55e;
+}
+
+/*Contador*/
+@keyframes parpadeo {
+    0% { opacity: 1; }
+    50% { opacity: 0.7; }
+    100% { opacity: 1; }
+}
+
+
+              </style>
+              </head>
+               <body> 
+                   <header>
+                        <h1 class="animado">Proyecto Libertad 2026</h1> 
+                        
+                        <p>Código Activo: TITÁN-RECARGA</p>
+                         
+                      </header>
+                             <header style="text-align:center; margin-bottom: 30px;"> <h1 class="titulo-yorvis">YORVIS TECH - PROYECTO LIBERTAD</h1> <div class="linea-neon"></div>
+                         </header>
+                         <!-- sección de servicios  -->
+                         <section id="servicios" style="margin-top:40px;">
+    <h2 style="color:#00f2ff;">💼 Mis Servicios</h2>
+    <div class="tarjeta-servicio">
+        <h3>Optimización Android</h3>
+        <p>Recupero la velocidad de tu equipo viejo (P9 y similares).</p>
+        <span class="precio">$25.000 COP</span>
+    </div>
+    <div id="oferta-container" style="background: #ef4444; color: white; padding: 10px; border-radius: 10px; margin-bottom: 20px; animation: parpadeo 1.5s infinite;">
+    <p style="margin:0; font-weight:bold;">🔥 OFERTA DE LANZAMIENTO TERMINA EN:</p>
+    <h2 id="cuenta-regresiva" style="margin:5px 0; font-family: 'Orbitron', sans-serif;">00:00:00</h2>
+</div>
+
+</section>
+
+<!-- SECCIÓN DE CONTRATACIÓN RÁPIDA -->
+<section id="pagos" style="text-align:center; padding: 30px; background: rgba(0, 242, 255, 0.05); border-radius: 20px; margin-top: 30px;">
+    <h2 style="color:#00f2ff;">⚡ Contratar Ahora</h2>
+    <p>Selecciona tu servicio y págalo por Nequi/Daviplata:</p>
+    
+    <select id="servicio-select" style="padding: 10px; border-radius: 5px; width: 80%; margin-bottom: 20px;">
+        <option value="Optimizacion Android">Optimización Android - $25.000</option>
+        <option value="Asesoría de Trámites">Asesoría de Trámites - $50.000</option>
+        <option value="Redacción de Documentos">Redacción de Documentos - $30.000</option>
+    </select>
+
+    <button onclick="enviarPedido()" class="btn-pago">ENVIAR PEDIDO POR WHATSAPP 📱</button>
+</section>
+
+
+                        
+                          <main> <!-- SECCIÓN DE ALGORITMO -->
+                           <section id="algoritmo">
+                               
+                                <h2>Calculadora de Trámites (Algoritmo)</h2>
+                                 <input type="number" id="monto" placeholder="Ingresa saldo en COP">
+<button onclick="iniciarProceso()" class="btn-seguro">VALIDAR FONDOS 🔐</button>
+                                              <p id="resultado"></p> 
+                  </section> 
+                  </main>
+                  <!-- SECCION DE FUNCIONES -->
+                  
+               <script>
+                   function enviarPedido() {
+    let servicio = document.getElementById('servicio-select').value;
+    let numero = "573507916503"; // REEMPLAZA CON TU NÚMERO REAL
+    let mensaje = `Hola Yorvis, estoy interesado en el servicio de: ${servicio}. ¿Cómo puedo realizar el pago?`;
+    
+    // Genera el link de WhatsApp con el mensaje automático
+    let url = `https://wa.me{numero}?text=${encodeURIComponent(mensaje)}`;
+    window.open(url, '_blank');
+}
+
+                   
+                   </script>   
+                                               
+                         
+    <script>
+              <!--1. Esta es la función que pides con el botón-->
+function iniciarProceso() {
+    let clave = prompt("🔐 Ingrese Clave de Seguridad TITÁN:");
+    
+    if (clave === "yorvis2026") {
+        ejecutarAlgoritmo(); // Si la clave es correcta, corre el cálculo
+    } else {
+        alert("❌ Acceso Denegado");
+    }
+}
+
+// 2. Esta es la lógica que ya teníamos (el algoritmo)
+function ejecutarAlgoritmo() {
+    let entrada = document.getElementById('capital').value;
+    let cap = entrada.replace(/\./g, '').replace(/,/g, ''); 
+    let p = document.getElementById('pantalla');
+    
+    if(parseInt(cap) >= 1200000) {
+      p.innerHTML = "✅ OBJETIVO LOGRADO<br>Fondo de Migración Asegurado";
+      p.style.color = "#00ff88";
+    } else {
+      p.innerHTML = "❌ FONDO INSUFICIENTE";
+      p.style.color = "#ff4444";
+    }
+}
+
+let tiempoRestante = localStorage.getItem('finOferta') || 120 * 60;
+
+function actualizarReloj() {
+    let horas = Math.floor(tiempoRestante / 3600);
+    let minutos = Math.floor((tiempoRestante % 3600) / 60);
+    let segundos = tiempoRestante % 60;
+
+    document.getElementById('cuenta-regresiva').innerHTML = 
+        `${horas.toString().padStart(2, '0')}:${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
+
+    if (tiempoRestante > 0) {
+        tiempoRestante--;
+        localStorage.setItem('finOferta', tiempoRestante); // Guarda el progreso
+    } else {
+        document.getElementById('oferta-container').innerHTML = "⏳ Oferta expirada";
+    }
+}
+setInterval(actualizarReloj, 1000);
+
+// BOTÓN SECRETO PARA REINICIAR (Solo tú lo sabrás)
+function reiniciarReloj() {
+    localStorage.removeItem('finOferta');
+    location.reload(); // Recarga la página y el reloj vuelve a 2 horas
+}
+
+
+                                 </script> 
+                                 
+                                
+                                
+            <br><br><br><br><a href="https://wa.me" class="btn-whatsapp" target="_blank">
+    <!-- Aquí va la imagen -->
+    <img src="/storage/emulated/0/Pictures/logo.png" "width="30" height="30" alt="WA">
+    <img src="logo.png" onerror="this.src='https://cdn-icons-png.flaticon.com'" width="30" height="30" alt="WA">
+    ¡Contáctame!
+           
+           <button onclick="reiniciarReloj()" style="opacity:0.1; position:fixed; top:0; left:0;">R</button>
+
+                                               </body> 
+                                               
+                                               </html> 
+
+
+
