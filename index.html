@@ -204,11 +204,11 @@ body {
                <script>
                    function enviarPedido() {
     let servicio = document.getElementById('servicio-select').value;
-    let numero = "+573507916503"; // REEMPLAZA CON TU NÚMERO REAL
+    let numero = "573507916503"; // REEMPLAZA CON TU NÚMERO REAL
     let mensaje = `Hola Yorvis, estoy interesado en el servicio de: ${servicio}. ¿Cómo puedo realizar el pago?`;
     
     // Genera el link de WhatsApp con el mensaje automático
-    let url = `https://wa.me{numero}?text=${encodeURIComponent(mensaje)}`;
+    let url = `https://wa.me{573507916503}?text=${encodeURIComponent(mensaje)}`;
     window.open(url, '_blank');
 }
 
