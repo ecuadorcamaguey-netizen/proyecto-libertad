@@ -203,16 +203,21 @@ body {
                   
                <script>
                    function enviarPedido() {
+    // Capturamos el servicio seleccionado en el menú desplegable
     let servicio = document.getElementById('servicio-select').value;
-    let numero = "573507916503"; // REEMPLAZA CON TU NÚMERO REAL
+    
+    // Tu número oficial de Yorvis Tech con el código de Colombia (57)
+    let numero = "573507916503"; 
+    
+    // Mensaje automático personalizado
     let mensaje = `Hola Yorvis, estoy interesado en el servicio de: ${servicio}. ¿Cómo puedo realizar el pago?`;
     
-    // Genera el link de WhatsApp con el mensaje automático
-    let url = `https://wa.me/numero?text=${encodeURIComponent(mensaje)}`;
+    // Construcción del link limpio (sin llaves ni errores)
+    let url = `https://wa.me{numero}?text=${encodeURIComponent(mensaje)}`;
+    
+    // Abre el chat de WhatsApp en una pestaña nueva
     window.open(url, '_blank');
-}
-
-                   
+                  }
                    </script>   
                                                
                          
