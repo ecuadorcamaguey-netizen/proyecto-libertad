@@ -316,6 +316,33 @@ body {
                                               <p id="resultado"></p> 
                   </section> 
                   </main>
+                  <!--SCRIPT DE BLOQUE DE OFERTA RELAMPAGO YORVIS TECH-->
+                  <script>
+// Lógica del contador de 2 horas (7200 segundos)
+let time = 7200; 
+const timerElement = document.getElementById('timer');
+
+function updateTimer() {
+    let hours = Math.floor(time / 3600);
+    let minutes = Math.floor((time % 3600) / 60);
+    let seconds = time % 60;
+
+    // Formato 00:00:00
+    hours = hours < 10 ? '0' + hours : hours;
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+    seconds = seconds < 10 ? '0' + seconds : seconds;
+
+    timerElement.innerHTML = `${hours}:${minutes}:${seconds}`;
+    
+    if (time > 0) {
+        time--;
+    } else {
+        time = 7200; // Reinicia para el siguiente cliente
+    }
+}
+
+setInterval(updateTimer, 1000);
+</script>
                   <!-- SECCION DE FUNCIONES -->
                   
                <script>
