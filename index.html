@@ -262,7 +262,7 @@ body {
     let mensaje = `Hola Yorvis, estoy interesado en el servicio de: ${servicio}. ¿Cómo puedo realizar el pago?`;
     
     // Construcción del link limpio (sin llaves ni errores)
-    let url = `https://wa.me{numero}?text=${mensaje}{encodeURIComponent(mensaje)}`;
+    let url = `https://wa.me?text=${mensaje}{encodeURIComponent(mensaje)}`;
     
     // Abre el chat de WhatsApp en una pestaña nueva
     window.open(url, '_blank');
