@@ -410,28 +410,58 @@ function mostrarEntrenamiento() {
     window.location.hash = "seccion-entrenamiento";
 }
 </script>
-                  <!-- MÓDULO: ALGORITMO DE INGRESOS NEÓN -->
-<div id="algoritmo-ingresos" style="margin-top: 40px; padding: 20px; border: 1px dashed #39FF14; background: rgba(0,0,0,0.8);">
-    <h3 style="color: #39FF14; font-size: 1em; text-align: center;">⚡ GENERADOR DE FLUJO FINANCIERO _</h3>
+<!-- ÁREA PRIVADA: TABLERO DE CONTROL YORVIS TECH -->
+<div id="area-privada-titán" style="display:none; background: #050505; color: #39FF14; padding: 30px; font-family: 'Courier New', monospace; border: 2px solid #39FF14; margin: 20px; border-radius: 10px; box-shadow: 0 0 30px rgba(57, 255, 20, 0.2);">
     
-    <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 15px;">
-        <label style="font-size: 0.8em;">CANTIDAD DE SERVICIOS (MES):</label>
-        <input type="number" id="num-servicios" placeholder="Ej: 10" style="background: #111; color: #39FF14; border: 1px solid #39FF14; padding: 10px;">
+    <h2 style="text-align: center; border-bottom: 1px solid #333; padding-bottom: 10px;">🔐 PANEL ESTRATÉGICO TITÁN-2026</h2>
+
+    <!-- MÓDULO A: ALGORITMO DE INGRESOS (PROYECCIÓN ABRIL) -->
+    <div style="background: rgba(57, 255, 20, 0.05); padding: 20px; border-radius: 8px; margin-bottom: 30px; border: 1px solid #222;">
+        <h3 style="font-size: 1em; color: #fff;">📊 ALGORITMO GENERADOR DE FLUJO</h3>
+        <p style="font-size: 0.7em; color: #888;">Calcula la meta para el fondo de $1.200.000 COP</p>
         
-        <label style="font-size: 0.8em;">VALOR PROMEDIO POR SERVICIO ($):</label>
-        <input type="number" id="valor-servicio" placeholder="Ej: 50000" style="background: #111; color: #39FF14; border: 1px solid #39FF14; padding: 10px;">
+        <div style="margin-top: 15px;">
+            <input type="number" id="input-servicios" placeholder="N° de Servicios" style="width: 100%; background: #000; border: 1px solid #39FF14; color: #39FF14; padding: 10px; margin-bottom: 10px;">
+            <input type="number" id="input-precio" placeholder="Precio Promedio ($)" style="width: 100%; background: #000; border: 1px solid #39FF14; color: #39FF14; padding: 10px; margin-bottom: 10px;">
+            <button onclick="ejecutarAlgoritmo()" style="width: 100%; background: #39FF14; color: #000; font-weight: bold; border: none; padding: 12px; cursor: pointer;">EJECUTAR CÁLCULO _</button>
+        </div>
         
-        <button onclick="calcularMeta()" style="background: #39FF14; color: #000; font-weight: bold; border: none; padding: 15px; cursor: pointer; margin-top: 10px;">
-            EJECUTAR CÁLCULO DE FONDO
-        </button>
+        <div id="display-financiero" style="display:none; margin-top: 20px; text-align: center; border: 1px solid #39FF14; padding: 10px;">
+            <span style="font-size: 0.8em; color: #888;">PROYECCIÓN DE CAPITAL:</span><br>
+            <span id="total-proyectado" style="font-size: 1.5em; font-weight: bold;">$0</span>
+        </div>
     </div>
 
-    <div id="resultado-finanzas" style="margin-top: 20px; text-align: center; font-size: 1.2em; display: none;">
-        <span style="color: #888;">PROYECCIÓN TOTAL:</span> <br>
-        <span id="monto-final" style="color: #39FF14; font-weight: bold; text-shadow: 0 0 10px #39FF14;">$ 0.00</span>
-        <p style="font-size: 0.6em; color: #555; margin-top: 5px;">ESTADO: FONDO DE RESERVA EN CRECIMIENTO</p>
+    <!-- MÓDULO B: ENTRENAMIENTO FUNCIONAL (RUTINAS) -->
+    <div style="border-top: 1px solid #333; pt-20px;">
+        <h3 style="font-size: 1em; color: #fff;">🏋️ RUTINAS FUNCIONALES DESBLOQUEADAS</h3>
+        <p style="font-size: 0.8em; color: #ccc;">• Sentadilla Isométrica: 4x45s<br>• Flexiones Explosivas: 4x15<br>• Plancha Core: 3x60s</p>
     </div>
 </div>
+
+<script>
+// Función para el Algoritmo de Ingresos
+function ejecutarAlgoritmo() {
+    let s = document.getElementById('input-servicios').value;
+    let p = document.getElementById('input-precio').value;
+    let t = s * p;
+    document.getElementById('display-financiero').style.display = 'block';
+    document.getElementById('total-proyectado').innerHTML = '$ ' + t.toLocaleString('es-CO');
+}
+
+// Función Maestra de Acceso
+function accederPrivado() {
+    let pass = prompt("INGRESE CLAVE DE SEGURIDAD:");
+    if (pass === "yorvis2026") {
+        document.getElementById('area-privada-titán').style.display = 'block';
+        window.location.hash = "area-privada-titán";
+        alert("ACCESO TITÁN CONCEDIDO. Algoritmo y Rutinas en línea.");
+    } else {
+        alert("ERROR: Clave incorrecta.");
+    }
+}
+</script>
+
 
 <script>
 function calcularMeta() {
