@@ -410,9 +410,43 @@ function mostrarEntrenamiento() {
     window.location.hash = "seccion-entrenamiento";
 }
 </script>
+                  <!-- MÓDULO: ALGORITMO DE INGRESOS NEÓN -->
+<div id="algoritmo-ingresos" style="margin-top: 40px; padding: 20px; border: 1px dashed #39FF14; background: rgba(0,0,0,0.8);">
+    <h3 style="color: #39FF14; font-size: 1em; text-align: center;">⚡ GENERADOR DE FLUJO FINANCIERO _</h3>
+    
+    <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 15px;">
+        <label style="font-size: 0.8em;">CANTIDAD DE SERVICIOS (MES):</label>
+        <input type="number" id="num-servicios" placeholder="Ej: 10" style="background: #111; color: #39FF14; border: 1px solid #39FF14; padding: 10px;">
+        
+        <label style="font-size: 0.8em;">VALOR PROMEDIO POR SERVICIO ($):</label>
+        <input type="number" id="valor-servicio" placeholder="Ej: 50000" style="background: #111; color: #39FF14; border: 1px solid #39FF14; padding: 10px;">
+        
+        <button onclick="calcularMeta()" style="background: #39FF14; color: #000; font-weight: bold; border: none; padding: 15px; cursor: pointer; margin-top: 10px;">
+            EJECUTAR CÁLCULO DE FONDO
+        </button>
+    </div>
+
+    <div id="resultado-finanzas" style="margin-top: 20px; text-align: center; font-size: 1.2em; display: none;">
+        <span style="color: #888;">PROYECCIÓN TOTAL:</span> <br>
+        <span id="monto-final" style="color: #39FF14; font-weight: bold; text-shadow: 0 0 10px #39FF14;">$ 0.00</span>
+        <p style="font-size: 0.6em; color: #555; margin-top: 5px;">ESTADO: FONDO DE RESERVA EN CRECIMIENTO</p>
+    </div>
+</div>
+
+<script>
+function calcularMeta() {
+    let cant = document.getElementById('num-servicios').value;
+    let val = document.getElementById('valor-servicio').value;
+    let total = cant * val;
+    
+    document.getElementById('resultado-finanzas').style.display = 'block';
+    document.getElementById('monto-final').innerHTML = '$ ' + total.toLocaleString('es-CO');
+    
+    alert("Algoritmo Actualizado: Meta de Abril 2026 en proceso.");
+}
+</script>
 
                   
-
 
                          <!-- sección de servicios  -->
                          <section id="servicios" style="margin-top:40px;">
