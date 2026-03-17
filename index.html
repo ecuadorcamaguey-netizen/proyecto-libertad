@@ -352,6 +352,23 @@ body {
         <small>- Carlos M. (Bogotá)</small>
     </div>
 </section>
+<!-- MENÚ DE NAVEGACIÓN YORVIS TECH -->
+<nav style="background:#000; padding:15px; border-bottom:1px solid #39FF14; display:flex; justify-content:space-around;">
+    <a href="#" style="color:#39FF14; text-decoration:none; font-family:monospace;">[ INICIO ]</a>
+    <a href="#" onclick="accederPrivado()" style="color:#39FF14; text-decoration:none; font-family:monospace;">[ ÁREA PRIVADA 🔒 ]</a>
+</nav>
+
+<script>
+function accederPrivado() {
+    let clave = prompt("INGRESE CLAVE DE ACCESO (TITÁN-2026):");
+    if (clave === "yorvis2026") {
+        alert("ACCESO CONCEDIDO. Cargando planes de entrenamiento...");
+        window.location.href = "#seccion-entrenamiento"; // Aquí irá tu contenido oculto
+    } else {
+        alert("ACCESO DENEGADO: Credenciales incorrectas.");
+    }
+}
+</script>
 
 
                          <!-- sección de servicios  -->
