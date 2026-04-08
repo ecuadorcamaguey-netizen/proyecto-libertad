@@ -214,7 +214,7 @@ body {
     100% { opacity: 1; }
 }
 /* INTERFAZ DE PAGO PAYPAL - YORVIS TECH*/
-<style>
+
     .terminal-paypal {
         background: #000;
         color: #39FF14; /* Verde Neón */
@@ -275,6 +275,58 @@ body {
   border-color: #39FF14;
   box-shadow: 0 0 20px rgba(57, 255, 20, 0.4);
 }
+                 
+                 /*ESTILOS PARA EL AUNUNCIO DE CRIPTO*/
+  .anuncio-cripto {
+    background: #0a0a0a;
+    border: 2px dashed #39FF14;
+    padding: 30px;
+    margin: 40px auto;
+    max-width: 600px;
+    border-radius: 20px;
+    box-shadow: 0 0 20px rgba(57, 255, 20, 0.2);
+    text-align: center;
+    color: white;
+  }
+
+  .badge-nuevo {
+    background: #39FF14;
+    color: black;
+    display: inline-block;
+    padding: 5px 15px;
+    font-weight: bold;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    margin-bottom: 15px;
+  }
+
+  .titulo-lanzamiento {
+    font-size: 2rem;
+    color: #39FF14;
+    text-shadow: 0 0 10px #39FF14;
+    margin-bottom: 10px;
+  }
+
+  .moneda-neon {
+    width: 80px;
+    height: 80px;
+    border: 4px solid #39FF14;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    font-weight: bold;
+    margin: 20px auto;
+    color: #39FF14;
+    box-shadow: 0 0 15px #39FF14, inset 0 0 10px #39FF14;
+    animation: girar 4s linear infinite;
+  }
+
+  @keyframes girar {
+    from { transform: rotateY(0deg); }
+    to { transform: rotateY(360deg); }
+  }
 
 </style>
 
@@ -592,6 +644,22 @@ function calcularMeta() {
 
     </div>
 </section>
+                  <!-- BLOQUE DE LANZAMIENTO CRIPTO -->
+<div class="anuncio-cripto">
+  <div class="badge-nuevo">PRÓXIMAMENTE</div>
+  <h3 class="titulo-lanzamiento">Netizen Coin (NTZN)</h3>
+  <p>Estamos forjando el futuro del servicio técnico. Paga tus reparaciones, obtén garantías digitales y beneficios exclusivos con nuestro propio activo digital.</p>
+  
+  <div class="contenedor-moneda">
+    <div class="moneda-neon">N</div>
+  </div>
+  
+  <p class="estado-descarga">Estatus: <span style="color: #39FF14;">Sincronizando con la Blockchain...</span></p>
+</div>
+
+<!-- ESTILOS PARA EL ANUNCIO (Agrégalos a tu sección <style>) -->
+
+
 
 
 <!-- SECCIÓN DE CONTRATACIÓN RÁPIDA -->
