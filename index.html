@@ -410,7 +410,62 @@ body {
     text-shadow: 0 0 5px #39FF14;
   }
 
-                 
+     /*Certificado de garantía digital style*/   
+              
+  .certificado-garantia {
+    background: linear-gradient(145deg, #050505, #111);
+    border: 1px solid #39FF14;
+    border-radius: 15px;
+    padding: 20px;
+    margin: 30px auto;
+    max-width: 450px;
+    box-shadow: inset 0 0 15px rgba(57, 255, 20, 0.1), 0 10px 20px rgba(0,0,0,0.5);
+    color: #ccc;
+    font-family: 'Segoe UI', sans-serif;
+  }
+
+  .header-garantia {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #39FF14;
+    border-bottom: 1px solid rgba(57, 255, 20, 0.3);
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+  }
+
+  .header-garantia h4 {
+    margin: 0;
+    letter-spacing: 2px;
+    font-size: 0.9rem;
+  }
+
+  .texto-garantia {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    text-align: left;
+  }
+
+  .footer-garantia {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+    font-size: 0.7rem;
+  }
+
+  .id-garantia {
+    color: #555;
+  }
+
+  .sello-seguridad {
+    background: #39FF14;
+    color: #000;
+    padding: 2px 8px;
+    font-weight: bold;
+    border-radius: 4px;
+    text-transform: uppercase;
+  }   
 </style>
 
 
@@ -766,7 +821,18 @@ function calcularMeta() {
 </div>
 
 
-
+<!-- CERTIFICADO DE GARANTÍA DIGITAL -->
+<div class="certificado-garantia">
+  <div class="header-garantia">
+    <span class="icon-shield">🛡️</span>
+    <h4>NETIZEN DIGITAL GUARANTEE</h4>
+  </div>
+  <p class="texto-garantia">Este servicio cuenta con respaldo en la red <strong>Solana</strong>. El token de garantía es intransferible y asegura soporte técnico por 30 días.</p>
+  <div class="footer-garantia">
+    <span class="id-garantia">VERIFICADO: #NTZN-2024</span>
+    <div class="sello-seguridad">SECURE</div>
+  </div>
+</div>
 <!-- ESTILOS PARA EL ANUNCIO (Agrégalos a tu sección <style>) -->
 
 
