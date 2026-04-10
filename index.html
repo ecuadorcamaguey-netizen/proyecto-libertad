@@ -563,7 +563,68 @@ body {
   .carnet-vip:hover .brillo-efecto {
     left: 150%;
   }
-                 
+    /*Formulario de contacto de Neon */   
+      
+  .formulario-netizen {
+    background: #000;
+    border: 1px solid #39FF14;
+    padding: 25px;
+    border-radius: 15px;
+    max-width: 450px;
+    margin: 40px auto;
+    box-shadow: 0 0 15px rgba(57, 255, 20, 0.1);
+    text-align: left;
+  }
+
+  .form-titulo {
+    color: #39FF14;
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+    text-shadow: 0 0 5px #39FF14;
+  }
+
+  .campo-grupo {
+    margin-bottom: 15px;
+  }
+
+  .campo-grupo label {
+    display: block;
+    color: #39FF14;
+    font-size: 0.7rem;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+  }
+
+  .campo-grupo input, .campo-grupo select {
+    width: 100%;
+    background: #111;
+    border: 1px solid #333;
+    padding: 10px;
+    color: #fff;
+    border-radius: 5px;
+    outline: none;
+  }
+
+  .campo-grupo input:focus {
+    border-color: #39FF14;
+  }
+
+  .btn-enviar {
+    width: 100%;
+    background: #39FF14;
+    color: #000;
+    border: none;
+    padding: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.3s;
+  }
+
+  .btn-enviar:hover {
+    box-shadow: 0 0 20px #39FF14;
+    transform: scale(1.02);
+  }           
 </style>
 
 
@@ -934,6 +995,34 @@ function calcularMeta() {
     </div>
   </div>
 </div>
+        <!-- FORMULARIO DE CONTACTO NEÓN -->
+<div class="formulario-netizen">
+  <h3 class="form-titulo">SOLICITAR SERVICIO TÉCNICO</h3>
+  <p style="color: #666; font-size: 0.8rem; margin-bottom: 20px;">Deja tus datos y nos pondremos en contacto para coordinar el pago con NTZN.</p>
+  
+  <form id="form-reparacion">
+    <div class="campo-grupo">
+      <label>Nombre Completo</label>
+      <input type="text" placeholder="Ej. Yorvis Pérez" required>
+    </div>
+
+    <div class="campo-grupo">
+      <label>Modelo del Equipo</label>
+      <input type="text" placeholder="Ej. Laptop HP / PC Gamer" required>
+    </div>
+
+    <div class="campo-grupo">
+      <label>Tipo de Servicio</label>
+      <select required>
+        <option value="mantenimiento">Mantenimiento Preventivo (100 NTZN)</option>
+        <option value="optimizacion">Optimización Software (50 NTZN)</option>
+        <option value="diagnostico">Diagnóstico General</option>
+      </select>
+    </div>
+
+    <button type="submit" class="btn-enviar">ENVIAR SOLICITUD 🚀</button>
+  </form>
+</div>          
                   
 <!-- BOTÓN DE PAGO NEÓN CONECTADO A TU BILLETERA -->
 <div class="contenedor-pago">
