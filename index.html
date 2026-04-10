@@ -465,7 +465,105 @@ body {
     font-weight: bold;
     border-radius: 4px;
     text-transform: uppercase;
-  }   
+  } 
+                 /*Carnet de garantia NITIZEN style*/
+
+  .carnet-vip {
+    position: relative;
+    width: 350px;
+    height: 200px;
+    background: #000;
+    border-radius: 15px;
+    margin: 40px auto;
+    border: 1px solid rgba(57, 255, 20, 0.4);
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0,0,0,1);
+    transition: 0.5s;
+    cursor: pointer;
+  }
+
+  .carnet-vip:hover {
+    transform: translateY(-10px) rotateX(5deg);
+    box-shadow: 0 0 30px rgba(57, 255, 20, 0.3);
+    border-color: #39FF14;
+  }
+
+  .contenido-carnet {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+  }
+
+  .chip-digital {
+    width: 40px;
+    height: 30px;
+    background: linear-gradient(135deg, #39FF14, #1a5c0a);
+    border-radius: 5px;
+    display: block;
+  }
+
+  .top-carnet {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .marca-red {
+    font-size: 0.6rem;
+    color: #39FF14;
+    letter-spacing: 2px;
+  }
+
+  .ntzn-logo {
+    color: #fff;
+    font-size: 2.5rem;
+    margin: 0;
+    text-shadow: 0 0 10px #39FF14;
+    font-family: 'Orbitron', sans-serif;
+  }
+
+  .tipo-servicio {
+    font-size: 0.7rem;
+    color: #555;
+    margin-top: -5px;
+  }
+
+  .datos-carnet {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .col-dato span {
+    font-size: 0.5rem;
+    color: #39FF14;
+    display: block;
+  }
+
+  .col-dato p {
+    font-size: 0.8rem;
+    color: #fff;
+    margin: 0;
+    font-weight: bold;
+  }
+
+  /* Efecto de brillo que pasa por encima */
+  .brillo-efecto {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(to right, transparent, rgba(57, 255, 20, 0.2), transparent);
+    transform: skewX(-25deg);
+    transition: 0.7s;
+  }
+
+  .carnet-vip:hover .brillo-efecto {
+    left: 150%;
+  }
+                 
 </style>
 
 
@@ -811,7 +909,32 @@ function calcularMeta() {
     <span class="precio-ntzn">130 NTZN</span>
   </div>
 </div>
-   
+                  
+   <!-- CARNET DE GARANTÍA VIP NETIZEN -->
+<div class="carnet-vip">
+  <div class="brillo-efecto"></div>
+  <div class="contenido-carnet">
+    <div class="top-carnet">
+      <span class="chip-digital"></span>
+      <span class="marca-red">SOLANA NETWORK</span>
+    </div>
+    <div class="centro-carnet">
+      <h2 class="ntzn-logo">NTZN</h2>
+      <p class="tipo-servicio">GARANTÍA TÉCNICA GLOBAL</p>
+    </div>
+    <div class="datos-carnet">
+      <div class="col-dato">
+        <span>TITULAR</span>
+        <p>CLIENTE VERIFICADO</p>
+      </div>
+      <div class="col-dato">
+        <span>VALIDEZ</span>
+        <p>30 DÍAS POST-PAGO</p>
+      </div>
+    </div>
+  </div>
+</div>
+                  
 <!-- BOTÓN DE PAGO NEÓN CONECTADO A TU BILLETERA -->
 <div class="contenedor-pago">
   <a href="solana:917j5y45oeLNmN6DUrZrP6DyRAYzxh7mnA5h2LJnw6uq?label=Servicio%20Tecnico%20Netizen" class="boton-crypto">
