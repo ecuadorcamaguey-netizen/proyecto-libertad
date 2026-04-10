@@ -327,7 +327,35 @@ body {
     from { transform: rotateY(0deg); }
     to { transform: rotateY(360deg); }
   }
+/*BOTON DE PAGO CONECTADO A LA BILLETERA STYLE*/
+                .boton-crypto {
+    background: transparent;
+    color: #39FF14;
+    border: 2px solid #39FF14;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 10px;
+    display: inline-block;
+    transition: 0.3s;
+    box-shadow: 0 0 10px rgba(57, 255, 20, 0.4);
+    margin-top: 20px;
+  }
 
+  .boton-crypto:hover {
+    background: #39FF14;
+    color: black;
+    box-shadow: 0 0 30px #39FF14;
+    transform: scale(1.05);
+  }
+
+  .wallet-display {
+    font-family: monospace;
+    font-size: 0.7rem;
+    color: #555;
+    margin-top: 10px;
+  }   
 </style>
 
 
@@ -656,6 +684,15 @@ function calcularMeta() {
   
   <p class="estado-descarga">Estatus: <span style="color: #39FF14;">Sincronizando con la Blockchain...</span></p>
 </div>
+<!-- BOTÓN DE PAGO NEÓN CONECTADO A TU BILLETERA -->
+<div class="contenedor-pago">
+  <a href="solana:917j5y45oeLNmN6DUrZrP6DyRAYzxh7mnA5h2LJnw6uq?label=Servicio%20Tecnico%20Netizen" class="boton-crypto">
+    PAGAR CON NTZN / SOLANA
+  </a>
+  <p class="wallet-display">ID: 917j...w6uq</p>
+</div>
+
+
 
 <!-- ESTILOS PARA EL ANUNCIO (Agrégalos a tu sección <style>) -->
 
