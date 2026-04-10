@@ -999,29 +999,38 @@ function calcularMeta() {
 <div class="formulario-netizen">
   <h3 class="form-titulo">SOLICITAR SERVICIO TÉCNICO</h3>
   <p style="color: #666; font-size: 0.8rem; margin-bottom: 20px;">Deja tus datos y nos pondremos en contacto para coordinar el pago con NTZN.</p>
+   
+  <!-- TU FORMULARIO CONECTADO Y FUNCIONAL -->
+<form action="https://formspree.io/f/xbdpvqrn" method="POST">
   
-  <form id="form-reparacion" action="https://formspree.io/f/xbdpvqrn" method="POST">
-    <div class="campo-grupo">
-      <label>Nombre Completo</label>
-      <input type="text" placeholder="Ej. Yorvis Pérez" required>
-    </div>
+  <div class="campo-grupo">
+    <label>Nombre Completo</label>
+    <input type="text" name="nombre" placeholder="Ej. Yorvis Pérez" required>
+  </div>
 
-    <div class="campo-grupo">
-      <label>Modelo del Equipo</label>
-      <input type="text" placeholder="Ej. Laptop HP / PC Gamer" required>
-    </div>
+  <div class="campo-grupo">
+    <label>Modelo del Equipo</label>
+    <input type="text" name="equipo" placeholder="Ej. Laptop HP / PC Gamer" required>
+  </div>
 
-    <div class="campo-grupo">
-      <label>Tipo de Servicio</label>
-      <select required>
-        <option value="mantenimiento">Mantenimiento Preventivo (100 NTZN)</option>
-        <option value="optimizacion">Optimización Software (50 NTZN)</option>
-        <option value="diagnostico">Diagnóstico General</option>
-      </select>
-    </div>
+  <div class="campo-grupo">
+    <label>Tipo de Servicio</label>
+    <select name="servicio" required>
+      <option value="mantenimiento">Mantenimiento Preventivo (100 NTZN)</option>
+      <option value="optimizacion">Optimización Software (50 NTZN)</option>
+      <option value="diagnostico">Diagnóstico General</option>
+    </select>
+  </div>
 
-    <button type="submit" class="btn-enviar">ENVIAR SOLICITUD 🚀</button>
-  </form>
+  <div class="campo-grupo">
+    <label>Tu Correo o WhatsApp</label>
+    <input type="text" name="contacto" placeholder="Para contactarte..." required>
+  </div>
+
+  <button type="submit" class="btn-enviar">ENVIAR SOLICITUD 🚀</button>
+</form>
+
+  
 </div>          
                   
 <!-- BOTÓN DE PAGO NEÓN CONECTADO A TU BILLETERA -->
