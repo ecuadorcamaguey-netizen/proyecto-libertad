@@ -1246,9 +1246,26 @@ function reiniciarReloj() {
     localStorage.removeItem('finOferta');
     location.reload(); // Recarga la página y el reloj vuelve a 2 horas
 }
+// FORMULARIO DE INSCRIPCIÓN (TRABAJO DE SCRIPT)
+       
+  const scriptURL = 'https://google.com'
+  const form = document.forms['submit-to-google-sheet']
+  const msg = document.getElementById("msg")
 
-
-                                 </script> 
+  form.addEventListener('submit', e => {
+    e.preventDefault()
+    fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+      .then(response => {
+          msg.innerHTML = "¡Inscripción enviada con éxito!"
+          setTimeout(function(){
+              msg.innerHTML = ""
+          }, 5000)
+          form.reset()
+      })
+      .catch(error => console.error('Error!', error.message))
+  })
+    
+   </script> 
                                  
                                 
                                 
