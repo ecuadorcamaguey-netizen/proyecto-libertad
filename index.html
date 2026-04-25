@@ -1059,7 +1059,7 @@ function calcularMeta() {
   <p style="color: #666; font-size: 0.8rem; margin-bottom: 20px;">Deja tus datos y nos pondremos en contacto para coordinar el pago con NTZN.</p>
    
   <!-- TU FORMULARIO CONECTADO Y FUNCIONAL -->
-<form id="submit-to-google-sheet" action="https://script.google.com/macros/s/AKfycbyTHFi3IbYNvE6g3DMz-2d9FpI3O0FtEXp4XEkr4Cuyn1L6CmM-P5PJdR71GytKRlqXmQ/exec" method="POST">
+<form name="submit-to-google-sheet" id="submit-to-google-sheet" action="https://script.google.com/macros/s/AKfycbyTHFi3IbYNvE6g3DMz-2d9FpI3O0FtEXp4XEkr4Cuyn1L6CmM-P5PJdR71GytKRlqXmQ/exec" method="POST">
   
   <div class="campo-grupo">
     <label>Nombre Completo</label>
@@ -1259,22 +1259,26 @@ function reiniciarReloj() {
 }
 // FORMULARIO DE INSCRIPCIÓN (TRABAJO DE SCRIPT)
        
+  
   const scriptURL = 'https://google.com'
-  const form = document.forms['submit-to-google-sheet']
-  const msg = document.getElementById("msg")
+  const form = document.querySelector('#submit-to-google-sheet')
 
   form.addEventListener('submit', e => {
     e.preventDefault()
+    console.log("Enviando..."); // Esto te avisará en la consola que el botón funciona
+    
     fetch(scriptURL, { method: 'POST', body: new FormData(form)})
       .then(response => {
-          msg.innerHTML = "¡Inscripción enviada con éxito!"
-          setTimeout(function(){
-              msg.innerHTML = ""
-          }, 5000)
-          form.reset()
+          alert("¡Inscripción enviada con éxito!"); // Usamos un alert simple para probar
+          form.reset();
       })
-      .catch(error => console.error('Error!', error.message))
+      .catch(error => {
+          console.error('Error!', error.message);
+          alert("Hubo un error al enviar. Revisa la consola.");
+      })
   })
+           
+
     
    </script> 
                                  
