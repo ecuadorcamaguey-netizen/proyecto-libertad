@@ -669,6 +669,45 @@ body {
   text-align: center;
   transition: opacity 0.5s;
 }
+         /*STYLE DEL MENU DESPEGABLE DE TRES LINIAS*/
+.menu-icono {
+    cursor: pointer;
+    display: inline-block;
+    padding: 10px;
+}
+.bar {
+    width: 25px;
+    height: 3px;
+    background-color: #333;
+    margin: 5px 0;
+    transition: 0.4s;
+}
+.menu-contenido {
+    display: none; /* Oculto por defecto */
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 250px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    padding: 15px;
+    z-index: 1;
+    border-radius: 8px;
+}
+.lista-menu {
+    list-style: none;
+    padding: 0;
+}
+.lista-menu li {
+    margin-bottom: 12px;
+}
+.btn-registro {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 8px;
+    width: 100%;
+    cursor: pointer;
+}
+
 
 </style>
 
@@ -678,20 +717,35 @@ body {
               </head>
                <body> 
 
-                  <!-- Botón del menú -->
-<div class="menu-icon" onclick="toggleMenu()">
-  <span></span>
-  <span></span>
-  <span></span>
+                  <!-- Icono de tres líneas -->
+<div class="menu-icono" onclick="toggleMenu()">
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
 </div>
 
-<!-- Menú lateral -->
-<div id="sideMenu" class="side-menu">
-  <h3>Registro de Usuario</h3>
-  <input type="text" id="regUser" placeholder="Usuario">
-  <input type="password" id="regPass" placeholder="Contraseña">
-  <button onclick="saveUser()">Crear Cuenta</button>
+<!-- Menú desplegable -->
+<div id="menuOpciones" class="menu-contenido">
+    <ul class="lista-menu">
+        <li><strong>PROYECTO LIBERTAD</strong></li>
+        <hr>
+        <li>
+            <label>Usuario:</label>
+            <input type="text" id="usuario" placeholder="Ej: Yorvis">
+        </li>
+        <li>
+            <label>Contraseña:</label>
+            <input type="password" id="pass" placeholder="********">
+        </li>
+        <li>
+            <button class="btn-registro" onclick="registrar()">Crear Cuenta</button>
+        </li>
+        <hr>
+        <li><a href="#">Mi Billetera LTC</a></li>
+        <li><a href="#">Historial de Grifo</a></li>
+    </ul>
 </div>
+
 
                   <!---Bloque del Logo (N)--->
 
@@ -1294,6 +1348,20 @@ function reiniciarReloj() {
       })
   })
            
+// sceipt del menu despegable de tres linia.
+       function toggleMenu() {
+    var x = document.getElementById("menuOpciones");
+    if (x.style.display === "block") {
+        x.style.display = "none";
+    } else {
+        x.style.display = "block";
+    }
+}
+
+function registrar() {
+    const user = document.getElementById("usuario").value;
+    alert("¡Hola " + user + "! Registro simulado en Proyecto Libertad.");
+}
 
     
    </script> 
