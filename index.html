@@ -672,57 +672,63 @@ body {
          /*STYLE DEL MENU DESPEGABLE DE TRES LINIAS*/
 
 
-:root {
-    --verde-nucleo: #4b5320;
-    --borde-oro: #d4af37;
-    --resplandor: rgba(212, 175, 55, 0.4);
+/* Contenedor del Bloque de Servicio */
+.servicio-tecnologico {
+    width: 100%;
+    max-width: 800px;
+    margin: 20px auto;
+    background: #1a1a1a;
+    border: 2px solid #4b5320;
+    border-radius: 15px;
+    overflow: hidden;
+    position: relative;
 }
 
-/* El contenedor del menú ahora es una esfera oculta */
-.menu-contenido {
-    display: block; /* Siempre bloque, pero oculto por el círculo */
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    width: 300px;
-    background: radial-gradient(circle, #4b5320 0%, #1a1a1a 100%);
-    border: 2px solid var(--borde-oro);
-    border-radius: 20px; /* Bordes redondeados tecnológicos */
-    padding: 20px;
-    color: white;
-    z-index: 100;
-    
-    /* ESTADO INICIAL: Un círculo diminuto en la esquina del botón */
-    clip-path: circle(0% at 20px 20px);
-    transition: clip-path 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 0 20px var(--resplandor);
+/* El Botón que actúa como activador del Banner */
+.activador-nucleo {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(90deg, #1a1a1a, #4b5320);
+    color: #d4af37;
+    text-align: center;
+    cursor: pointer;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: none;
+    letter-spacing: 2px;
 }
 
-/* ESTADO ACTIVO: La esfera se expande a la redonda */
-.menu-contenido.activo {
-    clip-path: circle(150% at 20px 20px);
-}
-
-/* Estilo del botón tipo "Activador de Núcleo" */
-.menu-icono {
-    width: 50px;
-    height: 50px;
-    background: var(--verde-nucleo);
-    border: 2px solid var(--borde-oro);
-    border-radius: 50%; /* Botón redondo */
+/* La esfera que se expande dentro del bloque */
+.contenido-esferico {
+    max-height: 0; /* Cerrado por defecto */
+    opacity: 0;
+    overflow: hidden;
+    background: radial-gradient(circle at center, #4b5320 0%, #000 100%);
+    transition: max-height 0.8s ease, opacity 0.5s ease;
+    padding: 0 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    z-index: 101;
-    position: relative;
-    transition: transform 0.3s;
 }
 
-.menu-icono:active {
-    transform: scale(0.9);
+/* Estado cuando se activa el servicio */
+.servicio-tecnologico.activo .contenido-esferico {
+    max-height: 600px; /* Se expande como un banner */
+    opacity: 1;
+    padding: 20px;
 }
+
+.input-militar {
+    width: 80%;
+    background: #000;
+    border: 1px solid #d4af37;
+    color: #0f0;
+    padding: 10px;
+    margin: 10px 0;
+    font-family: monospace;
+}
+
+
 
 
 </style>
@@ -990,27 +996,29 @@ function calcularMeta() {
     alert("Algoritmo Actualizado: Meta de Abril 2026 en proceso.");
 }
 </script>
-<!--Html MENU DESPEGABLE TRES LINIA TIPO ESFERA-->
-                 <div class="menu-icono" onclick="toggleMenu()">
-    <div class="bar"></div>
-    <div class="bar"></div>
-    <div class="bar"></div>
-</div>
+<!--HTML MENU DESPEGABLE TRES LINIA TIPO ESFERA-->
+<section class="servicio-tecnologico" id="panelLibertad">
+    <button class="activador-nucleo" onclick="activarServicio()">
+        [ ACCEDER AL SISTEMA DE LIBERTAD ]
+    </button>
 
-<div id="menuOpciones" class="menu-contenido">
-    <h3 style="color:var(--borde-oro); text-align:center;">NÚCLEO DE LIBERTAD</h3>
-    <hr>
-    <ul class="lista-menu">
-        <li><label>SOLDADO:</label><input type="text" id="user"></li>
-        <li><label>CLAVE:</label><input type="password" id="pass"></li>
-        <li><button class="btn-registro">INICIAR SISTEMA</button></li>
-    </ul>
-    <hr>
-    <ul class="sub-lista">
-        <li><a href="#" class="enlace-militar">● BILLETERA LTC</a></li>
-        <li><a href="#" class="enlace-militar">● ACTIVAR GRIFO</a></li>
-    </ul>
-</div>
+    <div class="contenido-esferico">
+        <h2 style="color: #d4af37;">PANEL TÁCTICO</h2>
+        
+        <input type="text" class="input-militar" placeholder="ID SOLDADO">
+        <input type="password" class="input-militar" placeholder="CÓDIGO ALPHA">
+        
+        <button class="btn-registro" style="background:#4b5320; color:white; padding:10px 20px; border:1px solid #d4af37; cursor:pointer;">
+            INICIAR PROTOCOLO
+        </button>
+
+        <div style="margin-top:20px; text-align:left; width:80%;">
+            <a href="#" style="color:#fff; text-decoration:none; display:block;">> ACCESO BILLETERA LTC</a>
+            <a href="#" style="color:#fff; text-decoration:none; display:block;">> ACTIVAR GRIFO DE BONO</a>
+        </div>
+    </div>
+</section>
+
  
 
                          <!-- sección de servicios  -->
@@ -1388,6 +1396,10 @@ function toggleMenu() {
     } else {
         icono.style.transform = "rotate(0deg)";
     }
+}
+function activarServicio() {
+    const panel = document.getElementById("panelLibertad");
+    panel.classList.toggle("activo");
 }
 
 
