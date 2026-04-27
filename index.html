@@ -750,6 +750,25 @@ body {
     background-color: #556b2f;
     box-shadow: 0 0 10px var(--texto-oro);
 }
+.sub-lista {
+    list-style: none;
+    padding-left: 10px;
+}
+
+.enlace-militar {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+    display: block;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.enlace-militar:hover {
+    color: var(--texto-oro);
+    padding-left: 5px;
+    transition: 0.3s;
+}
 
 
 </style>
@@ -761,17 +780,18 @@ body {
                <body> 
 
                   <!-- Icono de tres líneas -->
-
-<div class="menu-icono" onclick="toggleMenu()">
+                  <div class="menu-icono" onclick="toggleMenu()">
     <div class="bar"></div>
     <div class="bar"></div>
     <div class="bar"></div>
 </div>
-<!--MENU DESPEGABLE-->
+
 <div id="menuOpciones" class="menu-contenido">
     <ul class="lista-menu">
         <li style="text-align: center; color: var(--texto-oro);"><strong>OPERACIÓN LIBERTAD</strong></li>
         <hr style="border: 0.5px solid var(--verde-claro);">
+        
+        <!-- Sección de Registro -->
         <li>
             <label>ID USUARIO:</label>
             <input type="text" id="usuario" placeholder="Soldado_Yorvis">
@@ -783,8 +803,21 @@ body {
         <li>
             <button class="btn-registro" onclick="registrar()">Activar Cuenta</button>
         </li>
+        
+        <hr style="border: 0.5px solid var(--verde-claro);">
+        
+        <!-- Nuevas Listas: Billetera y Grifo -->
+        <li>
+            <label>SISTEMA DE PAGOS:</label>
+            <ul class="sub-lista">
+                <li><a href="#" class="enlace-militar">💼 Mi Billetera LTC</a></li>
+                <li><a href="#" class="enlace-militar">🚰 Grifo de Bonos</a></li>
+            </ul>
+        </li>
     </ul>
 </div>
+
+
 
                   <!---Bloque del Logo (N)--->
 
@@ -1390,6 +1423,7 @@ function reiniciarReloj() {
 // sceipt del menu despegable de tres linia.
        function toggleMenu() {
     var x = document.getElementById("menuOpciones");
+    // Verificamos si está oculto o no para cambiar el estado
     if (x.style.display === "block") {
         x.style.display = "none";
     } else {
@@ -1397,10 +1431,15 @@ function reiniciarReloj() {
     }
 }
 
-function registrar() {
-    const user = document.getElementById("usuario").value;
-    alert("¡Hola " + user + "! Registro simulado en Proyecto Libertad.");
+// Cerramos el menú si el usuario hace clic fuera de él
+window.onclick = function(event) {
+    var menu = document.getElementById("menuOpciones");
+    var icono = document.querySelector(".menu-icono");
+    if (event.target !== menu && !menu.contains(event.target) && !icono.contains(event.target)) {
+        menu.style.display = "none";
+    }
 }
+
 
     
    </script> 
