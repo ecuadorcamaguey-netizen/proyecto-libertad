@@ -671,103 +671,57 @@ body {
 }
          /*STYLE DEL MENU DESPEGABLE DE TRES LINIAS*/
 
-                 
+
 :root {
-    --verde-militar: #4b5320;
-    --verde-claro: #6b8e23;
-    --negro-tactico: #1a1a1a;
-    --texto-oro: #d4af37; /* Color tipo insignia */
+    --verde-nucleo: #4b5320;
+    --borde-oro: #d4af37;
+    --resplandor: rgba(212, 175, 55, 0.4);
 }
 
-.menu-icono {
-    cursor: pointer;
-    background: var(--verde-militar);
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid var(--texto-oro);
-    width: fit-content;
-}
-
-.bar {
-    width: 30px;
-    height: 4px;
-    background-color: white;
-    margin: 6px 0;
-    box-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-}
-
+/* El contenedor del menú ahora es una esfera oculta */
 .menu-contenido {
-    display: none;
+    display: block; /* Siempre bloque, pero oculto por el círculo */
     position: absolute;
-    background: linear-gradient(145deg, #2d3316, #4b5320);
-    min-width: 280px;
-    border: 2px solid var(--texto-oro);
-    box-shadow: 5px 5px 15px rgba(0,0,0,0.7);
+    top: 10px;
+    left: 10px;
+    width: 300px;
+    background: radial-gradient(circle, #4b5320 0%, #1a1a1a 100%);
+    border: 2px solid var(--borde-oro);
+    border-radius: 20px; /* Bordes redondeados tecnológicos */
     padding: 20px;
+    color: white;
     z-index: 100;
-    border-radius: 0 15px 15px 15px;
-    color: white;
-    font-family: 'Courier New', Courier, monospace; /* Estilo máquina de escribir/militar */
+    
+    /* ESTADO INICIAL: Un círculo diminuto en la esquina del botón */
+    clip-path: circle(0% at 20px 20px);
+    transition: clip-path 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 0 20px var(--resplandor);
 }
 
-.lista-menu {
-    list-style: none;
-    padding: 0;
+/* ESTADO ACTIVO: La esfera se expande a la redonda */
+.menu-contenido.activo {
+    clip-path: circle(150% at 20px 20px);
 }
 
-.lista-menu li label {
-    display: block;
-    font-weight: bold;
-    color: var(--texto-oro);
-    margin-bottom: 5px;
-    text-transform: uppercase;
-    font-size: 12px;
-}
-
-.lista-menu input {
-    background: var(--negro-tactico);
-    border: 1px solid var(--verde-claro);
-    color: #00ff00; /* Texto tipo terminal */
-    padding: 10px;
-    width: 90%;
-    margin-bottom: 15px;
-    border-radius: 3px;
-}
-
-.btn-registro {
-    background-color: var(--verde-claro);
-    color: white;
-    border: 1px solid white;
-    padding: 12px;
-    width: 100%;
+/* Estilo del botón tipo "Activador de Núcleo" */
+.menu-icono {
+    width: 50px;
+    height: 50px;
+    background: var(--verde-nucleo);
+    border: 2px solid var(--borde-oro);
+    border-radius: 50%; /* Botón redondo */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
-    font-weight: bold;
-    text-transform: uppercase;
-    transition: 0.3s;
+    z-index: 101;
+    position: relative;
+    transition: transform 0.3s;
 }
 
-.btn-registro:hover {
-    background-color: #556b2f;
-    box-shadow: 0 0 10px var(--texto-oro);
-}
-.sub-lista {
-    list-style: none;
-    padding-left: 10px;
-}
-
-.enlace-militar {
-    color: white;
-    text-decoration: none;
-    font-size: 14px;
-    display: block;
-    padding: 8px 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.enlace-militar:hover {
-    color: var(--texto-oro);
-    padding-left: 5px;
-    transition: 0.3s;
+.menu-icono:active {
+    transform: scale(0.9);
 }
 
 
@@ -1036,44 +990,28 @@ function calcularMeta() {
     alert("Algoritmo Actualizado: Meta de Abril 2026 en proceso.");
 }
 </script>
-
-                  <!-- Icono de tres líneas -->
-                  <div class="menu-icono" onclick="toggleMenu()">
+<!--Html MENU DESPEGABLE TRES LINIA TIPO ESFERA-->
+                 <div class="menu-icono" onclick="toggleMenu()">
     <div class="bar"></div>
     <div class="bar"></div>
     <div class="bar"></div>
 </div>
 
 <div id="menuOpciones" class="menu-contenido">
+    <h3 style="color:var(--borde-oro); text-align:center;">NÚCLEO DE LIBERTAD</h3>
+    <hr>
     <ul class="lista-menu">
-        <li style="text-align: center; color: var(--texto-oro);"><strong>OPERACIÓN LIBERTAD</strong></li>
-        <hr style="border: 0.5px solid var(--verde-claro);">
-        <br><br><br><br>
-        <!-- Sección de Registro -->
-        <li>
-            <label>ID USUARIO:</label>
-            <input type="text" id="usuario" placeholder="Soldado_Yorvis">
-        </li>
-        <li>
-            <label>CÓDIGO DE ACCESO:</label>
-            <input type="password" id="pass" placeholder="********">
-        </li>
-        <li>
-            <button class="btn-registro" onclick="registrar()">Activar Cuenta</button>
-        </li>
-        
-        <hr style="border: 0.5px solid var(--verde-claro);">
-        
-        <!-- Nuevas Listas: Billetera y Grifo -->
-        <li>
-            <label>SISTEMA DE PAGOS:</label>
-            <ul class="sub-lista">
-                <li><a href="#" class="enlace-militar">💼 Mi Billetera LTC</a></li>
-                <li><a href="#" class="enlace-militar">🚰 Grifo de Bonos</a></li>
-            </ul>
-        </li>
+        <li><label>SOLDADO:</label><input type="text" id="user"></li>
+        <li><label>CLAVE:</label><input type="password" id="pass"></li>
+        <li><button class="btn-registro">INICIAR SISTEMA</button></li>
+    </ul>
+    <hr>
+    <ul class="sub-lista">
+        <li><a href="#" class="enlace-militar">● BILLETERA LTC</a></li>
+        <li><a href="#" class="enlace-militar">● ACTIVAR GRIFO</a></li>
     </ul>
 </div>
+ 
 
                          <!-- sección de servicios  -->
                          <section id="servicios" style="margin-top:40px;">
@@ -1434,6 +1372,21 @@ window.onclick = function(event) {
     var icono = document.querySelector(".menu-icono");
     if (event.target !== menu && !menu.contains(event.target) && !icono.contains(event.target)) {
         menu.style.display = "none";
+    }
+}
+       // Activacion de la esfera 
+function toggleMenu() {
+    const menu = document.getElementById("menuOpciones");
+    const icono = document.querySelector(".menu-icono");
+    
+    // Alterna la clase 'activo' para expandir la esfera
+    menu.classList.toggle("activo");
+    
+    // Efecto de rotación en el botón al activar
+    if (menu.classList.contains("activo")) {
+        icono.style.transform = "rotate(90deg)";
+    } else {
+        icono.style.transform = "rotate(0deg)";
     }
 }
 
