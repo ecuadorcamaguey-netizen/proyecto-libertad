@@ -1416,6 +1416,46 @@ function activarServicio() {
 const firebaseConfig = {
   databaseURL: "https://proyecto-libertad-b3747-default-rtdb.firebaseio.com/" 
 };
+//Cargar Firebase primero 
+<script src="gstatic.com"></script>
+<script src="gstatic.com"></script>
+
+
+  // Tu conexión directa con el proyecto de Google
+  const firebaseConfig = {
+    databaseURL: "TU_ENLACE_DE_FIREBASE_AQUI" 
+  };
+  
+  firebase.initializeApp(firebaseConfig);
+  const database = firebase.database();
+
+  // Esta es la función que llama el 'onclick' del botón
+  function registrarUsuario() {
+    // Tomamos lo que el soldado escribió en la pantalla
+    const user = document.getElementById("usuario").value;
+    const pass = document.getElementById("pass").value;
+
+    // Validación de seguridad para que no envíen campos vacíos
+    if (user.trim() === "" || pass.trim() === "") {
+        alert("¡ALTO! El ID de Soldado y el Código Alpha son obligatorios.");
+        return;
+    }
+
+    // Enviamos los datos a la nube de Firebase
+    database.ref('usuarios/' + user).set({
+      usuario: user,
+      clave: pass,
+      fechaRegistro: new Date().toLocaleString()
+    })
+    .then(() => {
+      alert("SISTEMA ACTIVADO: Registro exitoso para el Soldado " + user);
+    })
+    .catch((error) => {
+      console.error(error);
+      alert("ERROR DE CONEXIÓN: Verifica tu base de datos.");
+    });
+  }
+
 
     
    </script> 
