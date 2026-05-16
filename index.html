@@ -1353,6 +1353,21 @@ function reiniciarReloj() {
     localStorage.removeItem('finOferta');
     location.reload(); // Recarga la página y el reloj vuelve a 2 horas
 }
+       // 1. Esto calcula el tiempo cuando la página se carga (o se reinicia)
+let tiempoObjetivo = localStorage.getItem('finOferta');
+
+if (!tiempoObjetivo) {
+    // Si entraste por tu menú secreto, no habrá registro. Aquí creamos 2 horas nuevas:
+    tiempoObjetivo = new Date().getTime() + (2 * 60 * 60 * 1000); 
+    localStorage.setItem('finOferta', tiempoObjetivo);
+}
+
+// 2. Tu función del Menú Secreto (Corregida)
+function reiniciarReloj() {
+    localStorage.removeItem('finOferta'); // Borra el registro
+    location.reload();                    // Al recargar, el paso 1 creará 2 horas nuevas
+}
+
 // FORMULARIO DE INSCRIPCIÓN (TRABAJO DE SCRIPT)
        
   
