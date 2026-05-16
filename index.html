@@ -1371,6 +1371,17 @@ function reiniciarReloj() {
     location.reload();                    // Al recargar, el paso 1 creará 2 horas nuevas
 }
 
+       //PARA SECUENCIA DE LETRAS ESCRIBIR TITAN
+       let secuencia = "";
+window.addEventListener('keydown', (e) => {
+    secuencia += e.key;
+    if (secuencia.includes("titan")) {
+        reiniciarReloj();
+        secuencia = ""; // Limpia la secuencia
+    }
+});
+
+       
 // FORMULARIO DE INSCRIPCIÓN (TRABAJO DE SCRIPT)
        
   
