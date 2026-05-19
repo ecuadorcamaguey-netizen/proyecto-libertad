@@ -865,11 +865,15 @@ body {
     </div>
 </section>
 <!-- MENÚ DE NAVEGACIÓN YORVIS TECH -->
-<!-- Menú Original Corregido (Conserva tus mismos estilos visuales) -->
-[ <a href="#inicio" style="all: unset; cursor: pointer;">INICIO</a> ] 
-[ <a href="#arraigo" style="all: unset; cursor: pointer;">ÁREA PRIVADA 🔒</a> ] 
-[ <a href="#entrenamiento" style="all: unset; cursor: pointer;">ENTRENAMIENTO 🏋</a> ] 
-[ <a href="#netizen-coin" style="all: unset; cursor: pointer;">ÁREA TITÁN 🔐</a> ]
+
+<!-- Menú Original Intacto - Estilo Verde Neón con Control de Script -->
+[ <span onclick="window.scrollTo({top: 0, behavior: 'smooth'});" style="cursor: pointer; color: #00ff00; font-family: monospace; text-shadow: 0 0 5px #00ff00;">INICIO</span> ] 
+
+[ <span onclick="event.preventDefault(); tuFuncionPrivada();" style="cursor: pointer; color: #00ff00; font-family: monospace; text-shadow: 0 0 5px #00ff00;">ÁREA PRIVADA 🔒</span> ] 
+
+[ <span onclick="document.getElementById('entrenamiento').scrollIntoView({behavior: 'smooth'});" style="cursor: pointer; color: #00ff00; font-family: monospace; text-shadow: 0 0 5px #00ff00;">ENTRENAMIENTO 🏋</span> ] 
+
+[ <span onclick="event.preventDefault(); tuFuncionTitan();" style="cursor: pointer; color: #00ff00; font-family: monospace; text-shadow: 0 0 5px #00ff00;">ÁREA TITÁN 🔐</span> ]
 
 
 <!-- SECCIÓN PÚBLICA DE ENTRENAMIENTO (Fuera de la privada) -->
