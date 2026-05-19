@@ -1222,6 +1222,95 @@ function calcularMeta() {
   <button type="submit" class="btn-enviar">ENVIAR SOLICITUD 🚀</button>
 </form>
 
+
+   <!-- FORMULARIO DE CONTACTO NEÓN OPTIMIZADO PARA FORMSPREE -->
+<div class="formulario-netizen">
+  <h3 class="form-titulo">SOLICITAR SERVICIO TÉCNICO</h3>
+  <p style="color: #666; font-size: 0.8rem; margin-bottom: 20px;">Deja tus datos y nos pondremos en contacto para coordinar el pago con NTZN.</p>
+   
+  <!-- REEMPLAZA "TU_ID_DE_FORMSPREE" POR EL CÓDIGO QUE TE DA LA PLATAFORMA -->
+  <form id="formspree-netizen" action="https://formspree.io" method="POST">
+  
+    <div class="campo-grupo">
+      <label>Nombre Completo</label>
+      <input type="text" name="name" placeholder="Ej. Yorvis Pérez" required>
+    </div>
+
+    <div class="campo-grupo">
+      <label>Modelo del Equipo</label>
+      <input type="text" name="device" placeholder="Ej. Laptop HP / PC Gamer" required>
+    </div>
+
+    <div class="campo-grupo">
+      <label>Tipo de Servicio</label>
+      <select name="service_type" required>
+        <option value="Mantenimiento Preventivo (100 NTZN)">Mantenimiento Preventivo (100 NTZN)</option>
+        <option value="Optimizacion Software (50 NTZN)">Optimización Software (50 NTZN)</option>
+        <option value="Diagnostico General">Diagnóstico General</option>
+      </select>
+    </div>
+
+    <div class="campo-grupo">
+      <label>Tu Correo o WhatsApp</label>
+      <input type="text" name="contact_info" placeholder="Para contactarte..." required>
+    </div>
+
+    <button type="submit" id="btn-submit-netizen" class="btn-enviar">ENVIAR SOLICITUD 🚀</button>
+    
+    <!-- Contenedor flotante invisible para avisar al cliente si se envió o falló -->
+    <p id="form-status-msg" style="text-align: center; margin-top: 15px; font-weight: bold; display: none;"></p>
+  </form>
+</div>
+
+<!-- SCRIPT INDEPENDIENTE PARA ENVIAR POR FORMSPREE SIN RECARGAR LA PÁGINA -->
+<script>
+  const formulario = document.getElementById("formspree-netizen");
+  const botonEnviar = document.getElementById("btn-submit-netizen");
+  const mensajeEstado = document.getElementById("form-status-msg");
+
+  if (formulario) {
+    formulario.addEventListener("submit", async function(event) {
+      event.preventDefault(); // Evita que la página se recargue estéticamente
+      
+      // Bloqueamos el botón temporalmente para evitar doble envío de datos
+      botonEnviar.disabled = true;
+      botonEnviar.textContent = "PROCESANDO SOLICITUD... ⏳";
+
+      const data = new FormData(event.target);
+
+      try {
+        const response = await fetch(event.target.action, {
+          method: formulario.method,
+          body: data,
+          headers: {
+            'Accept': 'application/json'
+          }
+        });
+
+        if (response.ok) {
+          // ÉXITO: Cambios visuales inmediatos para el cliente
+          mensajeEstado.style.display = "block";
+          mensajeEstado.style.color = "#00ffcc"; // Color neón de éxito
+          mensajeEstado.textContent = "¡Solicitud enviada con éxito! Nos comunicaremos pronto. 🔥";
+          formulario.reset(); // Limpia los campos del formulario automáticamente
+          botonEnviar.textContent = "SOLICITUD ENVIADA ✅";
+        } else {
+          // ERROR DE FORMSPREE
+          throw new Error("Error en el servidor de Formspree");
+        }
+      } catch (error) {
+        // ERROR DE RED
+        mensajeEstado.style.display = "block";
+        mensajeEstado.style.color = "#ff3333"; // Color rojo neón de alerta
+        mensajeEstado.textContent = "Hubo un problema. Por favor, intenta de nuevo.";
+        botonEnviar.disabled = false;
+        botonEnviar.textContent = "REINTENTAR ENVIAR 🚀";
+      }
+    });
+  }
+</script>
+
+   
   
 </div>          
          <!-- DISTRIBUCIÓN DE NETIZEN (TOKENOMICS) -->
@@ -1477,8 +1566,6 @@ function activarServicio() {
     panel.classList.toggle("activo");
 }
 
-const firebaseConfig = {
-  databaseURL: "https://proyecto-libertad-b3747-default-rtdb.firebaseio.com/"};
 
                   
                </script>
