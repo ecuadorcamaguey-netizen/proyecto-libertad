@@ -865,15 +865,14 @@ body {
     </div>
 </section>
 <!-- MENÚ DE NAVEGACIÓN YORVIS TECH -->
-
-<!-- Menú Original Intacto - Estilo Verde Neón con Control de Script -->
-[ <span onclick="window.scrollTo({top: 0, behavior: 'smooth'});" style="cursor: pointer; color: #00ff00; font-family: monospace; text-shadow: 0 0 5px #00ff00;">INICIO</span> ] 
-
-[ <span onclick="event.preventDefault(); tuFuncionPrivada();" style="cursor: pointer; color: #00ff00; font-family: monospace; text-shadow: 0 0 5px #00ff00;">ÁREA PRIVADA 🔒</span> ] 
-
-[ <span onclick="document.getElementById('entrenamiento').scrollIntoView({behavior: 'smooth'});" style="cursor: pointer; color: #00ff00; font-family: monospace; text-shadow: 0 0 5px #00ff00;">ENTRENAMIENTO 🏋</span> ] 
-
-[ <span onclick="event.preventDefault(); tuFuncionTitan();" style="cursor: pointer; color: #00ff00; font-family: monospace; text-shadow: 0 0 5px #00ff00;">ÁREA TITÁN 🔐</span> ]
+<nav style="background:#000; padding:15px; border-bottom:1px solid #39FF14; display:flex; justify-content:space-around;">
+    <a href="#" style="color:#39FF14; text-decoration:none; font-family:monospace;">[ INICIO ]</a>
+    <a href="#" onclick="accederPrivado()" style="color:#39FF14; text-decoration:none; font-family:monospace;">[ ÁREA PRIVADA 🔒 ]</a>
+</nav>
+ <nav style="background:#000; padding:15px; border-bottom:1px solid #39FF14; display:flex; justify-content:center; gap:20px;">
+    <a href="#" style="color:#39FF14; text-decoration:none; font-family:monospace; font-size:0.8em;">[ INICIO ]</a>
+    <a href="#fitness-publico" style="color:#39FF14; text-decoration:none; font-family:monospace; font-size:0.8em;">[ ENTRENAMIENTO 🏋️ ]</a>
+    <a href="#" onclick="accederPrivado()" style="color:#39FF14; text-decoration:none; font-family:monospace; font-size:0.8em;">[ ÁREA TITÁN 🔐 ]</a>
 
 
 <!-- SECCIÓN PÚBLICA DE ENTRENAMIENTO (Fuera de la privada) -->
