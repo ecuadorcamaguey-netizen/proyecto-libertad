@@ -825,12 +825,7 @@ body {
     </div>
 </section>
 
-                  <!-- Botones de Filtro Operativo con tus estilos nativos -->
-<div style="text-align: center; margin: 25px 0;">
-  <button onclick="filtrarTestimonios('todos')" class="btn-filtro-titan" style="padding: 12px 20px; margin: 5px; cursor: pointer; font-family: inherit; font-weight: bold; border-radius: 5px; border: 1px solid #ffcc00; background-color: #1a1a1a; color: #ffcc00;">[ VER TODO ]</button>
-  <button onclick="filtrarTestimonios('tecnico')" class="btn-filtro-titan" style="padding: 12px 20px; margin: 5px; cursor: pointer; font-family: inherit; font-weight: bold; border-radius: 5px; border: 1px solid #ffcc00; background-color: #000; color: #fff;">📱 SERVICIO TÉCNICO</button>
-  <button onclick="filtrarTestimonios('fitness')" class="btn-filtro-titan" style="padding: 12px 20px; margin: 5px; cursor: pointer; font-family: inherit; font-weight: bold; border-radius: 5px; border: 1px solid #ffcc00; background-color: #000; color: #fff;">🏋️ ENTRENAMIENTO</button>
-</div>
+
 
 <!-- Contenedor con tus etiquetas de testimonios originales -->
 <div id="bloque-testimonios-operativo">
@@ -838,7 +833,7 @@ body {
   <!-- Categoria Técnico -->
   <div class="testimonio-item tecnico-test">
     <p>"Mi celular estaba para botar y Yorvis lo dejó volando. ¡Recomendado!"</p>
-    <small>⭐ Yenni-M. - Bogotá</small>
+    <span>⭐ Yenni-M. - Bogotá</span>
   </div>
   
   <div class="testimonio-item tecnico-test">
@@ -1556,20 +1551,7 @@ const firebaseConfig = {
     });
   }
 
-         
-   // CONTENEDOR DE TESTIMONIO ACTUAL lo que dicen mis clientes 
-   
-function filtrarTestimonios(categoria) {
-  const elementos = document.querySelectorAll('.testimonio');
-  elementos.forEach(el => {
-    if (categoria === 'todos' || el.classList.contains(categoria)) {
-      el.style.display = 'block';
-    } else {
-      el.style.display = 'none';
-    }
-  });
-}
-      
+
    </script> 
                                  
                                 
