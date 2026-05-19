@@ -825,6 +825,70 @@ body {
     </div>
 </section>
 
+                  <!-- Botones de Filtro Operativo con tus estilos nativos -->
+<div style="text-align: center; margin: 25px 0;">
+  <button onclick="filtrarTestimonios('todos')" class="btn-filtro-titan" style="padding: 12px 20px; margin: 5px; cursor: pointer; font-family: inherit; font-weight: bold; border-radius: 5px; border: 1px solid #ffcc00; background-color: #1a1a1a; color: #ffcc00;">[ VER TODO ]</button>
+  <button onclick="filtrarTestimonios('tecnico')" class="btn-filtro-titan" style="padding: 12px 20px; margin: 5px; cursor: pointer; font-family: inherit; font-weight: bold; border-radius: 5px; border: 1px solid #ffcc00; background-color: #000; color: #fff;">📱 SERVICIO TÉCNICO</button>
+  <button onclick="filtrarTestimonios('fitness')" class="btn-filtro-titan" style="padding: 12px 20px; margin: 5px; cursor: pointer; font-family: inherit; font-weight: bold; border-radius: 5px; border: 1px solid #ffcc00; background-color: #000; color: #fff;">🏋️ ENTRENAMIENTO</button>
+</div>
+
+<!-- Contenedor con tus etiquetas de testimonios originales -->
+<div id="bloque-testimonios-operativo">
+  
+  <!-- Categoria Técnico -->
+  <div class="testimonio-item tecnico-test">
+    <p>"Mi celular estaba para botar y Yorvis lo dejó volando. ¡Recomendado!"</p>
+    <small>⭐ Yenni-M. - Bogotá</small>
+  </div>
+  
+  <div class="testimonio-item tecnico-test">
+    <p>"Mi teléfono estaba un poco dañado y Yorvis lo dejó muy veloz. ¡Recomendado!"</p>
+    <small>⭐ Denis-M. Havana C.</small>
+  </div>
+
+  <div class="testimonio-item tecnico-test">
+    <p>"Mi Huawei estaba muerto y en otros lados me decían que no tenía arreglo. Yorvis lo optimizó y ahora vuela. 100% honesto."</p>
+    <small>📢 Camilo R. (Chapinero)</small>
+  </div>
+
+  <!-- Categoria Fitness -->
+  <div class="testimonio-item fitness-test">
+    <p>"Empecé el entrenamiento funcional con el profe Yorvis y el cambio en mi resistencia ha sido brutal. Muy técnico y disciplinado."</p>
+    <small>🏋️ Leosdel T. (La Havana C.)</small>
+  </div>
+
+  <div class="testimonio-item fitness-test">
+    <p>"Estuve una semana completa entrenando con el entrenador Yorvis y él me ayudó a mejorar mi salud y mi resistencia."</p>
+    <small>🏋️ Nereida M. (Havana C.)</small>
+  </div>
+
+  <div class="testimonio-item fitness-test">
+    <p>"Es super genial ejercitarse con el entrenador Yorvis, él me ayudó a destacar y ser disciplinada..."</p>
+    <small>🏋️ Naydu V. (Bogotá D.C.)</small>
+  </div>
+</div>
+
+<!-- Script de interconexión directa -->
+<script>
+function filtrarTestimonios(categoria) {
+  const tecnicos = document.querySelectorAll('.tecnico-test');
+  const fitness = document.querySelectorAll('.fitness-test');
+  
+  if (categoria === 'todos') {
+    tecnicos.forEach(el => el.style.display = 'block');
+    fitness.forEach(el => el.style.display = 'block');
+  } else if (categoria === 'tecnico') {
+    tecnicos.forEach(el => el.style.display = 'block');
+    fitness.forEach(el => el.style.display = 'none');
+  } else if (categoria === 'fitness') {
+    tecnicos.forEach(el => el.style.display = 'none');
+    fitness.forEach(el => el.style.display = 'block');
+  }
+}
+</script>
+
+
+                  
                   <!-- SECCIÓN: TESTIMONIOS DE ÉLITE - YORVIS TECH -->
 <section style="padding: 40px 20px; background: #050505; font-family: 'Courier New', monospace;">
     <h2 style="text-align: center; color: #39FF14; font-size: 1.2em; letter-spacing: 2px;">💬 OPINIONES DEL SECTOR</h2>
