@@ -1486,6 +1486,51 @@ const firebaseConfig = {
       alert("ERROR DE CONEXIÓN: Verifica tu base de datos.");
     });
   }
+// SCRIPT DE UN NUEVO CONTADOR DE PEUEBA 
+   // contador-independiente.js
+function inicializarRelojRelampago() {
+    // Busca los contenedores nativos de tu web para horas, minutos y segundos
+    const contHoras = document.getElementById('horas'); // Cambia por el ID real de tu HTML
+    const contMinutos = document.getElementById('minutos');
+    const contSegundos = document.getElementById('segundos');
+
+    if (!contHoras) return; // Seguridad por si la etiqueta no carga a tiempo
+
+    function actualizarContador() {
+        const ahora = new Date();
+        
+        // ESTRATEGIA: El reloj vence al final del día actual (23:59:59) para crear urgencia constante
+        const finDeOferta = new Date();
+        finDeOferta.setHours(23, 59, 59, 999);
+
+        const tiempoRestante = finDeOferta - ahora;
+
+        if (tiempoRestante <= 0) {
+            // Si llega a cero, el script reinicia el ciclo automáticamente
+            contHoras.textContent = "00";
+            contMinutos.textContent = "00";
+            contSegundos.textContent = "00";
+            return;
+        }
+
+        // Conversión matemática exacta de milisegundos a formato horario
+        const horas = Math.floor((tiempoRestante / (1000 * 60 * 60)) % 24);
+        const minutos = Math.floor((tiempoRestante / 1000 / 60) % 60);
+        const segundos = Math.floor((tiempoRestante / 1000) % 60);
+
+        // Agrega un cero a la izquierda si el número es menor a 10 para no romper el diseño
+        contHoras.textContent = horas < 10 ? '0' + horas : horas;
+        contMinutos.textContent = minutos < 10 ? '0' + minutos : minutos;
+        contSegundos.textContent = segundos < 10 ? '0' + segundos : segundos;
+    }
+
+    // Ejecuta la función de inmediato y luego actualiza cada segundo
+    actualizarContador();
+    setInterval(actualizarContador, 1000);
+}
+
+// Llama la función cuando el documento HTML esté completamente renderizado
+document.addEventListener("DOMContentLoaded", inicializarRelojRelampago);
 
 
    </script> 
