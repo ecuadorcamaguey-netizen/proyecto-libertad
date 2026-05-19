@@ -858,6 +858,38 @@ body {
     </div>
 </section>
 
+                  <!-- CONTENEDOR DE PRUEBA: RELOJ RELÁMPAGO -->
+<div class="reloj-prueba-contenedor" style="text-align: center; background-color: #111; color: #fff; padding: 20px; border-radius: 8px; border: 1px solid #ffcc00; max-width: 300px; margin: 20px auto; font-family: sans-serif;">
+  <h4 style="color: #ffcc00; margin-top: 0; text-transform: uppercase; font-size: 14px; letter-spacing: 1px;">⏱️ Oferta de Prueba</h4>
+  
+  <div style="display: flex; justify-content: center; gap: 15px; font-size: 24px; font-weight: bold;">
+    <div>
+      <span id="horas-prueba">00</span>
+      <div style="font-size: 10px; color: #aaa; text-transform: uppercase;">Horas</div>
+    </div>
+    <div>:</div>
+    <div>
+      <span id="minutos-prueba">00</span>
+      <div style="font-size: 10px; color: #aaa; text-transform: uppercase;">Minutos</div>
+    </div>
+    <div>:</div>
+    <div>
+      <span id="segundos-prueba">00</span>
+      <div style="font-size: 10px; color: #aaa; text-transform: uppercase;">Segundos</div>
+    </div>
+  </div>
+</div>
+
+                 <!-- BOTÓN DE COMPRA VINCULADO AL RELOJ -->
+<div style="text-align: center; margin-top: 15px;">
+  <a id="boton-compra-prueba" href="https://tu-enlace-de-pago-nequi" style="display: inline-block; padding: 12px 25px; background-color: #ffcc00; color: #000; font-weight: bold; text-decoration: none; border-radius: 5px; text-transform: uppercase; font-family: sans-serif; transition: all 0.3s ease;">
+    🚀 Adquirir Servicio Ahora
+  </a>
+</div>
+ 
+
+                  
+                  
                   <section id="confianza" style="margin-top:50px; padding:20px; border: 1px solid #38bdf8; border-radius: 20px; background: rgba(0, 242, 255, 0.05);">
     <h2 style="color:#00f2ff;">⭐ Clientes Satisfechos</h2>
     
@@ -1486,53 +1518,62 @@ const firebaseConfig = {
       alert("ERROR DE CONEXIÓN: Verifica tu base de datos.");
     });
   }
-// SCRIPT DE UN NUEVO CONTADOR DE PEUEBA 
-   // contador-independiente.js
-function inicializarRelojRelampago() {
-    // Busca los contenedores nativos de tu web para horas, minutos y segundos
-    const contHoras = document.getElementById('horas'); // Cambia por el ID real de tu HTML
-    const contMinutos = document.getElementById('minutos');
-    const contSegundos = document.getElementById('segundos');
 
-    if (!contHoras) return; // Seguridad por si la etiqueta no carga a tiempo
+// script-reloj-prueba.js
+function probarRelojConBloqueo() {
+    const txtHoras = document.getElementById('horas-prueba');
+    const txtMinutos = document.getElementById('minutos-prueba');
+    const txtSegundos = document.getElementById('segundos-prueba');
+    const botonCompra = document.getElementById('boton-compra-prueba'); // Detecta tu botón
 
-    function actualizarContador() {
+    if (!txtHoras || !txtMinutos || !txtSegundos) return;
+
+    function ejecutarConteo() {
         const ahora = new Date();
+        const finDelDia = new Date();
         
-        // ESTRATEGIA: El reloj vence al final del día actual (23:59:59) para crear urgencia constante
-        const finDeOferta = new Date();
-        finDeOferta.setHours(23, 59, 59, 999);
+        // PARA LA PRUEBA EN VIVO: Si quieres ver cómo se agota ya mismo,
+        // pon una hora que ya pasó (ej. las 6 AM de hoy) o una que falte un minuto.
+        finDelDia.setHours(09, 00, 00, 999); 
 
-        const tiempoRestante = finDeOferta - ahora;
+        const diferencia = finDelDia - ahora;
 
-        if (tiempoRestante <= 0) {
-            // Si llega a cero, el script reinicia el ciclo automáticamente
-            contHoras.textContent = "00";
-            contMinutos.textContent = "00";
-            contSegundos.textContent = "00";
+        // ¡ACCIÓN CUANDO LLEGA A CERO!
+        if (diferencia <= 0) {
+            txtHoras.textContent = "00";
+            txtMinutos.textContent = "00";
+            txtSegundos.textContent = "00";
+            
+            // Si el botón existe en la página, lo transformamos en "Agotado"
+            if (botonCompra) {
+                botonCompra.textContent = "❌ OFERTA AGOTADA";
+                botonCompra.style.backgroundColor = "#444444"; // Color gris oscuro de bloqueado
+                botonCompra.style.color = "#888888"; // Texto gris claro
+                botonCompra.style.pointerEvents = "none"; // Desactiva por completo los clics
+                botonCompra.style.border = "1px solid #555";
+            }
             return;
         }
 
-        // Conversión matemática exacta de milisegundos a formato horario
-        const horas = Math.floor((tiempoRestante / (1000 * 60 * 60)) % 24);
-        const minutos = Math.floor((tiempoRestante / 1000 / 60) % 60);
-        const segundos = Math.floor((tiempoRestante / 1000) % 60);
+        // Si aún queda tiempo, calcula los números normalmente
+        const h = Math.floor((diferencia / (1000 * 60 * 60)) % 24);
+        const m = Math.floor((diferencia / 1000 / 60) % 60);
+        const s = Math.floor((diferencia / 1000) % 60);
 
-        // Agrega un cero a la izquierda si el número es menor a 10 para no romper el diseño
-        contHoras.textContent = horas < 10 ? '0' + horas : horas;
-        contMinutos.textContent = minutos < 10 ? '0' + minutos : minutos;
-        contSegundos.textContent = segundos < 10 ? '0' + segundos : segundos;
+        txtHoras.textContent = h < 10 ? '0' + h : h;
+        txtMinutos.textContent = m < 10 ? '0' + m : m;
+        txtSegundos.textContent = s < 10 ? '0' + s : s;
     }
 
-    // Ejecuta la función de inmediato y luego actualiza cada segundo
-    actualizarContador();
-    setInterval(actualizarContador, 1000);
+    ejecutarConteo();
+    setInterval(ejecutarConteo, 1000);
 }
 
-// Llama la función cuando el documento HTML esté completamente renderizado
-document.addEventListener("DOMContentLoaded", inicializarRelojRelampago);
+// Inicializa al cargar el documento
+document.addEventListener("DOMContentLoaded", probarRelojConBloqueo);
 
 
+   
    </script> 
                                  
                                 
