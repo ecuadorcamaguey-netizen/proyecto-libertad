@@ -1537,8 +1537,105 @@ function procesarArchivoTitan() {
 <!-- ESTILOS PARA EL ANUNCIO (Agrégalos a tu sección <style>) -->
 
 
+<!-- PANEL DE CONTROL ECOSTRATEGICO SOLANA (NTZN) -->
+<div class="panel-solana-titan" style="max-width: 500px; margin: 30px auto; padding: 25px; background-color: #080808; border: 2px solid #ffcc00; border-radius: 6px; font-family: inherit; color: #ffffff; box-shadow: 0px 0px 20px rgba(153, 50, 204, 0.2);">
+  
+  <h3 style="text-align: center; color: #ffcc00; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 5px;">
+    🪙 NÚCLEO BLOCKCHAIN SOLANA
+  </h3>
+  <p style="text-align: center; font-size: 12px; color: #9945FF; font-weight: bold; margin-bottom: 20px; text-transform: uppercase;">
+    Ecosistema Activo: Netizen Coin (NTZN)
+  </p>
+
+  <!-- Estado de la conexión -->
+  <div style="background: #111; padding: 15px; border-radius: 4px; border: 1px solid #222; text-align: center; margin-bottom: 20px;">
+    <p id="estado-wallet" style="color: #ff3333; font-weight: bold; margin: 0 0 10px 0; font-size: 14px;">
+      [ ESTADO: BILLETERA DESCONECTADA ]
+    </p>
+    <p id="direccion-wallet" style="color: #888; font-size: 11px; word-break: break-all; margin: 0; font-family: monospace; display: none;"></p>
+  </div>
+
+  <!-- Botón de Interacción Web3 -->
+  <button id="btn-conectar-solana" onclick="gestionarWalletSolana()" 
+          style="width: 100%; padding: 12px; background: linear-gradient(90deg, #9945FF 0%, #14F195 100%); color: #000000; border: none; border-radius: 4px; font-weight: bold; font-family: inherit; font-size: 15px; cursor: pointer; text-transform: uppercase; box-shadow: 0 4px 10px rgba(20, 241, 149, 0.2);">
+    CONECTAR PHANTOM / SOLFLARE WALLET ⚡
+  </button>
+
+  <!-- Datos del Token (Simulado / Lectura de Red) -->
+  <div id="datos-token-titan" style="margin-top: 20px; border-top: 1px dashed #333; padding-top: 15px; display: none;">
+    <table style="width: 100%; font-size: 13px; color: #ddd;">
+      <tr>
+        <td style="padding: 5px 0; color: #ffcc00;"><strong>ACTIVO DIGITAL:</strong></td>
+        <td style="text-align: right;">Netizen Coin (NTZN)</td>
+      </tr>
+      <tr>
+        <td style="padding: 5px 0; color: #ffcc00;"><strong>RED OPERATIVA:</strong></td>
+        <td style="text-align: right; color: #14F195;">Solana Mainnet</td>
+      </tr>
+      <tr>
+        <td style="padding: 5px 0; color: #ffcc00;"><strong>BALANCE ESTIMADO:</strong></td>
+        <td style="text-align: right; font-family: monospace;">0.00 NTZN</td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+                  <!-- Librería Oficial Web3 de Solana para Navegadores -->
+<script src="https://unpkg.com"></script>
+
+<script>
+let walletPublickKey = null;
+
+async function gestionarWalletSolana() {
+  // 1. Verificar si el usuario tiene una billetera instalada (Phantom, Solflare, etc.)
+  const proveedorWallet = window.solana || window.phantom?.solana;
+
+  if (!proveedorWallet) {
+    alert("🔐 SISTEMA: No se detectó ninguna billetera de Solana instalada. Instala la extensión de Phantom Wallet en tu navegador.");
+    window.open("https://phantom.app", "_blank");
+    return;
+  }
+
+  try {
+    // 2. Si ya está conectado, desconectar
+    if (walletPublickKey) {
+      await proveedorWallet.disconnect();
+      walletPublickKey = null;
+      
+      // Revertir interfaz al estado inicial
+      document.getElementById("estado-wallet").innerText = "[ ESTADO: BILLETERA DESCONECTADA ]";
+      document.getElementById("estado-wallet").style.color = "#ff3333";
+      document.getElementById("direccion-wallet").style.display = "none";
+      document.getElementById("datos-token-titan").style.display = "none";
+      document.getElementById("btn-conectar-solana").innerText = "CONECTAR PHANTOM / SOLFLARE WALLET ⚡";
+      return;
+    }
+
+    // 3. Solicitar conexión a la billetera
+    const respuesta = await proveedorWallet.connect();
+    walletPublickKey = respuesta.publicKey.toString();
+
+    // 4. Actualizar la interfaz con los datos tácticos de la red
+    document.getElementById("estado-wallet").innerText = "[ 🟢 BILLETERA ENLAZADA CON ÉXITO ]";
+    document.getElementById("estado-wallet").style.color = "#14F195";
+    
+    document.getElementById("direccion-wallet").innerText = "KEY: " + walletPublickKey;
+    document.getElementById("direccion-wallet").style.display = "block";
+    
+    document.getElementById("datos-token-titan").style.display = "block";
+    document.getElementById("btn-conectar-solana").innerText = "[ DESCONECTAR BILLETERA ]";
+
+  } catch (error) {
+    console.error("Fallo en la autenticación Web3:", error);
+    alert("⚠️ ERROR DE RED: El usuario canceló la firma digital de acceso.");
+  }
+}
+</script>
 
 
+
+                  
+                  
 <!-- SECCIÓN DE CONTRATACIÓN RÁPIDA -->
 <section id="pagos" style="text-align:center; padding: 30px; background: rgba(0, 242, 255, 0.05); border-radius: 20px; margin-top: 30px;">
     <h2 style="color:#00f2ff;">⚡ Contratar Ahora</h2>
