@@ -879,36 +879,61 @@ body {
     🚀 Adquirir Servicio Ahora
   </a>
 </div>
+                  
+                  <!-- BOTÓN DE PAGO NEQUI CONFIGURADO -->
+<div style="text-align: center; margin: 25px auto; max-width: 400px;">
+  <a href="https://nequi.com.co" target="_blank" class="btn-pago-titan" 
+     style="display: block; padding: 15px 20px; background-color: #ffcc00; color: #000000; text-decoration: none; font-family: inherit; font-weight: bold; font-size: 16px; border-radius: 6px; border: 2px solid #ffcc00; text-transform: uppercase; box-shadow: 0px 4px 15px rgba(255, 204, 0, 0.3); transition: transform 0.2s, background 0.2s;">
+    💳 PAGAR SERVICIO POR NEQUI 🚀
+  </a>
+  <span style="font-size: 11px; color: #888; display: block; margin-top: 5px; text-transform: uppercase;">
+    [ Conexión segura con pasarela Nequi Colombia ]
+  </span>
+</div>
 
-                 <script>
+
+
+                  <script>
 function iniciarContadoresDobles() {
-  // CONFIGURACIÓN: Horas de urgencia independientes para cada reloj
-  const HORAS_RELAMPAGO = 2; // Reloj de arriba durará 2 horas recursivas
-  const HORAS_PRUEBA = 24;   // Reloj de abajo durará 24 horas recursivas
-
-  // Capturar o inicializar marcas de tiempo en el navegador
-  let finRelampago = localStorage.getItem('titan_fin_relampago');
-  let finPrueba = localStorage.getItem('titan_fin_prueba');
+  const HORAS_RELAMPAGO = 2; // Tiempo para el reloj superior
+  const HORAS_PRUEBA = 24;   // Tiempo para el reloj inferior
 
   const ahoraInicial = new Date().getTime();
+
+  // Forzar limpieza si detecta errores previos congelados en el navegador
+  if (localStorage.getItem('titan_fin_relampago') && parseFloat(localStorage.getItem('titan_fin_relampago')) < ahoraInicial) {
+    localStorage.removeItem('titan_fin_relampago');
+  }
+  if (localStorage.getItem('titan_fin_prueba') && parseFloat(localStorage.getItem('titan_fin_prueba')) < ahoraInicial) {
+    localStorage.removeItem('titan_fin_prueba');
+  }
+
+  // Inicializar marcas de tiempo limpias desde este momento
+  let finRelampago = localStorage.getItem('titan_fin_relampago');
+  let finPrueba = localStorage.getItem('titan_fin_prueba');
 
   if (!finRelampago) {
     finRelampago = ahoraInicial + (HORAS_RELAMPAGO * 60 * 60 * 1000);
     localStorage.setItem('titan_fin_relampago', finRelampago);
+  } else {
+    finRelampago = parseFloat(finRelampago);
   }
+
   if (!finPrueba) {
     finPrueba = ahoraInicial + (HORAS_PRUEBA * 60 * 60 * 1000);
     localStorage.setItem('titan_fin_prueba', finPrueba);
+  } else {
+    finPrueba = parseFloat(finPrueba);
   }
 
-  // Bucle de actualización cada 1 segundo
+  // Ejecución en bucle continuo
   setInterval(function() {
     const ahora = new Date().getTime();
     
     let distRelampago = finRelampago - ahora;
     let distPrueba = finPrueba - ahora;
 
-    // Reinicios automáticos si expiran
+    // Si el tiempo expira, reinicia el ciclo automáticamente para el siguiente cliente
     if (distRelampago < 0) {
       finRelampago = new Date().getTime() + (HORAS_RELAMPAGO * 60 * 60 * 1000);
       localStorage.setItem('titan_fin_relampago', finRelampago);
@@ -920,35 +945,40 @@ function iniciarContadoresDobles() {
       distPrueba = finPrueba - ahora;
     }
 
-    // Desglose de tiempos: Oferta Relámpago
+    // Cálculos matemáticos del reloj digital
     let rh = Math.floor((distRelampago % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     let rm = Math.floor((distRelampago % (1000 * 60 * 60)) / (1000 * 60));
     let rs = Math.floor((distRelampago % (1000 * 60)) / 1000);
 
-    // Desglose de tiempos: Oferta de Prueba
     let ph = Math.floor((distPrueba % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     let pm = Math.floor((distPrueba % (1000 * 60 * 60)) / (1000 * 60));
     let ps = Math.floor((distPrueba % (1000 * 60)) / 1000);
 
-    // Formato con cero inicial si es menor a 10
+    // Formatear con un cero a la izquierda si el número es menor a 10
     rh = rh < 10 ? "0" + rh : rh; rm = rm < 10 ? "0" + rm : rm; rs = rs < 10 ? "0" + rs : rs;
     ph = ph < 10 ? "0" + ph : ph; pm = pm < 10 ? "0" + pm : pm; ps = ps < 10 ? "0" + ps : ps;
 
-    // Inyectar valores de forma exacta en el HTML
-    document.getElementById("relampago-h").innerText = rh;
-    document.getElementById("relampago-m").innerText = rm;
-    document.getElementById("relampago-s").innerText = rs;
+    // Pintar los números en los elementos correspondientes de tu HTML
+    if(document.getElementById("relampago-h")) {
+      document.getElementById("relampago-h").innerText = rh;
+      document.getElementById("relampago-m").innerText = rm;
+      document.getElementById("relampago-s").innerText = rs;
+    }
 
-    document.getElementById("prueba-h").innerText = ph;
-    document.getElementById("prueba-m").innerText = pm;
-    document.getElementById("prueba-s").innerText = ps;
+    if(document.getElementById("prueba-h")) {
+      document.getElementById("prueba-h").innerText = ph;
+      document.getElementById("prueba-m").innerText = pm;
+      document.getElementById("prueba-s").innerText = ps;
+    }
 
   }, 1000);
 }
 
-// Inicializar de forma segura al cargar la ventana
+// Carga limpia en el navegador del usuario
 window.addEventListener('load', iniciarContadoresDobles);
-</script>
+                  </script>
+                  
+    
  
 
                   <!---TESTIMONIOS DE LOS CLIENTES--->
