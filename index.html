@@ -1067,9 +1067,9 @@ function calcularMeta() {
         </div>
     </div>
 </section>
-
+                  
                   <!-- ========================================== -->
-<!-- NUEVA ÁREA PRIVADA EXCLUSIVA TITÁN-GUARD -->
+<!-- NUEVA ÁREA PRIVADA EXCLUSIVA TITÁN-GUARD CON CARGA LOCAL -->
 <!-- ========================================== -->
 <div class="area-privada-segura" style="max-width: 650px; margin: 40px auto; padding: 25px; background-color: #0b0b0b; border: 2px dashed #ffcc00; border-radius: 8px; font-family: inherit; color: #ffffff; box-shadow: 0px 0px 20px rgba(255, 204, 0, 0.1);">
   
@@ -1080,7 +1080,7 @@ function calcularMeta() {
     Sección restringida bajo protocolo de resguardo. Introduce tu credencial maestra.
   </p>
 
-  <!-- Formulario de Acceso (Interceptado por JS) -->
+  <!-- Formulario de Acceso -->
   <div id="bloque-bloqueo-titan" style="text-align: center; padding: 10px 0;">
     <input type="password" id="clave-maestra-titan" placeholder="Introduce la contraseña..." 
            style="padding: 10px; width: 60%; background-color: #000; border: 1px solid #ffcc00; color: #fff; text-align: center; font-family: inherit; border-radius: 4px; font-size: 16px;">
@@ -1098,15 +1098,27 @@ function calcularMeta() {
       📁 Expediente de Resguardo Activo
     </h4>
     
-    <!-- Aquí puedes mover tus textos confidenciales de Migración y Arraigo -->
     <div style="font-size: 14px; line-height: 1.6; color: #e0e0e0; margin-bottom: 15px;">
       <p><strong>ESTADO:</strong> OPERACIÓN LIBERTAD CONFIDENCIAL</p>
       <p><strong>CÓDIGO DE RESPALDO:</strong> TITÁN-RECARGA-2026-FINAL</p>
-      <hr style="border-color: #222;">
-      <p><em>Mueve aquí los datos confidenciales de tus trámites para que nadie en internet los pueda leer sin tu contraseña.</em></p>
     </div>
 
-    <!-- Botón simulación para cerrar sesión y volver a bloquear -->
+    <!-- SECCIÓN DE CARGA DE ARCHIVOS -->
+    <div style="border: 1px solid #333; padding: 15px; border-radius: 4px; background-color: #111; margin-bottom: 20px;">
+      <h5 style="color: #ffcc00; margin-top: 0; text-transform: uppercase;">⚡ CARGAR DOCUMENTACIÓN LOCAL</h5>
+      <p style="font-size: 12px; color: #888;">Sube un PDF o Imagen para visualizarlo temporalmente en tu panel estratégico seguro.</p>
+      
+      <input type="file" id="input-archivo-titan" accept="image/*,application/pdf" onchange="procesarArchivoTitan()"
+             style="width: 100%; color: #fff; background: #000; padding: 8px; border: 1px solid #444; border-radius: 4px; font-family: inherit; box-sizing: border-box; cursor: pointer;">
+      
+      <!-- Visor de documentos cargados -->
+      <div id="visor-archivo-titan" style="margin-top: 15px; text-align: center; display: none; border: 1px solid #ffcc00; padding: 10px; border-radius: 4px; background: #000;">
+        <p style="color: #ffcc00; font-size: 12px; font-weight: bold; margin-bottom: 10px;">[ ARCHIVO DESBLOQUEADO EN PANTALLA ]</p>
+        <div id="preview-contenedor"></div>
+      </div>
+    </div>
+
+    <!-- Botón para cerrar sesión y volver a bloquear -->
     <button onclick="bloquearBovedaTitan()" 
             style="padding: 5px 15px; background-color: #333; color: #fff; border: 1px solid #555; cursor: pointer; font-family: inherit; font-size: 12px; border-radius: 4px;">
       [ CERRAR SESIÓN PRIVADA ]
@@ -1115,37 +1127,73 @@ function calcularMeta() {
 
 </div>
 
-<!-- SCRIPT DE CONTROL OPERATIVO -->
+<!-- SCRIPT DE CONTROL OPERATIVO COMPLETO -->
 <script>
 function desbloquearBovedaTitan() {
   const claveIngresada = document.getElementById('clave-maestra-titan').value;
-  const claveCorrecta = "TITAN2026"; // <-- AQUÍ CAMBIA TU CONTRASEÑA
+  const claveCorrecta = "TITAN2026"; // <-- CAMBIA TU CONTRASEÑA AQUÍ
   
   const bloqueBloqueo = document.getElementById('bloque-bloqueo-titan');
   const contenidoOculto = document.getElementById('contenido-oculto-titan');
   const mensajeError = document.getElementById('error-boveda-titan');
 
   if (claveIngresada === claveCorrecta) {
-    // Éxito: Oculta el campo de contraseña y muestra la información privada
     bloqueBloqueo.style.display = 'none';
     contenidoOculto.style.display = 'block';
     mensajeError.style.display = 'none';
   } else {
-    // Error: Muestra mensaje de fallo
     mensajeError.style.display = 'block';
   }
 }
 
 function bloquearBovedaTitan() {
-  // Función para volver a bloquear el panel si se requiere
   document.getElementById('bloque-bloqueo-titan').style.display = 'block';
   document.getElementById('contenido-oculto-titan').style.display = 'none';
   document.getElementById('clave-maestra-titan').value = '';
+  // Limpiar el visor al cerrar sesión por seguridad
+  document.getElementById('visor-archivo-titan').style.display = 'none';
+  document.getElementById('preview-contenedor').innerHTML = '';
+  document.getElementById('input-archivo-titan').value = '';
+}
+
+function procesarArchivoTitan() {
+  const fileInput = document.getElementById('input-archivo-titan');
+  const visor = document.getElementById('visor-archivo-titan');
+  const contenedor = document.getElementById('preview-contenedor');
+  
+  const file = fileInput.files[0];
+  
+  if (file) {
+    visor.style.display = 'block';
+    contenedor.innerHTML = ''; // Limpiar previo
+    
+    const fileReader = new FileReader();
+    
+    fileReader.onload = function(e) {
+      if (file.type.match('image.*')) {
+        // Si es imagen, la dibuja directamente
+        const img = document.createElement('img');
+        img.src = e.target.result;
+        img.style.maxWidth = '100%';
+        img.style.maxHeight = '400px';
+        img.style.border = '1px solid #333';
+        contenedor.appendChild(img);
+      } else if (file.type === 'application/pdf') {
+        // Si es PDF, genera un objeto incrustado responsivo
+        const embed = document.createElement('embed');
+        embed.src = e.target.result;
+        embed.type = 'application/pdf';
+        embed.style.width = '100%';
+        embed.style.height = '400px';
+        contenedor.appendChild(embed);
+      }
+    };
+    
+    fileReader.readAsDataURL(file);
+  }
 }
 </script>
 
-
- 
 
                          <!-- sección de servicios  -->
                          <section id="servicios" style="margin-top:40px;">
