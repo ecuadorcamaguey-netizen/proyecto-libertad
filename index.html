@@ -1068,6 +1068,83 @@ function calcularMeta() {
     </div>
 </section>
 
+                  <!-- ========================================== -->
+<!-- NUEVA ÁREA PRIVADA EXCLUSIVA TITÁN-GUARD -->
+<!-- ========================================== -->
+<div class="area-privada-segura" style="max-width: 650px; margin: 40px auto; padding: 25px; background-color: #0b0b0b; border: 2px dashed #ffcc00; border-radius: 8px; font-family: inherit; color: #ffffff; box-shadow: 0px 0px 20px rgba(255, 204, 0, 0.1);">
+  
+  <h3 style="text-align: center; color: #ffcc00; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 15px;">
+    🔒 BOVEDA DE SEGURIDAD [TITÁN-GUARD]
+  </h3>
+  <p style="text-align: center; font-size: 14px; color: #aaaaaa; margin-bottom: 20px;">
+    Sección restringida bajo protocolo de resguardo. Introduce tu credencial maestra.
+  </p>
+
+  <!-- Formulario de Acceso (Interceptado por JS) -->
+  <div id="bloque-bloqueo-titan" style="text-align: center; padding: 10px 0;">
+    <input type="password" id="clave-maestra-titan" placeholder="Introduce la contraseña..." 
+           style="padding: 10px; width: 60%; background-color: #000; border: 1px solid #ffcc00; color: #fff; text-align: center; font-family: inherit; border-radius: 4px; font-size: 16px;">
+    <br><br>
+    <button onclick="desbloquearBovedaTitan()" 
+            style="padding: 10px 25px; background-color: #ffcc00; color: #000; border: none; font-weight: bold; cursor: pointer; text-transform: uppercase; border-radius: 4px; font-family: inherit;">
+      ACCEDER AL EXPEDIENTE ⚡
+    </button>
+    <p id="error-boveda-titan" style="color: #ff3333; font-weight: bold; margin-top: 15px; display: none;">[ ERROR: CREDENCIAL INVÁLIDA ]</p>
+  </div>
+
+  <!-- CONTENIDO PRIVADO (Oculto por defecto con display: none) -->
+  <div id="contenido-oculto-titan" style="display: none; border-top: 1px solid #333; margin-top: 20px; padding-top: 20px; background-color: #000000; padding: 15px; border-radius: 4px;">
+    <h4 style="color: #ffcc00; border-bottom: 1px solid #ffcc00; padding-bottom: 5px; text-transform: uppercase;">
+      📁 Expediente de Resguardo Activo
+    </h4>
+    
+    <!-- Aquí puedes mover tus textos confidenciales de Migración y Arraigo -->
+    <div style="font-size: 14px; line-height: 1.6; color: #e0e0e0; margin-bottom: 15px;">
+      <p><strong>ESTADO:</strong> OPERACIÓN LIBERTAD CONFIDENCIAL</p>
+      <p><strong>CÓDIGO DE RESPALDO:</strong> TITÁN-RECARGA-2026-FINAL</p>
+      <hr style="border-color: #222;">
+      <p><em>Mueve aquí los datos confidenciales de tus trámites para que nadie en internet los pueda leer sin tu contraseña.</em></p>
+    </div>
+
+    <!-- Botón simulación para cerrar sesión y volver a bloquear -->
+    <button onclick="bloquearBovedaTitan()" 
+            style="padding: 5px 15px; background-color: #333; color: #fff; border: 1px solid #555; cursor: pointer; font-family: inherit; font-size: 12px; border-radius: 4px;">
+      [ CERRAR SESIÓN PRIVADA ]
+    </button>
+  </div>
+
+</div>
+
+<!-- SCRIPT DE CONTROL OPERATIVO -->
+<script>
+function desbloquearBovedaTitan() {
+  const claveIngresada = document.getElementById('clave-maestra-titan').value;
+  const claveCorrecta = "TITAN2026"; // <-- AQUÍ CAMBIA TU CONTRASEÑA
+  
+  const bloqueBloqueo = document.getElementById('bloque-bloqueo-titan');
+  const contenidoOculto = document.getElementById('contenido-oculto-titan');
+  const mensajeError = document.getElementById('error-boveda-titan');
+
+  if (claveIngresada === claveCorrecta) {
+    // Éxito: Oculta el campo de contraseña y muestra la información privada
+    bloqueBloqueo.style.display = 'none';
+    contenidoOculto.style.display = 'block';
+    mensajeError.style.display = 'none';
+  } else {
+    // Error: Muestra mensaje de fallo
+    mensajeError.style.display = 'block';
+  }
+}
+
+function bloquearBovedaTitan() {
+  // Función para volver a bloquear el panel si se requiere
+  document.getElementById('bloque-bloqueo-titan').style.display = 'block';
+  document.getElementById('contenido-oculto-titan').style.display = 'none';
+  document.getElementById('clave-maestra-titan').value = '';
+}
+</script>
+
+
  
 
                          <!-- sección de servicios  -->
