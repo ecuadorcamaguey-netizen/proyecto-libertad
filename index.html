@@ -753,6 +753,20 @@ body {
   <span style="color: #444;">|</span>
   <button onclick="cambiarIdioma('en')" style="background: none; border: none; color: #888888; font-family: inherit; font-weight: bold; cursor: pointer; padding: 2px 5px; font-size: 12px;" id="btn-lang-en">[ EN ]</button>
 </div>
+
+<!---TITULO DE LA PAGINA PARA CAMBIAR--->
+                   <header>
+                      <h1 class="animado" onclick="this.clicks = (this.clicks || 0) + 1; if(this.clicks === 5) { reiniciarReloj(); }">
+    PROYECTO LIBERTAD 2026
+</h1>
+
+                        
+                        <p>Código Activo: TITÁN-RECARGA</p>
+                         
+                      </header>
+                             <header style="text-align:center; margin-bottom: 30px;"> <h1 class="titulo-yorvis">YORVIS TECH - PROYECTO LIBERTAD</h1> <div class="linea-neon"></div>
+                         </header>
+                  
                   <!-- COMPONENTE DE DONACIONES TRADUCIBLE -->
 <div class="donaciones-verde-container" style="max-width: 550px; margin: 40px auto; padding: 25px; background-color: #000000; border: 2px solid #14F195; border-radius: 6px; font-family: inherit; color: #ffffff;">
   
@@ -826,23 +840,9 @@ window.addEventListener('load', () => {
   const idiomaGuardado = localStorage.getItem('titan_idioma_pref') || 'es';
   cambiarIdioma(idiomaGuardado);
 });
-</script>
-
+           </script>  
 
                   
-
-                  <!---TITULO DE LA PAGINA PARA CAMBIAR--->
-                   <header>
-                      <h1 class="animado" onclick="this.clicks = (this.clicks || 0) + 1; if(this.clicks === 5) { reiniciarReloj(); }">
-    PROYECTO LIBERTAD 2026
-</h1>
-
-                        
-                        <p>Código Activo: TITÁN-RECARGA</p>
-                         
-                      </header>
-                             <header style="text-align:center; margin-bottom: 30px;"> <h1 class="titulo-yorvis">YORVIS TECH - PROYECTO LIBERTAD</h1> <div class="linea-neon"></div>
-                         </header>
                   <!-- BLOQUE DE OFERTA RELÁMPAGO YORVIS TECH -->
 <div id="promo-banner" style="background: #000; color: #39FF14; border: 2px solid #39FF14; padding: 15px; text-align: center; font-family: 'Courier New', Courier, monospace; margin: 20px; border-radius: 10px; box-shadow: 0 0 15px #39FF14;">
     <h3 style="margin: 0; font-size: 1.2em;">⚠️ OFERTA RELÁMPAGO: OPTIMIZACIÓN ANDROID 🚀</h3>
