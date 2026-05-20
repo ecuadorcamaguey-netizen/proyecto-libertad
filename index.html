@@ -747,6 +747,13 @@ body {
     <span class="letra-n">N</span>
   </div>
 </div>
+                  <!-- SELECTOR DE IDIOMAS TRILINGÜE TÁCTICO -->
+<div class="language-selector-titan" style="position: fixed; top: 15px; right: 15px; z-index: 10000; background-color: #000000; border: 1px solid #14F195; padding: 5px 10px; border-radius: 4px; box-shadow: 0px 0px 10px rgba(20, 241, 149, 0.3);">
+  <button onclick="cambiarIdioma('es')" style="background: none; border: none; color: #14F195; font-family: inherit; font-weight: bold; cursor: pointer; padding: 2px 5px; font-size: 12px;">[ ES ]</button>
+  <span style="color: #444;">|</span>
+  <button onclick="cambiarIdioma('en')" style="background: none; border: none; color: #888888; font-family: inherit; font-weight: bold; cursor: pointer; padding: 2px 5px; font-size: 12px;" id="btn-lang-en">[ EN ]</button>
+</div>
+
                   
                    <header>
                       <h1 class="animado" onclick="this.clicks = (this.clicks || 0) + 1; if(this.clicks === 5) { reiniciarReloj(); }">
