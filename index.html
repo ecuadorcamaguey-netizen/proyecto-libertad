@@ -1390,7 +1390,32 @@ function calcularMeta() {
   </div>
                   </div>
                   
-                  
+                  <section id="seccion-titan-guard">
+  <h2>🔒 BÓVEDA DE SEGURIDAD [TITÁN-GUARD]</h2>
+  
+  <!-- Formulario de ingreso (Se oculta al desbloquear) -->
+  <div id="formulario-bloqueado">
+    <p>Sección restringida bajo protocolo de resguardo. Introduce tu credencial maestra.</p>
+    <input type="password" id="input-credencial" placeholder="Introduce credencial...">
+    <button id="btn-acceder-boveda">ACCEDER AL EXPEDIENTE ⚡</button>
+    
+    <!-- Mensaje de error (Inicialmente oculto o vacío) -->
+    <div id="mensaje-error-boveda" style="color: #ff3333; margin-top: 10px; display: none;">
+      ⚡ [ ERROR: CREDENCIAL INVÁLIDA ]
+    </div>
+  </div>
+
+  <!-- Contenido protegido (Inicialmente oculto con CSS: display: none) -->
+  <div id="expediente-protegido" style="display: none; border-top: 2px dashed #00ff00; padding-top: 15px;">
+    <h4>📁 Expediente de Resguardo Activo</h4>
+    <p><strong>ESTADO:</strong> OPERACIÓN LIBERTAD CONFIDENCIAL</p>
+    <p><strong>CÓDIGO DE RESPALDO:</strong> TITÁN-RECARGA-2026-FINAL</p>
+    
+    <!-- Aquí van tus botones de cargar documentación local o ver PDF -->
+    <button id="btn-cerrar-boveda">[ CERRAR SESIÓN PRIVADA ]</button>
+  </div>
+</section>
+
                   
                   <!-- ========================================== -->
 <!-- NUEVA ÁREA PRIVADA EXCLUSIVA TITÁN-GUARD CON CARGA LOCAL -->
@@ -1498,6 +1523,7 @@ function procesarArchivoTitan() {
 }
 </script>
 
+                  
 
                          <!-- sección de servicios  -->
                          <section id="servicios" style="margin-top:40px;">
