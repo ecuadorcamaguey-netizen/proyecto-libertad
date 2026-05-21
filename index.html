@@ -1389,6 +1389,83 @@ function calcularMeta() {
     </div>
   </div>
                   </div>
+                  <!---visualizacion de prueba de boveda--->
+                  <section id="seccion-titan-guard">
+  <h2>🔒 BÓVEDA DE SEGURIDAD [TITÁN-GUARD]</h2>
+  
+  <!-- Formulario de ingreso (Se oculta al desbloquear) -->
+  <div id="formulario-bloqueado">
+    <p>Sección restringida bajo protocolo de resguardo. Introduce tu credencial maestra.</p>
+    <input type="password" id="input-credencial" placeholder="Introduce credencial...">
+    <button id="btn-acceder-boveda">ACCEDER AL EXPEDIENTE ⚡</button>
+    
+    <!-- Mensaje de error (Inicialmente oculto o vacío) -->
+    <div id="mensaje-error-boveda" style="color: #ff3333; margin-top: 10px; display: none;">
+      ⚡ [ ERROR: CREDENCIAL INVÁLIDA ]
+    </div>
+  </div>
+
+  <!-- Contenido protegido (Inicialmente oculto con CSS: display: none) -->
+  <div id="expediente-protegido" style="display: none; border-top: 2px dashed #00ff00; padding-top: 15px;">
+    <h4>📁 Expediente de Resguardo Activo</h4>
+    <p><strong>ESTADO:</strong> OPERACIÓN LIBERTAD CONFIDENCIAL</p>
+    <p><strong>CÓDIGO DE RESPALDO:</strong> TITÁN-RECARGA-2026-FINAL</p>
+    
+    <!-- Aquí van tus botones de cargar documentación local o ver PDF -->
+    <button id="btn-cerrar-boveda">[ CERRAR SESIÓN PRIVADA ]</button>
+  </div>
+</section>
+                  
+<!---Visualizaciom de boveda en script--->
+                  <script>
+                  document.addEventListener('DOMContentLoaded', () => {
+    const btnAcceder = document.getElementById('btn-acceder-boveda');
+    const btnCerrar = document.getElementById('btn-cerrar-boveda');
+    const inputCredencial = document.getElementById('input-credencial');
+    const mensajeError = document.getElementById('mensaje-error-boveda');
+    const formularioBloqueado = document.getElementById('formulario-bloqueado');
+    const expedienteProtegido = document.getElementById('expediente-protegido');
+
+    // Clave maestra definida en tus protocolos
+    const CREDENCIAL_CORRECTA = 'TITÁN-RECARGA';
+
+    // Evento para validar la contraseña
+    btnAcceder.addEventListener('click', () => {
+        const valorIngresado = inputCredencial.value.trim();
+
+        // Limpieza previa del mensaje de error para evitar efectos duplicados
+        mensajeError.style.display = 'none';
+
+        if (valorIngresado === CREDENCIAL_CORRECTA) {
+            // ¡Acceso concedido! Efecto dinámico de desbloqueo
+            formularioBloqueado.style.display = 'none';
+            expedienteProtegido.style.display = 'block';
+            
+            // Limpiamos el campo de texto por seguridad
+            inputCredencial.value = ''; 
+        } else {
+            // Acceso denegado: Muestra la alerta roja dinámica
+            mensajeError.style.display = 'block';
+            inputCredencial.value = '';
+            inputCredencial.focus();
+        }
+    });
+
+    // Permitir presionar 'Enter' en el input para ingresar rápido
+    inputCredencial.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            btnAcceder.click();
+        }
+    });
+
+    // Evento para volver a bloquear (Cerrar Sesión Privada)
+    btnCerrar.addEventListener('click', () => {
+        expedienteProtegido.style.display = 'none';
+        formularioBloqueado.style.display = 'block';
+        mensajeError.style.display = 'none';
+    });
+});
+                  </script>
                   
                   
                   <!-- ========================================== -->
