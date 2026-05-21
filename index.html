@@ -1881,8 +1881,9 @@ async function gestionarWalletSolana() {
 </section>
 
 
-                        
-                          <main> <!-- SECCIÓN DE ALGORITMO -->
+                        <!---CALCULADORA DE ALGORITMO--->
+                          <main>
+                             
                            <section id="algoritmo">
                                
                                 <h2>Calculadora de Trámites (Algoritmo)</h2>
@@ -1891,6 +1892,33 @@ async function gestionarWalletSolana() {
                                               <p id="resultado"></p> 
                   </section> 
                   </main>
+                  
+                  <!---NUEVO GENERADOR DE ALGORITMOS--->
+                  <section class="panel-titan">
+  <h2>📊 ALGORITMO GENERADOR DE FLUJO</h2>
+  <p>Calcula la meta para el fondo de reserva de $1.200.000 COP para la formalización definitiva.</p>
+
+  <div class="grid-tactico">
+    <!-- Bloque de Proyección -->
+    <div class="tarjeta-tactica" style="text-align: center;">
+      <h3>PROYECCIÓN DE CAPITAL</h3>
+      <div style="font-size: 24px; font-weight: bold; margin: 15px 0; color: var(--neon-green); text-shadow: 0 0 10px var(--neon-green);">
+        $0 COP
+      </div>
+      <button class="btn-neon">EJECUTAR CÁLCULO _</button>
+    </div>
+
+    <!-- Bloque de Validación -->
+    <div class="tarjeta-tactica" style="text-align: center;">
+      <h3>CALCULADORA DE TRÁMITES</h3>
+      <p>Verificación de estatus y procesamiento bajo protocolo de resguardo.</p>
+      <button class="btn-neon" style="border-color: #ffcc00; color: #ffcc00; box-shadow: 0 0 5px rgba(255,204,0,0.3);">
+        VALIDAR FONDOS 🔐
+      </button>
+    </div>
+  </div>
+</section>
+
 
 
 <!-- ========================================== -->
@@ -2048,6 +2076,7 @@ setInterval(updateTimer, 1000);
                                                
                          
     <script>
+       //ALGORITMO PARA CALCULAR
               //1. Esta es la función que pides con el botón
 function iniciarProceso() {
     let clave = prompt("🔐 Ingrese Clave de Seguridad TITÁN:");
