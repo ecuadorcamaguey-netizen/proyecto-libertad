@@ -727,7 +727,103 @@ body {
     margin: 10px 0;
     font-family: monospace;
 }
+                 
 
+/*Pueva de estilos de nuevo estado*/
+                 
+                 /* ==========================================
+   OPTIMIZACIÓN ESTILO TÁCTICO NEÓN (TITÁN)
+   ========================================== */
+
+:root {
+  --neon-green: #00ff66;
+  --neon-glow: rgba(0, 255, 102, 0.4);
+  --dark-bg: #0a0f0d;
+  --panel-bg: rgba(16, 24, 20, 0.85);
+  --alert-red: #ff3333;
+  --alert-glow: rgba(255, 51, 51, 0.4);
+  --terminal-font: 'Courier New', Courier, monospace;
+}
+
+/* Contenedor General del Panel */
+.panel-titan {
+  background-color: var(--dark-bg);
+  font-family: var(--terminal-font);
+  color: var(--neon-green);
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid var(--neon-green);
+  box-shadow: 0 0 15px var(--neon-glow);
+  max-width: 100%;
+  margin: 20px auto;
+}
+
+/* Rejilla Responsiva para las Tarjetas del Panel */
+.grid-tactico {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+/* Tarjetas Individuales (Fuerza, Algoritmos, etc.) */
+.tarjeta-tactica {
+  background: var(--panel-bg);
+  border: 1px solid rgba(0, 255, 102, 0.3);
+  padding: 15px;
+  border-radius: 4px;
+  flex: 1 1 calc(50% - 20px); /* 2 columnas en PC, se adapta en móvil */
+  min-width: 280px;
+  transition: all 0.3s ease;
+}
+
+.tarjeta-tactica:hover {
+  border-color: var(--neon-green);
+  box-shadow: 0 0 10px var(--neon-glow);
+  transform: translateY(-2px);
+}
+
+/* Botones con Efecto Matriz Interactivos */
+.btn-neon {
+  background: transparent;
+  border: 1px solid var(--neon-green);
+  color: var(--neon-green);
+  font-family: var(--terminal-font);
+  font-weight: bold;
+  padding: 10px 20px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.btn-neon:hover {
+  background: var(--neon-green);
+  color: var(--dark-bg);
+  box-shadow: 0 0 15px var(--neon-green);
+}
+
+/* Alertas de Error (Bóveda / Credencial Inválida) */
+.alerta-error {
+  background: rgba(255, 51, 51, 0.1);
+  border: 1px solid var(--alert-red);
+  color: var(--alert-red);
+  padding: 12px;
+  border-radius: 4px;
+  font-weight: bold;
+  text-shadow: 0 0 5px var(--alert-glow);
+  box-shadow: inset 0 0 10px rgba(255, 51, 51, 0.2);
+  animation: parpadeo 2s infinite alternate;
+}
+
+/* Animación de Parpadeo Táctico para Errores */
+@keyframes parpadeo {
+  0% { opacity: 0.8; }
+  100% { opacity: 1; border-color: rgba(255, 51, 51, 0.6); }
+}
 
 
 
@@ -1244,6 +1340,24 @@ function calcularMeta() {
         </div>
     </div>
 </section>
+                  <!---PRUEBA DE BOVEDA DE SEGURIDAD--->
+                  <div class="panel-titan">
+  <h2>🔒 BÓVEDA DE SEGURIDAD [TITÁN-GUARD]</h2>
+  
+  <!-- Alerta optimizada con el estilo rojo neón de advertencia -->
+  <div class="alerta-error">
+    ⚡ [ ERROR: CREDENCIAL INVÁLIDA ]
+  </div>
+  
+  <div class="grid-tactico">
+    <div class="tarjeta-tactica">
+      <h3>📁 Expediente de Resguardo Activo</h3>
+      <p><strong>ESTADO:</strong> OPERACIÓN LIBERTAD CONFIDENCIAL</p>
+      <button class="btn-neon">ACCEDER AL EXPEDIENTE ⚡</button>
+    </div>
+  </div>
+                  </div>
+                  
                   
                   <!-- ========================================== -->
 <!-- NUEVA ÁREA PRIVADA EXCLUSIVA TITÁN-GUARD CON CARGA LOCAL -->
