@@ -1389,108 +1389,12 @@ function calcularMeta() {
     </div>
   </div>
                   </div>
-                  <!---visualizacion de prueba de boveda--->
-                  <section id="seccion-titan-guard">
-  <h2>🔒 BÓVEDA DE SEGURIDAD [TITÁN-GUARD]</h2>
-  
-  <!-- Formulario de ingreso (Se oculta al desbloquear) -->
-  <div id="formulario-bloqueado">
-    <p>Sección restringida bajo protocolo de resguardo. Introduce tu credencial maestra.</p>
-    <input type="password" id="input-credencial" placeholder="Introduce credencial...">
-    <button id="btn-acceder-boveda">ACCEDER AL EXPEDIENTE ⚡</button>
-    
-    <!-- Mensaje de error (Inicialmente oculto o vacío) -->
-    <div id="mensaje-error-boveda" style="color: #ff3333; margin-top: 10px; display: none;">
-      ⚡ [ ERROR: CREDENCIAL INVÁLIDA ]
-    </div>
-  </div>
-
-  <!-- Contenido protegido (Inicialmente oculto con CSS: display: none) -->
-  <div id="expediente-protegido" style="display: none; border-top: 2px dashed #00ff00; padding-top: 15px;">
-    <h4>📁 Expediente de Resguardo Activo</h4>
-    <p><strong>ESTADO:</strong> OPERACIÓN LIBERTAD CONFIDENCIAL</p>
-    <p><strong>CÓDIGO DE RESPALDO:</strong> TITÁN-RECARGA-2026-FINAL</p>
-    
-    <!-- Aquí van tus botones de cargar documentación local o ver PDF -->
-    <button id="btn-cerrar-boveda">[ CERRAR SESIÓN PRIVADA ]</button>
-  </div>
-</section>
                   
-<!---Visualizaciom de boveda en script--->
-                  <script>
-                  document.addEventListener('DOMContentLoaded', () => {
-    const btnAcceder = document.getElementById('btn-acceder-boveda');
-    const btnCerrar = document.getElementById('btn-cerrar-boveda');
-    const inputCredencial = document.getElementById('input-credencial');
-    const mensajeError = document.getElementById('mensaje-error-boveda');
-    const formularioBloqueado = document.getElementById('formulario-bloqueado');
-    const expedienteProtegido = document.getElementById('expediente-protegido');
-
-    // Clave maestra definida en tus protocolos
-    const CREDENCIAL_CORRECTA = 'TITÁN-RECARGA';
-
-    // Evento para validar la contraseña
-    btnAcceder.addEventListener('click', () => {
-        const valorIngresado = inputCredencial.value.trim();
-
-        // Limpieza previa del mensaje de error para evitar efectos duplicados
-        mensajeError.style.display = 'none';
-
-        if (valorIngresado === CREDENCIAL_CORRECTA) {
-            // ¡Acceso concedido! Efecto dinámico de desbloqueo
-            formularioBloqueado.style.display = 'none';
-            expedienteProtegido.style.display = 'block';
-            
-            // Limpiamos el campo de texto por seguridad
-            inputCredencial.value = ''; 
-        } else {
-            // Acceso denegado: Muestra la alerta roja dinámica
-            mensajeError.style.display = 'block';
-            inputCredencial.value = '';
-            inputCredencial.focus();
-        }
-    });
-
-    // Permitir presionar 'Enter' en el input para ingresar rápido
-    inputCredencial.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-            btnAcceder.click();
-        }
-    });
-
-    // Evento para volver a bloquear (Cerrar Sesión Privada)
-    btnCerrar.addEventListener('click', () => {
-        expedienteProtegido.style.display = 'none';
-        formularioBloqueado.style.display = 'block';
-        mensajeError.style.display = 'none';
-    });
-});
-                  </script>
                   
                   
                   <!-- ========================================== -->
 <!-- NUEVA ÁREA PRIVADA EXCLUSIVA TITÁN-GUARD CON CARGA LOCAL -->
 <!-- ========================================== -->
-<div class="area-privada-segura" style="max-width: 650px; margin: 40px auto; padding: 25px; background-color: #0b0b0b; border: 2px dashed #ffcc00; border-radius: 8px; font-family: inherit; color: #ffffff; box-shadow: 0px 0px 20px rgba(255, 204, 0, 0.1);">
-  
-  <h3 style="text-align: center; color: #ffcc00; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 15px;">
-    🔒 BOVEDA DE SEGURIDAD [TITÁN-GUARD]
-  </h3>
-  <p style="text-align: center; font-size: 14px; color: #aaaaaa; margin-bottom: 20px;">
-    Sección restringida bajo protocolo de resguardo. Introduce tu credencial maestra.
-  </p>
-
-  <!-- Formulario de Acceso -->
-  <div id="bloque-bloqueo-titan" style="text-align: center; padding: 10px 0;">
-    <input type="password" id="clave-maestra-titan" placeholder="Introduce la contraseña..." 
-           style="padding: 10px; width: 60%; background-color: #000; border: 1px solid #ffcc00; color: #fff; text-align: center; font-family: inherit; border-radius: 4px; font-size: 16px;">
-    <br><br>
-    <button onclick="desbloquearBovedaTitan()" 
-            style="padding: 10px 25px; background-color: #ffcc00; color: #000; border: none; font-weight: bold; cursor: pointer; text-transform: uppercase; border-radius: 4px; font-family: inherit;">
-      ACCEDER AL EXPEDIENTE ⚡
-    </button>
-    <p id="error-boveda-titan" style="color: #ff3333; font-weight: bold; margin-top: 15px; display: none;">[ ERROR: CREDENCIAL INVÁLIDA ]</p>
-  </div>
 
   <!-- CONTENIDO PRIVADO (Oculto por defecto con display: none) -->
   <div id="contenido-oculto-titan" style="display: none; border-top: 1px solid #333; margin-top: 20px; padding-top: 20px; background-color: #000000; padding: 15px; border-radius: 4px;">
