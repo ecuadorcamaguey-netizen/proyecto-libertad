@@ -2310,7 +2310,59 @@ document.addEventListener("DOMContentLoaded", probarRelojConBloqueo);
    
    </script> 
                                  
-                                
+               <!---SCRIPT DE ALGORITMO DE FLUJO Y DE EJECUCIÓN DE CALCULOS DE FONDOS--->
+                  <script>
+document.addEventListener("DOMContentLoaded", () => {
+    // 1. Vinculamos los elementos del DOM basándonos en tu diseño táctico
+    const btnCalcular = document.querySelector(".tarjeta-tactica:nth-of-type(1) .btn-neon");
+    const displayCapital = document.querySelector(".tarjeta-tactica:nth-of-type(1) div");
+    
+    // Si tus elementos tienen IDs o clases específicas, puedes cambiarlos aquí abajo:
+    // Ejemplo alternativo: const btnCalcular = document.getElementById("btn-calcular");
+
+    if (btnCalcular && displayCapital) {
+        btnCalcular.addEventListener("click", () => {
+            // Deshabilitamos el botón temporalmente para evitar múltiples clics
+            btnCalcular.disabled = true;
+            btnCalcular.innerText = "PROCESANDO ALGORITMO... ⏳";
+            btnCalcular.style.borderColor = "#ffcc00";
+            btnCalcular.style.color = "#ffcc00";
+
+            let capitalActual = 0;
+            const metaFondo = 1200000; // Meta: $1,200,000 COP
+            const duracionAnimacion = 2000; // 2 segundos de carga visual
+            const intervaloTiempo = 30; // Se actualiza cada 30 milisegundos
+            const pasos Totales = duracionAnimacion / intervaloTiempo;
+            const incrementoPorPaso = metaFondo / pasosTotales;
+
+            // Efecto de sonido táctico simulado en consola u operaciones de red
+            console.log("⚡ [SISTEMA]: Iniciando cálculo de flujo de capital...");
+
+            const temporizador = setInterval(() => {
+                capitalActual += incrementoPorPaso;
+
+                if (capitalActual >= metaFondo) {
+                    capitalActual = metaFondo;
+                    clearInterval(temporizador);
+                    
+                    // Estado Final Exitoso (Verde Neón Confirmado)
+                    displayCapital.innerHTML = `$${metaFondo.toLocaleString('es-CO')} COP`;
+                    btnCalcular.innerText = "CÁLCULO COMPLETADO ✓";
+                    btnCalcular.style.borderColor = "var(--neon-green)";
+                    btnCalcular.style.color = "var(--neon-green)";
+                    btnCalcular.disabled = false;
+                    
+                    console.log("✓ [SISTEMA]: Meta de formalización proyectada con éxito.");
+                } else {
+                    // Actualización en tiempo real con formato de moneda colombiana
+                    displayCapital.innerHTML = `$${Math.floor(capitalActual).toLocaleString('es-CO')} COP`;
+                }
+            }, intervaloTiempo);
+        });
+    }
+});
+</script>
+
                                 
             <br><br><br><br><a href="https://wa.me" class="btn-whatsapp" target="_blank">
     <!-- Aquí va la imagen -->
