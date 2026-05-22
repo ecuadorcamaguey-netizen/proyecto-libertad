@@ -215,51 +215,21 @@ body {
 }
 /* INTERFAZ DE PAGO PAYPAL - YORVIS TECH*/
 
-    .terminal-paypal {
-        background: #000;
-        color: #39FF14; /* Verde Neón */
-        border: 2px solid #39FF14;
-        padding: 25px;
-        text-align: center;
-        font-family: 'Courier New', Courier, monospace;
-        margin: 25px auto;
-        max-width: 350px;
-        border-radius: 15px;
-        box-shadow: 0 0 25px rgba(57, 255, 20, 0.6);
-        position: relative;
-        overflow: hidden;
-    }
+@keyframes titanBlink {
+  0% { opacity: 1; }
+  50% { opacity: 0.3; }
+  100% { opacity: 1; }
+}
+.status-blink {
+  animation: titanBlink 1.5s infinite;
+}
+#btn-paypal-neon:hover {
+  background-color: #39FF14 !important;
+  color: #000000 !important;
+  box-shadow: 0 0 20px #39FF14 !important;
+}               
 
-    .btn-recaudo {
-        display: inline-block;
-        background: #39FF14;
-        color: #000;
-        padding: 15px 30px;
-        text-decoration: none;
-        font-weight: bold;
-        font-size: 1.2em;
-        border-radius: 5px;
-        margin-top: 15px;
-        box-shadow: 0 0 10px #39FF14;
-        transition: transform 0.2s, box-shadow 0.2s;
-    }
 
-    .btn-recaudo:hover {
-        transform: scale(1.05);
-        box-shadow: 0 0 30px #39FF14;
-    }
-
-    .status-blink {
-        animation: blink 1.5s infinite;
-        font-size: 0.8em;
-        margin-bottom: 10px;
-    }
-
-    @keyframes blink {
-        0% { opacity: 1; }
-        50% { opacity: 0.3; }
-        100% { opacity: 1; }
-    }
                  /* Contenedor de la galería con borde neón suave */
 .contenedor-trabajo {
   border: 1px solid #1a1a1a;
@@ -991,7 +961,82 @@ window.addEventListener('load', () => {
         PROTOCOLO SEGURO ACTIVADO [AES-256]
     </div>
 
+<!-- ========================================== -->
+<!-- NUEVO MÓDULO INTERNACIONAL DE RECAUDO YORVIS TECH -->
+<!-- ========================================== -->
+<div id="modulo-recaudo-internacional" style="max-width: 550px; margin: 40px auto; padding: 25px; background-color: #000000; border: 2px solid #39FF14; border-radius: 10px; font-family: 'Courier New', Courier, monospace; color: #ffffff; box-shadow: 0 0 20px rgba(57, 255, 20, 0.2); box-sizing: border-box;">
+  
+  <!-- Encabezado Táctico Parpadeante -->
+  <div style="text-align: center; margin-bottom: 20px;">
+    <span class="status-blink" style="color: #39FF14; font-weight: bold; font-size: 13px; letter-spacing: 1px; display: inline-block;">
+      ● SYSTEM READY: RECAUDO INTERNACIONAL
+    </span>
+    <h3 style="color: #ffffff; margin: 10px 0 5px 0; font-size: 18px; letter-spacing: 1px; text-transform: uppercase;">
+      PROYECTO: LIBERTAD 2026
+    </h3>
+  </div>
 
+  <!-- Bloque Informativo: Carta de Arraigo -->
+  <div style="background: #0a0a0a; border: 1px solid #222222; padding: 15px; border-radius: 6px; margin-bottom: 25px; border-left: 4px solid #39FF14;">
+    <h4 style="color: #39FF14; margin: 0 0 8px 0; font-size: 14px; text-transform: uppercase;">📁 RESPALDO INSTITUCIONAL</h4>
+    <p style="margin: 0; font-size: 13px; color: #dddddd; line-height: 1.5;">
+      Validación de procesos bajo el expediente oficial de la <strong>Carta de Arraigo con 9 años de trayectoria en Bogotá</strong>. Soporte técnico y legal garantizado.
+    </p>
+  </div>
+
+  <!-- Botón de Pago PayPal Neón -->
+  <div style="text-align: center;">
+    <button onclick="iniciarPasarelaPayPal(event)" id="btn-paypal-neon" 
+            style="width: 100%; max-width: 350px; padding: 14px 20px; background-color: #000000; color: #39FF14; border: 2px solid #39FF14; border-radius: 6px; font-family: inherit; font-size: 15px; font-weight: bold; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 0 10px rgba(57, 255, 20, 0.1);">
+      PAYPAL_DEPOSIT_INIT ⚡
+    </button>
+    
+    <p style="color: #888888; font-size: 11px; margin-top: 15px; text-transform: uppercase; letter-spacing: 1px;">
+      🔒 PROTOCOLO SEGURO ACTIVADO [AES-256]
+    </p>
+  </div>
+</div>
+                  <!---JS DE PASARELA PAYPAL--->
+                  
+                  <script>
+                     
+                  function iniciarPasarelaPayPal(event) {
+    // Evita cualquier acción extraña del navegador
+    event.preventDefault();
+
+    const ENLACE_PAYPAL = "https://paypal.me.";
+    const boton = document.getElementById('btn-paypal-neon');
+    if (!boton) return;
+
+    // 1. EFECTO INMERSIVO: Deshabilitamos el botón y cambiamos el texto táctico
+    boton.disabled = true;
+    boton.style.pointerEvents = "none";
+    boton.style.backgroundColor = "#39FF14";
+    boton.style.color = "#000000";
+    boton.innerHTML = "[ CONNECTING TO SECURE GATEWAY... 🔌 ]";
+
+    // Secuencia rápida de carga en pantalla
+    setTimeout(() => {
+        boton.innerHTML = "[ ENCRYPTING DATA AES-256... 🔐 ]";
+    }, 800);
+
+    setTimeout(() => {
+        boton.innerHTML = "[ REDIRECTING TO PAYPAL... ✓ ]";
+        
+        // 2. REDIRECCIÓN DIRECTA SEGURA
+        window.open(ENLACE_PAYPAL, "_blank");
+    }, 1800);
+
+    // 3. PERSISTENCIA LIMPIA: Restablecemos el botón para que quede listo nuevamente
+    setTimeout(() => {
+        boton.disabled = false;
+        boton.style.pointerEvents = "auto";
+        boton.style.backgroundColor = "#000000";
+        boton.style.color = "#39FF14";
+        boton.innerHTML = "PAYPAL_DEPOSIT_INIT ⚡";
+    }, 4500);
+}
+               </script>
 
                   
       <br>
