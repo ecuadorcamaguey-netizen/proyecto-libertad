@@ -996,6 +996,12 @@ window.addEventListener('load', () => {
 <a class="lang-text btn-recaudo" data-es="PAYPAL_DEPOSIT_INIT" data-en="PAYPAL_DEPOSIT_INIT" href="https://paypal.me/boxtraining." target="_blank">
     PAYPAL_DEPOSIT_INIT
 </a>
+   <!-- Modifica tu botón de PayPal para que quede exactamente así -->
+<a class="lang-text btn-recaudo" data-es="PAYPAL_DEPOSIT_INIT" data-en="PAYPAL_DEPOSIT_INIT" 
+   href="https://paypal.me." target="_blank" onclick="procesarPagoPaypal(event)">
+    PAYPAL_DEPOSIT_INIT
+</a>
+
 
     
     <div style="margin-top: 15px; font-size: 0.7em; color: #888;">
@@ -1014,41 +1020,40 @@ window.addEventListener('load', () => {
  </div>
                   <!---SCRIPT DE PASARELA DE PAGOS--->
                   <script>
-                  function procesarPagoNequi() {
-    // ⚠️ Asegúrate de cambiar esto si usas tu link definitivo en el futuro:
+
+function procesarPagoPaypal(event) {
+    // Frena el comportamiento del enlace para que la página no se mueva ni se esconda la sección
+    event.preventDefault();
+
     const ENLACE_PAYPAL = "https://paypal.me.";
-    
-    // Capturamos el botón mediante su clase real
-    const botonPayPal = document.querySelector('.btn-recaudo') || document.getElementById('btn-nequi-pasarela');
+    const botonPayPal = document.querySelector('.btn-recaudo');
     if (!botonPayPal) return;
 
-    // 1. EFECTO INMERSIVO EN PANTALLA: Cambios de estilo y texto tipo terminal
-    botonPayPal.disabled = true;
-    botonPayPal.style.backgroundColor = "#39FF14"; // Verde neón brillante
+    // 1. EFECTO INMERSIVO TÁCTICO: Bloqueamos y cambiamos el estilo visual del botón
+    botonPayPal.style.pointerEvents = "none"; // Evita múltiples clics seguidos
+    botonPayPal.style.backgroundColor = "#39FF14"; // Verde neón de tu paleta
     botonPayPal.style.color = "#000000";
-    botonPayPal.style.boxShadow = "0 0 15px #39FF14";
     botonPayPal.innerHTML = "[ GENERANDO SESIÓN DE PAGO... ⚙️ ]";
 
-    // Secuencia táctica rápida para que aprecies los cambios visuales en tu sitio
+    // Secuencia de texto rápida para comprobar los cambios visuales en pantalla
     setTimeout(() => {
         botonPayPal.innerHTML = "[ CIFRANDO PROTOCOLO AES-256... 🔐 ]";
     }, 800);
 
     setTimeout(() => {
-        botonPayPal.innerHTML = "[ RECAUDO ENVIADO CON ÉXITO ✓ ]";
+        botonPayPal.innerHTML = "[ RECAUDO INICIADO ✓ ]";
         
-        // 2. REDIRECCIÓN DIRECTA: Se ejecuta justo al final de la experiencia visual
+        // 2. REDIRECCIÓN SEGURA: Abre la pestaña de PayPal de manera limpia
         window.open(ENLACE_PAYPAL, "_blank");
     }, 1800);
 
-    // 3. PERSISTENCIA LIMPIA: Restablecemos el botón a su estado original después de abrir la pestaña
+    // 3. PERSISTENCIA LIMPIA: Restablecemos el botón a su estado normal pasados unos segundos
     setTimeout(() => {
-        botonPayPal.disabled = false;
-        botonPayPal.style.backgroundColor = ""; // Regresa al CSS original
+        botonPayPal.style.pointerEvents = "auto";
+        botonPayPal.style.backgroundColor = ""; 
         botonPayPal.style.color = "";
-        botonPayPal.style.boxShadow = "";
         botonPayPal.innerHTML = "PAYPAL_DEPOSIT_INIT";
-    }, 4500);
+    }, 5000);
 }
 
                   </script>                
