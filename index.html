@@ -2079,7 +2079,10 @@ async function gestionarWalletSolana() {
 </div>
 
 <!-- SCRIPT RESPALDO WEB3 PARA SOLANA -->
-<script>
+                  
+                  <script src="https://unpkg.com"></script>
+
+                  <script>
 async function enviarDonacionSolana() {
   const proveedorWallet = window.solana || window.phantom?.solana;
 
@@ -2091,16 +2094,17 @@ async function enviarDonacionSolana() {
   try {
     const conexion = new solanaWeb3.Connection(solanaWeb3.clusterApiUrl('mainnet-beta'));
     
-    // ⚠️ COLOCA TU DIRECCIÓN PÚBLICA REAL DE SOLANA AQUÍ:
-    const tuWalletDestino = new solanaWeb3.PublicKey("TU_DIRECCION_DE_WALLET_AQUI");
+    // ⚠️ Recuerda reemplazar esta cadena por tu dirección real de Solana:
+    const tuWalletDestino = new solanaWeb3.PublicKey("Gxe...tu_llave_publica_real...7Xq");
+
+    // OPTIMIZACIÓN: Si no está conectada, solicita la conexión automáticamente en tiempo real
+    if (!proveedorWallet.isConnected) {
+        await proveedorWallet.connect();
+    }
+    
     const walletUsuario = proveedorWallet.publicKey;
 
-    if (!walletUsuario) {
-      alert("⚠️ ALERTA: Primero debes enlazar tu billetera en el módulo superior.");
-      return;
-    }
-
-    // Cantidad fija de prueba: 0.02 SOL
+    // Cantidad fija establecida: 0.02 SOL
     const MONTO_LAMPPORTS = 0.02 * solanaWeb3.LAMPORTS_PER_SOL; 
 
     const transaccion = new solanaWeb3.Transaction().add(
@@ -2124,9 +2128,10 @@ async function enviarDonacionSolana() {
     alert("❌ TRANSACCIÓN ABORTADA: Firma rechazada o fondos insuficientes.");
   }
 }
-</script>
 
 
+                  </script>   
+                  
                   
                   <!--SCRIPT DE BLOQUE DE OFERTA RELAMPAGO YORVIS TECH-->
                   <script>
