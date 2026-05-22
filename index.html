@@ -1642,7 +1642,59 @@ function procesarArchivoTitan() {
     24:00:00
   </div>
 </div>
+                            <!---SCRITP DE PRUEBA DEL NUEVO RELOJ DE OFERTA DE LA LANZAMIENTO--->
+                         <script>
+                            document.addEventListener('DOMContentLoaded', () => {
+    iniciarTemporizadorOferta();
+});
 
+function iniciarTemporizadorOferta() {
+    const contenedorReloj = document.getElementById('reloj-oferta-titan');
+    if (!contenedorReloj) return; // Si no encuentra el reloj en pantalla, frena la función
+
+    const TIEMPO_OFERTA_MS = 24 * 60 * 60 * 1000; // 24 horas convertidas a milisegundos
+    let tiempoFinalizacion = localStorage.getItem('titan_oferta_limite');
+
+    // PERSISTENCIA LIMPIA: Si es la primera vez que entra, creamos la fecha límite futura
+    if (!tiempoFinalizacion) {
+        tiempoFinalizacion = Date.now() + TIEMPO_OFERTA_MS;
+        localStorage.setItem('titan_oferta_limite', tiempoFinalizacion);
+    } else {
+        tiempoFinalizacion = parseInt(tiempoFinalizacion, 10);
+    }
+
+    // Actualización en tiempo real cada 1 segundo (Efecto inmersivo)
+    const intervaloReloj = setInterval(() => {
+        const ahora = Date.now();
+        const tiempoRestante = tiempoFinalizacion - ahora;
+
+        // Si el tiempo se agota, detenemos el reloj y cambiamos la interfaz
+        if (tiempoRestante <= 0) {
+            clearInterval(intervaloReloj);
+            contenedorReloj.innerHTML = "00:00:00";
+            contenedorReloj.style.color = "#888888"; // Apagamos el neón a gris
+            
+            // Opcional: Cambiar texto o bloquear botones de descuento expirados
+            const tituloOferta = contenedorReloj.previousElementSibling;
+            if (tituloOferta) tituloOferta.innerHTML = "❌ OFERTA EXCLUSIVA EXPIRADA";
+            return;
+        }
+
+        // Cálculos matemáticos de tiempo
+        const horas = Math.floor((tiempoRestante / (1000 * 60 * 60)) % 24);
+        const minutos = Math.floor((tiempoRestante / (1000 * 60)) % 60);
+        const segundos = Math.floor((tiempoRestante / 1000) % 60);
+
+        // GENERACIÓN DINÁMICA: Añadimos un cero a la izquierda si el número es menor a 10
+        const horasFormato = horas < 10 ? '0' + horas : horas;
+        const minutosFormato = minutos < 10 ? '0' + minutos : minutos;
+        const segundosFormato = segundos < 10 ? '0' + segundos : segundos;
+
+        // Inyectamos el formato táctico final en la pantalla
+        contenedorReloj.innerHTML = `${horasFormato}:${minutosFormato}:${segundosFormato}`;
+    }, 1000);
+}
+                         </script>
 
 </section>
            <!-- BANNER DE POSICIONAMIENTO: ENTRENAMIENTO FUNCIONAL -->
