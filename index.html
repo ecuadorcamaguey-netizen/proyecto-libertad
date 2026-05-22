@@ -993,9 +993,10 @@ window.addEventListener('load', () => {
     <div style="font-size: 0.9em; margin-bottom: 10px;">PROYECTO: LIBERTAD 2026</div>
     
     <!-- REEMPLAZA EL LINK ABAJO CON TU PAYPAL.ME -->
-    <a class="lang-text" data-es="" data-en="PAYPAL_DEPOSIT_INIT" href="https://paypal.me/boxtraining." target="_blank" class="btn-recaudo">
-        PAYPAL_DEPOSIT_INIT
-    </a>
+<a class="lang-text btn-recaudo" data-es="PAYPAL_DEPOSIT_INIT" data-en="PAYPAL_DEPOSIT_INIT" href="https://paypal.me/boxtraining." target="_blank">
+    PAYPAL_DEPOSIT_INIT
+</a>
+
     
     <div style="margin-top: 15px; font-size: 0.7em; color: #888;">
         PROTOCOLO SEGURO ACTIVADO [AES-256]
@@ -1011,6 +1012,57 @@ window.addEventListener('load', () => {
     
     <p class="lang-text" data-es="Confirmación inmediata vía WhatsApp" data-en="" style="color: #39FF14; font-size: 0.8em;">Confirmación inmediata vía WhatsApp</p>
  </div>
+                  <!---SCRIPT DE PASARELA DE PAGOS--->
+                  
+                  <script>
+                     
+                  document.addEventListener('DOMContentLoaded', () => {
+    iniciarTemporizadorOferta();
+});
+
+function iniciarTemporizadorOferta() {
+    const contenedorReloj = document.getElementById('timer'); // Ajustado a tu ID real
+    if (!contenedorReloj) return;
+
+    const TIEMPO_OFERTA_MS = 2 * 60 * 60 * 1000; // 2 horas exactas en milisegundos
+    let tiempoFinalizacion = localStorage.getItem('titan_oferta_limite_2h');
+
+    // Persistencia limpia: si es la primera vez, guarda la hora de fin
+    if (!tiempoFinalizacion) {
+        tiempoFinalizacion = Date.now() + TIEMPO_OFERTA_MS;
+        localStorage.setItem('titan_oferta_limite_2h', tiempoFinalizacion);
+    } else {
+        tiempoFinalizacion = parseInt(tiempoFinalizacion, 10);
+    }
+
+    const intervaloReloj = setInterval(() => {
+        const ahora = Date.now();
+        const tiempoRestante = tiempoFinalizacion - ahora;
+
+        if (tiempoRestante <= 0) {
+            clearInterval(intervaloReloj);
+            contenedorReloj.innerHTML = "00:00:00";
+            contenedorReloj.style.color = "#888888";
+            
+            // Cambia el título si expira la oferta relámpago
+            const titulo = document.querySelector('#promo-banner h3');
+            if (titulo) titulo.innerHTML = "❌ OFERTA RELÁMPAGO EXPIRADA";
+            return;
+        }
+
+        const horas = Math.floor((tiempoRestante / (1000 * 60 * 60)) % 24);
+        const minutos = Math.floor((tiempoRestante / (1000 * 60)) % 60);
+        const segundos = Math.floor((tiempoRestante / 1000) % 60);
+
+        // Formato con ceros a la izquierda (Generación dinámica)
+        const hFormato = horas < 10 ? '0' + horas : horas;
+        const mFormato = minutos < 10 ? '0' + minutos : minutos;
+        const sFormato = segundos < 10 ? '0' + segundos : segundos;
+
+        contenedorReloj.innerHTML = `${hFormato}:${mFormato}:${sFormato}`;
+    }, 1000);
+}
+        </script>
 
 
 
