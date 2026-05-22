@@ -2368,6 +2368,204 @@ async function enviarDonacionSolana() {
 
 
                   </script>   
+
+
+                  <!---PRUEBA DE BOVEDA DE SEGURIDAD CON CONSOLA DE MENSAJERÍA--->
+<div class="panel-titan" style="max-width: 700px; margin: 40px auto; padding: 25px; background-color: #000; border: 2px dashed #ffcc00; border-radius: 8px;">
+  <h2>🔒 BÓVEDA DE SEGURIDAD [TITÁN-GUARD]</h2>
+  
+  <div id="error-titan-guard" class="alerta-error" style="display: none; color: #ff3333; text-align: center; margin-bottom: 15px; font-weight: bold;">
+    ⚡ [ ERROR: CREDENCIAL INVÁLIDA ]
+  </div>
+  
+  <!-- BOTÓN DE ACCESO INICIAL -->
+  <div id="bloque-acceso-boveda" style="text-align: center; padding: 20px;">
+    <p>Área restringida. Se requiere credencial táctica para abrir canal de mensajería y documentos.</p>
+    <button id="btn-acceso-titan" class="btn-neon" onclick="solicitarAccesoBovedaMultimedia()" style="padding: 10px 20px; background: #ffcc00; color: #000; border: none; font-weight: bold; cursor: pointer;">
+      ABRIR CENTRO OPERATIVO MULTIMEDIA ⚡
+    </button>
+  </div>
+
+  <!-- CONSOLA PRIVADA (Oculta por defecto) -->
+  <div id="consola-privada-titan" style="display: none; border-top: 1px solid #333; padding-top: 20px;">
+    <h3 style="color: #ffcc00; text-transform: uppercase;">📁 CONSOLA DE INTELIGENCIA Y MENSAJERÍA</h3>
+    <p style="font-size: 12px; color: #888;">ESTADO: CANAL ENCRIPTADO EN SESIÓN LOCAL (AES-256)</p>
+
+    <!-- PANELES DIVIDIDOS: CHAT + ARCHIVOS -->
+    <div style="display: flex; flex-direction: column; gap: 20px; margin-top: 15px;">
+      
+      <!-- CUADRO DE CHAT INTEGRADO -->
+      <div style="border: 1px solid #222; background: #0a0a0a; padding: 15px; border-radius: 6px;">
+        <h4 style="color: #ffcc00; margin: 0 0 10px 0; font-size: 14px;">💬 BITÁCORA DE INTERACCIÓN / CHAT</h4>
+        
+        <!-- Contenedor de mensajes del chat -->
+        <div id="caja-mensajes-chat" style="height: 180px; overflow-y: auto; background: #000; border: 1px solid #333; padding: 10px; margin-bottom: 10px; border-radius: 4px; font-family: monospace; font-size: 13px;">
+          <!-- Aquí se inyectan los mensajes dinámicamente -->
+        </div>
+        
+        <!-- Inputs del Chat -->
+        <div style="display: flex; gap: 10px;">
+          <input type="text" id="chat-usuario" placeholder="Operador/Nombre" style="width: 30%; background: #000; border: 1px solid #ffcc00; color: #fff; padding: 5px; font-family: inherit;">
+          <input type="text" id="chat-mensaje" placeholder="Escribe un reporte o mensaje secreto..." style="width: 70%; background: #000; border: 1px solid #ffcc00; color: #fff; padding: 5px; font-family: inherit;">
+        </div>
+        <button onclick="registrarMensajeEnChat()" style="margin-top: 10px; width: 100%; padding: 8px; background: #ffcc00; color: #000; font-weight: bold; border: none; cursor: pointer; text-transform: uppercase; font-size: 12px;">
+          TRANSMITIR MENSAJE 🛰️
+        </button>
+      </div>
+
+      <!-- SISTEMA DE VOLCADO MULTIMEDIA (Imágenes, Videos, Audios, Documentos) -->
+      <div style="border: 1px solid #222; background: #0a0a0a; padding: 15px; border-radius: 6px;">
+        <h4 style="color: #ffcc00; margin: 0 0 5px 0; font-size: 14px;">💼 ARCHIVADOR DE RESPALDO MULTIMEDIA</h4>
+        <p style="font-size: 11px; color: #666; margin-bottom: 10px;">Carga local de archivos tácticos (PDF, Img, MP4, MP3) para análisis en pantalla.</p>
+        
+        <input type="file" id="archivo-tactico-input" onchange="procesarCargaMultimediaBoveda()" style="width: 100%; color: #fff; background: #000; padding: 5px; border: 1px solid #333; cursor: pointer; font-size: 12px;">
+        
+        <!-- VISOR DINÁMICO MULTIMEDIA -->
+        <div id="visor-multimedia-boveda" style="margin-top: 15px; display: none; border: 1px solid #ffcc00; padding: 10px; background: #000; border-radius: 4px; text-align: center;">
+          <p style="color: #ffcc00; font-size: 11px; margin-bottom: 8px; font-weight: bold;">[ VISUALIZANDO RECURSO DESBLOQUEADO ]</p>
+          <div id="contenedor-render-archivo"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- BOTÓN PARA CERRAR Y VOLVER A ENCRIPTAR TODO -->
+    <button onclick="cerrarSesionBovedaMultimedia()" style="margin-top: 20px; padding: 5px 15px; background: #222; color: #ff3333; border: 1px solid #ff3333; cursor: pointer; font-family: inherit; font-size: 11px; font-weight: bold;">
+      [ CERRAR SESIÓN Y ENCRIPTAR CANAL ]
+    </button>
+  </div>
+</div>
+
+                  <script>
+
+const CLAVE_MAESTRA = 'TITÁN-RECARGA';
+
+// 1. ACCESO A LA BÓVEDA CON PERSISTENCIA LIMPIA
+function solicitarAccesoBovedaMultimedia() {
+    const alertaError = document.getElementById('error-titan-guard');
+    const boton = document.getElementById('btn-acceso-titan');
+    alertaError.style.display = 'none';
+
+    const clave = prompt("🔒 ACCESO RESTRINGIDO [TITÁN-GUARD]\nIntroduce la clave maestra para activar el chat y el archivador:");
+    
+    if (clave === null) return;
+
+    const textoOriginal = boton.innerHTML;
+    boton.disabled = true;
+    boton.innerHTML = 'DESENCRIPTANDO CANAL MULTIMEDIA... 🖥️';
+
+    setTimeout(() => {
+        boton.disabled = false;
+        boton.innerHTML = textoOriginal;
+
+        if (clave.trim() === CLAVE_MAESTRA) {
+            document.getElementById('bloque-acceso-boveda').style.display = 'none';
+            document.getElementById('consola-privada-titan').style.display = 'block';
+            cargarChatDeLocalStorage(); // Recupera mensajes guardados antes
+        } else {
+            alertaError.style.display = 'block';
+        }
+    }, 1200);
+}
+
+// 2. LOGICA DEL CHAT EN TIEMPO REAL (Almacenamiento Local)
+function registrarMensajeEnChat() {
+    const inputUser = document.getElementById('chat-usuario');
+    const inputMsg = document.getElementById('chat-mensaje');
+    
+    const usuario = inputUser.value.trim() || "OPERADOR";
+    const mensaje = inputMsg.value.trim();
+
+    if (mensaje === "") return;
+
+    // Crear la estructura del mensaje con hora actual
+    const hora = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+    const nuevoMensajeObj = { usuario, mensaje, hora };
+
+    // Recuperar base de datos del chat actual de LocalStorage
+    let historialChat = JSON.parse(localStorage.getItem('historial_chat_titan')) || [];
+    historialChat.push(nuevoMensajeObj);
+    localStorage.setItem('historial_chat_titan', JSON.stringify(historialChat));
+
+    // Limpiar input de mensaje y actualizar la vista
+    inputMsg.value = "";
+    renderizarMensajes(historialChat);
+}
+
+function cargarChatDeLocalStorage() {
+    const historialChat = JSON.parse(localStorage.getItem('historial_chat_titan')) || [];
+    renderizarMensajes(historialChat);
+}
+
+function renderizarMensajes(historial) {
+    const cajaChat = document.getElementById('caja-mensajes-chat');
+    cajaChat.innerHTML = ""; // Persistencia limpia
+
+    historial.forEach(item => {
+        cajaChat.innerHTML += `
+            <div style="margin-bottom: 8px; border-left: 2px solid #ffcc00; padding-left: 5px; color: #e0e0e0;">
+              <span style="color: #ffcc00; font-weight: bold;">[${item.hora}] ${item.usuario}:</span> ${item.mensaje}
+            </div>
+        `;
+    });
+    // Auto-scroll hacia el último mensaje enviado
+    cajaChat.scrollTop = cajaChat.scrollHeight;
+}
+
+// 3. PROCESADOR MULTIMEDIA UNIVERSAL (Imágenes, Videos, Audios y Documentos)
+function procesarCargaMultimediaBoveda() {
+    const input = document.getElementById('archivo-tactico-input');
+    const visor = document.getElementById('visor-multimedia-boveda');
+    const contenedor = document.getElementById('contenedor-render-archivo');
+    
+    const archivo = input.files[0];
+    if (!archivo) return;
+
+    const lector = new FileReader();
+
+    lector.onload = function(e) {
+        visor.style.display = 'block';
+        contenedor.innerHTML = ""; // Limpieza previa
+
+        // EVALUACIÓN DINÁMICA DEL TIPO DE ARCHIVO
+        if (archivo.type.startsWith('image/')) {
+            contenedor.innerHTML = `<img src="${e.target.result}" style="max-width:100%; max-height:300px; border: 1px solid #333;">`;
+        } 
+        else if (archivo.type.startsWith('video/')) {
+            contenedor.innerHTML = `<video src="${e.target.result}" controls style="max-width:100%; max-height:300px;"></video>`;
+        } 
+        else if (archivo.type.startsWith('audio/')) {
+            contenedor.innerHTML = `<audio src="${e.target.result}" controls style="width:100%; margin-top:10px;"></audio>`;
+        } 
+        else if (archivo.type === 'application/pdf') {
+            contenedor.innerHTML = `<embed src="${e.target.result}" type="application/pdf" width="100%" height="400px" style="border:none;">`;
+        } 
+        else {
+            // Documentos genéricos (Word, Excel, etc.)
+            contenedor.innerHTML = `
+                <div style="padding: 20px; background: #111; border: 1px dashed #555;">
+                    <p style="color: #ffcc00; margin: 0;">💼 DOCUMENTO DESBLOQUEADO</p>
+                    <span style="font-size: 12px; color: #aaa;">${archivo.name} (${(archivo.size/1024).toFixed(1)} KB)</span>
+                </div>`;
+        }
+    };
+
+    lector.readAsDataURL(archivo);
+}
+
+// 4. CIERRE Y ENCRIPTACIÓN COMPLETA
+function cerrarSesionBovedaMultimedia() {
+    document.getElementById('consola-privada-titan').style.display = 'none';
+    document.getElementById('bloque-acceso-boveda').style.display = 'block';
+    
+    // Limpieza profunda de los residuos multimedia de la sesión activa
+    document.getElementById('archivo-tactico-input').value = "";
+    document.getElementById('visor-multimedia-boveda').style.display = 'none';
+    document.getElementById('contenedor-render-archivo').innerHTML = "";
+}
+
+                     
+                  </script>
                   
                   
                   <!--SCRIPT DE BLOQUE DE OFERTA RELAMPAGO YORVIS TECH-->
