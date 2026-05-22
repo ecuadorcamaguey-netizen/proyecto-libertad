@@ -913,43 +913,29 @@ body {
     const botonNequi = document.getElementById('btn-nequi-pasarela');
     if (!botonNequi) return;
 
-    // Guardamos los textos para respetar el sistema de traducción traducible de tu web
-    const textoOriginalEs = botonNequi.getAttribute("data-es") || "[ ENVIAR ]";
-    const textoOriginalEn = botonNequi.getAttribute("data-en") || "[ SEND ]";
-
-    // 1. EFECTO DE RED INMERSIVO: Bloqueo del botón y cambio de estado táctico
-    botonNequi.disabled = true;
-    botonNequi.innerHTML = "[ CONECTANDO PASARELA... 🇨🇴 ]";
-    botonNequi.setAttribute("data-es", "[ CONECTANDO PASARELA... 🇨🇴 ]");
-    botonNequi.setAttribute("data-en", "[ CONNECTING GATEWAY... 🇨🇴 ]");
-
-    // Copiamos automáticamente el número de cuenta al portapapeles en segundo plano
-    navigator.clipboard.writeText(NUMERO_NEQUI_DESTINO).then(() => {
-        
-        setTimeout(() => {
-            // 2. GENERACIÓN DINÁMICA: Notificación en pantalla antes de abrir la pasarela
-            alert(`⚡ [ PASARELA NEQUI COLOMBIA ]\n\nEl número de cuenta (${NUMERO_NEQUI_DESTINO}) se ha copiado automáticamente a tu portapapeles.\n\nAhora serás redirigido al portal oficial para completar tu aporte libre.`);
-
-            // 3. PERSISTENCIA LIMPIA: Restauramos el botón a su estado normal
-            botonNequi.disabled = false;
-            botonNequi.innerHTML = textoOriginalEs;
-            botonNequi.setAttribute("data-es", textoOriginalEs);
-            botonNequi.setAttribute("data-en", textoOriginalEn);
-
-            // Redirigimos al portal oficial de recargas seguras de Nequi donde pueden transferir por PSE
-            window.open("https://nequi.com.co", "_blank");
-
-        }, 1200); // 1.2 segundos de retraso inmersivo de carga táctica
-        
-    }).catch(err => {
-        console.error("Error en pasarela Nequi:", err);
-        // Si el navegador bloquea el portapapeles por seguridad, abrimos la pasarela de igual forma
-        window.open("https://nequi.com.co", "_blank");
-        botonNequi.disabled = false;
+    // 1. PERSISTENCIA LIMPIA: Copia inmediata en el portapapeles sin esperas
+    navigator.clipboard.writeText(NUMERO_NEQUI_DESTINO).catch(err => {
+        console.error("Error al copiar número:", err);
     });
+
+    // 2. EFECTO INMERSIVO INMEDIATO: Cambiamos el estilo del botón para avisar que se copió
+    botonNequi.style.backgroundColor = "#14F195";
+    botonNequi.style.color = "#000000";
+    botonNequi.innerHTML = "[ ¡CÚMERO COPIADO! 📋 ]";
+    botonNequi.setAttribute("data-es", "[ ¡NÚMERO COPIADO! 📋 ]");
+
+    // Restablecemos el aspecto original del botón después de unos segundos para que pueda volver a usarse
+    setTimeout(() => {
+        botonNequi.style.backgroundColor = "#000000";
+        botonNequi.style.color = "#14F195";
+        botonNequi.innerHTML = "[ ENVIAR ]";
+        botonNequi.setAttribute("data-es", "[ ENVIAR ]");
+    }, 4000);
+
+    // 3. REDIRECCIÓN SIN BLOQUEOS: Al ejecutarse inmediatamente tras el clic, el navegador NO lo bloquea
+    window.open("https://nequi.com.co", "_blank");
 }
-               </script>
-                  
+                  </script>
                   <script>
 function cambiarIdioma(idioma) {
   // 1. Buscar todos los elementos que tengan la clase 'lang-text'
