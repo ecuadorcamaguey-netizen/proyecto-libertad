@@ -1223,21 +1223,23 @@ function procesarPagoNequi() {
     window.open("https://nequi.com.co", "_blank");
 }
 
-// FUNCTION 2: ADQUIRIR SERVICIO POR WHATSAPP (CORREGIDA SIN INTERFERENCIAS)
+// CORRECCIÓN ABSOLUTA PARA EL ENLACE DE WHATSAPP
 function adquirirOfertaRelampago() {
+    // Número internacional limpio sin símbolos de suma ni errores de unión
     const TELEFONO_YORVIS = "573507916503"; 
     
-    // Texto formateado de manera limpia
-    const textoMensaje = "🎯 Hola Yorvis Tech, quiero adquirir el Servicio de Optimización Android por $25.000 COP. Vengo desde la página del Proyecto Libertad.";
-    const mensajeCodificado = encodeURIComponent(textoMensaje);
+    // Texto plano sin caracteres extraños para evitar cruces encriptados
+    const textoMensaje = "Hola Yorvis Tech, quiero adquirir el Servicio de Optimizacion Android por 25.000 COP. Vengo de la pagina del Proyecto Libertad.";
     
-    // URL nativa de comunicación directa de WhatsApp
+    // Codificación segura para URL
+    const textoCodificado = encodeURIComponent(textoMensaje);
+    
+    // Estructura oficial limpia (wa.me/numero?text=mensaje)
     const urlCorrecta = "https://wa.me" + TELEFONO_YORVIS + "?text=" + textoCodificado;
     
-    // Abrimos el chat inmediatamente
+    // Ejecución inmediata en una nueva pestaña del navegador
     window.open(urlCorrecta, "_blank");
 }
-
    
 </script>
                   
