@@ -10,6 +10,11 @@
 
              <title>Operación Libertad - Yorvis Tech</title>
            <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com">
+
+           <!-- Librerías de Firebase para conexión en la nube -->
+<script src="https://gstatic.com"></script>
+<script src="https://gstatic.com"></script>
+
               <style>
                   /*section para títulos */
                   .titulo-yorvis {
@@ -2436,134 +2441,98 @@ async function enviarDonacionSolana() {
     </button>
   </div>
 </div>
+                  <!---BOBEDA DE SEGURIDAD DE CHAT Y MULTIMEDIA--->
 
                   <script>
 
-const CLAVE_MAESTRA = 'TITAN-2026';
 
-// 1. ACCESO A LA BÓVEDA CON PERSISTENCIA LIMPIA
-function solicitarAccesoBovedaMultimedia() {
-    const alertaError = document.getElementById('error-titan-guard');
-    const boton = document.getElementById('btn-acceso-titan');
-    alertaError.style.display = 'none';
+// CONTROL DE PERSISTENCIA: Carga el archivo guardado automáticamente al refrescar la página
+document.addEventListener("DOMContentLoaded", () => {
+    const archivoGuardado = localStorage.getItem("boveda_multimedia_permanente");
+    const tipoGuardado = localStorage.getItem("boveda_multimedia_tipo");
+    const nombreGuardado = localStorage.getItem("boveda_multimedia_nombre");
 
-    const clave = prompt("🔒 ACCESO RESTRINGIDO [TITÁN-GUARD]\nIntroduce la clave maestra para activar el chat y el archivador:");
-    
-    if (clave === null) return;
+    if (archivoGuardado && tipoGuardado) {
+        renderizarDesdeMemoria(archivoGuardado, tipoGuardado, nombreGuardado);
+    }
+});
 
-    const textoOriginal = boton.innerHTML;
-    boton.disabled = true;
-    boton.innerHTML = 'DESENCRIPTANDO CANAL MULTIMEDIA... 🖥️';
-
-    setTimeout(() => {
-        boton.disabled = false;
-        boton.innerHTML = textoOriginal;
-
-        if (clave.trim() === CLAVE_MAESTRA) {
-            document.getElementById('bloque-acceso-boveda').style.display = 'none';
-            document.getElementById('consola-privada-titan').style.display = 'block';
-            cargarChatDeLocalStorage(); // Recupera mensajes guardados antes
-        } else {
-            alertaError.style.display = 'block';
-        }
-    }, 1200);
-}
-
-// 2. LOGICA DEL CHAT EN TIEMPO REAL (Almacenamiento Local)
-function registrarMensajeEnChat() {
-    const inputUser = document.getElementById('chat-usuario');
-    const inputMsg = document.getElementById('chat-mensaje');
-    
-    const usuario = inputUser.value.trim() || "OPERADOR";
-    const mensaje = inputMsg.value.trim();
-
-    if (mensaje === "") return;
-
-    // Crear la estructura del mensaje con hora actual
-    const hora = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-    const nuevoMensajeObj = { usuario, mensaje, hora };
-
-    // Recuperar base de datos del chat actual de LocalStorage
-    let historialChat = JSON.parse(localStorage.getItem('historial_chat_titan')) || [];
-    historialChat.push(nuevoMensajeObj);
-    localStorage.setItem('historial_chat_titan', JSON.stringify(historialChat));
-
-    // Limpiar input de mensaje y actualizar la vista
-    inputMsg.value = "";
-    renderizarMensajes(historialChat);
-}
-
-function cargarChatDeLocalStorage() {
-    const historialChat = JSON.parse(localStorage.getItem('historial_chat_titan')) || [];
-    renderizarMensajes(historialChat);
-}
-
-function renderizarMensajes(historial) {
-    const cajaChat = document.getElementById('caja-mensajes-chat');
-    cajaChat.innerHTML = ""; // Persistencia limpia
-
-    historial.forEach(item => {
-        cajaChat.innerHTML += `
-            <div style="margin-bottom: 8px; border-left: 2px solid #ffcc00; padding-left: 5px; color: #e0e0e0;">
-              <span style="color: #ffcc00; font-weight: bold;">[${item.hora}] ${item.usuario}:</span> ${item.mensaje}
-            </div>
-        `;
-    });
-    // Auto-scroll hacia el último mensaje enviado
-    cajaChat.scrollTop = cajaChat.scrollHeight;
-}
-
-// 3. PROCESADOR MULTIMEDIA UNIVERSAL (Imágenes, Videos, Audios y Documentos)
+// 3. PROCESADOR MULTIMEDIA UNIVERSAL (Modificado para persistencia permanente)
 function procesarCargaMultimediaBoveda() {
     const input = document.getElementById('archivo-tactico-input');
-    const visor = document.getElementById('visor-multimedia-boveda');
-    const contenedor = document.getElementById('contenedor-render-archivo');
-    
     const archivo = input.files[0];
     if (!archivo) return;
 
     const lector = new FileReader();
 
     lector.onload = function(e) {
-        visor.style.display = 'block';
-        contenedor.innerHTML = ""; // Limpieza previa
+        const resultadoBase64 = e.target.result;
 
-        // EVALUACIÓN DINÁMICA DEL TIPO DE ARCHIVO
-        if (archivo.type.startsWith('image/')) {
-            contenedor.innerHTML = `<img src="${e.target.result}" style="max-width:100%; max-height:300px; border: 1px solid #333;">`;
-        } 
-        else if (archivo.type.startsWith('video/')) {
-            contenedor.innerHTML = `<video src="${e.target.result}" controls style="max-width:100%; max-height:300px;"></video>`;
-        } 
-        else if (archivo.type.startsWith('audio/')) {
-            contenedor.innerHTML = `<audio src="${e.target.result}" controls style="width:100%; margin-top:10px;"></audio>`;
-        } 
-        else if (archivo.type === 'application/pdf') {
-            contenedor.innerHTML = `<embed src="${e.target.result}" type="application/pdf" width="100%" height="400px" style="border:none;">`;
-        } 
-        else {
-            // Documentos genéricos (Word, Excel, etc.)
-            contenedor.innerHTML = `
-                <div style="padding: 20px; background: #111; border: 1px dashed #555;">
-                    <p style="color: #ffcc00; margin: 0;">💼 DOCUMENTO DESBLOQUEADO</p>
-                    <span style="font-size: 12px; color: #aaa;">${archivo.name} (${(archivo.size/1024).toFixed(1)} KB)</span>
-                </div>`;
+        // NUEVO: Guardamos el archivo y sus propiedades de forma fija en el teléfono
+        try {
+            localStorage.setItem("boveda_multimedia_permanente", resultadoBase64);
+            localStorage.setItem("boveda_multimedia_tipo", archivo.type);
+            localStorage.setItem("boveda_multimedia_nombre", archivo.name);
+            
+            // Pintamos el recurso en pantalla
+            renderizarDesdeMemoria(resultadoBase64, archivo.type, archivo.name);
+        } catch (error) {
+            console.error("Error de almacenamiento:", error);
+            alert("⚠️ ALERTA: El archivo es demasiado pesado para la memoria local rápida. Intenta con un archivo de menor tamaño.");
         }
     };
 
     lector.readAsDataURL(archivo);
 }
 
-// 4. CIERRE Y ENCRIPTACIÓN COMPLETA
+// FUNCIÓN AUXILIAR: Se encarga de pintar los componentes tácticos en el HTML
+function renderizarDesdeMemoria(datosBase64, tipoArchivo, nombreArchivo) {
+    const visor = document.getElementById('visor-multimedia-boveda');
+    const contenedor = document.getElementById('contenedor-render-archivo');
+    
+    if (!visor || !contenedor) return;
+    
+    visor.style.display = 'block';
+    contenedor.innerHTML = ""; // Limpieza previa
+
+    // EVALUACIÓN DINÁMICA DEL TIPO DE ARCHIVO (Tu lógica original intacta)
+    if (tipoArchivo.startsWith('image/')) {
+        contenedor.innerHTML = `<img src="${datosBase64}" style="max-width:100%; max-height:300px; border: 1px solid #ffcc00; border-radius:4px; margin-top:10px;">`;
+    } 
+    else if (tipoArchivo.startsWith('video/')) {
+        contenedor.innerHTML = `<video src="${datosBase64}" controls style="max-width:100%; max-height:300px; margin-top:10px;"></video>`;
+    } 
+    else if (tipoArchivo.startsWith('audio/')) {
+        contenedor.innerHTML = `<audio src="${datosBase64}" controls style="width:100%; margin-top:10px;"></audio>`;
+    } 
+    else if (tipoArchivo === 'application/pdf') {
+        contenedor.innerHTML = `<embed src="${datosBase64}" type="application/pdf" width="100%" height="400px" style="border:1px solid #222;">`;
+    } 
+    else {
+        contenedor.innerHTML = `
+            <div style="padding: 20px; background: #111; border: 1px dashed #ffcc00; margin-top:10px;">
+                <p style="color: #ffcc00; margin: 0;">💼 DOCUMENTO DESBLOQUEADO</p>
+                <span style="font-size: 12px; color: #aaa;">${nombreArchivo || "Archivo de Respaldo"}</span>
+            </div>`;
+    }
+}
+
+// 4. CIERRE Y ENCRIPTACIÓN COMPLETA (Modificado para limpiar también la memoria local si se desea)
 function cerrarSesionBovedaMultimedia() {
     document.getElementById('consola-privada-titan').style.display = 'none';
     document.getElementById('bloque-acceso-boveda').style.display = 'block';
     
-    // Limpieza profunda de los residuos multimedia de la sesión activa
     document.getElementById('archivo-tactico-input').value = "";
     document.getElementById('visor-multimedia-boveda').style.display = 'none';
     document.getElementById('contenedor-render-archivo').innerHTML = "";
+    
+    // NOTA TÁCTICA: Si quieres que al cerrar sesión el archivo se destruya por seguridad, quita las barras '//' de abajo:
+    // localStorage.removeItem("boveda_multimedia_permanente");
+    // localStorage.removeItem("boveda_multimedia_tipo");
+    // localStorage.removeItem("boveda_multimedia_nombre");
 }
+
+                     //AGREGAMOS 
 
                      
                   </script>
