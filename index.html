@@ -1457,6 +1457,142 @@ function calcularMeta() {
         </div>
     </div>
 </section>
+
+                  <!--HTML MENU DESPEGABLE TRES LINIA TIPO ESFERA (ACTUALIZADO CON EL GRIFO DE BONO)-->
+<section class="servicio-tecnologico" id="panelLibertad">
+    <button class="activador-nucleo" onclick="activarServicio()">
+        [ ACCEDER AL SISTEMA DE LIBERTAD ]
+    </button>
+
+    <div class="contenido-esferico">
+        <h2 style="color: #d4af37;">PANEL TÁCTICO</h2>
+        
+        <input type="text" class="input-militar" placeholder="ID NAME">
+        <input type="password" class="input-militar" placeholder="CÓDIGO ALPHA">
+        
+        <button class="btn-registro" onclick="registrarUsuario()" style="background:#4b5320; color:white; padding:10px 20px; border:1px solid #d4af37; cursor:pointer;">
+            INICIAR PROTOCOLO
+        </button>
+
+        <!-- ACCESOS OPERATIVOS CON BILLETERA INTEGRADA -->
+        <div style="margin-top:20px; text-align:left; width:80%; font-family: monospace;">
+            
+            <!-- VISOR DE SALDO LTC INTERNO -->
+            <div style="background: rgba(0,0,0,0.6); border: 1px solid #345d9d; padding: 8px; margin-bottom: 10px; border-radius: 4px;">
+                <span style="color:#aaa; font-size:11px;">BILLETERA LTC:</span> 
+                <strong id="saldo-ltc-grifo" style="color: #345d9d;">0.00000000</strong> <span style="font-size:10px; color:#345d9d;">LTC</span>
+            </div>
+
+            <!-- ENLACE DE LA BILLETERA -->
+            <a href="#" onclick="alert('⚡ BILLETERA LTC CONFIGURADA Y ENLAZADA AL SISTEMA LOCAL')" style="color:#fff; text-decoration:none; display:block; margin-bottom: 5px;">
+                > ACCESO BILLETERA LTC
+            </a>
+            
+            <!-- BOTÓN DEL GRIFO CON ESTILO DE ENLACE QUE CAMBIA SI ESTÁ BLOQUEADO -->
+            <a href="#" id="btn-activar-grifo" onclick="ejecutarGrifoBonoLTC(); return false;" style="color:#14F195; text-decoration:none; display:block;">
+                > ACTIVAR GRIFO DE BONO <span id="tiempo-espera-grifo" style="color:#ff3333; font-size:11px; margin-left:5px;"></span>
+            </a>
+            
+        </div>
+    </div>
+</section>
+                  <!---SCRIPT DE GRIFO DE PANEL TACTICO--->
+
+                  <script>
+
+                   // CONTROL AL CARGAR LA PÁGINA: Lee los saldos y verifica bloqueos en tu menú militar
+document.addEventListener("DOMContentLoaded", () => {
+    // Cargamos el saldo acumulado guardado en el teléfono
+    const saldoGuardado = localStorage.getItem("ltc_saldo_acumulado") || "0.00000000";
+    const visorSaldo = document.getElementById("saldo-ltc-grifo");
+    if (visorSaldo) visorSaldo.innerHTML = parseFloat(saldoGuardado).toFixed(8);
+
+    // Verificamos si el grifo sigue en enfriamiento
+    verificarBloqueoGrifo();
+});
+
+// ALGORITMO EXTRACTOR DEL BONO LTC
+function ejecutarGrifoBonoLTC() {
+    const ultimoReclamo = localStorage.getItem("ltc_ultimo_reclamo");
+    const tiempoActual = Date.now();
+    const COOLDOWN_24H = 24 * 60 * 60 * 1000; // 24 Horas reales
+
+    // Si ya reclamó y no han pasado 24h, bloqueamos la extracción
+    if (ultimoReclamo && (tiempoActual - ultimoReclamo < COOLDOWN_24H)) {
+        alert("🔒 SISTEMA: Extracción denegada. El grifo está recargando energía.");
+        return;
+    }
+
+    // Cálculo matemático del bono aleatorio de LTC
+    const recompensaBase = 0.0005;
+    const recompensaAleatoria = Math.random() * 0.0020;
+    const ltcGanado = recompensaBase + recompensaAleatoria;
+
+    // Guardado persistente en la memoria del celular
+    let saldoActual = parseFloat(localStorage.getItem("ltc_saldo_acumulado") || "0.00000000");
+    saldoActual += ltcGanado;
+    
+    localStorage.setItem("ltc_saldo_acumulado", saldoActual.toFixed(8));
+    localStorage.setItem("ltc_ultimo_reclamo", tiempoActual);
+
+    // Actualizamos la interfaz del menú
+    document.getElementById("saldo-ltc-grifo").innerHTML = saldoActual.toFixed(8);
+    
+    alert(`🟢 EXTRACCIÓN EXITOSA\n\nInyección de +${ltcGanado.toFixed(8)} LTC completada en el registro militar.`);
+    
+    // Iniciamos la cuenta regresiva en el menú
+    verificarBloqueoGrifo();
+}
+
+// INSPECTOR DE TIEMPO PARA EL ENLACE DEL PANEL
+function verificarBloqueoGrifo() {
+    const ultimoReclamo = localStorage.getItem("ltc_ultimo_reclamo");
+    if (!ultimoReclamo) return;
+
+    const btnGrifo = document.getElementById("btn-activar-grifo");
+    const visorReloj = document.getElementById("tiempo-espera-grifo");
+
+    const tiempoActual = Date.now();
+    const COOLDOWN_24H = 24 * 60 * 60 * 1000;
+    const tiempoTranscurrido = tiempoActual - ultimoReclamo;
+
+    if (tiempoTranscurrido < COOLDOWN_24H) {
+        // Estilo visual del enlace bloqueado
+        if (btnGrifo) {
+            btnGrifo.style.color = "#555555";
+            btnGrifo.style.cursor = "not-allowed";
+        }
+
+        const intervaloGrifo = setInterval(() => {
+            const ahora = Date.now();
+            const restante = (parseInt(ultimoReclamo) + COOLDOWN_24H) - ahora;
+
+            if (restante <= 0) {
+                clearInterval(intervaloGrifo);
+                // Liberamos el botón cuando se cumpla el día
+                if (btnGrifo) {
+                    btnGrifo.style.color = "#14F195";
+                    btnGrifo.style.cursor = "pointer";
+                }
+                if (visorReloj) visorReloj.innerHTML = "";
+            } else {
+                // Conversión de milisegundos a formato militar HH:MM:SS
+                let horas = Math.floor(restante / (1000 * 60 * 60));
+                let minutos = Math.floor((restante % (1000 * 60 * 60)) / (1000 * 60));
+                let segundos = Math.floor((restante % (1000 * 60)) / 1000);
+
+                horas = horas < 10 ? "0" + horas : horas;
+                minutos = minutes < 10 ? "0" + minutos : minutos;
+                segundos = segundos < 10 ? "0" + segundos : segundos;
+
+                if (visorReloj) visorReloj.innerHTML = `[ ⏳ ENFRIAMIENTO: ${horas}:${minutos}:${segundos} ]`;
+            }
+        }, 1000);
+    }
+}
+  
+                  </script>
+                  
                  <!---PRUEBA DE BOVEDA DE SEGURIDAD--->
 <div class="panel-titan">
   <h2>🔒 BÓVEDA DE SEGURIDAD [TITÁN-GUARD]</h2>
