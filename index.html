@@ -1485,6 +1485,86 @@ function calcularMeta() {
 
                   <script>
 
+             // CONTROL DE SESIÓN AL CARGAR EL NÚCLEO (CORREGIDO)
+document.addEventListener("DOMContentLoaded", () => {
+    const operadorExistente = localStorage.getItem("operador_id_name");
+    const inputsMilitar = document.querySelectorAll(".input-militar");
+    const btnRegistro = document.querySelector(".btn-registro");
+
+    // Si ya hay un operador registrado y las casillas existen en pantalla
+    if (operadorExistente && btnRegistro && inputsMilitar.length >= 2) {
+        inputsMilitar[0].value = operadorExistente; // Autocompleta en el ID NAME [0]
+        inputsMilitar[0].disabled = true;           // Bloquea el campo de nombre
+        inputsMilitar[0].style.opacity = "0.6";
+        
+        // Colores de sistema desbloqueado
+        btnRegistro.innerHTML = "DESBLOQUEAR NÚCLEO 🛰️";
+        btnRegistro.style.background = "#112200";
+        btnRegistro.style.borderColor = "#14F195";
+    }
+});
+ 
+            //COMTROL DEL PANEL TACTICO clave  USUARIO
+                    // FUNCIÓN PRINCIPAL: INICIAR PROTOCOLO (CORREGIDA CON POSICIONES EXACTAS)
+function registrarUsuario() {
+    // Capturamos los dos inputs militares de tu interfaz
+    const inputs = document.querySelectorAll(".input-militar");
+    const btnRegistro = document.querySelector(".btn-registro");
+    
+    // Verificación de seguridad: si no encuentra los dos inputs, frena el código
+    if (inputs.length < 2) return;
+
+    // 🚨 CORRECCIÓN TÁCTICA: Indicamos la posición exacta [0] y [1]
+    const idName = inputs[0].value.trim();       // Primer input (ID NAME)
+    const codigoAlpha = inputs[1].value.trim();  // Segundo input (CÓDIGO ALPHA)
+    
+    const CODIGO_MAESTRO = "ALPHA-2026"; // Tu clave táctica de acceso
+
+    // Validación elemental: campos vacíos
+    if (idName === "" || codigoAlpha === "") {
+        alert("⚠️ SEGURIDAD: Todos los campos del protocolo de acceso deben ser diligenciados.");
+        return;
+    }
+
+    // Validación del Código de Acceso
+    if (codigoAlpha !== CODIGO_MAESTRO) {
+        alert("❌ ERROR ALPHA: Credenciales de encriptación inválidas. Acceso denegado.");
+        inputs[1].value = ""; // Limpiamos solo la contraseña por seguridad
+        return;
+    }
+
+    // EFECTO DE DECODIFICACIÓN EN TIEMPO REAL
+    btnRegistro.disabled = true;
+    btnRegistro.style.cursor = "not-allowed";
+    let porcentaje = 0;
+
+    const temporizadorCarga = setInterval(() => {
+        porcentaje += 25;
+        btnRegistro.innerHTML = `DECODIFICANDO... ${porcentaje}%`;
+
+        if (porcentaje >= 100) {
+            clearInterval(temporizadorCarga);
+            
+            // Guardamos el nombre del operador permanentemente en el teléfono
+            localStorage.setItem("operador_id_name", idName);
+
+            alert(`🟢 ACCESO PERMITIDO\n\nIdentidad verificada: Operador [ ${idName} ]. Iniciando interfaz del Proyecto Libertad.`);
+
+            // Cambiamos el borde del panel para indicar éxito
+            const contenidoEsferico = document.querySelector(".contenido-esferico");
+            if (contenidoEsferico) {
+                contenidoEsferico.style.border = "1px solid #14F195"; 
+            }
+
+            // Dejamos el botón fijo reflejando la sesión activa
+            btnRegistro.disabled = false;
+            btnRegistro.style.cursor = "pointer";
+            btnRegistro.innerHTML = "SESIÓN ACTIVA ✔";
+        }
+    }, 400); 
+}
+ 
+
                    // CONTROL AL CARGAR LA PÁGINA: Lee los saldos y verifica bloqueos en tu menú militar
 document.addEventListener("DOMContentLoaded", () => {
     // Cargamos el saldo acumulado guardado en el teléfono
