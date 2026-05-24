@@ -2391,19 +2391,110 @@ async function gestionarWalletSolana() {
                   </main>
                   
                   <!---NUEVO GENERADOR DE ALGORITMOS--->
-                  <section class="panel-titan">
-  <h2>📊 ALGORITMO GENERADOR DE FLUJO</h2>
-  <p>Calcula la meta para el fondo de reserva de $1.200.000 COP para la formalización definitiva.</p>
 
-  <div class="grid-tactico">
-    <!-- Bloque de Proyección -->
-    <div class="tarjeta-tactica" style="text-align: center;">
-      <h3>PROYECCIÓN DE CAPITAL</h3>
-      <div style="font-size: 24px; font-weight: bold; margin: 15px 0; color: var(--neon-green); text-shadow: 0 0 10px var(--neon-green);">
-        $0 COP
-      </div>
-      <button class="btn-neon">EJECUTAR CÁLCULO _</button>
-    </div>
+                  <!-- 📊 ALGORITMO GENERADOR DE FLUJO CALIBRADO -->
+<div style="background: #0a0a0a; border: 2px solid #d4af37; padding: 25px; border-radius: 6px; text-align: center; max-width: 500px; margin: 30px auto; font-family: monospace;">
+  
+  <h3 style="color: #d4af37; font-size: 14px; letter-spacing: 1px; margin-top: 0; text-transform: uppercase;">
+    📊 ALGORITMO GENERADOR DE FLUJO
+  </h3>
+  <p style="color: #888888; font-size: 12px; margin-bottom: 20px;">
+    Calcula la meta para el fondo de reserva de $1.200.000 COP para la formalización definitiva.
+  </p>
+
+  <!-- BARRA DE CARGA GRÁFICA TÁCTICA -->
+  <div style="width: 100%; background: #222; border: 1px solid #d4af37; height: 18px; border-radius: 3px; margin-bottom: 15px; overflow: hidden; position: relative;">
+    <div id="progreso-barra-flujo" style="width: 0%; background: #d4af37; height: 100%; transition: width 1.5s ease-in-out;"></div>
+  </div>
+
+  <!-- VISOR NUMÉRICO DE PROYECCIÓN -->
+  <div style="background: #000; border: 1px solid #222; padding: 10px; border-radius: 4px; margin-bottom: 20px;">
+    <span style="color: #666; font-size: 11px; display: block;">PROYECCIÓN DE CAPITAL ACTUAL</span>
+    <strong id="visor-capital-flujo" style="color: #ffffff; font-size: 22px;">$0</strong> <span style="color: #d4af37; font-size: 12px; font-weight: bold;">COP</span>
+    <span id="porcentaje-flujo" style="color: #14F195; font-size: 12px; display: block; margin-top: 5px; font-weight: bold;">(0% DEL OBJETIVO)</span>
+  </div>
+
+  <!-- BOTÓN DE CÁLCULO -->
+  <button onclick="calcularFlujoCapital()" id="btn-ejecutar-flujo" style="width: 100%; padding: 12px; background: transparent; color: #d4af37; border: 1px solid #d4af37; font-weight: bold; cursor: pointer; text-transform: uppercase; font-size: 12px; letter-spacing: 1px;">
+    EJECUTAR CÁLCULO _
+  </button>
+
+</div>
+
+
+                  <!---SCRIPT DE CLAVE DE INGRESO AL GENERADOR DE ALGORITMO--->
+<script>
+
+   // ALGORITMO GENERADOR CON FILTRO DE PRIVACIDAD DE CLAVE
+function calcularFlujoCapital() {
+    // 🚨 CLAVE TÁCTICA PARA ESTA SECCIÓN FINANCIERA
+    const CLAVE_FLUJO_MAESTRA = "FLUJO-2026"; 
+
+    // Solicita la contraseña mediante un cuadro inmersivo compatible con tu teléfono antiguo
+    const credencialIngresada = prompt("📊 SEGURIDAD FINANCIERA [PROYECTO LIBERTAD]\n\nIntroduzca el Código de Autorización para ejecutar la proyección:");
+
+    // Si el usuario cancela o deja el cuadro vacío, salimos en silencio
+    if (credencialIngresada === null) return;
+
+    // Validación estricta de la credencial
+    if (credencialIngresada.trim() !== CLAVE_FLUJO_MAESTRA) {
+        alert("❌ ACCESO RECHAZADO\n\nCódigo de autorización incorrecto. Sector numérico bloqueado.");
+        return;
+    }
+
+    // --- CONTINUACIÓN DEL MOTOR MATEMÁTICO (SI LA CLAVE ES CORRECTA) ---
+    const META_TOTAL = 1200000; // Meta base establecida en COP
+    
+    // Lee el saldo acumulado de tu grifo LTC y lo suma simuladamente al fondo base
+    const ltcSaldo = parseFloat(localStorage.getItem("ltc_saldo_acumulado") || "0.00000000");
+    const ltcConvertidoACop = Math.floor(ltcSaldo * 380000); 
+    
+    const capitalBaseAhorro = 350000; // Tu base fija de ahorro
+    const capitalTotalProyectado = capitalBaseAhorro + ltcConvertidoACop;
+
+    const barra = document.getElementById("progreso-barra-flujo");
+    const visor = document.getElementById("visor-capital-flujo");
+    const textoPorcentaje = document.getElementById("porcentaje-flujo");
+    const botonFlujo = document.getElementById("btn-ejecutar-flujo");
+
+    if (!barra || !visor || !textoPorcentaje || !botonFlujo) return;
+
+    // Bloqueamos el botón temporalmente para simular el procesamiento de datos
+    botonFlujo.disabled = true;
+    botonFlujo.innerHTML = "DECODIFICANDO MATRIZ NUMÉRICA... ⚡";
+    botonFlujo.style.borderColor = "#666";
+    botonFlujo.style.color = "#666";
+
+    let porcentaje = Math.floor((capitalTotalProyectado / META_TOTAL) * 100);
+    if (porcentaje > 100) porcentaje = 100; 
+
+    // Efecto dinámico de conteo progresivo
+    let capitalContador = 0;
+    const saltoDinamic = Math.ceil(capitalTotalProyectado / 40); 
+    
+    const intervaloContador = setInterval(() => {
+        capitalContador += saltoDinamic;
+        
+        if (capitalContador >= capitalTotalProyectado) {
+            clearInterval(intervaloContador);
+            
+            visor.innerHTML = "$" + capitalTotalProyectado.toLocaleString("es-CO");
+            barra.style.width = porcentaje + "%";
+            textoPorcentaje.innerHTML = `(${porcentaje}% DEL OBJETIVO LOGRADO)`;
+            
+            botonFlujo.disabled = false;
+            botonFlujo.innerHTML = "ALGORITMO ACTUALIZADO ✓";
+            botonFlujo.style.borderColor = "#14F195";
+            botonFlujo.style.color = "#14F195";
+        } else {
+            visor.innerHTML = "$" + capitalContador.toLocaleString("es-CO");
+        }
+    }, 30); 
+}
+
+   
+</script>
+                  
      <!---NUEVO BLOQUE DE PRUEBA PARA EL CALCULO--->
 
      <!-- ========================================== -->
