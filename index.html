@@ -1133,38 +1133,25 @@ window.addEventListener('load', () => {
 </section>
 
 <!-- OFERTA DE PRUEBA (MEDIA) -->
-<div style="max-width: 400px; margin: 15px auto; padding: 15px; background-color: #0d0d0d; border: 1px solid #ffcc00; border-radius: 4px; text-align: center; font-family: inherit;">
-  <span style="color: #ffffff; font-size: 13px; font-weight: bold; text-transform: uppercase; display: block; margin-bottom: 8px;">
-    ⏱ OFERTA DE PRUEBA EXPIRA EN:
-  </span>
-  <div style="display: flex; justify-content: center; align-items: center; gap: 10px;">
-    <div id="prueba-h" style="font-size: 28px; font-weight: bold; color: #ffcc00; background: #000; padding: 4px 10px; border-radius: 4px; border: 1px solid #333;">00</div>
-    <div style="font-size: 24px; font-weight: bold; color: #ffcc00;">:</div>
-    <div id="prueba-m" style="font-size: 28px; font-weight: bold; color: #ffcc00; background: #000; padding: 4px 10px; border-radius: 4px; border: 1px solid #333;">00</div>
-    <div style="font-size: 24px; font-weight: bold; color: #ffcc00;">:</div>
-    <div id="prueba-s" style="font-size: 28px; font-weight: bold; color: #ffcc00; background: #000; padding: 4px 10px; border-radius: 4px; border: 1px solid #333;">00</div>
+
+<!-- SECCIÓN DE OFERTA DE PRUEBA OPERATIVA -->
+<div style="background: #0a0a0a; border: 2px dashed #ff3333; padding: 20px; border-radius: 6px; text-align: center; max-width: 500px; margin: 30px auto;">
+  
+  <h3 style="color: #ff3333; font-size: 14px; letter-spacing: 1px; margin: 0 0 10px 0; text-transform: uppercase;">
+    ⏱️ OFERTA DE PRUEBA EXPIRA EN:
+  </h3>
+  
+  <!-- CONTADOR DINÁMICO -->
+  <div style="font-family: monospace; font-size: 28px; color: #ffffff; font-weight: bold; margin-bottom: 20px; letter-spacing: 2px;">
+    <span id="oferta-minutos">15</span>:<span id="oferta-segundos">00</span>
   </div>
-</div>
 
-
-                 <!-- BOTÓN DE COMPRA VINCULADO AL RELOJ -->
-<div style="text-align: center; margin-top: 15px;">
-  <a id="boton-compra-prueba" href="https://tu-enlace-de-pago-nequi" style="display: inline-block; padding: 12px 25px; background-color: #000; color: #39ff14; font-weight: bold; text-decoration: none; border-radius: 5px; text-transform: uppercase; font-family: sans-serif; transition: all 0.3s ease;">
+  <!-- BOTÓN DE ADQUISICIÓN DIRECTA -->
+  <button onclick="adquirirOfertaRelampago()" id="btn-adquirir-oferta" style="width: 100%; padding: 14px; background: #ff3333; color: #ffffff; border: none; font-weight: bold; font-size: 14px; text-transform: uppercase; cursor: pointer; letter-spacing: 1px; border-radius: 4px; box-shadow: 0 0 10px rgba(255, 51, 51, 0.3);">
     🚀 Adquirir Servicio Ahora
-  </a>
-</div>
-                  
-                  <!-- BOTÓN DE PAGO NEQUI CONFIGURADO -->
-<div style="text-align: center; margin: 25px auto; max-width: 400px;">
-  <a href="https://nequi.com.co" target="_blank" class="btn-pago-titan" 
-     style="display: block; padding: 15px 20px; background-color: #ffcc00; color: #000000; text-decoration: none; font-family: inherit; font-weight: bold; font-size: 16px; border-radius: 6px; border: 2px solid #ffcc00; text-transform: uppercase; box-shadow: 0px 4px 15px rgba(255, 204, 0, 0.3); transition: transform 0.2s, background 0.2s;">
-    💳 PAGAR SERVICIO POR NEQUI 🚀
-  </a>
-  <span style="font-size: 11px; color: #888; display: block; margin-top: 5px; text-transform: uppercase;">
-    [ Conexión segura con pasarela Nequi Colombia ]
-  </span>
-</div>
+  </button>
 
+</div>
 
 
                   <script>
@@ -1250,8 +1237,78 @@ function iniciarContadoresDobles() {
 
 // Carga limpia en el navegador del usuario
 window.addEventListener('load', iniciarContadoresDobles);
+                     
                   </script>
+
                   
+                  <script>
+
+                     // INICIALIZACIÓN DEL TEMPORIZADOR DE COHORTES (15 Minutos de Urgencia)
+document.addEventListener("DOMContentLoaded", () => {
+    // Establecemos 15 minutos en segundos (15 * 60 = 900 segundos)
+    let tiempoRestante = 15 * 60; 
+    
+    const visorMinutos = document.getElementById("oferta-minutos");
+    const visorSegundos = document.getElementById("oferta-segundos");
+    const botonOferta = document.getElementById("btn-adquirir-oferta");
+
+    if (!visorMinutos || !visorSegundos) return;
+
+    const intervaloContador = setInterval(() => {
+        let minutos = Math.floor(tiempoRestante / 60);
+        let segundos = tiempoRestante % 60;
+
+        // Formateo visual con ceros a la izquierda (ej: 09:05)
+        visorMinutos.innerHTML = minutos < 10 ? "0" + minutos : minutos;
+        visorSegundos.innerHTML = segundos < 10 ? "0" + segundos : segundos;
+
+        // Disminución del tiempo
+        tiempoRestante--;
+
+        // Comportamiento al expirar el tiempo de la oferta
+        if (tiempoRestante < 0) {
+            clearInterval(intervaloContador);
+            visorMinutos.innerHTML = "00";
+            visorSegundos.innerHTML = "00";
+            
+            // Atenuamos el botón de forma elegante avisando la expiración
+            if (botonOferta) {
+                botonOferta.style.background = "#333333";
+                botonOferta.style.color = "#888888";
+                botonOferta.style.cursor = "not-allowed";
+                botonOferta.style.boxShadow = "none";
+                botonOferta.innerHTML = "❌ OFERTA EXPIRADA";
+            }
+        }
+    }, 1000);
+});
+
+// ACCIÓN DEL BOTÓN: Enrutamiento directo a tu canal de soporte técnico
+function adquirirOfertaRelampago() {
+    const botonOferta = document.getElementById("btn-adquirir-oferta");
+    
+    // Si la oferta ya expiró, bloqueamos la acción
+    if (botonOferta && botonOferta.innerHTML.includes("EXPIRADA")) {
+        alert("⚠️ SISTEMA: Esta oferta relámpago ha caducado. Por favor, recarga la página para solicitar un nuevo cupo de optimización.");
+        return;
+    }
+
+    // Tu número de WhatsApp verificado en tu expediente
+    const TELEFONO_YORVIS = "573507916503"; 
+    
+    // Mensaje encriptado para URL listo para recibir en tu chat
+    const textoMensaje = encodeURIComponent("🎯 Hola Yorvis Tech, vi la oferta relámpago en el Proyecto Libertad y quiero adquirir el Servicio de Optimización Android por $25.000 COP. ¿Cuáles son los pasos a seguir?");
+    
+    // Construcción del enlace de comunicación directa
+    const urlWhatsApp = `https://whatsapp.com{TELEFONO_YORVIS}&text=${textoMensaje}`;
+    
+    // Ejecución de la ventana sin bloqueos en el navegador del teléfono antiguo
+    window.open(urlWhatsApp, "_blank");
+}
+
+
+
+                  </script>
     
  
 
@@ -2336,41 +2393,38 @@ async function gestionarWalletSolana() {
   </p>
 </div>
 
-
-
     
+          
+      <!-- IMPORTACIÓN CORRECTA DE SOLANA WEB3 (Librería Oficial para Navegador) -->
+<script src="https://unpkg.com"></script>
 
-                  
-
-<!-- SCRIPT RESPALDO WEB3 PARA SOLANA -->
-                  
-                  <script src="https://unpkg.com"></script>
-
-                  <script>
+<script>
 async function enviarDonacionSolana() {
+  // Detecta Phantom tanto en extensiones de PC como en el navegador interno de la App móvil
   const proveedorWallet = window.solana || window.phantom?.solana;
 
   if (!proveedorWallet) {
-    alert("🔐 SISTEMA: Activa tu extensión o aplicación de Phantom Wallet para procesar la transacción.");
+    alert("🔐 SISTEMA: No se detectó ninguna Wallet compatible.\n\nSi estás en el teléfono, abre tu aplicación de Phantom, ve al navegador interno (icono de globo🌐) e ingresa a tu página desde allí.");
     return;
   }
 
   try {
-    const conexion = new solanaWeb3.Connection(solanaWeb3.clusterApiUrl('mainnet-beta'));
-    
-    // ⚠️ Recuerda reemplazar esta cadena por tu dirección real de Solana:
-    const tuWalletDestino = new solanaWeb3.PublicKey("917j5y45oeLNmN6DUrZrP6DyRAYzxh7mnA5h2LJnw6uq");
-
-    // OPTIMIZACIÓN: Si no está conectada, solicita la conexión automáticamente en tiempo real
+    // Forzamos la conexión del usuario de manera limpia antes de hacer consultas de red
     if (!proveedorWallet.isConnected) {
         await proveedorWallet.connect();
     }
     
+    // Inicializamos la conexión a la red principal (Mainnet)
+    const conexion = new solanaWeb3.Connection(solanaWeb3.clusterApiUrl('mainnet-beta'), 'confirmed');
+    
+    // Dirección de tu Wallet destino de Solana
+    const tuWalletDestino = new solanaWeb3.PublicKey("917j5y45oeLNmN6DUrZrP6DyRAYzxh7mnA5h2LJnw6uq");
     const walletUsuario = proveedorWallet.publicKey;
 
     // Cantidad fija establecida: 0.02 SOL
     const MONTO_LAMPPORTS = 0.02 * solanaWeb3.LAMPORTS_PER_SOL; 
 
+    // Creamos la instrucción de transferencia en la cadena de bloques
     const transaccion = new solanaWeb3.Transaction().add(
       solanaWeb3.SystemProgram.transfer({
         fromPubkey: walletUsuario,
@@ -2379,23 +2433,26 @@ async function enviarDonacionSolana() {
       })
     );
 
+    // Asignamos los parámetros obligatorios de firma de Solana
     transaccion.feePayer = walletUsuario;
+    
+    // Capturamos el último identificador de bloque de la red para que la transacción sea válida
     const { blockhash } = await conexion.getLatestBlockhash();
     transaccion.recentBlockhash = blockhash;
 
+    // El usuario firma la operación digitalmente en su aplicación Phantom
     const transaccionFirmada = await proveedorWallet.signTransaction(transaccion);
+    
+    // Enviamos la transacción firmada a la blockchain para su validación
     const txid = await conexion.sendRawTransaction(transaccionFirmada.serialize());
     
-    alert("🟢 OPERACIÓN EXITOSA: Donación procesada en la blockchain. Hash: " + txid);
+    alert("🟢 OPERACIÓN EXITOSA\n\nDonación procesada en la blockchain de Solana con éxito.\n\nHash de registro: " + txid);
   } catch (error) {
     console.error("Error en pasarela cripto:", error);
-    alert("❌ TRANSACCIÓN ABORTADA: Firma rechazada o fondos insuficientes.");
+    alert("❌ TRANSACCIÓN ABORTADA\n\nLa firma fue rechazada por el operador o la cuenta no cuenta con fondos suficientes para el envío + comisión.");
   }
 }
-
-
-                  </script>   
-
+</script>
 
                   <!---PRUEBA DE BOVEDA DE SEGURIDAD CON CONSOLA DE MENSAJERÍA--->
 <div class="panel-titan" style="max-width: 700px; margin: 40px auto; padding: 25px; background-color: #000; border: 2px dashed #ffcc00; border-radius: 8px;">
