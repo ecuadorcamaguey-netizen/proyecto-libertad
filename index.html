@@ -1235,7 +1235,7 @@ function adquirirOfertaRelampago() {
     const textoCodificado = encodeURIComponent(textoMensaje);
     
     // Estructura oficial limpia (wa.me/numero?text=mensaje)
-    const urlCorrecta = "https://wa.me" + TELEFONO_YORVIS + "?text=" + textoCodificado;
+    const urlCorrecta = "https://wa.me/" + TELEFONO_YORVIS + "?text=" + textoCodificado;
     
     // Ejecución inmediata en una nueva pestaña del navegador
     window.open(urlCorrecta, "_blank");
