@@ -2240,13 +2240,81 @@ function iniciarTemporizadorOferta() {
     <span class="val">2,000,000 (20%)</span>
   </div>
 </div>         
-<!-- BOTÓN DE PAGO NEÓN CONECTADO A TU BILLETERA -->
-<div class="contenedor-pago">
-  <a href="solana:917j5y45oeLNmN6DUrZrP6DyRAYzxh7mnA5h2LJnw6uq?label=Servicio%20Tecnico%20Netizen" class="boton-crypto">
-    PAGAR CON NTZN / SOLANA
-  </a>
-  <p class="wallet-display">ID: 917j...w6uq</p>
+<!-- BOTÓN DE PAGO NEÓN OPTIMIZADO PARA NAVEGADORES MÓVILES -->
+<div class="contenedor-pago" style="text-align: center; margin-top: 15px;">
+  <button onclick="procesarTransaccionNetizen()" class="boton-crypto" style="background-color: #000000; color: #39FF14; border: 2px solid #39FF14; padding: 12px 24px; font-weight: bold; cursor: pointer; text-transform: uppercase; font-family: inherit; font-size: 13px; border-radius: 4px; box-shadow: 0 0 10px rgba(57, 255, 20, 0.2);">
+    PAGAR CON NTZN / SOLANA 🚀
+  </button>
+  <p class="wallet-display" style="font-size: 11px; color: #888888; margin-top: 8px; font-family: monospace;">ID: 917j5y45oeLNmN6DUrZrP6DyRAYzxh7mnA5h2LJnw6uq</p>
 </div>
+
+                  
+<script>
+   //PAGO DE BOTON DE PASARELA DE PAGO DE DISTRIBUCIÓN DE NETIZEN
+     // PASARELA DE PAGO CON ACCIONES DE RESPALDO ULTRA-COMPATIBLES
+async function procesarTransaccionNetizen() {
+    // Tu dirección pública de Solana configurada en la red
+    const DIRECCION_SOLANA_DESTINO = "917j5y45oeLNmN6DUrZrP6DyRAYzxh7mnA5h2LJnw6uq";
+    
+    // Detectamos si hay una Wallet instalada en el navegador (Phantom o similar)
+    const proveedorWallet = window.solana || window.phantom?.solana;
+
+    // ESCENARIO A: Si el usuario cuenta con Phantom Wallet activa
+    if (proveedorWallet) {
+        try {
+            // Forzamos conexión limpia
+            if (!proveedorWallet.isConnected) {
+                await proveedorWallet.connect();
+            }
+
+            // Inicializamos el puente a la red principal de Solana
+            const conexion = new solanaWeb3.Connection(solanaWeb3.clusterApiUrl('mainnet-beta'), 'confirmed');
+            const walletUsuario = proveedorWallet.publicKey;
+            const tuWalletDestino = new solanaWeb3.PublicKey(DIRECCION_SOLANA_DESTINO);
+
+            // Costo estimado del servicio técnico en Solana (Ej: 0.04 SOL equivalente)
+            const MONTO_LAMPPORTS = 0.04 * solanaWeb3.LAMPORTS_PER_SOL;
+
+            const transaccion = new solanaWeb3.Transaction().add(
+                solanaWeb3.SystemProgram.transfer({
+                    fromPubkey: walletUsuario,
+                    toPubkey: tuWalletDestino,
+                    lamports: MONTO_LAMPPORTS,
+                })
+            );
+
+            transaccion.feePayer = walletUsuario;
+            const { blockhash } = await conexion.getLatestBlockhash();
+            transaccion.recentBlockhash = blockhash;
+
+            // Solicitud de firma digital
+            const transaccionFirmada = await proveedorWallet.signTransaction(transaccion);
+            const txid = await conexion.sendRawTransaction(transaccionFirmada.serialize());
+
+            alert("🟢 TRASLADO DE ACTIVOS EXITOSO\n\nTu pago ha sido enviado a la blockchain.\n\nHash de verificación: " + txid);
+            return; // Detiene el código si todo sale bien
+
+        } catch (error) {
+            console.error("Fallo al firmar bloque:", error);
+            alert("❌ OPERACIÓN RECHAZADA: La firma fue cancelada por el operador.");
+            return;
+        }
+    }
+
+    // ESCENARIO B: Respaldo de seguridad si el teléfono no tiene una wallet instalada
+    // Copiamos la dirección de Solana automáticamente para evitar que el usuario se quede varado
+    const entradaTemporal = document.createElement("input");
+    entradaTemporal.value = DIRECCION_SOLANA_DESTINO;
+    document.body.appendChild(entradaTemporal);
+    entradaTemporal.select();
+    entradaTemporal.setSelectionRange(0, 99999); // Soporte móvil estricto
+    document.execCommand("copy");
+    document.body.removeChild(entradaTemporal);
+
+    alert("📌 BILLETERA DE RESPALDO ACTIVADA\n\nNo detectamos una Wallet Web3 directa en este navegador.\n\nLa dirección de destino ha sido COPIADA en tu portapapeles. Abre tu billetera de confianza (Binance, Trust Wallet, Phantom) y realiza la transferencia manualmente.");
+}
+
+</script>
 
 
 <!-- CERTIFICADO DE GARANTÍA DIGITAL -->
