@@ -818,13 +818,72 @@ body {
     <span class="letra-n">N</span>
   </div>
 </div>
-                  <!-- SELECTOR DE IDIOMAS TRILINGÜE TÁCTICO -->
-<div class="language-selector-titan" style="position: fixed; top: 15px; right: 15px; z-index: 10000; background-color: #000000; border: 1px solid #14F195; padding: 5px 10px; border-radius: 4px; box-shadow: 0px 0px 10px rgba(20, 241, 149, 0.3);">
-  <button onclick="cambiarIdioma('es')" style="background: none; border: none; color: #14F195; font-family: inherit; font-weight: bold; cursor: pointer; padding: 2px 5px; font-size: 12px;">[ ES ]</button>
-  <span style="color: #444;">|</span>
-  <button onclick="cambiarIdioma('en')" style="background: none; border: none; color: #888888; font-family: inherit; font-weight: bold; cursor: pointer; padding: 2px 5px; font-size: 12px;" id="btn-lang-en">[ EN ]</button>
+                  <!-- INTERRUPTOR TÁCTICO DE IDIOMA -->
+<div class="contenedor-idioma" style="text-align: right; padding: 10px 20px; font-family: monospace;">
+  <button onclick="cambiarIdioma('es')" style="background: #000; color: #14F195; border: 1px solid #14F195; padding: 5px 10px; cursor: pointer; font-weight: bold; font-size: 11px; border-radius: 3px; margin-right: 5px;">
+    ES 🇨🇴
+  </button>
+  <button onclick="cambiarIdioma('en')" style="background: #000; color: #888; border: 1px solid #444; padding: 5px 10px; cursor: pointer; font-weight: bold; font-size: 11px; border-radius: 3px;">
+    EN 🇺🇸
+  </button>
 </div>
+            <script>
+               //SELECTOR DE IDIOMAS DEL SITIO WEB 
 
+               // CONTROL DE TRADUCCIÓN AL CARGAR LA PÁGINA
+document.addEventListener("DOMContentLoaded", () => {
+    // Leemos si el usuario ya tenía un idioma preferido guardado en el teléfono
+    const idiomaGuardado = localStorage.getItem("proyecto_libertad_idioma") || "es";
+    
+    // Aplicamos el idioma guardado de forma automática
+    cambiarIdioma(idiomaGuardado);
+});
+
+// FUNCIÓN PRINCIPAL DE CAMBIO DE IDIOMA
+function cambiarIdioma(codigoIdioma) {
+    // 1. Guardamos la preferencia en la memoria local del teléfono
+    localStorage.setItem("proyecto_libertad_idioma", codigoIdioma);
+
+    // 2. Capturamos todos los elementos de la página que tengan la clase 'lang-text'
+    const elementosTraducibles = document.querySelectorAll(".lang-text");
+
+    elementosTraducibles.forEach(elemento => {
+        // Buscamos el texto correspondiente al idioma seleccionado en los atributos data-
+        const textoTraducido = elemento.getAttribute(`data-${codigoIdioma}`);
+        
+        if (textoTraducido) {
+            // Si el elemento es un botón con marcadores de envío, cambiamos el texto plano
+            if (elemento.tagName === "BUTTON" || elemento.tagName === "INPUT") {
+                elemento.innerHTML = textoTraducido;
+                if (elemento.placeholder) elemento.placeholder = textoTraducido;
+            } else {
+                // Para párrafos, títulos y textos normales
+                elemento.innerHTML = textoTraducido;
+            }
+        }
+    });
+
+    // 3. ESTILO VISUAL: Resaltamos el botón del idioma que está activo en este momento
+    const botones = document.querySelectorAll(".contenedor-idioma button");
+    if (botones.length >= 2) {
+        if (codigoIdioma === "es") {
+            botones[0].style.color = "#14F195";
+            botones[0].style.borderColor = "#14F195";
+            botones[1].style.color = "#888";
+            botones[1].style.borderColor = "#444";
+        } else {
+            botones[0].style.color = "#888";
+            botones[0].style.borderColor = "#444";
+            botones[1].style.color = "#14F195";
+            botones[1].style.borderColor = "#14F195";
+        }
+    }
+}
+
+               
+            </script>
+
+                  
 <!---TITULO DE LA PAGINA PARA CAMBIAR--->
                    <header>
                       <h1 class="animado lang-text" lang-es="PROYECTO LIBERTAD 2026" lang-en="PROJECT FREEDOM 2026" onclick="this.clicks = (this.clicks || 0) + 1; if(this.clicks === 5) { reiniciarReloj(); }">
