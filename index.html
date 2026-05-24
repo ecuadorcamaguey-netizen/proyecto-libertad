@@ -1131,184 +1131,116 @@ window.addEventListener('load', () => {
 
     </div>
 </section>
+                  
 
-<!-- OFERTA DE PRUEBA (MEDIA) -->
+<!--COMTADOR DE OFERTA DE PRUEBA (MEDIA) -->
 
-<!-- SECCIÓN DE OFERTA DE PRUEBA OPERATIVA -->
-<div style="background: #0a0a0a; border: 2px dashed #ff3333; padding: 20px; border-radius: 6px; text-align: center; max-width: 500px; margin: 30px auto;">
+<!-- ⚡ CENTRO DE APOYO OPERATIVO UNIFICADO -->
+<div class="donaciones-verde-container" style="max-width: 550px; margin: 40px auto; padding: 25px; background-color: #000000; border: 2px solid #14F195; border-radius: 6px; font-family: inherit; color: #ffffff;">
   
+  <h3 class="lang-text" data-es="⚡ CENTRO DE APOYO OPERATIVO" data-en="⚡ OPERATIONAL SUPPORT CENTER" style="text-align: center; color: #14F195; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 5px; font-weight: bold;">
+    ⚡ CENTRO DE APOYO OPERATIVO
+  </h3>
+  
+  <p class="lang-text" data-es="[ Financia el desarrollo de herramientas libres y soberanas ]" data-en="[ Fund the development of free and sovereign tools ]" style="text-align: center; font-size: 12px; color: #888888; margin-bottom: 25px; text-transform: uppercase;">
+    [ Financia el desarrollo de herramientas libres y soberanas ]
+  </p>
+
+  <!-- NUEVO BOTÓN DE NEQUI REINSTALADO -->
+  <div style="background: #0a0a0a; padding: 15px; border-radius: 4px; border: 1px solid #222222; margin-bottom: 15px; display: flex; align-items: center; justify-content: space-between;">
+    <div>
+      <h4 style="margin: 0 0 5px 0; color: #14F195; font-size: 14px;">🇨🇴 NEQUI COLOMBIA</h4>
+      <p class="lang-text" data-es="Aporte inmediato por número celular." data-en="Instant transfer via mobile number." style="margin: 0; font-size: 12px; color: #aaaaaa;">
+        Aporte inmediato por número celular.
+      </p>
+    </div>
+    <button onclick="procesarPagoNequi()" id="btn-nequi-pasarela" class="lang-text" data-es="[ ENVIAR ]" data-en="[ SEND ]" style="padding: 10px 18px; background-color: #000000; color: #14F195; border: 1px solid #14F195; border-radius: 4px; font-weight: bold; font-size: 12px; font-family: inherit; cursor: pointer;">
+      [ ENVIAR ]
+    </button>
+  </div>
+
+  <!-- TARJETA SOLANA -->
+  <div style="background: #0a0a0a; padding: 15px; border-radius: 4px; border: 1px solid #222222; display: flex; align-items: center; justify-content: space-between;">
+    <div>
+      <h4 style="margin: 0 0 5px 0; color: #14F195; font-size: 14px;">🪙 RED SOLANA (SOL)</h4>
+      <p class="lang-text" data-es="Transferencia directa a tu bóveda Web3." data-en="Direct transfer to your Web3 vault." style="margin: 0; font-size: 12px; color: #aaaaaa;">
+        Transferencia directa a tu bóveda Web3.
+      </p>
+    </div>
+    <button onclick="enviarDonacionSolana()" class="lang-text" data-es="[ TRASFERIR ]" data-en="[ TRANSFER ]" style="padding: 10px 18px; background-color: #14F195; color: #000000; border: none; border-radius: 4px; font-weight: bold; font-size: 12px; font-family: inherit; cursor: pointer;">
+      [ TRASFERIR ]
+    </button>
+  </div>
+</div>
+
+<!-- ⏱️ SECCIÓN DE LA OFERTA RELÁMPAGO REPARADA -->
+<div style="background: #0a0a0a; border: 2px dashed #ff3333; padding: 20px; border-radius: 6px; text-align: center; max-width: 500px; margin: 30px auto;">
   <h3 style="color: #ff3333; font-size: 14px; letter-spacing: 1px; margin: 0 0 10px 0; text-transform: uppercase;">
     ⏱️ OFERTA DE PRUEBA EXPIRA EN:
   </h3>
   
-  <!-- CONTADOR DINÁMICO -->
+  <!-- Tu contador de 15 minutos -->
   <div style="font-family: monospace; font-size: 28px; color: #ffffff; font-weight: bold; margin-bottom: 20px; letter-spacing: 2px;">
     <span id="oferta-minutos">15</span>:<span id="oferta-segundos">00</span>
   </div>
 
-  <!-- BOTÓN DE ADQUISICIÓN DIRECTA -->
-  <button onclick="adquirirOfertaRelampago()" id="btn-adquirir-oferta" style="width: 100%; padding: 14px; background: #ff3333; color: #ffffff; border: none; font-weight: bold; font-size: 14px; text-transform: uppercase; cursor: pointer; letter-spacing: 1px; border-radius: 4px; box-shadow: 0 0 10px rgba(255, 51, 51, 0.3);">
+  <!-- BOTÓN CON ID ASIGNADO PARA EVITAR COMPORTAMIENTOS ERRÁTICOS -->
+  <button onclick="adquirirOfertaRelampago()" id="btn-adquirir-oferta" style="width: 100%; padding: 14px; background: #ff3333; color: #ffffff; border: none; font-weight: bold; font-size: 14px; text-transform: uppercase; cursor: pointer; letter-spacing: 1px; border-radius: 4px;">
     🚀 Adquirir Servicio Ahora
   </button>
-
 </div>
 
+<!---SCRUPT DE COMTADOR DE OFERTA DE PRUEBA--->
+<script>
 
-                  <script>
-function iniciarContadoresDobles() {
-  const HORAS_RELAMPAGO = 2; // Tiempo para el reloj superior
-  const HORAS_PRUEBA = 24;   // Tiempo para el reloj inferior
+// FUNCTION 1: PROCESAR TRASLADO AUTOMÁTICO A NEQUI (MÉTODO CLÁSICO RESGUARDADO)
+function procesarPagoNequi() {
+    const NUMERO_NEQUI_DESTINO = "3507916503"; 
+    const botonNequi = document.getElementById('btn-nequi-pasarela');
+    if (!botonNequi) return;
 
-  const ahoraInicial = new Date().getTime();
+    // Copiado seguro universal para navegadores antiguos
+    const entradaTemporal = document.createElement("input");
+    entradaTemporal.value = NUMERO_NEQUI_DESTINO;
+    document.body.appendChild(entradaTemporal);
+    entradaTemporal.select();
+    entradaTemporal.setSelectionRange(0, 99999);
+    document.execCommand("copy");
+    document.body.removeChild(entradaTemporal);
 
-  // Forzar limpieza si detecta errores previos congelados en el navegador
-  if (localStorage.getItem('titan_fin_relampago') && parseFloat(localStorage.getItem('titan_fin_relampago')) < ahoraInicial) {
-    localStorage.removeItem('titan_fin_relampago');
-  }
-  if (localStorage.getItem('titan_fin_prueba') && parseFloat(localStorage.getItem('titan_fin_prueba')) < ahoraInicial) {
-    localStorage.removeItem('titan_fin_prueba');
-  }
+    // Cambio visual transitorio
+    botonNequi.style.backgroundColor = "#14F195";
+    botonNequi.style.color = "#000000";
+    botonNequi.innerHTML = "[ ¡NÚMERO COPIADO! 📋 ]";
 
-  // Inicializar marcas de tiempo limpias desde este momento
-  let finRelampago = localStorage.getItem('titan_fin_relampago');
-  let finPrueba = localStorage.getItem('titan_fin_prueba');
+    setTimeout(() => {
+        botonNequi.style.backgroundColor = "#000000";
+        botonNequi.style.color = "#14F195";
+        botonNequi.innerHTML = "[ ENVIAR ]";
+    }, 4000);
 
-  if (!finRelampago) {
-    finRelampago = ahoraInicial + (HORAS_RELAMPAGO * 60 * 60 * 1000);
-    localStorage.setItem('titan_fin_relampago', finRelampago);
-  } else {
-    finRelampago = parseFloat(finRelampago);
-  }
-
-  if (!finPrueba) {
-    finPrueba = ahoraInicial + (HORAS_PRUEBA * 60 * 60 * 1000);
-    localStorage.setItem('titan_fin_prueba', finPrueba);
-  } else {
-    finPrueba = parseFloat(finPrueba);
-  }
-
-  // Ejecución en bucle continuo
-  setInterval(function() {
-    const ahora = new Date().getTime();
-    
-    let distRelampago = finRelampago - ahora;
-    let distPrueba = finPrueba - ahora;
-
-    // Si el tiempo expira, reinicia el ciclo automáticamente para el siguiente cliente
-    if (distRelampago < 0) {
-      finRelampago = new Date().getTime() + (HORAS_RELAMPAGO * 60 * 60 * 1000);
-      localStorage.setItem('titan_fin_relampago', finRelampago);
-      distRelampago = finRelampago - ahora;
-    }
-    if (distPrueba < 0) {
-      finPrueba = new Date().getTime() + (HORAS_PRUEBA * 60 * 60 * 1000);
-      localStorage.setItem('titan_fin_prueba', finPrueba);
-      distPrueba = finPrueba - ahora;
-    }
-
-    // Cálculos matemáticos del reloj digital
-    let rh = Math.floor((distRelampago % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    let rm = Math.floor((distRelampago % (1000 * 60 * 60)) / (1000 * 60));
-    let rs = Math.floor((distRelampago % (1000 * 60)) / 1000);
-
-    let ph = Math.floor((distPrueba % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    let pm = Math.floor((distPrueba % (1000 * 60 * 60)) / (1000 * 60));
-    let ps = Math.floor((distPrueba % (1000 * 60)) / 1000);
-
-    // Formatear con un cero a la izquierda si el número es menor a 10
-    rh = rh < 10 ? "0" + rh : rh; rm = rm < 10 ? "0" + rm : rm; rs = rs < 10 ? "0" + rs : rs;
-    ph = ph < 10 ? "0" + ph : ph; pm = pm < 10 ? "0" + pm : pm; ps = ps < 10 ? "0" + ps : ps;
-
-    // Pintar los números en los elementos correspondientes de tu HTML
-    if(document.getElementById("relampago-h")) {
-      document.getElementById("relampago-h").innerText = rh;
-      document.getElementById("relampago-m").innerText = rm;
-      document.getElementById("relampago-s").innerText = rs;
-    }
-
-    if(document.getElementById("prueba-h")) {
-      document.getElementById("prueba-h").innerText = ph;
-      document.getElementById("prueba-m").innerText = pm;
-      document.getElementById("prueba-s").innerText = ps;
-    }
-
-  }, 1000);
+    // Despliegue seguro de pasarela externa
+    window.open("https://nequi.com.co", "_blank");
 }
 
-// Carga limpia en el navegador del usuario
-window.addEventListener('load', iniciarContadoresDobles);
-                     
-                  </script>
-
-                  
-                  <script>
-
-                     // INICIALIZACIÓN DEL TEMPORIZADOR DE COHORTES (15 Minutos de Urgencia)
-document.addEventListener("DOMContentLoaded", () => {
-    // Establecemos 15 minutos en segundos (15 * 60 = 900 segundos)
-    let tiempoRestante = 15 * 60; 
-    
-    const visorMinutos = document.getElementById("oferta-minutos");
-    const visorSegundos = document.getElementById("oferta-segundos");
-    const botonOferta = document.getElementById("btn-adquirir-oferta");
-
-    if (!visorMinutos || !visorSegundos) return;
-
-    const intervaloContador = setInterval(() => {
-        let minutos = Math.floor(tiempoRestante / 60);
-        let segundos = tiempoRestante % 60;
-
-        // Formateo visual con ceros a la izquierda (ej: 09:05)
-        visorMinutos.innerHTML = minutos < 10 ? "0" + minutos : minutos;
-        visorSegundos.innerHTML = segundos < 10 ? "0" + segundos : segundos;
-
-        // Disminución del tiempo
-        tiempoRestante--;
-
-        // Comportamiento al expirar el tiempo de la oferta
-        if (tiempoRestante < 0) {
-            clearInterval(intervaloContador);
-            visorMinutos.innerHTML = "00";
-            visorSegundos.innerHTML = "00";
-            
-            // Atenuamos el botón de forma elegante avisando la expiración
-            if (botonOferta) {
-                botonOferta.style.background = "#333333";
-                botonOferta.style.color = "#888888";
-                botonOferta.style.cursor = "not-allowed";
-                botonOferta.style.boxShadow = "none";
-                botonOferta.innerHTML = "❌ OFERTA EXPIRADA";
-            }
-        }
-    }, 1000);
-});
-
-// ACCIÓN DEL BOTÓN: Enrutamiento directo a tu canal de soporte técnico
+// FUNCTION 2: ADQUIRIR SERVICIO POR WHATSAPP (CORREGIDA SIN INTERFERENCIAS)
 function adquirirOfertaRelampago() {
-    const botonOferta = document.getElementById("btn-adquirir-oferta");
-    
-    // Si la oferta ya expiró, bloqueamos la acción
-    if (botonOferta && botonOferta.innerHTML.includes("EXPIRADA")) {
-        alert("⚠️ SISTEMA: Esta oferta relámpago ha caducado. Por favor, recarga la página para solicitar un nuevo cupo de optimización.");
-        return;
-    }
-
-    // Tu número de WhatsApp verificado en tu expediente
     const TELEFONO_YORVIS = "573507916503"; 
     
-    // Mensaje encriptado para URL listo para recibir en tu chat
-    const textoMensaje = encodeURIComponent("🎯 Hola Yorvis Tech, vi la oferta relámpago en el Proyecto Libertad y quiero adquirir el Servicio de Optimización Android por $25.000 COP. ¿Cuáles son los pasos a seguir?");
+    // Texto formateado de manera limpia
+    const mensajeTáctico = "🎯 Hola Yorvis Tech, quiero adquirir el Servicio de Optimización Android por $25.000 COP. Vengo desde la página del Proyecto Libertad.";
+    const mensajeEncriptado = encodeURIComponent(mensajeTáctico);
     
-    // Construcción del enlace de comunicación directa
-    const urlWhatsApp = `https://whatsapp.com{TELEFONO_YORVIS}&text=${textoMensaje}`;
+    // URL nativa de comunicación directa de WhatsApp
+    const urlEnlace = "https://whatsapp.com" + TELEFONO_YORVIS + "&text=" + mensajeEncriptado;
     
-    // Ejecución de la ventana sin bloqueos en el navegador del teléfono antiguo
-    window.open(urlWhatsApp, "_blank");
+    // Abrimos el chat inmediatamente
+    window.open(urlEnlace, "_blank");
 }
 
-
-
-                  </script>
+   
+</script>
+                  
     
  
 
