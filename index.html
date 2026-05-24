@@ -2615,25 +2615,45 @@ function calcularFlujoCapital() {
     </button>
   </div>
 
-  <!-- Canal 3: PayPal -->
-  <div style="background: #0a0a0a; padding: 15px; border-radius: 4px; border: 1px solid #222222; margin-bottom: 15px; display: flex; align-items: center; justify-content: space-between; gap: 15px;">
-    <div>
-      <h4 style="margin: 0 0 5px 0; color: #14F195; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">🌍 PAYPAL GLOBAL</h4>
-      <p style="margin: 0; font-size: 12px; color: #aaaaaa;">Aportes internacionales en divisas.</p>
-    </div>
-    <!-- REEMPLAZA CON TU LINK DE PAYPAL.ME -->
-    <a href="https://paypal.me" target="_blank" 
-       style="padding: 10px 18px; background-color: #000000; color: #14F195; border: 1px solid #14F195; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 12px; text-transform: uppercase; font-family: inherit; transition: all 0.3s ease;">
-      [ DONAR ]
-    </a>
+  <!-- TARJETA PAYPAL OPTIMIZADA -->
+<div style="background: #0a0a0a; padding: 15px; border-radius: 4px; border: 1px solid #222222; margin-bottom: 15px; display: flex; align-items: center; justify-content: space-between;">
+  <div>
+    <h4 style="margin: 0 0 5px 0; color: #0070ba; font-size: 14px;">🌍 PAYPAL GLOBAL</h4>
+    <p class="lang-text" data-es="Aportes internacionales en divisas (USD/EUR)." data-en="International support in foreign currency." style="margin: 0; font-size: 12px; color: #aaaaaa;">
+      Aportes internacionales en divisas (USD/EUR).
+    </p>
   </div>
+  <button onclick="procesarPagoPayPal()" id="btn-paypal-pasarela" class="lang-text" data-es="[ DONAR ]" data-en="[ DONATE ]" style="padding: 10px 18px; background-color: #000000; color: #0070ba; border: 1px solid #0070ba; border-radius: 4px; font-weight: bold; font-size: 12px; font-family: inherit; cursor: pointer;">
+    [ DONAR ]
+  </button>
+</div> 
 
-  <p style="text-align: center; font-size: 10px; color: #444444; margin: 15px 0 0 0; text-transform: uppercase; letter-spacing: 1px;">
-    [ SECURE TRANSMISSION // CRYPTO OPERATIONAL NETWORK ]
-  </p>
-</div>
-
+   <!---SCRIPT DE BOTON DE PAYPAL DEL CENTRO DE APOYO--->
+<script>
+function procesarPagoPayPal() {
+    // Enlace de pasarela internacional (Puedes cambiar 'yorvistech' por tu usuario real de PayPal)
+    const ENLACE_PAYPAL_ME = "https://paypal.me/boxtraining"; 
     
+    const btnPaypal = document.getElementById("btn-paypal-pasarela");
+    if (!btnPaypal) return;
+
+    // Efecto visual instantáneo de transmisión
+    btnPaypal.style.backgroundColor = "#0070ba";
+    btnPaypal.style.color = "#ffffff";
+    btnPaypal.innerHTML = "[ CONNECTING... ⚡ ]";
+
+    setTimeout(() => {
+        btnPaypal.style.backgroundColor = "#000000";
+        btnPaypal.style.color = "#0070ba";
+        btnPaypal.innerHTML = "[ DONAR ]";
+    }, 4000);
+
+    // Ejecuta redirección limpia sin bloqueos de ventanas emergentes
+    window.open(ENLACE_PAYPAL_ME, "_blank");
+}
+
+
+</script>
           
       <!-- IMPORTACIÓN CORRECTA DE SOLANA WEB3 (Librería Oficial para Navegador) -->
 <script src="https://unpkg.com"></script>
