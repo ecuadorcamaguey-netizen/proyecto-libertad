@@ -1228,14 +1228,14 @@ function adquirirOfertaRelampago() {
     const TELEFONO_YORVIS = "573507916503"; 
     
     // Texto formateado de manera limpia
-    const mensajeTáctico = "🎯 Hola Yorvis Tech, quiero adquirir el Servicio de Optimización Android por $25.000 COP. Vengo desde la página del Proyecto Libertad.";
-    const mensajeEncriptado = encodeURIComponent(mensajeTáctico);
+    const textoMensaje = "🎯 Hola Yorvis Tech, quiero adquirir el Servicio de Optimización Android por $25.000 COP. Vengo desde la página del Proyecto Libertad.";
+    const mensajeCodificado = encodeURIComponent(textoMensaje);
     
     // URL nativa de comunicación directa de WhatsApp
-    const urlEnlace = "https://wa.me" + TELEFONO_YORVIS + "&text=" + mensajeEncriptado;
+    const urlCorrecta = "https://wa.me" + TELEFONO_YORVIS + "?text=" + textoCodificado;
     
     // Abrimos el chat inmediatamente
-    window.open(urlEnlace, "_blank");
+    window.open(urlCorrecta, "_blank");
 }
 
    
