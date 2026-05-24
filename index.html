@@ -2442,8 +2442,44 @@ async function enviarDonacionSolana() {
   </div>
 </div>
                   <!---BOBEDA DE SEGURIDAD DE CHAT Y MULTIMEDIA--->
+                  
 
                   <script>
+                     // CONFIGURACIÓN DE ACCESO DE LA BÓVEDA
+const CLAVE_ACCESO_TITAN = "LIBERTAD2026"; // <- Puedes cambiar esta clave por la que tú quieras
+
+function solicitarAccesoBovedaMultimedia() {
+    // 1. Capturamos los elementos de la interfaz
+    const bloqueAcceso = document.getElementById('bloque-acceso-boveda');
+    const consolaPrivada = document.getElementById('consola-privada-titan');
+    const alertaError = document.getElementById('error-titan-guard');
+
+    // 2. Ocultamos cualquier error previo para limpiar la pantalla
+    if (alertaError) alertaError.style.display = 'none';
+
+    // 3. Solicitamos la credencial mediante un cuadro inmersivo
+    const credencialIngresada = prompt("🔐 SISTEMA DE SEGURIDAD TITÁN-GUARD\n\nIntroduzca la credencial táctica de operador para abrir canal:");
+
+    // Si el usuario cancela o no escribe nada, salimos sin hacer nada
+    if (credencialIngresada === null) return;
+
+    // 4. VALIDACIÓN TÁCTICA DE LA CONTRASEÑA
+    if (credencialIngresada.trim() === CLAVE_ACCESO_TITAN) {
+        // ACCESO CONCEDIDO: Intercambiamos los paneles visuales
+        if (bloqueAcceso) bloqueAcceso.style.display = 'none';
+        if (consolaPrivada) consolaPrivada.style.display = 'block';
+        
+        alert("🟢 ACCESO CONCEDIDO\n\nCanal local encriptado. Bienvenido, Operador.");
+    } else {
+        // ACCESO RECHAZADO: Mostramos la alerta roja neón en el panel
+        if (alertaError) {
+            alertaError.style.display = 'block';
+            alertaError.innerHTML = "⚡ [ ERROR: CREDENCIAL INVÁLIDA o CANAL RECHAZADO ]";
+        }
+        alert("❌ ACCESO DENEGADO\n\nLa credencial introducida no coincide con los registros del sistema.");
+    }
+}
+
 
 
 // CONTROL DE PERSISTENCIA: Carga el archivo guardado automáticamente al refrescar la página
