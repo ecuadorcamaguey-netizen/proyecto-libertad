@@ -2239,7 +2239,27 @@ function iniciarTemporizadorOferta() {
     <span>Fondo de Desarrollo:</span>
     <span class="val">2,000,000 (20%)</span>
   </div>
-</div>         
+</div>   
+<!-- TABLERO DE VERIFICACIÓN DE TOKEN EN LA BLOCKCHAIN -->
+<div class="verificacion-token-box" style="background: #050505; border: 1px dashed #39FF14; padding: 15px; border-radius: 4px; margin-top: 15px; font-family: monospace;">
+  
+  <span style="color: #888888; font-size: 11px; display: block; margin-bottom: 5px;">📍 DIRECCIÓN DEL CONTRATO (MINT ADDRESS)</span>
+  
+  <!-- CASILLA DE CONTRATO INTERACTIVO -->
+  <div style="display: flex; gap: 10px; margin-bottom: 12px;">
+    <input type="text" id="contrato-token-ntzn" value="917j5y45oeLNmN6DUrZrP6DyRAYzxh7mnA5h2LJnw6uq" readonly style="width: 75%; background: #000000; border: 1px solid #39FF14; color: #39FF14; padding: 8px; font-size: 11px; font-family: monospace; border-radius: 3px;">
+    <button onclick="copiarContratoToken()" style="width: 25%; background: #39FF14; color: #000000; font-weight: bold; border: none; cursor: pointer; font-size: 11px; border-radius: 3px; text-transform: uppercase;">
+      📋 COPIAR
+    </button>
+  </div>
+
+  <!-- BOTÓN DE EXPLORACIÓN EXTERNA -->
+  <button onclick="explorarTokenSolscan()" style="width: 100%; padding: 10px; background: transparent; color: #39FF14; border: 1px solid #39FF14; font-weight: bold; cursor: pointer; text-transform: uppercase; font-size: 11px; letter-spacing: 1px; border-radius: 3px;">
+    🔍 RASTREAR TOKEN EN SOLSCAN
+  </button>
+</div>
+
+                  
 <!-- BOTÓN DE PAGO NEÓN OPTIMIZADO PARA NAVEGADORES MÓVILES -->
 <div class="contenedor-pago" style="text-align: center; margin-top: 15px;">
   <button onclick="procesarTransaccionNetizen()" class="boton-crypto" style="background-color: #000000; color: #39FF14; border: 2px solid #39FF14; padding: 12px 24px; font-weight: bold; cursor: pointer; text-transform: uppercase; font-family: inherit; font-size: 13px; border-radius: 4px; box-shadow: 0 0 10px rgba(57, 255, 20, 0.2);">
@@ -2250,6 +2270,7 @@ function iniciarTemporizadorOferta() {
 
                   
 <script>
+   //DISTRIBUCION DE NITIZEN Y NUEVO CODIGO SCRIPT PARA PARA NAVEGADORES NUEVO COM NETIZEN 
    //PAGO DE BOTON DE PASARELA DE PAGO DE DISTRIBUCIÓN DE NETIZEN
      // PASARELA DE PAGO CON ACCIONES DE RESPALDO ULTRA-COMPATIBLES
 async function procesarTransaccionNetizen() {
