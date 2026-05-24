@@ -880,37 +880,59 @@ body {
 
 </div>
                   <!---SCRIPT DE TARJETA NEQUI DE PROCESAR PAGOS--->
-                  <script>
-                  function procesarPagoNequi() {
-    // ⚠️ COLOCA TU NÚMERO DE CELULAR ASOCIADO A NEQUI AQUÍ:
+                  
+                     <script>
+function procesarPagoNequi() {
+    // Tu número de celular asociado a Nequi
     const NUMERO_NEQUI_DESTINO = "3507916503"; 
     
     const botonNequi = document.getElementById('btn-nequi-pasarela');
     if (!botonNequi) return;
 
-    // 1. PERSISTENCIA LIMPIA: Copia inmediata en el portapapeles sin esperas
-    navigator.clipboard.writeText(NUMERO_NEQUI_DESTINO).catch(err => {
-        console.error("Error al copiar número:", err);
-    });
+    // 1. COPIADO ULTRA-COMPATIBLE (Ideal para teléfonos antiguos)
+    if (navigator.clipboard && window.isSecureContext) {
+        // Método moderno si está disponible
+        navigator.clipboard.writeText(NUMERO_NEQUI_DESTINO).catch(err => {
+            console.error("Error al copiar número:", err);
+        });
+    } else {
+        // Método clásico de respaldo si el celular es viejo o no usa HTTPS
+        const entradaTemporal = document.createElement("input");
+        entradaTemporal.value = NUMERO_NEQUI_DESTINO;
+        document.body.appendChild(entradaTemporal);
+        entradaTemporal.select();
+        entradaTemporal.setSelectionRange(0, 99999); // Para soporte en móviles
+        document.execCommand("copy");
+        document.body.removeChild(entradaTemporal);
+    }
 
-    // 2. EFECTO INMERSIVO INMEDIATO: Cambiamos el estilo del botón para avisar que se copió
+    // 2. EFECTO INMERSIVO CORREGIDO: Ajustamos los textos en español e inglés
     botonNequi.style.backgroundColor = "#14F195";
     botonNequi.style.color = "#000000";
-    botonNequi.innerHTML = "[ ¡CÚMERO COPIADO! 📋 ]";
+    
+    // Cambiamos los atributos dinámicamente para no romper tu sistema de traducción
     botonNequi.setAttribute("data-es", "[ ¡NÚMERO COPIADO! 📋 ]");
+    botonNequi.setAttribute("data-en", "[ COPIED NUMBER! 📋 ]");
+    
+    // Detectamos qué idioma está activo en ese momento para mostrar el texto correcto
+    const esEspanol = botonNequi.innerHTML.includes("ENVIAR") || botonNequi.innerHTML.includes("COPIADO");
+    botonNequi.innerHTML = esEspanol ? "[ ¡NÚMERO COPIADO! 📋 ]" : "[ COPIED NUMBER! 📋 ]";
 
-    // Restablecemos el aspecto original del botón después de unos segundos para que pueda volver a usarse
+    // Restablecemos el aspecto original del botón después de 4 segundos
     setTimeout(() => {
         botonNequi.style.backgroundColor = "#000000";
         botonNequi.style.color = "#14F195";
-        botonNequi.innerHTML = "[ ENVIAR ]";
         botonNequi.setAttribute("data-es", "[ ENVIAR ]");
+        botonNequi.setAttribute("data-en", "[ SEND ]");
+        botonNequi.innerHTML = esEspanol ? "[ ENVIAR ]" : "[ SEND ]";
     }, 4000);
 
-    // 3. REDIRECCIÓN SIN BLOQUEOS: Al ejecutarse inmediatamente tras el clic, el navegador NO lo bloquea
-    window.open("https://nequi.com.co", "_blank");
+    // 3. REDIRECCIÓN DIRECTA A LA APP O WEB
+    // Abrimos el portal oficial de Nequi sin que el navegador antiguo lo detecte como pop-up publicitario
+    window.open("https://www.nequi.com.co", "_blank");
 }
-                  </script>
+     </script>
+                  
                   <script>
 function cambiarIdioma(idioma) {
   // 1. Buscar todos los elementos que tengan la clase 'lang-text'
@@ -2570,7 +2592,100 @@ function cerrarSesionBovedaMultimedia() {
 
                      //AGREGAMOS 
 
+            //BOTON PARA PURGAR ARCHIVOS 
                      
+                     function renderizarDesdeMemoria(datosBase64, tipoArchivo, nombreArchivo) {
+    const visor = document.getElementById('visor-multimedia-boveda');
+    const contenedor = document.getElementById('contenedor-render-archivo');
+    
+    if (!visor || !contenedor) return;
+    
+    visor.style.display = 'block';
+    contenedor.innerHTML = ""; // Limpieza previa
+
+    let bloqueContenido = "";
+
+    // EVALUACIÓN DINÁMICA DEL TIPO DE ARCHIVO
+    if (tipoArchivo.startsWith('image/')) {
+        bloqueContenido = `<img src="${datosBase64}" style="max-width:100%; max-height:300px; border: 1px solid #ffcc00; border-radius:4px; margin-top:10px;">`;
+    } 
+    else if (tipoArchivo.startsWith('video/')) {
+        bloqueContenido = `<video src="${datosBase64}" controls style="max-width:100%; max-height:300px; margin-top:10px;"></video>`;
+    } 
+    else if (tipoArchivo.startsWith('audio/')) {
+        bloqueContenido = `<audio src="${datosBase64}" controls style="width:100%; margin-top:10px;"></audio>`;
+    } 
+    else if (tipoArchivo === 'application/pdf') {
+        bloqueContenido = `<embed src="${datosBase64}" type="application/pdf" width="100%" height="400px" style="border:1px solid #222;">`;
+    } 
+    else {
+        bloqueContenido = `
+            <div style="padding: 20px; background: #111; border: 1px dashed #ffcc00; margin-top:10px;">
+                <p style="color: #ffcc00; margin: 0;">💼 DOCUMENTO DESBLOQUEADO</p>
+                <span style="font-size: 12px; color: #aaa;">${nombreArchivo || "Archivo de Respaldo"}</span>
+            </div>`;
+    }
+
+    // INYECCIÓN: Agregamos el contenido y el Botón de Purga al final
+    contenedor.innerHTML = `
+        ${bloqueContenido}
+        <div style="margin-top: 15px; text-align: center;">
+            <button onclick="purgarArchivoPermanente()" style="padding: 6px 12px; background: #220000; color: #ff3333; border: 1px solid #ff3333; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 11px; font-family: inherit; text-transform: uppercase;">
+                💥 PURGAR ARCHIVO DE LA MEMORIA
+            </button>
+        </div>
+    `;
+}
+                     //FUNCION DE PUERGA MANUAL 
+
+                     // FUNCIÓN DE PURGA MANUAL
+function purgarArchivoPermanente() {
+    if (confirm("🚨 ¿Confirmas la destrucción absoluta de este archivo en la memoria del dispositivo?")) {
+        // Borramos los registros del localStorage
+        localStorage.removeItem("boveda_multimedia_permanente");
+        localStorage.removeItem("boveda_multimedia_tipo");
+        localStorage.removeItem("boveda_multimedia_nombre");
+
+        // Limpiamos la interfaz de inmediato
+        document.getElementById('archivo-tactico-input').value = "";
+        document.getElementById('visor-multimedia-boveda').style.display = 'none';
+        document.getElementById('contenedor-render-archivo').innerHTML = "";
+        
+        alert("💥 SISTEMA: Datos purgados y sector de memoria sobreescrito con éxito.");
+    }
+}
+
+                     //AUTODESTRUCCION DE CHAT CADA 24HORAS 
+
+                     // ESCUCHAR EN TIEMPO REAL CON FILTRO DE AUTODESTRUCCIÓN
+baseDatos.ref("chat_boveda").on("value", (snapshot) => {
+    const cajaChat = document.getElementById("caja-mensajes-chat");
+    if (!cajaChat) return;
+    
+    cajaChat.innerHTML = ""; 
+    const datos = snapshot.val();
+    const tiempoActual = Date.now();
+    const LIMITE_24_HORAS = 24 * 60 * 60 * 1000; // Milisegundos en un día
+
+    for (let id in datos) {
+        const msg = datos[id];
+        
+        // Verificación de caducidad
+        if (tiempoActual - msg.timestamp > LIMITE_24_HORAS) {
+            // Si el mensaje es más viejo de 24 horas, se borra de la nube automáticamente
+            baseDatos.ref("chat_boveda").child(id).remove();
+        } else {
+            // Si está vigente, se imprime en pantalla
+            const parrafo = document.createElement("p");
+            parrafo.style.margin = "5px 0";
+            parrafo.innerHTML = `<strong style="color: #ffcc00;">[${msg.operador}]:</strong> ${msg.texto}`;
+            cajaChat.appendChild(parrafo);
+        }
+    }
+    cajaChat.scrollTop = cajaChat.scrollHeight;
+});
+
+
                   </script>
                   
                   
