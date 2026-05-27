@@ -304,7 +304,131 @@ body {
     }
 }
 
+/*STYLOS DEL SOPORTE DE NAVBAR*/
+                /* ==========================================================================
+   SECCIÓN SOPORTE (Estilo Consola de Diagnóstico)
+   ========================================================================== */
+.seccion-soporte {
+    padding: 100px 5% 60px 5%; /* Espacio arriba para que no lo tape la navbar */
+    background-color: var(--bg-principal);
+    display: flex;
+    justify-content: center;
+}
 
+.contenedor-soporte {
+    width: 100%;
+    max-width: 900px;
+    background: var(--bg-secundario);
+    border: 1px solid rgba(0, 255, 163, 0.2);
+    border-radius: 8px;
+    padding: 25px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+}
+
+/* Encabezado estilo terminal */
+.consola-header {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px dashed rgba(0, 255, 163, 0.3);
+    padding-bottom: 12px;
+    margin-bottom: 25px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.9rem;
+}
+
+.consola-titulo {
+    color: var(--color-acento);
+    font-weight: bold;
+}
+
+.consola-id {
+    color: var(--color-mutado);
+}
+
+/* Tarjetas internas de la consola */
+.tarjeta-tactica {
+    background: rgba(10, 11, 15, 0.6);
+    border-left: 4px solid var(--color-acento);
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 0 6px 6px 0;
+}
+
+.tarjeta-tactica h3 {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.1rem;
+    color: #fff;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+}
+
+.texto-original {
+    color: var(--color-texto);
+    font-size: 1rem;
+    line-height: 1.6;
+    text-align: justify;
+}
+
+/* Variación para alertas */
+.alerta-borde {
+    border-left-color: #ffaa00; /* Color naranja de advertencia */
+}
+
+/* Grid técnico para ordenar datos sueltos */
+.grid-estados {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.estado-item {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 10px;
+    border-radius: 4px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.85rem;
+}
+
+.estado-item .label {
+    color: var(--color-mutado);
+    display: block;
+    margin-bottom: 2px;
+}
+
+.estado-item .valor {
+    color: #fff;
+    font-weight: bold;
+}
+
+.estado-item .valor.critico { color: #ff5555; }
+.estado-item .valor.exito { color: #00ffa3; }
+
+/* Bloque inferior */
+.cita-bloque {
+    border-left-color: #00a3ff; /* Azul de información */
+    margin-bottom: 0;
+}
+
+.consola-footer-btn {
+    margin-top: 15px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.4);
+    text-align: right;
+}
+
+/* Ajuste responsivo */
+@media (max-width: 768px) {
+    .consola-header {
+        flex-direction: column;
+        gap: 5px;
+    }
+    .contenedor-soporte {
+        padding: 15px;
+    }
+}
+ 
                  
 /* ESTILOS NEÓN (Pon esto dentro de tu etiqueta <style>) */
 
