@@ -1290,6 +1290,273 @@ function cambiarIdioma(codigoIdioma) {
         });
     });
 </script>
+                                   <!-- FORMULARIO DE CONTACTO NEÓN OPTIMIZADO PARA FORMSPREE -->
+<div class="formulario-netizen">
+  <h3 class="form-titulo">SOLICITAR SERVICIO TÉCNICO</h3>
+  <p style="color: #666; font-size: 0.8rem; margin-bottom: 20px;">Deja tus datos y nos pondremos en contacto para coordinar el pago con NTZN.</p>
+   
+  <!-- REEMPLAZA "TU_ID_DE_FORMSPREE" POR EL CÓDIGO QUE TE DA LA PLATAFORMA -->
+  <form id="formspree-netizen" action="https://formspree.io/f/xqejezwb" method="POST">
+  
+    <div class="campo-grupo">
+      <label>Nombre Completo</label>
+      <input type="text" name="name" placeholder="Ej. Yorvis Pérez" required>
+    </div>
+
+    <div class="campo-grupo">
+      <label>Modelo del Equipo</label>
+      <input type="text" name="device" placeholder="Ej. Laptop HP / PC Gamer" required>
+    </div>
+
+    <div class="campo-grupo">
+      <label>Tipo de Servicio</label>
+      <select name="service_type" required>
+        <option value="Mantenimiento Preventivo (100 NTZN)">Mantenimiento Preventivo (100 NTZN)</option>
+        <option value="Optimizacion Software (50 NTZN)">Optimización Software (50 NTZN)</option>
+        <option value="Diagnostico General">Diagnóstico General</option>
+      </select>
+    </div>
+
+    <div class="campo-grupo">
+      <label>Tu Correo o WhatsApp</label>
+      <input type="text" name="contact_info" placeholder="Para contactarte..." required>
+    </div>
+
+    <button type="submit" id="btn-submit-netizen" class="btn-enviar">ENVIAR SOLICITUD 🚀</button>
+    
+    <!-- Contenedor flotante invisible para avisar al cliente si se envió o falló -->
+    <p id="form-status-msg" style="text-align: center; margin-top: 15px; font-weight: bold; display: none;"></p>
+  </form>
+</div>
+                                <!-- SCRIPT INDEPENDIENTE PARA ENVIAR POR FORMSPREE SIN RECARGAR LA PÁGINA -->
+<script>
+  const formulario = document.getElementById("formspree-netizen");
+  const botonEnviar = document.getElementById("btn-submit-netizen");
+  const mensajeEstado = document.getElementById("form-status-msg");
+
+  if (formulario) {
+    formulario.addEventListener("submit", async function(event) {
+      event.preventDefault(); // Evita que la página se recargue estéticamente
+      
+      // Bloqueamos el botón temporalmente para evitar doble envío de datos
+      botonEnviar.disabled = true;
+      botonEnviar.textContent = "PROCESANDO SOLICITUD... ⏳";
+
+      const data = new FormData(event.target);
+
+      try {
+        const response = await fetch(event.target.action, {
+          method: formulario.method,
+          body: data,
+          headers: {
+            'Accept': 'application/json'
+          }
+        });
+
+        if (response.ok) {
+          // ÉXITO: Cambios visuales inmediatos para el cliente
+          mensajeEstado.style.display = "block";
+          mensajeEstado.style.color = "#00ffcc"; // Color neón de éxito
+          mensajeEstado.textContent = "¡Solicitud enviada con éxito! Nos comunicaremos pronto. 🔥";
+          formulario.reset(); // Limpia los campos del formulario automáticamente
+          botonEnviar.textContent = "SOLICITUD ENVIADA ✅";
+        } else {
+          // ERROR DE FORMSPREE
+          throw new Error("Error en el servidor de Formspree");
+        }
+      } catch (error) {
+        // ERROR DE RED
+        mensajeEstado.style.display = "block";
+        mensajeEstado.style.color = "#ff3333"; // Color rojo neón de alerta
+        mensajeEstado.textContent = "Hubo un problema. Por favor, intenta de nuevo.";
+        botonEnviar.disabled = false;
+        botonEnviar.textContent = "REINTENTAR ENVIAR 🚀";
+      }
+    });
+  }
+</script>
+                                <!-- DISTRIBUCIÓN DE NETIZEN (TOKENOMICS) -->
+<div class="tokenomics-box">
+  <h3 style="color: #39FF14; text-align: center; font-size: 0.9rem;">DISTRIBUCIÓN DE NTZN</h3>
+  <div class="stat-row">
+    <span>Reserva para Garantías:</span>
+    <span class="val">5,000,000 (50%)</span>
+  </div>
+  <div class="stat-row">
+    <span>Ecosistema y Marketing:</span>
+    <span class="val">3,000,000 (30%)</span>
+  </div>
+  <div class="stat-row">
+    <span>Fondo de Desarrollo:</span>
+    <span class="val">2,000,000 (20%)</span>
+  </div>
+</div>   
+<!-- TABLERO DE VERIFICACIÓN DE TOKEN EN LA BLOCKCHAIN -->
+<div class="verificacion-token-box" style="background: #050505; border: 1px dashed #39FF14; padding: 15px; border-radius: 4px; margin-top: 15px; font-family: monospace;">
+  
+  <span style="color: #888888; font-size: 11px; display: block; margin-bottom: 5px;">📍 DIRECCIÓN DEL CONTRATO (MINT ADDRESS)</span>
+  
+  <!-- CASILLA DE CONTRATO INTERACTIVO -->
+  <div style="display: flex; gap: 10px; margin-bottom: 12px;">
+    <input type="text" id="contrato-token-ntzn" value="917j5y45oeLNmN6DUrZrP6DyRAYzxh7mnA5h2LJnw6uq" readonly style="width: 75%; background: #000000; border: 1px solid #39FF14; color: #39FF14; padding: 8px; font-size: 11px; font-family: monospace; border-radius: 3px;">
+    <button onclick="copiarContratoToken()" style="width: 25%; background: #39FF14; color: #000000; font-weight: bold; border: none; cursor: pointer; font-size: 11px; border-radius: 3px; text-transform: uppercase;">
+      📋 COPIAR
+    </button>
+  </div>
+
+  <!-- BOTÓN DE EXPLORACIÓN EXTERNA -->
+  <button onclick="explorarTokenSolscan()" style="width: 100%; padding: 10px; background: transparent; color: #39FF14; border: 1px solid #39FF14; font-weight: bold; cursor: pointer; text-transform: uppercase; font-size: 11px; letter-spacing: 1px; border-radius: 3px;">
+    🔍 RASTREAR TOKEN EN SOLSCAN
+  </button>
+</div>
+
+                  
+<!-- BOTÓN DE PAGO NEÓN OPTIMIZADO PARA NAVEGADORES MÓVILES -->
+<div class="contenedor-pago" style="text-align: center; margin-top: 15px;">
+  <button onclick="procesarTransaccionNetizen()" class="boton-crypto" style="background-color: #000000; color: #39FF14; border: 2px solid #39FF14; padding: 12px 24px; font-weight: bold; cursor: pointer; text-transform: uppercase; font-family: inherit; font-size: 13px; border-radius: 4px; box-shadow: 0 0 10px rgba(57, 255, 20, 0.2);">
+    PAGAR CON NTZN / SOLANA 🚀
+  </button>
+  <p class="wallet-display" style="font-size: 11px; color: #888888; margin-top: 8px; font-family: monospace;">ID: 917j5y45oeLNmN6DUrZrP6DyRAYzxh7mnA5h2LJnw6uq</p>
+</div>
+
+   <!-- CARNET DE GARANTÍA VIP NETIZEN -->
+<div class="carnet-vip">
+  <div class="brillo-efecto"></div>
+  <div class="contenido-carnet">
+    <div class="top-carnet">
+      <span class="chip-digital"></span>
+      <span class="marca-red">SOLANA NETWORK</span>
+    </div>
+    <div class="centro-carnet">
+      <h2 class="ntzn-logo">NTZN</h2>
+      <p class="tipo-servicio">GARANTÍA TÉCNICA GLOBAL</p>
+    </div>
+    <div class="datos-carnet">
+      <div class="col-dato">
+        <span>TITULAR</span>
+        <p>CLIENTE VERIFICADO</p>
+      </div>
+      <div class="col-dato">
+        <span>VALIDEZ</span>
+        <p>30 DÍAS POST-PAGO</p>
+      </div>
+    </div>
+  </div>
+</div>
+          
+</div>  
+
+  <!-- BLOQUE DE LANZAMIENTO CRIPTO -->
+<div class="anuncio-cripto">
+  <div class="badge-nuevo">PRÓXIMAMENTE</div>
+  <h3 class="titulo-lanzamiento">Netizen Coin (NTZN)</h3>
+  <p>Estamos forjando el futuro del servicio técnico. Paga tus reparaciones, obtén garantías digitales y beneficios exclusivos con nuestro propio activo digital.</p>
+  
+  <div class="contenedor-moneda">
+    <div class="moneda-neon">N</div>
+  </div>
+  
+  <p class="estado-descarga">Estatus: <span style="color: #39FF14;">Sincronizando con la Blockchain...</span></p>
+</div>
+               <!-- TABLA DE SERVICIOS ACTUALIZADA -->
+<div class="servicios-cripto">
+  <div class="item-servicio">
+    <span class="nombre-servicio">Mantenimiento Preventivo</span>
+    <span class="precio-ntzn">100 NTZN</span>
+  </div>
+  
+  <div class="item-servicio" style="margin-top: 15px;">
+    <span class="nombre-servicio">Optimización de Software</span>
+    <span class="precio-ntzn">50 NTZN</span>
+  </div>
+
+  <div class="item-servicio" style="margin-top: 15px; border-top: 1px solid rgba(57, 255, 20, 0.2); padding-top: 10px;">
+    <span class="nombre-servicio" style="color: #39FF14; font-size: 0.8rem;">PROMO: Pack Full Netizen</span>
+    <span class="precio-ntzn">130 NTZN</span>
+  </div>
+</div>    
+                                
+
+<!---================================================--->        
+<!---================================================--->
+<!---================================================--->                                
+<!---================================================--->                  
+<script>
+   //DISTRIBUCION DE NITIZEN Y NUEVO CODIGO SCRIPT PARA PARA NAVEGADORES NUEVO COM NETIZEN 
+   //PAGO DE BOTON DE PASARELA DE PAGO DE DISTRIBUCIÓN DE NETIZEN
+     // PASARELA DE PAGO CON ACCIONES DE RESPALDO ULTRA-COMPATIBLES
+async function procesarTransaccionNetizen() {
+    // Tu dirección pública de Solana configurada en la red
+    const DIRECCION_SOLANA_DESTINO = "917j5y45oeLNmN6DUrZrP6DyRAYzxh7mnA5h2LJnw6uq";
+    
+    // Detectamos si hay una Wallet instalada en el navegador (Phantom o similar)
+    const proveedorWallet = window.solana || window.phantom?.solana;
+
+    // ESCENARIO A: Si el usuario cuenta con Phantom Wallet activa
+    if (proveedorWallet) {
+        try {
+            // Forzamos conexión limpia
+            if (!proveedorWallet.isConnected) {
+                await proveedorWallet.connect();
+            }
+
+            // Inicializamos el puente a la red principal de Solana
+            const conexion = new solanaWeb3.Connection(solanaWeb3.clusterApiUrl('mainnet-beta'), 'confirmed');
+            const walletUsuario = proveedorWallet.publicKey;
+            const tuWalletDestino = new solanaWeb3.PublicKey(DIRECCION_SOLANA_DESTINO);
+
+            // Costo estimado del servicio técnico en Solana (Ej: 0.04 SOL equivalente)
+            const MONTO_LAMPPORTS = 0.04 * solanaWeb3.LAMPORTS_PER_SOL;
+
+            const transaccion = new solanaWeb3.Transaction().add(
+                solanaWeb3.SystemProgram.transfer({
+                    fromPubkey: walletUsuario,
+                    toPubkey: tuWalletDestino,
+                    lamports: MONTO_LAMPPORTS,
+                })
+            );
+
+            transaccion.feePayer = walletUsuario;
+            const { blockhash } = await conexion.getLatestBlockhash();
+            transaccion.recentBlockhash = blockhash;
+
+            // Solicitud de firma digital
+            const transaccionFirmada = await proveedorWallet.signTransaction(transaccion);
+            const txid = await conexion.sendRawTransaction(transaccionFirmada.serialize());
+
+            alert("🟢 TRASLADO DE ACTIVOS EXITOSO\n\nTu pago ha sido enviado a la blockchain.\n\nHash de verificación: " + txid);
+            return; // Detiene el código si todo sale bien
+
+        } catch (error) {
+            console.error("Fallo al firmar bloque:", error);
+            alert("❌ OPERACIÓN RECHAZADA: La firma fue cancelada por el operador.");
+            return;
+        }
+    }
+
+    // ESCENARIO B: Respaldo de seguridad si el teléfono no tiene una wallet instalada
+    // Copiamos la dirección de Solana automáticamente para evitar que el usuario se quede varado
+    const entradaTemporal = document.createElement("input");
+    entradaTemporal.value = DIRECCION_SOLANA_DESTINO;
+    document.body.appendChild(entradaTemporal);
+    entradaTemporal.select();
+    entradaTemporal.setSelectionRange(0, 99999); // Soporte móvil estricto
+    document.execCommand("copy");
+    document.body.removeChild(entradaTemporal);
+
+    alert("📌 BILLETERA DE RESPALDO ACTIVADA\n\nNo detectamos una Wallet Web3 directa en este navegador.\n\nLa dirección de destino ha sido COPIADA en tu portapapeles. Abre tu billetera de confianza (Binance, Trust Wallet, Phantom) y realiza la transferencia manualmente.");
+}
+
+</script>
+
+                                
+
+
+
+
+
+
+                                
 
                                 
                   <!-- COMPONENTE DE DONACIONES TRADUCIBLE -->
@@ -2532,265 +2799,10 @@ function iniciarTemporizadorOferta() {
 
     </div>
 </section>
-                  <!-- BLOQUE DE LANZAMIENTO CRIPTO -->
-<div class="anuncio-cripto">
-  <div class="badge-nuevo">PRÓXIMAMENTE</div>
-  <h3 class="titulo-lanzamiento">Netizen Coin (NTZN)</h3>
-  <p>Estamos forjando el futuro del servicio técnico. Paga tus reparaciones, obtén garantías digitales y beneficios exclusivos con nuestro propio activo digital.</p>
-  
-  <div class="contenedor-moneda">
-    <div class="moneda-neon">N</div>
-  </div>
-  
-  <p class="estado-descarga">Estatus: <span style="color: #39FF14;">Sincronizando con la Blockchain...</span></p>
-</div>
-               <!-- TABLA DE SERVICIOS ACTUALIZADA -->
-<div class="servicios-cripto">
-  <div class="item-servicio">
-    <span class="nombre-servicio">Mantenimiento Preventivo</span>
-    <span class="precio-ntzn">100 NTZN</span>
-  </div>
-  
-  <div class="item-servicio" style="margin-top: 15px;">
-    <span class="nombre-servicio">Optimización de Software</span>
-    <span class="precio-ntzn">50 NTZN</span>
-  </div>
-
-  <div class="item-servicio" style="margin-top: 15px; border-top: 1px solid rgba(57, 255, 20, 0.2); padding-top: 10px;">
-    <span class="nombre-servicio" style="color: #39FF14; font-size: 0.8rem;">PROMO: Pack Full Netizen</span>
-    <span class="precio-ntzn">130 NTZN</span>
-  </div>
-</div>
                   
-   <!-- CARNET DE GARANTÍA VIP NETIZEN -->
-<div class="carnet-vip">
-  <div class="brillo-efecto"></div>
-  <div class="contenido-carnet">
-    <div class="top-carnet">
-      <span class="chip-digital"></span>
-      <span class="marca-red">SOLANA NETWORK</span>
-    </div>
-    <div class="centro-carnet">
-      <h2 class="ntzn-logo">NTZN</h2>
-      <p class="tipo-servicio">GARANTÍA TÉCNICA GLOBAL</p>
-    </div>
-    <div class="datos-carnet">
-      <div class="col-dato">
-        <span>TITULAR</span>
-        <p>CLIENTE VERIFICADO</p>
-      </div>
-      <div class="col-dato">
-        <span>VALIDEZ</span>
-        <p>30 DÍAS POST-PAGO</p>
-      </div>
-    </div>
-  </div>
-</div>
-        
-
-   <!-- FORMULARIO DE CONTACTO NEÓN OPTIMIZADO PARA FORMSPREE -->
-<div class="formulario-netizen">
-  <h3 class="form-titulo">SOLICITAR SERVICIO TÉCNICO</h3>
-  <p style="color: #666; font-size: 0.8rem; margin-bottom: 20px;">Deja tus datos y nos pondremos en contacto para coordinar el pago con NTZN.</p>
-   
-  <!-- REEMPLAZA "TU_ID_DE_FORMSPREE" POR EL CÓDIGO QUE TE DA LA PLATAFORMA -->
-  <form id="formspree-netizen" action="https://formspree.io/f/xqejezwb" method="POST">
-  
-    <div class="campo-grupo">
-      <label>Nombre Completo</label>
-      <input type="text" name="name" placeholder="Ej. Yorvis Pérez" required>
-    </div>
-
-    <div class="campo-grupo">
-      <label>Modelo del Equipo</label>
-      <input type="text" name="device" placeholder="Ej. Laptop HP / PC Gamer" required>
-    </div>
-
-    <div class="campo-grupo">
-      <label>Tipo de Servicio</label>
-      <select name="service_type" required>
-        <option value="Mantenimiento Preventivo (100 NTZN)">Mantenimiento Preventivo (100 NTZN)</option>
-        <option value="Optimizacion Software (50 NTZN)">Optimización Software (50 NTZN)</option>
-        <option value="Diagnostico General">Diagnóstico General</option>
-      </select>
-    </div>
-
-    <div class="campo-grupo">
-      <label>Tu Correo o WhatsApp</label>
-      <input type="text" name="contact_info" placeholder="Para contactarte..." required>
-    </div>
-
-    <button type="submit" id="btn-submit-netizen" class="btn-enviar">ENVIAR SOLICITUD 🚀</button>
-    
-    <!-- Contenedor flotante invisible para avisar al cliente si se envió o falló -->
-    <p id="form-status-msg" style="text-align: center; margin-top: 15px; font-weight: bold; display: none;"></p>
-  </form>
-</div>
-
-<!-- SCRIPT INDEPENDIENTE PARA ENVIAR POR FORMSPREE SIN RECARGAR LA PÁGINA -->
-<script>
-  const formulario = document.getElementById("formspree-netizen");
-  const botonEnviar = document.getElementById("btn-submit-netizen");
-  const mensajeEstado = document.getElementById("form-status-msg");
-
-  if (formulario) {
-    formulario.addEventListener("submit", async function(event) {
-      event.preventDefault(); // Evita que la página se recargue estéticamente
+                  
       
-      // Bloqueamos el botón temporalmente para evitar doble envío de datos
-      botonEnviar.disabled = true;
-      botonEnviar.textContent = "PROCESANDO SOLICITUD... ⏳";
-
-      const data = new FormData(event.target);
-
-      try {
-        const response = await fetch(event.target.action, {
-          method: formulario.method,
-          body: data,
-          headers: {
-            'Accept': 'application/json'
-          }
-        });
-
-        if (response.ok) {
-          // ÉXITO: Cambios visuales inmediatos para el cliente
-          mensajeEstado.style.display = "block";
-          mensajeEstado.style.color = "#00ffcc"; // Color neón de éxito
-          mensajeEstado.textContent = "¡Solicitud enviada con éxito! Nos comunicaremos pronto. 🔥";
-          formulario.reset(); // Limpia los campos del formulario automáticamente
-          botonEnviar.textContent = "SOLICITUD ENVIADA ✅";
-        } else {
-          // ERROR DE FORMSPREE
-          throw new Error("Error en el servidor de Formspree");
-        }
-      } catch (error) {
-        // ERROR DE RED
-        mensajeEstado.style.display = "block";
-        mensajeEstado.style.color = "#ff3333"; // Color rojo neón de alerta
-        mensajeEstado.textContent = "Hubo un problema. Por favor, intenta de nuevo.";
-        botonEnviar.disabled = false;
-        botonEnviar.textContent = "REINTENTAR ENVIAR 🚀";
-      }
-    });
-  }
-</script>
-
-   
-  
-</div>          
-         <!-- DISTRIBUCIÓN DE NETIZEN (TOKENOMICS) -->
-<div class="tokenomics-box">
-  <h3 style="color: #39FF14; text-align: center; font-size: 0.9rem;">DISTRIBUCIÓN DE NTZN</h3>
-  <div class="stat-row">
-    <span>Reserva para Garantías:</span>
-    <span class="val">5,000,000 (50%)</span>
-  </div>
-  <div class="stat-row">
-    <span>Ecosistema y Marketing:</span>
-    <span class="val">3,000,000 (30%)</span>
-  </div>
-  <div class="stat-row">
-    <span>Fondo de Desarrollo:</span>
-    <span class="val">2,000,000 (20%)</span>
-  </div>
-</div>   
-<!-- TABLERO DE VERIFICACIÓN DE TOKEN EN LA BLOCKCHAIN -->
-<div class="verificacion-token-box" style="background: #050505; border: 1px dashed #39FF14; padding: 15px; border-radius: 4px; margin-top: 15px; font-family: monospace;">
-  
-  <span style="color: #888888; font-size: 11px; display: block; margin-bottom: 5px;">📍 DIRECCIÓN DEL CONTRATO (MINT ADDRESS)</span>
-  
-  <!-- CASILLA DE CONTRATO INTERACTIVO -->
-  <div style="display: flex; gap: 10px; margin-bottom: 12px;">
-    <input type="text" id="contrato-token-ntzn" value="917j5y45oeLNmN6DUrZrP6DyRAYzxh7mnA5h2LJnw6uq" readonly style="width: 75%; background: #000000; border: 1px solid #39FF14; color: #39FF14; padding: 8px; font-size: 11px; font-family: monospace; border-radius: 3px;">
-    <button onclick="copiarContratoToken()" style="width: 25%; background: #39FF14; color: #000000; font-weight: bold; border: none; cursor: pointer; font-size: 11px; border-radius: 3px; text-transform: uppercase;">
-      📋 COPIAR
-    </button>
-  </div>
-
-  <!-- BOTÓN DE EXPLORACIÓN EXTERNA -->
-  <button onclick="explorarTokenSolscan()" style="width: 100%; padding: 10px; background: transparent; color: #39FF14; border: 1px solid #39FF14; font-weight: bold; cursor: pointer; text-transform: uppercase; font-size: 11px; letter-spacing: 1px; border-radius: 3px;">
-    🔍 RASTREAR TOKEN EN SOLSCAN
-  </button>
-</div>
-
-                  
-<!-- BOTÓN DE PAGO NEÓN OPTIMIZADO PARA NAVEGADORES MÓVILES -->
-<div class="contenedor-pago" style="text-align: center; margin-top: 15px;">
-  <button onclick="procesarTransaccionNetizen()" class="boton-crypto" style="background-color: #000000; color: #39FF14; border: 2px solid #39FF14; padding: 12px 24px; font-weight: bold; cursor: pointer; text-transform: uppercase; font-family: inherit; font-size: 13px; border-radius: 4px; box-shadow: 0 0 10px rgba(57, 255, 20, 0.2);">
-    PAGAR CON NTZN / SOLANA 🚀
-  </button>
-  <p class="wallet-display" style="font-size: 11px; color: #888888; margin-top: 8px; font-family: monospace;">ID: 917j5y45oeLNmN6DUrZrP6DyRAYzxh7mnA5h2LJnw6uq</p>
-</div>
-
-                  
-<script>
-   //DISTRIBUCION DE NITIZEN Y NUEVO CODIGO SCRIPT PARA PARA NAVEGADORES NUEVO COM NETIZEN 
-   //PAGO DE BOTON DE PASARELA DE PAGO DE DISTRIBUCIÓN DE NETIZEN
-     // PASARELA DE PAGO CON ACCIONES DE RESPALDO ULTRA-COMPATIBLES
-async function procesarTransaccionNetizen() {
-    // Tu dirección pública de Solana configurada en la red
-    const DIRECCION_SOLANA_DESTINO = "917j5y45oeLNmN6DUrZrP6DyRAYzxh7mnA5h2LJnw6uq";
-    
-    // Detectamos si hay una Wallet instalada en el navegador (Phantom o similar)
-    const proveedorWallet = window.solana || window.phantom?.solana;
-
-    // ESCENARIO A: Si el usuario cuenta con Phantom Wallet activa
-    if (proveedorWallet) {
-        try {
-            // Forzamos conexión limpia
-            if (!proveedorWallet.isConnected) {
-                await proveedorWallet.connect();
-            }
-
-            // Inicializamos el puente a la red principal de Solana
-            const conexion = new solanaWeb3.Connection(solanaWeb3.clusterApiUrl('mainnet-beta'), 'confirmed');
-            const walletUsuario = proveedorWallet.publicKey;
-            const tuWalletDestino = new solanaWeb3.PublicKey(DIRECCION_SOLANA_DESTINO);
-
-            // Costo estimado del servicio técnico en Solana (Ej: 0.04 SOL equivalente)
-            const MONTO_LAMPPORTS = 0.04 * solanaWeb3.LAMPORTS_PER_SOL;
-
-            const transaccion = new solanaWeb3.Transaction().add(
-                solanaWeb3.SystemProgram.transfer({
-                    fromPubkey: walletUsuario,
-                    toPubkey: tuWalletDestino,
-                    lamports: MONTO_LAMPPORTS,
-                })
-            );
-
-            transaccion.feePayer = walletUsuario;
-            const { blockhash } = await conexion.getLatestBlockhash();
-            transaccion.recentBlockhash = blockhash;
-
-            // Solicitud de firma digital
-            const transaccionFirmada = await proveedorWallet.signTransaction(transaccion);
-            const txid = await conexion.sendRawTransaction(transaccionFirmada.serialize());
-
-            alert("🟢 TRASLADO DE ACTIVOS EXITOSO\n\nTu pago ha sido enviado a la blockchain.\n\nHash de verificación: " + txid);
-            return; // Detiene el código si todo sale bien
-
-        } catch (error) {
-            console.error("Fallo al firmar bloque:", error);
-            alert("❌ OPERACIÓN RECHAZADA: La firma fue cancelada por el operador.");
-            return;
-        }
-    }
-
-    // ESCENARIO B: Respaldo de seguridad si el teléfono no tiene una wallet instalada
-    // Copiamos la dirección de Solana automáticamente para evitar que el usuario se quede varado
-    const entradaTemporal = document.createElement("input");
-    entradaTemporal.value = DIRECCION_SOLANA_DESTINO;
-    document.body.appendChild(entradaTemporal);
-    entradaTemporal.select();
-    entradaTemporal.setSelectionRange(0, 99999); // Soporte móvil estricto
-    document.execCommand("copy");
-    document.body.removeChild(entradaTemporal);
-
-    alert("📌 BILLETERA DE RESPALDO ACTIVADA\n\nNo detectamos una Wallet Web3 directa en este navegador.\n\nLa dirección de destino ha sido COPIADA en tu portapapeles. Abre tu billetera de confianza (Binance, Trust Wallet, Phantom) y realiza la transferencia manualmente.");
-}
-
-</script>
-
+ 
 
 <!-- CERTIFICADO DE GARANTÍA DIGITAL -->
 <div class="certificado-garantia">
