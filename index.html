@@ -142,6 +142,166 @@ body {
     to { opacity: 1; transform: translateY(0); }
 }
 
+                 /*ESTYLOS DE EL MENU NAVBAR */
+                 /* ==========================================================================
+   RESET Y VARIABLES (Configuración Base)
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    scroll-behavior: smooth; /* Hace que el salto entre secciones sea suave */
+}
+
+:root {
+    --bg-principal: #0d0e12;     /* Negro profundo moderno */
+    --bg-secundario: #161920;    /* Gris oscuro para contraste */
+    --color-texto: #e2e8f0;      /* Blanco suave para no cansar la vista */
+    --color-acento: #00ffa3;     /* Verde neón/Cian para botones y enlaces */
+    --color-mutado: #94a3b8;     /* Gris claro para textos secundarios */
+}
+
+body {
+    background-color: var(--bg-principal);
+    color: var(--color-texto);
+    line-height: 1.6;
+}
+
+/* ==========================================================================
+   BARRA DE NAVEGACIÓN (Navbar Fija)
+   ========================================================================== */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(22, 25, 32, 0.95); /* Semi-transparente */
+    backdrop-filter: blur(10px); /* Efecto esmerilado elegante */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 5%;
+    z-index: 1000;
+    border-bottom: 1px solid rgba(0, 25ff, 163, 0.1);
+}
+
+.navbar .logo {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: var(--color-texto);
+    letter-spacing: 1px;
+}
+
+.navbar .logo span {
+    color: var(--color-acento);
+}
+
+.navbar nav ul {
+    display: flex;
+    list-style: none;
+    gap: 1.5rem;
+}
+
+.navbar nav ul a {
+    color: var(--color-mutado);
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.navbar nav ul a:hover {
+    color: var(--color-acento);
+}
+
+/* ==========================================================================
+   SECCIÓN HERO / INICIO
+   ========================================================================== */
+.hero-section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0 1rem;
+    background: radial-gradient(circle at center, #1a2332 0%, var(--bg-principal) 70%);
+    padding-top: 80px; /* Evita que la navbar tape el contenido */
+}
+
+.hero-content {
+    max-width: 800px;
+}
+
+.hero-content h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+    letter-spacing: -1px;
+}
+
+.hero-content p {
+    font-size: 1.2rem;
+    color: var(--color-mutado);
+    margin-bottom: 1.5rem;
+}
+
+.hero-content .trayectoria-tag {
+    display: inline-block;
+    background-color: rgba(0, 255, 163, 0.1);
+    color: var(--color-acento);
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    border: 1px solid rgba(0, 255, 163, 0.2);
+}
+
+/* Botón Moderno */
+.btn-primary {
+    display: inline-block;
+    background-color: var(--color-acento);
+    color: #000;
+    text-decoration: none;
+    padding: 0.8rem 2rem;
+    font-weight: 600;
+    border-radius: 6px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 14px rgba(0, 255, 163, 0.3);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 255, 163, 0.5);
+}
+
+/* ==========================================================================
+   RESPONSIVO (Optimización para Celulares)
+   ========================================================================== */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem;
+    }
+    
+    .navbar nav ul {
+        gap: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .hero-content h1 {
+        font-size: 2.2rem;
+    }
+
+    .hero-content p {
+        font-size: 1rem;
+    }
+}
+
 
                  
 /* ESTILOS NEÓN (Pon esto dentro de tu etiqueta <style>) */
