@@ -1682,6 +1682,24 @@ async function gestionarWalletSolana() {
         </button>
     </div>
 </section>
+
+                                
+
+                                <!---SCRITP DE SECCION DE ENTRENAMIENTO--->
+<script>
+function accederPrivado() {
+    let clave = prompt("INGRESE CLAVE DE ACCESO (TITÁN-2026):");
+    if (clave === "yorvis2026") {
+        alert("ACCESO CONCEDIDO. Cargando planes de entrenamiento...");
+        window.location.href = "#seccion-entrenamiento"; // Aquí irá tu contenido oculto
+    } else {
+        alert("ACCESO DENEGADO: Credenciales incorrectas.");
+    }
+}
+</script>
+
+
+                                
                                 
 
 
@@ -1956,8 +1974,8 @@ window.addEventListener('load', () => {
         
         <!-- Testimonio 1: Servicio Técnico -->
         <div style="border-left: 3px solid #39FF14; padding: 15px; background: rgba(57, 255, 20, 0.03);">
-            <p style="color: #fff; font-size: 0.9em; margin: 0;">"Mi Huawei estaba muerto y en otros lados me decían que no tenía arreglo. Yorvis lo optimizó y ahora vuela. 100% honesto."</p>
-            <span style="color: #39FF14; font-size: 0.7em; display: block; margin-top: 10px;">> USUARIO: Camilo R. (Chapinero)</span>
+            <p style="color: #fff; font-size: 0.9em; margin: 0;">>"Estuve practicando con el entrenador Yorvis res semanas seguidas y yo sufria de las vías respiratorias, y ele ayudo a mejorar"</p>
+            <span style="color: #39FF14; font-size: 0.7em; display: block; margin-top: 10px;">> USUARIO: Roxi P. (España)</span>
         </div>
 
         <!-- Testimonio 2: Entrenamiento -->
@@ -1979,8 +1997,8 @@ window.addEventListener('load', () => {
        
         <!-- Testimonio 3: Confianza -->
         <div style="border-left: 3px solid #39FF14; padding: 15px; background: rgba(57, 255, 20, 0.03);">
-            <p style="color: #fff; font-size: 0.9em; margin: 0;">"Se nota la experiencia de años. Le dejé mi equipo con total confianza por su transparencia. Recomendado."</p>
-            <span style="color: #39FF14; font-size: 0.7em; display: block; margin-top: 10px;">> USUARIO: Jorge T. (Centro)</span>
+            <p style="color: #fff; font-size: 0.9em; margin: 0;">"Los entrenamientos son difíciles pero adecuados, y si funciona yas cuando trabajas una series de tareas las puedes encontrar con este sitio recomendable"</p>
+            <span style="color: #39FF14; font-size: 0.7em; display: block; margin-top: 10px;">> USUARIO: Natalie Y. (Centro)</span>
         </div>
 
     </div>
@@ -2110,48 +2128,11 @@ function adquirirOfertaRelampago() {
         <div class="estrellas">⭐⭐⭐⭐⭐</div>
         <small>- Carlos M. (Bogotá)</small>
     </div>
-</section>
-<!-- MENÚ DE NAVEGACIÓN YORVIS TECH -->
-<nav style="background:#000; padding:15px; border-bottom:1px solid #39FF14; display:flex; justify-content:space-around;">
-    <a href="#" style="color:#39FF14; text-decoration:none; font-family:monospace;">[ INICIO ]</a>
-    <a href="#" onclick="accederPrivado()" style="color:#39FF14; text-decoration:none; font-family:monospace;">[ ÁREA PRIVADA 🔒 ]</a>
-</nav>
- <nav style="background:#000; padding:15px; border-bottom:1px solid #39FF14; display:flex; justify-content:center; gap:20px;">
-    <a href="#" style="color:#39FF14; text-decoration:none; font-family:monospace; font-size:0.8em;">[ INICIO ]</a>
-    <a href="#fitness-publico" style="color:#39FF14; text-decoration:none; font-family:monospace; font-size:0.8em;">[ ENTRENAMIENTO 🏋️ ]</a>
-    <a href="#" onclick="accederPrivado()" style="color:#39FF14; text-decoration:none; font-family:monospace; font-size:0.8em;">[ ÁREA TITÁN 🔐 ]</a>
- </nav>
-
-<!-- SECCIÓN PÚBLICA DE ENTRENAMIENTO (Fuera de la privada) -->
-<section id="fitness-publico" style="padding:40px 20px; text-align:center; background:#0a0a0a; color:#fff;">
-    <h2 style="color:#39FF14; font-family:monospace;">CUERPO FUNCIONAL 2026</h2>
-    <p style="font-size:0.9em; color:#ccc; max-width:500px; margin:auto;">
-        Optimiza tu rendimiento físico con programas de alta intensidad en Bogotá. Fuerza, agilidad y disciplina.
-    </p>
-   <h2 style="color: #39FF14;">Entrenador Personal en Bogotá | Fitness Funcional Yorvis Tech</h2>
-<p>Servicio de entrenamiento funcional a domicilio y en parques en el norte y centro de Bogotá.</p>
-
-    <div style="margin-top:20px;">
-        <button onclick="accederPrivado()" style="background:transparent; border:1px solid #39FF14; color:#39FF14; padding:10px 20px; cursor:pointer;">
-            VER PLANES Y RUTINAS >
-        </button>
-    </div>
-</section>
+                     
                  
 
 
-                  <!---SCRITP DE SECCION DE ENTRENAMIENTO--->
-<script>
-function accederPrivado() {
-    let clave = prompt("INGRESE CLAVE DE ACCESO (TITÁN-2026):");
-    if (clave === "yorvis2026") {
-        alert("ACCESO CONCEDIDO. Cargando planes de entrenamiento...");
-        window.location.href = "#seccion-entrenamiento"; // Aquí irá tu contenido oculto
-    } else {
-        alert("ACCESO DENEGADO: Credenciales incorrectas.");
-    }
-}
-</script>
+                  
                   <!-- SECCIÓN PRIVADA: ENTRENAMIENTO FUNCIONAL TITÁN -->
 <div id="seccion-entrenamiento" style="display:none; background: #0a0a0a; color: #39FF14; padding: 40px 20px; font-family: 'Courier New', monospace; border: 2px solid #333; margin: 20px; border-radius: 15px;">
     
