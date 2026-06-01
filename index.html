@@ -1919,16 +1919,208 @@ async function gestionarWalletSolana() {
                                 
 
 
+
+
+
+
+
+
+
+
+
                                 
 
 
+<!-- ========================================== -->
+<!-- SECCIÓN DE DONACIÓN RÁPIDA - ESTILO VERDE TÁCTICO -->
+<!-- ========================================== -->
+<div class="donaciones-verde-container" style="max-width: 550px; margin: 40px auto; padding: 25px; background-color: #000000; border: 2px solid #14F195; border-radius: 6px; font-family: inherit; color: #ffffff; box-shadow: 0px 0px 20px rgba(20, 241, 149, 0.15);">
+  
+  <h3 style="text-align: center; color: #14F195; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 5px; font-weight: bold;">
+    ⚡ CENTRO DE APOYO OPERATIVO
+  </h3>
+  <p style="text-align: center; font-size: 12px; color: #888888; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 1px;">
+    [ Financia el desarrollo de herramientas libres y soberanas ]
+  </p>
 
+  <!-- Canal 1: Nequi -->
+  <div style="background: #0a0a0a; padding: 15px; border-radius: 4px; border: 1px solid #222222; margin-bottom: 15px; display: flex; align-items: center; justify-content: space-between; gap: 15px;">
+    <div>
+      <h4 style="margin: 0 0 5px 0; color: #14F195; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">🇨🇴 NEQUI COLOMBIA</h4>
+      <p style="margin: 0; font-size: 12px; color: #aaaaaa;">Aporte inmediato por número celular.</p>
+    </div>
+    <!-- REEMPLAZA CON TU LINK O QR -->
+    <a href="https://nequi.com.co" target="_blank" 
+       style="padding: 10px 18px; background-color: #000000; color: #14F195; border: 1px solid #14F195; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 12px; text-transform: uppercase; font-family: inherit; transition: all 0.3s ease;">
+      [ ENVIAR ]
+    </a>
+  </div>
 
+  <!-- Canal 2: Solana -->
+  <div style="background: #0a0a0a; padding: 15px; border-radius: 4px; border: 1px solid #222222; margin-bottom: 15px; display: flex; align-items: center; justify-content: space-between; gap: 15px;">
+    <div>
+      <h4 style="margin: 0 0 5px 0; color: #14F195; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">🪙 RED SOLANA (SOL)</h4>
+      <p style="margin: 0; font-size: 12px; color: #aaaaaa;">Transferencia directa a tu bóveda Web3.</p>
+    </div>
+    <button onclick="enviarDonacionSolana()" 
+            style="padding: 10px 18px; background-color: #14F195; color: #000000; border: none; border-radius: 4px; font-weight: bold; font-size: 12px; text-transform: uppercase; font-family: inherit; cursor: pointer; transition: all 0.3s ease;">
+      [ TRASFERIR ]
+    </button>
+  </div>
 
-
+  <!-- TARJETA PAYPAL OPTIMIZADA -->
+<div style="background: #0a0a0a; padding: 15px; border-radius: 4px; border: 1px solid #222222; margin-bottom: 15px; display: flex; align-items: center; justify-content: space-between;">
+  <div>
+    <h4 style="margin: 0 0 5px 0; color: #0070ba; font-size: 14px;">🌍 PAYPAL GLOBAL</h4>
+    <p class="lang-text" data-es="Aportes internacionales en divisas (USD/EUR)." data-en="International support in foreign currency." style="margin: 0; font-size: 12px; color: #aaaaaa;">
+      Aportes internacionales en divisas (USD/EUR).
+    </p>
+  </div>
+  <button onclick="procesarPagoPayPal()" id="btn-paypal-pasarela" class="lang-text" data-es="[ DONAR ]" data-en="[ DONATE ]" style="padding: 10px 18px; background-color: #000000; color: #0070ba; border: 1px solid #0070ba; border-radius: 4px; font-weight: bold; font-size: 12px; font-family: inherit; cursor: pointer;">
+    [ DONAR ]
+  </button>
+</div> 
                                 
 
+   <!---SCRIPT DE BOTON DE PAYPAL DEL CENTRO DE APOYO--->
+<script>
+function procesarPagoPayPal() {
+    // Enlace de pasarela internacional (Puedes cambiar 'yorvistech' por tu usuario real de PayPal)
+    const ENLACE_PAYPAL_ME = "https://paypal.me/boxtraining"; 
+    
+    const btnPaypal = document.getElementById("btn-paypal-pasarela");
+    if (!btnPaypal) return;
+
+    // Efecto visual instantáneo de transmisión
+    btnPaypal.style.backgroundColor = "#0070ba";
+    btnPaypal.style.color = "#ffffff";
+    btnPaypal.innerHTML = "[ CONNECTING... ⚡ ]";
+
+    setTimeout(() => {
+        btnPaypal.style.backgroundColor = "#000000";
+        btnPaypal.style.color = "#0070ba";
+        btnPaypal.innerHTML = "[ DONAR ]";
+    }, 4000);
+
+    // Ejecuta redirección limpia sin bloqueos de ventanas emergentes
+    window.open(ENLACE_PAYPAL_ME, "_blank");
+}
+
+
+</script>
+          
+      <!-- IMPORTACIÓN CORRECTA DE SOLANA WEB3 (Librería Oficial para Navegador) -->
+<script src="https://unpkg.com"></script>
                                 
+<script>
+async function enviarDonacionSolana() {
+  // Detecta Phantom tanto en extensiones de PC como en el navegador interno de la App móvil
+  const proveedorWallet = window.solana || window.phantom?.solana;
+
+  if (!proveedorWallet) {
+    alert("🔐 SISTEMA: No se detectó ninguna Wallet compatible.\n\nSi estás en el teléfono, abre tu aplicación de Phantom, ve al navegador interno (icono de globo🌐) e ingresa a tu página desde allí.");
+    return;
+  }
+
+  try {
+    // Forzamos la conexión del usuario de manera limpia antes de hacer consultas de red
+    if (!proveedorWallet.isConnected) {
+        await proveedorWallet.connect();
+    }
+    
+    // Inicializamos la conexión a la red principal (Mainnet)
+    const conexion = new solanaWeb3.Connection(solanaWeb3.clusterApiUrl('mainnet-beta'), 'confirmed');
+    
+    // Dirección de tu Wallet destino de Solana
+    const tuWalletDestino = new solanaWeb3.PublicKey("917j5y45oeLNmN6DUrZrP6DyRAYzxh7mnA5h2LJnw6uq");
+    const walletUsuario = proveedorWallet.publicKey;
+
+    // Cantidad fija establecida: 0.02 SOL
+    const MONTO_LAMPPORTS = 0.02 * solanaWeb3.LAMPORTS_PER_SOL; 
+
+    // Creamos la instrucción de transferencia en la cadena de bloques
+    const transaccion = new solanaWeb3.Transaction().add(
+      solanaWeb3.SystemProgram.transfer({
+        fromPubkey: walletUsuario,
+        toPubkey: tuWalletDestino,
+        lamports: MONTO_LAMPPORTS,
+      })
+    );
+
+    // Asignamos los parámetros obligatorios de firma de Solana
+    transaccion.feePayer = walletUsuario;
+    
+    // Capturamos el último identificador de bloque de la red para que la transacción sea válida
+    const { blockhash } = await conexion.getLatestBlockhash();
+    transaccion.recentBlockhash = blockhash;
+
+    // El usuario firma la operación digitalmente en su aplicación Phantom
+    const transaccionFirmada = await proveedorWallet.signTransaction(transaccion);
+    
+    // Enviamos la transacción firmada a la blockchain para su validación
+    const txid = await conexion.sendRawTransaction(transaccionFirmada.serialize());
+    
+    alert("🟢 OPERACIÓN EXITOSA\n\nDonación procesada en la blockchain de Solana con éxito.\n\nHash de registro: " + txid);
+  } catch (error) {
+    console.error("Error en pasarela cripto:", error);
+    alert("❌ TRANSACCIÓN ABORTADA\n\nLa firma fue rechazada por el operador o la cuenta no cuenta con fondos suficientes para el envío + comisión.");
+  }
+}
+</script>
+
+<!---SCRIPT POR SEPARADO DE OTROS TRABAJOS ANTERIORES A ANALIZAR --->
+<script>
+
+// FUNCTION 1: PROCESAR TRASLADO AUTOMÁTICO A NEQUI (MÉTODO CLÁSICO RESGUARDADO)
+function procesarPagoNequi() {
+    const NUMERO_NEQUI_DESTINO = "3507916503"; 
+    const botonNequi = document.getElementById('btn-nequi-pasarela');
+    if (!botonNequi) return;
+
+    // Copiado seguro universal para navegadores antiguos
+    const entradaTemporal = document.createElement("input");
+    entradaTemporal.value = NUMERO_NEQUI_DESTINO;
+    document.body.appendChild(entradaTemporal);
+    entradaTemporal.select();
+    entradaTemporal.setSelectionRange(0, 99999);
+    document.execCommand("copy");
+    document.body.removeChild(entradaTemporal);
+
+    // Cambio visual transitorio
+    botonNequi.style.backgroundColor = "#14F195";
+    botonNequi.style.color = "#000000";
+    botonNequi.innerHTML = "[ ¡NÚMERO COPIADO! 📋 ]";
+
+    setTimeout(() => {
+        botonNequi.style.backgroundColor = "#000000";
+        botonNequi.style.color = "#14F195";
+        botonNequi.innerHTML = "[ ENVIAR ]";
+    }, 4000);
+
+    // Despliegue seguro de pasarela externa
+    window.open("https://nequi.com.co", "_blank");
+}
+
+// CORRECCIÓN ABSOLUTA PARA EL ENLACE DE WHATSAPP
+function adquirirOfertaRelampago() {
+    // Número internacional limpio sin símbolos de suma ni errores de unión
+    const TELEFONO_YORVIS = "573507916503"; 
+    
+    // Texto plano sin caracteres extraños para evitar cruces encriptados
+    const textoMensaje = "Hola Yorvis Tech, quiero adquirir el Servicio de Optimizacion Android por 25.000 COP. Vengo de la pagina del Proyecto Libertad.";
+    
+    // Codificación segura para URL
+    const textoCodificado = encodeURIComponent(textoMensaje);
+    
+    // Estructura oficial limpia (wa.me/numero?text=mensaje)
+    const urlCorrecta = "https://wa.me/" + TELEFONO_YORVIS + "?text=" + textoCodificado;
+    
+    // Ejecución inmediata en una nueva pestaña del navegador
+    window.open(urlCorrecta, "_blank");
+}
+   
+</script>
+                          
 
                   <!---SCRIPT DE TARJETA NEQUI DE PROCESAR PAGOS--->
                   
@@ -2128,113 +2320,10 @@ window.addEventListener('load', () => {
                                 
 <!--COMTADOR DE OFERTA DE PRUEBA (MEDIA) -->
 
-<!-- ⚡ CENTRO DE APOYO OPERATIVO UNIFICADO -->
-<div class="donaciones-verde-container" style="max-width: 550px; margin: 40px auto; padding: 25px; background-color: #000000; border: 2px solid #14F195; border-radius: 6px; font-family: inherit; color: #ffffff;">
-  
-  <h3 class="lang-text" data-es="⚡ CENTRO DE APOYO OPERATIVO" data-en="⚡ OPERATIONAL SUPPORT CENTER" style="text-align: center; color: #14F195; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 5px; font-weight: bold;">
-    ⚡ CENTRO DE APOYO OPERATIVO
-  </h3>
-  
-  <p class="lang-text" data-es="[ Financia el desarrollo de herramientas libres y soberanas ]" data-en="[ Fund the development of free and sovereign tools ]" style="text-align: center; font-size: 12px; color: #888888; margin-bottom: 25px; text-transform: uppercase;">
-    [ Financia el desarrollo de herramientas libres y soberanas ]
-  </p>
 
-  <!-- NUEVO BOTÓN DE NEQUI REINSTALADO -->
-  <div style="background: #0a0a0a; padding: 15px; border-radius: 4px; border: 1px solid #222222; margin-bottom: 15px; display: flex; align-items: center; justify-content: space-between;">
-    <div>
-      <h4 style="margin: 0 0 5px 0; color: #14F195; font-size: 14px;">🇨🇴 NEQUI COLOMBIA</h4>
-      <p class="lang-text" data-es="Aporte inmediato por número celular." data-en="Instant transfer via mobile number." style="margin: 0; font-size: 12px; color: #aaaaaa;">
-        Aporte inmediato por número celular.
-      </p>
-    </div>
-    <button onclick="procesarPagoNequi()" id="btn-nequi-pasarela" class="lang-text" data-es="[ ENVIAR ]" data-en="[ SEND ]" style="padding: 10px 18px; background-color: #000000; color: #14F195; border: 1px solid #14F195; border-radius: 4px; font-weight: bold; font-size: 12px; font-family: inherit; cursor: pointer;">
-      [ ENVIAR ]
-    </button>
-  </div>
-
-  <!-- TARJETA SOLANA -->
-  <div style="background: #0a0a0a; padding: 15px; border-radius: 4px; border: 1px solid #222222; display: flex; align-items: center; justify-content: space-between;">
-    <div>
-      <h4 style="margin: 0 0 5px 0; color: #14F195; font-size: 14px;">🪙 RED SOLANA (SOL)</h4>
-      <p class="lang-text" data-es="Transferencia directa a tu bóveda Web3." data-en="Direct transfer to your Web3 vault." style="margin: 0; font-size: 12px; color: #aaaaaa;">
-        Transferencia directa a tu bóveda Web3.
-      </p>
-    </div>
-    <button onclick="enviarDonacionSolana()" class="lang-text" data-es="[ TRASFERIR ]" data-en="[ TRANSFER ]" style="padding: 10px 18px; background-color: #14F195; color: #000000; border: none; border-radius: 4px; font-weight: bold; font-size: 12px; font-family: inherit; cursor: pointer;">
-      [ TRASFERIR ]
-    </button>
-  </div>
-</div>
-
-<!-- ⏱️ SECCIÓN DE LA OFERTA RELÁMPAGO REPARADA -->
-<div style="background: #0a0a0a; border: 2px dashed #ff3333; padding: 20px; border-radius: 6px; text-align: center; max-width: 500px; margin: 30px auto;">
-  <h3 style="color: #ff3333; font-size: 14px; letter-spacing: 1px; margin: 0 0 10px 0; text-transform: uppercase;">
-    ⏱️ OFERTA DE PRUEBA EXPIRA EN:
-  </h3>
-  
-  <!-- Tu contador de 15 minutos -->
-  <div style="font-family: monospace; font-size: 28px; color: #ffffff; font-weight: bold; margin-bottom: 20px; letter-spacing: 2px;">
-    <span id="oferta-minutos">15</span>:<span id="oferta-segundos">00</span>
-  </div>
-
-  <!-- BOTÓN CON ID ASIGNADO PARA EVITAR COMPORTAMIENTOS ERRÁTICOS -->
-  <button onclick="adquirirOfertaRelampago()" id="btn-adquirir-oferta" style="width: 100%; padding: 14px; background: #ff3333; color: #ffffff; border: none; font-weight: bold; font-size: 14px; text-transform: uppercase; cursor: pointer; letter-spacing: 1px; border-radius: 4px;">
-    🚀 Adquirir Servicio Ahora
-  </button>
-</div>
 
 <!---SCRUPT DE COMTADOR DE OFERTA DE PRUEBA--->
-<script>
 
-// FUNCTION 1: PROCESAR TRASLADO AUTOMÁTICO A NEQUI (MÉTODO CLÁSICO RESGUARDADO)
-function procesarPagoNequi() {
-    const NUMERO_NEQUI_DESTINO = "3507916503"; 
-    const botonNequi = document.getElementById('btn-nequi-pasarela');
-    if (!botonNequi) return;
-
-    // Copiado seguro universal para navegadores antiguos
-    const entradaTemporal = document.createElement("input");
-    entradaTemporal.value = NUMERO_NEQUI_DESTINO;
-    document.body.appendChild(entradaTemporal);
-    entradaTemporal.select();
-    entradaTemporal.setSelectionRange(0, 99999);
-    document.execCommand("copy");
-    document.body.removeChild(entradaTemporal);
-
-    // Cambio visual transitorio
-    botonNequi.style.backgroundColor = "#14F195";
-    botonNequi.style.color = "#000000";
-    botonNequi.innerHTML = "[ ¡NÚMERO COPIADO! 📋 ]";
-
-    setTimeout(() => {
-        botonNequi.style.backgroundColor = "#000000";
-        botonNequi.style.color = "#14F195";
-        botonNequi.innerHTML = "[ ENVIAR ]";
-    }, 4000);
-
-    // Despliegue seguro de pasarela externa
-    window.open("https://nequi.com.co", "_blank");
-}
-
-// CORRECCIÓN ABSOLUTA PARA EL ENLACE DE WHATSAPP
-function adquirirOfertaRelampago() {
-    // Número internacional limpio sin símbolos de suma ni errores de unión
-    const TELEFONO_YORVIS = "573507916503"; 
-    
-    // Texto plano sin caracteres extraños para evitar cruces encriptados
-    const textoMensaje = "Hola Yorvis Tech, quiero adquirir el Servicio de Optimizacion Android por 25.000 COP. Vengo de la pagina del Proyecto Libertad.";
-    
-    // Codificación segura para URL
-    const textoCodificado = encodeURIComponent(textoMensaje);
-    
-    // Estructura oficial limpia (wa.me/numero?text=mensaje)
-    const urlCorrecta = "https://wa.me/" + TELEFONO_YORVIS + "?text=" + textoCodificado;
-    
-    // Ejecución inmediata en una nueva pestaña del navegador
-    window.open(urlCorrecta, "_blank");
-}
-   
-</script>
                   
     
  
@@ -3089,141 +3178,6 @@ function calcularFlujoCapital() {
 
 
 
-<!-- ========================================== -->
-<!-- SECCIÓN DE DONACIÓN RÁPIDA - ESTILO VERDE TÁCTICO -->
-<!-- ========================================== -->
-<div class="donaciones-verde-container" style="max-width: 550px; margin: 40px auto; padding: 25px; background-color: #000000; border: 2px solid #14F195; border-radius: 6px; font-family: inherit; color: #ffffff; box-shadow: 0px 0px 20px rgba(20, 241, 149, 0.15);">
-  
-  <h3 style="text-align: center; color: #14F195; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 5px; font-weight: bold;">
-    ⚡ CENTRO DE APOYO OPERATIVO
-  </h3>
-  <p style="text-align: center; font-size: 12px; color: #888888; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 1px;">
-    [ Financia el desarrollo de herramientas libres y soberanas ]
-  </p>
-
-  <!-- Canal 1: Nequi -->
-  <div style="background: #0a0a0a; padding: 15px; border-radius: 4px; border: 1px solid #222222; margin-bottom: 15px; display: flex; align-items: center; justify-content: space-between; gap: 15px;">
-    <div>
-      <h4 style="margin: 0 0 5px 0; color: #14F195; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">🇨🇴 NEQUI COLOMBIA</h4>
-      <p style="margin: 0; font-size: 12px; color: #aaaaaa;">Aporte inmediato por número celular.</p>
-    </div>
-    <!-- REEMPLAZA CON TU LINK O QR -->
-    <a href="https://nequi.com.co" target="_blank" 
-       style="padding: 10px 18px; background-color: #000000; color: #14F195; border: 1px solid #14F195; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 12px; text-transform: uppercase; font-family: inherit; transition: all 0.3s ease;">
-      [ ENVIAR ]
-    </a>
-  </div>
-
-  <!-- Canal 2: Solana -->
-  <div style="background: #0a0a0a; padding: 15px; border-radius: 4px; border: 1px solid #222222; margin-bottom: 15px; display: flex; align-items: center; justify-content: space-between; gap: 15px;">
-    <div>
-      <h4 style="margin: 0 0 5px 0; color: #14F195; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">🪙 RED SOLANA (SOL)</h4>
-      <p style="margin: 0; font-size: 12px; color: #aaaaaa;">Transferencia directa a tu bóveda Web3.</p>
-    </div>
-    <button onclick="enviarDonacionSolana()" 
-            style="padding: 10px 18px; background-color: #14F195; color: #000000; border: none; border-radius: 4px; font-weight: bold; font-size: 12px; text-transform: uppercase; font-family: inherit; cursor: pointer; transition: all 0.3s ease;">
-      [ TRASFERIR ]
-    </button>
-  </div>
-
-  <!-- TARJETA PAYPAL OPTIMIZADA -->
-<div style="background: #0a0a0a; padding: 15px; border-radius: 4px; border: 1px solid #222222; margin-bottom: 15px; display: flex; align-items: center; justify-content: space-between;">
-  <div>
-    <h4 style="margin: 0 0 5px 0; color: #0070ba; font-size: 14px;">🌍 PAYPAL GLOBAL</h4>
-    <p class="lang-text" data-es="Aportes internacionales en divisas (USD/EUR)." data-en="International support in foreign currency." style="margin: 0; font-size: 12px; color: #aaaaaa;">
-      Aportes internacionales en divisas (USD/EUR).
-    </p>
-  </div>
-  <button onclick="procesarPagoPayPal()" id="btn-paypal-pasarela" class="lang-text" data-es="[ DONAR ]" data-en="[ DONATE ]" style="padding: 10px 18px; background-color: #000000; color: #0070ba; border: 1px solid #0070ba; border-radius: 4px; font-weight: bold; font-size: 12px; font-family: inherit; cursor: pointer;">
-    [ DONAR ]
-  </button>
-</div> 
-
-   <!---SCRIPT DE BOTON DE PAYPAL DEL CENTRO DE APOYO--->
-<script>
-function procesarPagoPayPal() {
-    // Enlace de pasarela internacional (Puedes cambiar 'yorvistech' por tu usuario real de PayPal)
-    const ENLACE_PAYPAL_ME = "https://paypal.me/boxtraining"; 
-    
-    const btnPaypal = document.getElementById("btn-paypal-pasarela");
-    if (!btnPaypal) return;
-
-    // Efecto visual instantáneo de transmisión
-    btnPaypal.style.backgroundColor = "#0070ba";
-    btnPaypal.style.color = "#ffffff";
-    btnPaypal.innerHTML = "[ CONNECTING... ⚡ ]";
-
-    setTimeout(() => {
-        btnPaypal.style.backgroundColor = "#000000";
-        btnPaypal.style.color = "#0070ba";
-        btnPaypal.innerHTML = "[ DONAR ]";
-    }, 4000);
-
-    // Ejecuta redirección limpia sin bloqueos de ventanas emergentes
-    window.open(ENLACE_PAYPAL_ME, "_blank");
-}
-
-
-</script>
-          
-      <!-- IMPORTACIÓN CORRECTA DE SOLANA WEB3 (Librería Oficial para Navegador) -->
-<script src="https://unpkg.com"></script>
-
-<script>
-async function enviarDonacionSolana() {
-  // Detecta Phantom tanto en extensiones de PC como en el navegador interno de la App móvil
-  const proveedorWallet = window.solana || window.phantom?.solana;
-
-  if (!proveedorWallet) {
-    alert("🔐 SISTEMA: No se detectó ninguna Wallet compatible.\n\nSi estás en el teléfono, abre tu aplicación de Phantom, ve al navegador interno (icono de globo🌐) e ingresa a tu página desde allí.");
-    return;
-  }
-
-  try {
-    // Forzamos la conexión del usuario de manera limpia antes de hacer consultas de red
-    if (!proveedorWallet.isConnected) {
-        await proveedorWallet.connect();
-    }
-    
-    // Inicializamos la conexión a la red principal (Mainnet)
-    const conexion = new solanaWeb3.Connection(solanaWeb3.clusterApiUrl('mainnet-beta'), 'confirmed');
-    
-    // Dirección de tu Wallet destino de Solana
-    const tuWalletDestino = new solanaWeb3.PublicKey("917j5y45oeLNmN6DUrZrP6DyRAYzxh7mnA5h2LJnw6uq");
-    const walletUsuario = proveedorWallet.publicKey;
-
-    // Cantidad fija establecida: 0.02 SOL
-    const MONTO_LAMPPORTS = 0.02 * solanaWeb3.LAMPORTS_PER_SOL; 
-
-    // Creamos la instrucción de transferencia en la cadena de bloques
-    const transaccion = new solanaWeb3.Transaction().add(
-      solanaWeb3.SystemProgram.transfer({
-        fromPubkey: walletUsuario,
-        toPubkey: tuWalletDestino,
-        lamports: MONTO_LAMPPORTS,
-      })
-    );
-
-    // Asignamos los parámetros obligatorios de firma de Solana
-    transaccion.feePayer = walletUsuario;
-    
-    // Capturamos el último identificador de bloque de la red para que la transacción sea válida
-    const { blockhash } = await conexion.getLatestBlockhash();
-    transaccion.recentBlockhash = blockhash;
-
-    // El usuario firma la operación digitalmente en su aplicación Phantom
-    const transaccionFirmada = await proveedorWallet.signTransaction(transaccion);
-    
-    // Enviamos la transacción firmada a la blockchain para su validación
-    const txid = await conexion.sendRawTransaction(transaccionFirmada.serialize());
-    
-    alert("🟢 OPERACIÓN EXITOSA\n\nDonación procesada en la blockchain de Solana con éxito.\n\nHash de registro: " + txid);
-  } catch (error) {
-    console.error("Error en pasarela cripto:", error);
-    alert("❌ TRANSACCIÓN ABORTADA\n\nLa firma fue rechazada por el operador o la cuenta no cuenta con fondos suficientes para el envío + comisión.");
-  }
-}
-</script>
 
                   <!---PRUEBA DE BOVEDA DE SEGURIDAD CON CONSOLA DE MENSAJERÍA--->
 <div class="panel-titan" style="max-width: 700px; margin: 40px auto; padding: 25px; background-color: #000; border: 2px dashed #ffcc00; border-radius: 8px;">
