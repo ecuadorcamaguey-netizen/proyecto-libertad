@@ -2291,6 +2291,154 @@ window.addEventListener('load', () => {
 });
            </script>  
 <br>
+
+   
+
+   <!---PRUEBA DE BOVEDA DE SEGURIDAD--->
+<div class="panel-titan">
+  <h2>🔒 BÓVEDA DE SEGURIDAD [TITÁN-GUARD]</h2>
+   <div class="alerta-error">
+    ⚡ [ ERROR: CREDENCIAL INVÁLIDA ]
+  </div>
+  
+  <!-- Alerta oculta por defecto, aparecerá dinámicamente si la clave falla -->
+  <div id="error-titan-guard" class="alerta-error" style="display: none;">
+    ⚡ [ ERROR: CREDENCIAL INVÁLIDA ]
+  </div>
+  
+  <div class="grid-tactico">
+    <div class="tarjeta-tactica">
+      <h3>📁 Expediente de Resguardo Activo</h3>
+      <p><strong>ESTADO:</strong> OPERACIÓN LIBERTAD CONFIDENCIAL</p>
+      <!-- Añadimos id y el evento onclick -->
+      <button id="btn-acceso-titan" class="btn-neon" onclick="solicitarAccesoTitan()">ACCEDER AL EXPEDIENTE ⚡</button>
+    </div>
+  </div>
+</div>
+   <br>
+
+<!---SCRIPT DE PRUEBA DE BOVEDA DE SEGURIDAD---> 
+                  <script>
+                  function solicitarAccesoTitan() {
+    const CLAVE_CORRECTA = 'TITÁN-RECARGA';
+    const boton = document.getElementById('btn-acceso-titan');
+    const alertaError = document.getElementById('error-titan-guard');
+    
+    // 1. PERSISTENCIA LIMPIA: Ocultamos cualquier alerta de error de intentos anteriores
+    alertaError.style.display = 'none';
+    
+    // Lanzamos la ventana emergente para solicitar la credencial maestra
+    const claveIngresada = prompt("🔒 PROTOCOLO DE SEGURIDAD ACTIVADO\nIntroduce tu credencial maestra para acceder al expediente:");
+    
+    // Si el usuario cancela o deja vacío, salimos de la función sin hacer nada
+    if (claveIngresada === null) return;
+
+    // 2. EFECTO DE RED INMERSIVO: Simulamos procesamiento del sistema de resguardo
+    const textoOriginal = boton.innerHTML;
+    boton.disabled = true;
+    boton.innerHTML = 'VERIFICANDO CREDENCIAL... 🖥️';
+
+    setTimeout(() => {
+        // Restauramos el botón tras la simulación
+        boton.disabled = false;
+        boton.innerHTML = textoOriginal;
+
+        if (claveIngresada.trim() === CLAVE_CORRECTA) {
+            // ¡ACCESO CONCEDIDO! 
+            alert("🔓 ACCESO AUTORIZADO // EXPEDIENTE DESBLOQUEADO");
+            
+            // Aquí puedes redirigir al usuario al PDF o abrir tu visor
+            window.open("https://github.io", "_blank"); 
+        } else {
+            // 3. GENERACIÓN DINÁMICA: Mostramos la alerta neón roja si la clave es incorrecta
+            alertaError.style.display = 'block';
+        }
+    }, 1000); // 1 segundo de retraso táctico para el efecto visual
+}
+                  </script>
+
+
+ <!---BOVEDA DE SEGURIDAD DE PRUEBA--->
+                  <section id="seccion-titan-guard">
+  <h2>🔒 BÓVEDA DE SEGURIDAD [TITÁN-GUARD]</h2>
+  
+  <!-- Formulario de ingreso (Se oculta al desbloquear) -->
+  <div id="formulario-bloqueado">
+    <p>Sección restringida bajo protocolo de resguardo. Introduce tu credencial maestra.</p>
+    <input type="password" id="input-credencial" placeholder="Introduce credencial...">
+    <button id="btn-acceder-boveda">ACCEDER AL EXPEDIENTE ⚡</button>
+    
+    <!-- Mensaje de error (Inicialmente oculto o vacío) -->
+    <div id="mensaje-error-boveda" style="color: #ff3333; margin-top: 10px; display: none;">
+      ⚡ [ ERROR: CREDENCIAL INVÁLIDA ]
+    </div>
+  </div>
+
+  <!-- Contenido protegido (Inicialmente oculto con CSS: display: none) -->
+  <div id="expediente-protegido" style="display: none; border-top: 2px dashed #00ff00; padding-top: 15px;">
+    <h4>📁 Expediente de Resguardo Activo</h4>
+    <p><strong>ESTADO:</strong> OPERACIÓN LIBERTAD CONFIDENCIAL</p>
+    <p><strong>CÓDIGO DE RESPALDO:</strong> TITÁN-RECARGA-2026-FINAL</p>
+    
+    <!-- Aquí van tus botones de cargar documentación local o ver PDF -->
+    <button id="btn-cerrar-boveda">[ CERRAR SESIÓN PRIVADA ]</button>
+  </div>
+</section><br>  
+
+   <!---SCRIPT BOVED ADE SEGURIDAD --->
+                  <script>
+
+                    document.addEventListener('DOMContentLoaded', () => {
+    const btnAcceder = document.getElementById('btn-acceder-boveda');
+    const btnCerrar = document.getElementById('btn-cerrar-boveda');
+    const inputCredencial = document.getElementById('input-credencial');
+    const mensajeError = document.getElementById('mensaje-error-boveda');
+    const formularioBloqueado = document.getElementById('formulario-bloqueado');
+    const expedienteProtegido = document.getElementById('expediente-protegido');
+
+    // Clave maestra definida en tus protocolos
+    const CREDENCIAL_CORRECTA = 'TITÁN-RECARGA';
+
+    // Evento para validar la contraseña
+    btnAcceder.addEventListener('click', () => {
+        const valorIngresado = inputCredencial.value.trim();
+
+        // Limpieza previa del mensaje de error para evitar efectos duplicados
+        mensajeError.style.display = 'none';
+
+        if (valorIngresado === CREDENCIAL_CORRECTA) {
+            // ¡Acceso concedido! Efecto dinámico de desbloqueo
+            formularioBloqueado.style.display = 'none';
+            expedienteProtegido.style.display = 'block';
+            
+            // Limpiamos el campo de texto por seguridad
+            inputCredencial.value = ''; 
+        } else {
+            // Acceso denegado: Muestra la alerta roja dinámica
+            mensajeError.style.display = 'block';
+            inputCredencial.value = '';
+            inputCredencial.focus();
+        }
+    });
+
+    // Permitir presionar 'Enter' en el input para ingresar rápido
+    inputCredencial.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            btnAcceder.click();
+        }
+    });
+
+    // Evento para volver a bloquear (Cerrar Sesión Privada)
+    btnCerrar.addEventListener('click', () => {
+        expedienteProtegido.style.display = 'none';
+        formularioBloqueado.style.display = 'block';
+        mensajeError.style.display = 'none';
+    });
+});
+                  </script>
+                  
+
+   
                   
                   <!-- BLOQUE DE OFERTA RELÁMPAGO YORVIS TECH -->
 <div id="promo-banner" style="background: #000; color: #39FF14; border: 2px solid #39FF14; padding: 15px; text-align: center; font-family: 'Courier New', Courier, monospace; margin: 20px; border-radius: 10px; box-shadow: 0 0 15px #39FF14;">
@@ -2683,145 +2831,11 @@ function cerrarSesionProtocolo() {
   
                   </script>
                   
-                 <!---PRUEBA DE BOVEDA DE SEGURIDAD--->
-<div class="panel-titan">
-  <h2>🔒 BÓVEDA DE SEGURIDAD [TITÁN-GUARD]</h2>
-   <div class="alerta-error">
-    ⚡ [ ERROR: CREDENCIAL INVÁLIDA ]
-  </div>
-  
-  <!-- Alerta oculta por defecto, aparecerá dinámicamente si la clave falla -->
-  <div id="error-titan-guard" class="alerta-error" style="display: none;">
-    ⚡ [ ERROR: CREDENCIAL INVÁLIDA ]
-  </div>
-  
-  <div class="grid-tactico">
-    <div class="tarjeta-tactica">
-      <h3>📁 Expediente de Resguardo Activo</h3>
-      <p><strong>ESTADO:</strong> OPERACIÓN LIBERTAD CONFIDENCIAL</p>
-      <!-- Añadimos id y el evento onclick -->
-      <button id="btn-acceso-titan" class="btn-neon" onclick="solicitarAccesoTitan()">ACCEDER AL EXPEDIENTE ⚡</button>
-    </div>
-  </div>
-</div>
-<!---SCRIPT DE PRUEBA DE BOVEDA DE SEGURIDAD---> 
-                  <script>
-                  function solicitarAccesoTitan() {
-    const CLAVE_CORRECTA = 'TITÁN-RECARGA';
-    const boton = document.getElementById('btn-acceso-titan');
-    const alertaError = document.getElementById('error-titan-guard');
-    
-    // 1. PERSISTENCIA LIMPIA: Ocultamos cualquier alerta de error de intentos anteriores
-    alertaError.style.display = 'none';
-    
-    // Lanzamos la ventana emergente para solicitar la credencial maestra
-    const claveIngresada = prompt("🔒 PROTOCOLO DE SEGURIDAD ACTIVADO\nIntroduce tu credencial maestra para acceder al expediente:");
-    
-    // Si el usuario cancela o deja vacío, salimos de la función sin hacer nada
-    if (claveIngresada === null) return;
+                 
 
-    // 2. EFECTO DE RED INMERSIVO: Simulamos procesamiento del sistema de resguardo
-    const textoOriginal = boton.innerHTML;
-    boton.disabled = true;
-    boton.innerHTML = 'VERIFICANDO CREDENCIAL... 🖥️';
-
-    setTimeout(() => {
-        // Restauramos el botón tras la simulación
-        boton.disabled = false;
-        boton.innerHTML = textoOriginal;
-
-        if (claveIngresada.trim() === CLAVE_CORRECTA) {
-            // ¡ACCESO CONCEDIDO! 
-            alert("🔓 ACCESO AUTORIZADO // EXPEDIENTE DESBLOQUEADO");
-            
-            // Aquí puedes redirigir al usuario al PDF o abrir tu visor
-            window.open("https://github.io", "_blank"); 
-        } else {
-            // 3. GENERACIÓN DINÁMICA: Mostramos la alerta neón roja si la clave es incorrecta
-            alertaError.style.display = 'block';
-        }
-    }, 1000); // 1 segundo de retraso táctico para el efecto visual
-}
-                  </script>
 
                   
                   
-                  <!---BOVEDA DE SEGURIDAD DE PRUEBA--->
-                  <section id="seccion-titan-guard">
-  <h2>🔒 BÓVEDA DE SEGURIDAD [TITÁN-GUARD]</h2>
-  
-  <!-- Formulario de ingreso (Se oculta al desbloquear) -->
-  <div id="formulario-bloqueado">
-    <p>Sección restringida bajo protocolo de resguardo. Introduce tu credencial maestra.</p>
-    <input type="password" id="input-credencial" placeholder="Introduce credencial...">
-    <button id="btn-acceder-boveda">ACCEDER AL EXPEDIENTE ⚡</button>
-    
-    <!-- Mensaje de error (Inicialmente oculto o vacío) -->
-    <div id="mensaje-error-boveda" style="color: #ff3333; margin-top: 10px; display: none;">
-      ⚡ [ ERROR: CREDENCIAL INVÁLIDA ]
-    </div>
-  </div>
-
-  <!-- Contenido protegido (Inicialmente oculto con CSS: display: none) -->
-  <div id="expediente-protegido" style="display: none; border-top: 2px dashed #00ff00; padding-top: 15px;">
-    <h4>📁 Expediente de Resguardo Activo</h4>
-    <p><strong>ESTADO:</strong> OPERACIÓN LIBERTAD CONFIDENCIAL</p>
-    <p><strong>CÓDIGO DE RESPALDO:</strong> TITÁN-RECARGA-2026-FINAL</p>
-    
-    <!-- Aquí van tus botones de cargar documentación local o ver PDF -->
-    <button id="btn-cerrar-boveda">[ CERRAR SESIÓN PRIVADA ]</button>
-  </div>
-</section>
-                  <script>
-
-                    document.addEventListener('DOMContentLoaded', () => {
-    const btnAcceder = document.getElementById('btn-acceder-boveda');
-    const btnCerrar = document.getElementById('btn-cerrar-boveda');
-    const inputCredencial = document.getElementById('input-credencial');
-    const mensajeError = document.getElementById('mensaje-error-boveda');
-    const formularioBloqueado = document.getElementById('formulario-bloqueado');
-    const expedienteProtegido = document.getElementById('expediente-protegido');
-
-    // Clave maestra definida en tus protocolos
-    const CREDENCIAL_CORRECTA = 'TITÁN-RECARGA';
-
-    // Evento para validar la contraseña
-    btnAcceder.addEventListener('click', () => {
-        const valorIngresado = inputCredencial.value.trim();
-
-        // Limpieza previa del mensaje de error para evitar efectos duplicados
-        mensajeError.style.display = 'none';
-
-        if (valorIngresado === CREDENCIAL_CORRECTA) {
-            // ¡Acceso concedido! Efecto dinámico de desbloqueo
-            formularioBloqueado.style.display = 'none';
-            expedienteProtegido.style.display = 'block';
-            
-            // Limpiamos el campo de texto por seguridad
-            inputCredencial.value = ''; 
-        } else {
-            // Acceso denegado: Muestra la alerta roja dinámica
-            mensajeError.style.display = 'block';
-            inputCredencial.value = '';
-            inputCredencial.focus();
-        }
-    });
-
-    // Permitir presionar 'Enter' en el input para ingresar rápido
-    inputCredencial.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-            btnAcceder.click();
-        }
-    });
-
-    // Evento para volver a bloquear (Cerrar Sesión Privada)
-    btnCerrar.addEventListener('click', () => {
-        expedienteProtegido.style.display = 'none';
-        formularioBloqueado.style.display = 'block';
-        mensajeError.style.display = 'none';
-    });
-});
-                  </script>
                   
                   <!-- ========================================== -->
 <!-- NUEVA ÁREA PRIVADA EXCLUSIVA TITÁN-GUARD CON CARGA LOCAL -->
