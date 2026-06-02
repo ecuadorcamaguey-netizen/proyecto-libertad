@@ -4085,15 +4085,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
 <!-- LÓGICA DE FUNCIONAMIENTO (JAVASCRIPT) -->
 <script>
-  // 1. Acceso a la bóveda (Simulación de contraseña)
+  // 1. Acceso a la bóveda
   function solicitarAccesoBovedaMultimedia() {
     const pass = prompt("INTRODUZCA CREDENCIAL TÁCTICA:");
-    if (pass === "nere" || pass === "Nere" || pass === "1234") { // Modifica las claves válidas aquí
+    if (pass === "nere" || pass === "Nere" || pass === "1234") { 
       document.getElementById("bloque-acceso-boveda").style.display = "none";
       document.getElementById("error-titan-guard").style.display = "none";
       document.getElementById("consola-privada-titan").style.display = "block";
       
-      // Mensaje de bienvenida del sistema
       const caja = document.getElementById("caja-mensajes-chat");
       caja.innerHTML = `<p style="color: #00ff00;">[SISTEMA]: Canal establecido de forma segura. Bienvenido.</p>`;
     } else {
@@ -4101,7 +4100,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // 2. Registro y renderizado de mensajes en el chat
+  // 2. Registro y renderizado de mensajes
   function registrarMensajeEnChat() {
     const usuarioInput = document.getElementById("chat-usuario");
     const mensajeInput = document.getElementById("chat-mensaje");
@@ -4110,45 +4109,43 @@ document.addEventListener("DOMContentLoaded", () => {
     let usuario = usuarioInput.value.trim();
     let mensaje = mensajeInput.value.trim();
 
-    if (mensaje === "") return; // No enviar mensajes vacíos
+    if (mensaje === "") return; 
     if (usuario === "") usuario = "ANÓNIMO";
 
-    // Obtener la hora actual
     const hora = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
 
-    // Crear el elemento de mensaje con estilo hacker
     const nuevoMensaje = document.createElement("p");
     nuevoMensaje.style.margin = "5px 0";
     nuevoMensaje.style.lineHeight = "1.4";
     nuevoMensaje.innerHTML = `<span style="color: #666;">[${hora}]</span> <span style="color: #ffcc00; font-weight: bold;">${usuario}:</span> <span style="color: #fff;">${mensaje}</span>`;
 
-    // Insertar en la caja y hacer scroll hacia abajo
     cajaMensajes.appendChild(nuevoMensaje);
     cajaMensajes.scrollTop = cajaMensajes.scrollHeight;
 
-    // Limpiar input de mensaje (conservando el usuario)
     mensajeInput.value = "";
   }
 
-  // Permitir enviar el mensaje al presionar Enter en el teclado
-  document.getElementById("chat-mensaje")?.addEventListener("keypress", function(e) {
-    if (e.key === "Enter") registrarMensajeEnChat();
-  });
+  // Permitir enviar el mensaje al presionar Enter
+  setTimeout(() => {
+    document.getElementById("chat-mensaje")?.addEventListener("keypress", function(e) {
+      if (e.key === "Enter") registrarMensajeEnChat();
+    });
+  }, 500);
 
-  // 3. Procesamiento y visualización de archivos multimedia locales
+  // 3. Procesamiento de archivos multimedia locales (ERROR CORREGIDO AQUÍ)
   function procesarCargaMultimediaBoveda() {
     const input = document.getElementById("archivo-tactico-input");
     const visor = document.getElementById("visor-multimedia-boveda");
     const contenedor = document.getElementById("contenedor-render-archivo");
 
-    if (!input.files || !input.files[0]) return;
+    if (!input.files || input.files.length === 0) return;
     
     const archivo = input.files[0];
     const reader = new FileReader();
 
     reader.onload = function(e) {
       const resultado = e.target.result;
-      contenedor.innerHTML = ""; // Limpiar visor previo
+      contenedor.innerHTML = ""; 
       
       if (archivo.type.startsWith("image/")) {
         contenedor.innerHTML = `<img src="${resultado}" style="max-width: 100%; max-height: 300px; border: 1px solid #333;" />`;
@@ -4157,7 +4154,6 @@ document.addEventListener("DOMContentLoaded", () => {
       } else if (archivo.type.startsWith("audio/")) {
         contenedor.innerHTML = `<audio src="${resultado}" controls style="width: 100%;"></audio>`;
       } else {
-        // Para PDFs o archivos binarios/texto
         contenedor.innerHTML = `<p style="color: #00ff00;">📄 Archivo cargado correctamente: <strong>${archivo.name}</strong> (${(archivo.size/1024).toFixed(1)} KB)</p>`;
       }
       visor.style.display = "block";
@@ -4166,7 +4162,7 @@ document.addEventListener("DOMContentLoaded", () => {
     reader.readAsDataURL(archivo);
   }
 
-  // 4. Cerrar sesión y resetear la vista
+  // 4. Cerrar sesión
   function cerrarSesionBovedaMultimedia() {
     document.getElementById("consola-privada-titan").style.display = "none";
     document.getElementById("visor-multimedia-boveda").style.display = "none";
@@ -4176,6 +4172,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("bloque-acceso-boveda").style.display = "block";
   }
 </script>
+
                                
 
 
