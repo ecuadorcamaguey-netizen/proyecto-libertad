@@ -2402,7 +2402,9 @@ window.addEventListener('load', () => {
         <!-- Botón de Cierre Rápido -->
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
             <span style="color: #00ffcc; font-size: 13px; font-weight: bold;">🟢 CONEXIÓN SEGURA</span>
+           <button type="button" onclick="cambiarContraseña()" style="background: #333; color: #00ffcc; border: 1px solid #00ffcc padding 6px 12px; font-size: 12px; border-radius: 4px; cursor: pointer; font-weigth: bold;">⚙️Cambiar Clave</button>
             <button type="button" onclick="cerrarSesion()" style="background: #333; color: #ff3366; border: 1px solid #ff3366; padding: 6px 12px; font-size: 12px; border-radius: 4px; cursor: pointer; font-weight: bold;">Cerrar Bóveda</button>
+           
         </div>
 
         <!-- Módulo de Cámara y Archivos -->
@@ -2445,6 +2447,7 @@ window.addEventListener('load', () => {
 <script src="https://cloudflare.com"></script>
 
 <script>
+<script>
     let llaveSecreta = "";
     const cajaChat = document.getElementById('caja-chat');
     const video = document.getElementById('video');
@@ -2453,14 +2456,21 @@ window.addEventListener('load', () => {
     const btnCapturar = document.getElementById('btn-capturar');
     let streamLocal = null;
 
-    // Verificar si ya existe una contraseña registrada al cargar la página
+    // Verificar estado inicial al cargar la página
     document.addEventListener("DOMContentLoaded", () => {
+        actualizarInterfazBloqueo();
+    });
+
+    function actualizarInterfazBloqueo() {
         const hashGuardado = localStorage.getItem('boveda_hash');
         if (hashGuardado) {
             document.getElementById('titulo-bloqueo').textContent = "Bóveda Bloqueada";
             document.getElementById('indicacion-bloqueo').textContent = "Introduce tu Clave Maestra para descifrar tus archivos.";
+        } else {
+            document.getElementById('titulo-bloqueo').textContent = "Configura tu Clave Maestra";
+            document.getElementById('indicacion-bloqueo').textContent = "Crea una contraseña. No la olvides, se usará para cifrar todo.";
         }
-    });
+    }
 
     // Control de acceso estricto
     function desbloquearBoveda() {
@@ -2471,17 +2481,15 @@ window.addEventListener('load', () => {
         const hashGuardado = localStorage.getItem('boveda_hash');
 
         if (!hashGuardado) {
-            // Primer uso: Registrar la contraseña creando un Hash seguro
+            // Primer uso: Registrar contraseña
             localStorage.setItem('boveda_hash', hashInput);
             alert("Contraseña establecida correctamente. ¡No la olvides!");
         } else if (hashInput !== hashGuardado) {
-            // Contraseña incorrecta: Bloqueo absoluto
             alert("❌ Contraseña incorrecta. Acceso denegado.");
             document.getElementById('clave-maestra').value = "";
             return;
         }
 
-        // Si la clave es correcta, se da acceso al panel
         llaveSecreta = inputClave;
         document.getElementById('zona-candado').style.display = "none";
         document.getElementById('panel-boveda').style.display = "block";
@@ -2489,12 +2497,53 @@ window.addEventListener('load', () => {
         cargarYMostrarDatos();
     }
 
-    // Permitir enviar el mensaje con la tecla Enter del teclado del celular
+    // NUEVA FUNCIÓN: Cambiar contraseña de forma segura sin perder datos
+    function cambiarContrasena() {
+        const nuevaClave = prompt("Escribe tu NUEVA Clave Maestra:");
+        if (!nuevaClave || nuevaClave.trim() === "") { alert("Cambio cancelado. La clave no puede estar vacía."); return; }
+        
+        const nuevaClaveTrim = nuevaClave.trim();
+        if (nuevaClaveTrim === llaveSecreta) { alert("La nueva clave debe ser diferente a la actual."); return; }
+
+        // 1. Obtener y descifrar los datos actuales con la clave vieja
+        const datosCifrados = JSON.parse(localStorage.getItem('boveda_cifrada')) || [];
+        const datosDescifrados temporal = [];
+
+        datosCifrados.forEach(item => {
+            try {
+                const bytes = CryptoJS.AES.decrypt(item.contenido, llaveSecreta);
+                const textoDescifrado = bytes.toString(CryptoJS.enc.Utf8);
+                if (textoDescifrado) {
+                    temporal.push({ tipo: item.tipo, contenidoPuro: textoDescifrado });
+                }
+            } catch (e) {
+                console.error("Error al migrar datos.");
+            }
+        });
+
+        // 2. Volver a cifrar todos los datos con la NUEVA clave
+        const nuevosDatosCifrados = [];
+        temporal.forEach(item => {
+            const contenidoCifrado = CryptoJS.AES.encrypt(item.contenidoPuro, nuevaClaveTrim).toString();
+            nuevosDatosCifrados.push({ tipo: item.tipo, contenido: contenidoCifrado });
+        });
+
+        // 3. Guardar nueva configuración en el teléfono
+        const nuevoHash = CryptoJS.SHA256(nuevaClaveTrim).toString();
+        localStorage.setItem('boveda_hash', nuevoHash);
+        localStorage.setItem('boveda_cifrada', JSON.stringify(nuevosDatosCifrados));
+
+        // 4. Actualizar clave en sesión activa y refrescar pantalla
+        llaveSecreta = nuevaClaveTrim;
+        alert("🔒 ¡Clave cambiada con éxito! Tus datos fueron re-encriptados de forma segura.");
+        cargarYMostrarDatos();
+    }
+
+    // Permitir enviar el mensaje con la tecla Enter
     document.getElementById('msg-input').addEventListener('keypress', function(e) {
         if (e.key === 'Enter') { enviarMensaje(); }
     });
 
-    // Cargar y descifrar la base de datos local
     function cargarYMostrarDatos() {
         cajaChat.innerHTML = "";
         const datosCifrados = JSON.parse(localStorage.getItem('boveda_cifrada')) || [];
@@ -2508,13 +2557,12 @@ window.addEventListener('load', () => {
                     renderizarElemento({ tipo: item.tipo, contenido: textoDescifrado });
                 }
             } catch (e) {
-                console.error("Error al procesar bloque cifrado.");
+                console.error("Error al procesar bloque.");
             }
         });
         cajaChat.scrollTop = cajaChat.scrollHeight;
     }
 
-    // Cifrar y guardar de manera persistente
     function guardarDatoCifrado(tipo, contenidoPuro) {
         if (!llaveSecreta) return;
         
@@ -2540,30 +2588,69 @@ window.addEventListener('load', () => {
 
     function renderizarElemento(item) {
         const div = document.createElement('div');
-        div.style.padding = "10px";
-        div.style.borderRadius = "8px";
-        div.style.maxWidth = "80%";
-        div.style.margin = "4px 0";
-        div.style.fontSize = "14px";
-        div.style.lineHeight = "1.4";
+        div.style.padding = "10px"; div.style.borderRadius = "8px"; div.style.maxWidth = "80%";
+        div.style.margin = "4px 0"; div.style.fontSize = "14px"; div.style.lineHeight = "1.4";
         
         if (item.tipo === 'texto') {
-            div.style.background = "#ff3366";
-            div.style.color = "#fff";
-            div.style.alignSelf = "flex-end";
-            div.style.wordBreak = "break-word";
-            div.textContent = item.contenido;
+            div.style.background = "#ff3366"; div.style.color = "#fff"; div.style.alignSelf = "flex-end";
+            div.style.wordBreak = "break-word"; div.textContent = item.contenido;
         } else if (item.tipo === 'imagen') {
-            div.style.background = "#262626";
-            div.style.alignSelf = "flex-start";
-           
-const img = document.createElement('img');img.src = item.contenido;img.style.width = "100%";img.style.borderRadius = "6px";img.style.display = "block";div.appendChild(img);}cajaChat.appendChild(div);}
-   // Gestión de Cámara del Teléfono
-   async function activarCamara() {
-      try {streamLocal = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" }, audio: false });video.srcObject = streamLocal;video.style.display = "block";btnActivar.style.display = "none";btnCapturar.style.display = "block";} catch (err) { alert("No se pudo acceder a la cámara trasera."); }
-   }
-   function capturarFoto() {canvas.width = video.videoWidth;canvas.height = video.videoHeight;canvas.getContext('2d').drawImage(video, 0, 0);const dataUrl = canvas.toDataURL('image/jpeg');guardarDatoCifrado('imagen', dataUrl);apagarCamara();}
-   function subirImagen(event) {const file = event.target.files[0];if (file) {const reader = new FileReader();reader.onload = function(e) { guardarDatoCifrado('imagen', e.target.result); };reader.readAsDataURL(file);}}function apagarCamara() {if(streamLocal) streamLocal.getTracks().forEach(track => track.stop());video.style.display = "none";btnActivar.style.display = "block";btnCapturar.style.display = "none";}function cerrarSesion() {llaveSecreta = "";apagarCamara();document.getElementById('clave-maestra').value = "";document.getElementById('panel-boveda').style.display = "none";document.getElementById('zona-candado').style.display = "block";cajaChat.innerHTML = "";// Forzar actualización visual del bloqueodocument.getElementById('titulo-bloqueo').textContent = "Bóveda Bloqueada";document.getElementById('indicacion-bloqueo').textContent = "Introduce tu Clave Maestra para descifrar tus archivos.";}function borrarTodoElHistorial() {if (confirm("⚠️ ¿Estás completamente seguro de borrar TODO? Se eliminarán permanentemente tus mensajes, fotos y la contraseña registrada.")) {localStorage.clear();alert("Bóveda completamente vaciada.");window.location.reload();}}
+            div.style.background = "#262626"; div.style.alignSelf = "flex-start";
+            const img = document.createElement('img');
+            img.src = item.contenido; img.style.width = "100%"; img.style.borderRadius = "6px";
+            img.style.display = "block"; div.appendChild(img);
+        }
+        cajaChat.appendChild(div);
+    }
+
+    async function activarCamara() {
+        try {
+            streamLocal = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" }, audio: false });
+            video.srcObject = streamLocal; video.style.display = "block";
+            btnActivar.style.display = "none"; btnCapturar.style.display = "block";
+        } catch (err) { alert("No se pudo acceder a la cámara."); }
+    }
+
+    function capturarFoto() {
+        canvas.width = video.videoWidth; canvas.height = video.videoHeight;
+        canvas.getContext('2d').drawImage(video, 0, 0);
+        const dataUrl = canvas.toDataURL('image/jpeg');
+        guardarDatoCifrado('imagen', dataUrl);
+        apagarCamara();
+    }
+
+    function subirImagen(event) {
+        const file = event.target.files;
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) { guardarDatoCifrado('imagen', e.target.result); };
+            reader.readAsDataURL(file);
+        }
+    }
+
+    function apagarCamara() {
+        if(streamLocal) streamLocal.getTracks().forEach(track => track.stop());
+        video.style.display = "none"; btnActivar.style.display = "block"; btnCapturar.style.display = "none";
+    }
+
+    function cerrarSesion() {
+        llaveSecreta = "";
+        apagarCamara();
+        document.getElementById('clave-maestra').value = "";
+        document.getElementById('panel-boveda').style.display = "none";
+        document.getElementById('zona-candado').style.display = "block";
+        cajaChat.innerHTML = "";
+        actualizarInterfazBloqueo();
+    }
+
+    function borrarTodoElHistorial() {
+        if (confirm("⚠️ ¿Estás seguro de borrar TODO? Se eliminarán mensajes, fotos y clave.")) {
+            localStorage.clear();
+            alert("Bóveda vaciada.");
+            window.location.reload();
+        }
+    }
+</script>
 
 </script>
 
