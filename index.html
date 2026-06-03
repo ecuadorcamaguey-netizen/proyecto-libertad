@@ -2294,69 +2294,7 @@ window.addEventListener('load', () => {
 
    
 
-   <!---PRUEBA DE BOVEDA DE SEGURIDAD--->
-<div class="panel-titan">
-  <h2>🔒 BÓVEDA DE SEGURIDAD [TITÁN-GUARD]</h2>
-   <div class="alerta-error">
-    ⚡ [ ERROR: CREDENCIAL INVÁLIDA ]
-  </div>
   
-  <!-- Alerta oculta por defecto, aparecerá dinámicamente si la clave falla -->
-  <div id="error-titan-guard" class="alerta-error" style="display: none;">
-    ⚡ [ ERROR: CREDENCIAL INVÁLIDA ]
-  </div>
-  
-  <div class="grid-tactico">
-    <div class="tarjeta-tactica">
-      <h3>📁 Expediente de Resguardo Activo</h3>
-      <p><strong>ESTADO:</strong> OPERACIÓN LIBERTAD CONFIDENCIAL</p>
-      <!-- Añadimos id y el evento onclick -->
-      <button id="btn-acceso-titan" class="btn-neon" onclick="solicitarAccesoTitan()">ACCEDER AL EXPEDIENTE ⚡</button>
-    </div>
-  </div>
-</div>
-   <br>
-
-<!---SCRIPT DE PRUEBA DE BOVEDA DE SEGURIDAD---> 
-                  <script>
-                  function solicitarAccesoTitan() {
-    const CLAVE_CORRECTA = 'TITÁN-RECARGA';
-    const boton = document.getElementById('btn-acceso-titan');
-    const alertaError = document.getElementById('error-titan-guard');
-    
-    // 1. PERSISTENCIA LIMPIA: Ocultamos cualquier alerta de error de intentos anteriores
-    alertaError.style.display = 'none';
-    
-    // Lanzamos la ventana emergente para solicitar la credencial maestra
-    const claveIngresada = prompt("🔒 PROTOCOLO DE SEGURIDAD ACTIVADO\nIntroduce tu credencial maestra para acceder al expediente:");
-    
-    // Si el usuario cancela o deja vacío, salimos de la función sin hacer nada
-    if (claveIngresada === null) return;
-
-    // 2. EFECTO DE RED INMERSIVO: Simulamos procesamiento del sistema de resguardo
-    const textoOriginal = boton.innerHTML;
-    boton.disabled = true;
-    boton.innerHTML = 'VERIFICANDO CREDENCIAL... 🖥️';
-
-    setTimeout(() => {
-        // Restauramos el botón tras la simulación
-        boton.disabled = false;
-        boton.innerHTML = textoOriginal;
-
-        if (claveIngresada.trim() === CLAVE_CORRECTA) {
-            // ¡ACCESO CONCEDIDO! 
-            alert("🔓 ACCESO AUTORIZADO // EXPEDIENTE DESBLOQUEADO");
-            
-            // Aquí puedes redirigir al usuario al PDF o abrir tu visor
-            window.open("https://github.io", "_blank"); 
-        } else {
-            // 3. GENERACIÓN DINÁMICA: Mostramos la alerta neón roja si la clave es incorrecta
-            alertaError.style.display = 'block';
-        }
-    }, 1000); // 1 segundo de retraso táctico para el efecto visual
-}
-                  </script>
-
 
  <!---BOVEDA DE SEGURIDAD DE PRUEBA--->
                   <section id="seccion-titan-guard">
@@ -2397,7 +2335,7 @@ window.addEventListener('load', () => {
     const expedienteProtegido = document.getElementById('expediente-protegido');
 
     // Clave maestra definida en tus protocolos
-    const CREDENCIAL_CORRECTA = 'TITÁN-RECARGA';
+    const CREDENCIAL_CORRECTA = 'TITAN-RECARGA';
 
     // Evento para validar la contraseña
     btnAcceder.addEventListener('click', () => {
