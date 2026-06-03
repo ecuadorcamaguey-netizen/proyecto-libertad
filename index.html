@@ -2449,42 +2449,60 @@ window.addEventListener('load', () => {
 
 <!---=========================================--->
 
-<!-- SECCIÓN: BÓVEDA DE MENSAJERÍA, CHAT Y CÁMARA -->
-<section id="bovedas" style="padding: 20px; background-color: #111; color: #fff; font-family: sans-serif; max-width: 600px; margin: 20px auto; border-radius: 10px; border: 1px solid #00ffcc;">
-    <h2 style="color: #00ffcc; text-align: center; margin-top: 0;">🔒 Bóveda de Mensajería y Multimedia</h2>
+
+<!-- SECCIÓN: BÓVEDA ENCRIPTADA PRIVADA -->
+<section id="bovedas" style="padding: 20px; background-color: #111; color: #fff; font-family: sans-serif; max-width: 600px; margin: 20px auto; border-radius: 10px; border: 2px solid #ff3366;">
+    <h2 style="color: #ff3366; text-align: center; margin-top: 0;">🔒 Bóveda de Máxima Seguridad (Encriptada)</h2>
     
-    <!-- Zona de Cámara Privada -->
-    <div style="background: #222; padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px solid #333;">
-        <h3 style="color: #ffcc00; margin-top: 0; font-size: 16px;">📷 Captura de Evidencia / Fotos</h3>
-        <video id="video" autoplay playsinline style="width: 100%; max-height: 200px; background: #000; border-radius: 6px; display: none;"></video>
-        <canvas id="canvas" style="display:none;"></canvas>
-        
-        <div style="margin-top: 10px; display: flex; gap: 10px;">
-            <button id="btn-activar" onclick="activarCamara()" style="background: #00ffcc; color: #000; border: none; padding: 8px 12px; font-weight: bold; border-radius: 4px; cursor: pointer; flex: 1;">Activar Cámara</button>
-            <button id="btn-capturar" onclick="capturarFoto()" style="background: #ffcc00; color: #000; border: none; padding: 8px 12px; font-weight: bold; border-radius: 4px; cursor: pointer; flex: 1; display: none;">Tomar Foto</button>
-        </div>
-        
-        <div style="margin-top: 10px;">
-            <label style="background: #333; display: block; text-align: center; padding: 8px; border-radius: 4px; cursor: pointer; border: 1px dashed #666;">
-                📁 Subir Imagen desde Archivos
-                <input type="file" id="file-input" accept="image/*" onchange="subirImagen(event)" style="display: none;">
-            </label>
-        </div>
+    <!-- Autenticación Obligatoria -->
+    <div id="zona-candado" style="background: #222; padding: 15px; border-radius: 8px; text-align: center; border: 1px solid #444;">
+        <p style="color: #ccc; margin-top: 0;">Introduce tu Clave Maestra para desencriptar la base de datos:</p>
+        <input type="password" id="clave-maestra" placeholder="Escribe tu contraseña secreta..." style="width: 80%; padding: 10px; background: #333; color: #fff; border: 1px solid #ff3366; border-radius: 4px; text-align: center; margin-bottom: 10px; outline: none;">
+        <button onclick="desbloquearBoveda()" style="background: #ff3366; color: #fff; border: none; padding: 10px 20px; font-weight: bold; border-radius: 4px; cursor: pointer; width: 85%;">🔓 Acceder de Forma Segura</button>
     </div>
 
-    <!-- Zona de Chat y Mensajes -->
-    <div style="background: #222; padding: 15px; border-radius: 8px; border: 1px solid #333;">
-        <h3 style="color: #00ffcc; margin-top: 0; font-size: 16px;">💬 Historial de Mensajes y Archivos</h3>
-        <div id="caja-chat" style="height: 250px; overflow-y: auto; background: #1a1a1a; padding: 10px; border-radius: 6px; border: 1px solid #333; margin-bottom: 10px; display: flex; flex-direction: column; gap: 8px;"></div>
-        
-        <div style="display: flex; gap: 5px;">
-            <input type="text" id="msg-input" placeholder="Escribe un mensaje seguro..." style="flex: 1; padding: 10px; background: #333; color: #fff; border: 1px solid #444; border-radius: 4px; outline: none;">
-            <button onclick="enviarMensaje()" style="background: #00ffcc; color: #000; border: none; padding: 10px 15px; font-weight: bold; border-radius: 4px; cursor: pointer;">Enviar</button>
+    <!-- Panel de Control Oculto (Solo se muestra si la clave es correcta) -->
+    <div id="panel-boveda" style="display: none;">
+        <!-- Multimedia -->
+        <div style="background: #222; padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px solid #333;">
+            <h3 style="color: #ffcc00; margin-top: 0; font-size: 16px;">📷 Captura de Evidencia Encriptada</h3>
+            <video id="video" autoplay playsinline style="width: 100%; max-height: 200px; background: #000; border-radius: 6px; display: none;"></video>
+            <canvas id="canvas" style="display:none;"></canvas>
+            
+            <div style="margin-top: 10px; display: flex; gap: 10px;">
+                <button id="btn-activar" onclick="activarCamara()" style="background: #00ffcc; color: #000; border: none; padding: 8px 12px; font-weight: bold; border-radius: 4px; flex: 1;">Activar Cámara</button>
+                <button id="btn-capturar" onclick="capturarFoto()" style="background: #ffcc00; color: #000; border: none; padding: 8px 12px; font-weight: bold; border-radius: 4px; flex: 1; display: none;">Tomar Foto Encriptada</button>
+            </div>
+            
+            <div style="margin-top: 10px;">
+                <label style="background: #333; display: block; text-align: center; padding: 8px; border-radius: 4px; cursor: pointer; border: 1px dashed #666; font-size: 14px;">
+                    📁 Encriptar Imagen Local
+                    <input type="file" id="file-input" accept="image/*" onchange="subirImagen(event)" style="display: none;">
+                </label>
+            </div>
+        </div>
+
+        <!-- Chat -->
+        <div style="background: #222; padding: 15px; border-radius: 8px; border: 1px solid #333;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <h3 style="color: #00ffcc; margin: 0; font-size: 16px;">💬 Historial Desencriptado</h3>
+                <button onclick="cerrarSesion()" style="background: #555; color: #fff; border: none; padding: 5px 10px; font-size: 12px; border-radius: 4px; cursor: pointer;">Cerrar Bóveda</button>
+            </div>
+            <div id="caja-chat" style="height: 220px; overflow-y: auto; background: #1a1a1a; padding: 10px; border-radius: 6px; border: 1px solid #333; margin-bottom: 10px; display: flex; flex-direction: column; gap: 8px;"></div>
+            
+            <div style="display: flex; gap: 5px;">
+                <input type="text" id="msg-input" placeholder="Escribe un mensaje cifrado..." style="flex: 1; padding: 10px; background: #333; color: #fff; border: 1px solid #444; border-radius: 4px; outline: none;">
+                <button onclick="enviarMensaje()" style="background: #00ffcc; color: #000; border: none; padding: 10px 15px; font-weight: bold; border-radius: 4px;">Cifrar</button>
+            </div>
         </div>
     </div>
 </section>
 
+<!-- Librería de Encriptación Segura AES -->
+<script src="https://cloudflare.com"></script>
+
 <script>
+    let llaveSecreta = "";
     const cajaChat = document.getElementById('caja-chat');
     const video = document.getElementById('video');
     const canvas = document.getElementById('canvas');
@@ -2492,14 +2510,55 @@ window.addEventListener('load', () => {
     const btnCapturar = document.getElementById('btn-capturar');
     let streamLocal = null;
 
-    // Cargar datos guardados al iniciar
-    window.onload = () => {
-        const guardados = JSON.parse(localStorage.getItem('boveda_datos')) || [];
-        guardados.forEach(item => renderizarElemento(item));
-        cajaChat.scrollTop = cajaChat.scrollHeight;
-    };
+    // Función para validar la clave y descifrar la base de datos
+    function desbloquearBoveda() {
+        const inputClave = document.getElementById('clave-maestra').value;
+        if (!inputClave) { alert("Escribe una contraseña."); return; }
+        
+        llaveSecreta = inputClave;
+        document.getElementById('zona-candado').style.display = "none";
+        document.getElementById('panel-boveda').style.display = "block";
+        
+        cargarYMostrarDatos();
+    }
 
-    // Función para activar la cámara del celular
+    // Cargar y descifrar los datos guardados en el almacenamiento del celular
+    function cargarYMostrarDatos() {
+        cajaChat.innerHTML = "";
+        const datosCifrados = JSON.parse(localStorage.getItem('boveda_cifrada')) || [];
+        
+        datosCifrados.forEach(item => {
+            try {
+                // Descifrar contenido usando la Clave Maestra
+                const bytes = CryptoJS.AES.decrypt(item.contenido, llaveSecreta);
+                const textoDescifrado = bytes.toString(CryptoJS.enc.Utf8);
+                
+                if (textoDescifrado) {
+                    renderizarElemento({ tipo: item.tipo, contenido: textoDescifrado });
+                }
+            } catch (e) {
+                // Si la clave es incorrecta, fallará silenciosamente o mostrará basura
+            }
+        });
+        cajaChat.scrollTop = cajaChat.scrollHeight;
+    }
+
+    // Cifrar los datos con AES antes de guardarlos en el almacenamiento
+    function guardarDatoCifrado(tipo, contenidoPuro) {
+        if (!llaveSecreta) return;
+        
+        // Encriptación AES pura
+        const contenidoCifrado = CryptoJS.AES.encrypt(contenidoPuro, llaveSecreta).toString();
+        
+        const datosCifrados = JSON.parse(localStorage.getItem('boveda_cifrada')) || [];
+        datosCifrados.push({ tipo: tipo, contenido: contenidoCifrado });
+        localStorage.setItem('boveda_cifrada', JSON.stringify(datosCifrados));
+        
+        renderizarElemento({ tipo: tipo, contenido: contenidoPuro });
+        cajaChat.scrollTop = cajaChat.scrollHeight;
+    }
+
+    // Funciones de Cámara y Carga
     async function activarCamara() {
         try {
             streamLocal = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" }, audio: false });
@@ -2507,82 +2566,65 @@ window.addEventListener('load', () => {
             video.style.display = "block";
             btnActivar.style.display = "none";
             btnCapturar.style.display = "block";
-        } catch (err) {
-            alert("Error al acceder a la cámara. Asegúrate de dar permisos.");
-        }
+        } catch (err) { alert("Permiso de cámara denegado."); }
     }
 
-    // Función para tomar la foto
     function capturarFoto() {
         canvas.width = video.videoWidth;
         canvas.height = video.videoHeight;
         canvas.getContext('2d').drawImage(video, 0, 0);
         const dataUrl = canvas.toDataURL('image/jpeg');
         
-        guardarDato({ tipo: 'imagen', contenido: dataUrl });
-        
-        // Apagar cámara para ahorrar batería
-        if(streamLocal) streamLocal.getTracks().forEach(track => track.stop());
-        video.style.display = "none";
-        btnActivar.style.display = "block";
-        btnCapturar.style.display = "none";
+        guardarDatoCifrado('imagen', dataUrl);
+        apagarCamara();
     }
 
-    // Función para subir imagen desde el almacenamiento del celular
     function subirImagen(event) {
         const file = event.target.files[0];
         if (file) {
             const reader = new FileReader();
-            reader.onload = function(e) {
-                guardarDato({ tipo: 'imagen', contenido: e.target.result });
-            };
+            reader.onload = function(e) { guardarDatoCifrado('imagen', e.target.result); };
             reader.readAsDataURL(file);
         }
     }
 
-    // Función para enviar mensajes de texto
     function enviarMensaje() {
         const input = document.getElementById('msg-input');
         if (input.value.trim() !== "") {
-            guardarDato({ tipo: 'texto', contenido: input.value.trim() });
+            guardarDatoCifrado('texto', input.value.trim());
             input.value = "";
         }
     }
 
-    // Guardar en LocalStorage para que no se borre al recargar
-    function guardarDato(item) {
-        const guardados = JSON.parse(localStorage.getItem('boveda_datos')) || [];
-        guardados.push(item);
-        localStorage.setItem('boveda_datos', JSON.stringify(guardados));
-        renderizarElemento(item);
-        cajaChat.scrollTop = cajaChat.scrollHeight;
-    }
-
-    // Mostrar los elementos en la pantalla
     function renderizarElemento(item) {
         const div = document.createElement('div');
-        div.style.padding = "8px";
-        div.style.borderRadius = "4px";
-        div.style.maxWidth = "85%";
+        div.style.padding = "8px"; div.style.borderRadius = "4px"; div.style.maxWidth = "85%";
         
         if (item.tipo === 'texto') {
-            div.style.background = "#2b2b2b";
-            div.style.color = "#fff";
-            div.style.alignSelf = "flex-end";
-            div.textContent = item.contenido;
+            div.style.background = "#ff3366"; div.style.color = "#fff"; div.style.alignSelf = "flex-end";
+            div.textContent = item.textContent = item.contenido;
         } else if (item.tipo === 'imagen') {
-            div.style.background = "#333";
-            div.style.alignSelf = "flex-start";
+            div.style.background = "#333"; div.style.alignSelf = "flex-start";
             const img = document.createElement('img');
-            img.src = item.contenido;
-            img.style.width = "100%";
-            img.style.borderRadius = "4px";
+            img.src = item.contenido; img.style.width = "100%"; img.style.borderRadius = "4px";
             div.appendChild(img);
         }
         cajaChat.appendChild(div);
     }
-</script>
 
+    function apagarCamara() {
+        if(streamLocal) streamLocal.getTracks().forEach(track => track.stop());
+        video.style.display = "none"; btnActivar.style.display = "block"; btnCapturar.style.display = "none";
+    }
+
+    function cerrarSesion() {
+        llaveSecreta = "";
+        apagarCamara();
+        document.getElementById('clave-maestra').value = "";
+        document.getElementById('panel-boveda').style.display = "none";
+        document.getElementById('zona-candado').style.display = "block";
+    }
+</script>
 
 
    
