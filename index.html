@@ -2492,7 +2492,7 @@ window.addEventListener('load', () => {
             
             <div style="display: flex; gap: 5px;">
                 <input type="text" id="msg-input" placeholder="Escribe un mensaje cifrado..." style="flex: 1; padding: 10px; background: #333; color: #fff; border: 1px solid #444; border-radius: 4px; outline: none;">
-                <button onclick="enviarMensaje()" style="background: #00ffcc; color: #000; border: none; padding: 10px 15px; font-weight: bold; border-radius: 4px;">Cifrar</button>
+                <button type="boton" id="btn-cifrar" onclick="enviarMensaje()" style="background: #00ffcc; color: #000; border: none; padding: 10px 15px; font-weight: bold; border-radius: 4px;">Cifrar</button>
             </div>
         </div>
     </div>
@@ -2566,6 +2566,7 @@ window.addEventListener('load', () => {
     // Envía el mensaje de texto de forma segura
     function enviarMensaje() {
         const input = document.getElementById('msg-input');
+        if (!input) retrun
         const texto = input.value.trim();
         if (texto !== "") {
             guardarDatoCifrado('texto', texto);
