@@ -2502,7 +2502,7 @@ window.addEventListener('load', () => {
 <script src="https://cloudflare.com"></script>
 
 <script>
-    let llaveSecreta = "ABRIR1234";
+    let llaveSecreta = "Nere1234";
     const cajaChat = document.getElementById('caja-chat');
     const video = document.getElementById('video');
     const canvas = document.getElementById('canvas');
@@ -2510,7 +2510,7 @@ window.addEventListener('load', () => {
     const btnCapturar = document.getElementById('btn-capturar');
     let streamLocal = null;
 
-    // Función para validar la clave y descifrar la base de datos
+    // Ejecuta la desencriptación al presionar "Acceder"
     function desbloquearBoveda() {
         const inputClave = document.getElementById('clave-maestra').value;
         if (!inputClave) { alert("Escribe una contraseña."); return; }
@@ -2522,14 +2522,20 @@ window.addEventListener('load', () => {
         cargarYMostrarDatos();
     }
 
-    // Cargar y descifrar los datos guardados en el almacenamiento del celular
+    // Escucha la tecla Enter en el campo de texto del chat
+    document.getElementById('msg-input').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            enviarMensaje();
+        }
+    });
+
+    // Carga y descifra los datos guardados en el almacenamiento local
     function cargarYMostrarDatos() {
         cajaChat.innerHTML = "";
         const datosCifrados = JSON.parse(localStorage.getItem('boveda_cifrada')) || [];
         
         datosCifrados.forEach(item => {
             try {
-                // Descifrar contenido usando la Clave Maestra
                 const bytes = CryptoJS.AES.decrypt(item.contenido, llaveSecreta);
                 const textoDescifrado = bytes.toString(CryptoJS.enc.Utf8);
                 
@@ -2537,20 +2543,19 @@ window.addEventListener('load', () => {
                     renderizarElemento({ tipo: item.tipo, contenido: textoDescifrado });
                 }
             } catch (e) {
-                // Si la clave es incorrecta, fallará silenciosamente o mostrará basura
+                console.log("Error al descifrar un elemento.");
             }
         });
         cajaChat.scrollTop = cajaChat.scrollHeight;
     }
 
-    // Cifrar los datos con AES antes de guardarlos en el almacenamiento
+    // Cifra los datos con AES antes de guardarlos
     function guardarDatoCifrado(tipo, contenidoPuro) {
         if (!llaveSecreta) return;
         
-        // Encriptación AES pura
         const contenidoCifrado = CryptoJS.AES.encrypt(contenidoPuro, llaveSecreta).toString();
-        
         const datosCifrados = JSON.parse(localStorage.getItem('boveda_cifrada')) || [];
+        
         datosCifrados.push({ tipo: tipo, contenido: contenidoCifrado });
         localStorage.setItem('boveda_cifrada', JSON.stringify(datosCifrados));
         
@@ -2558,7 +2563,44 @@ window.addEventListener('load', () => {
         cajaChat.scrollTop = cajaChat.scrollHeight;
     }
 
-    // Funciones de Cámara y Carga
+    // Envía el mensaje de texto de forma segura
+    function enviarMensaje() {
+        const input = document.getElementById('msg-input');
+        const texto = input.value.trim();
+        if (texto !== "") {
+            guardarDatoCifrado('texto', texto);
+            input.value = "";
+            input.focus();
+        }
+    }
+
+    // Muestra los elementos de forma visual en la caja de chat (CORREGIDO)
+    function renderizarElemento(item) {
+        const div = document.createElement('div');
+        div.style.padding = "8px";
+        div.style.borderRadius = "4px";
+        div.style.maxWidth = "85%";
+        div.style.margin = "4px 0";
+        
+        if (item.tipo === 'texto') {
+            div.style.background = "#ff3366";
+            div.style.color = "#fff";
+            div.style.alignSelf = "flex-end";
+            div.style.wordBreak = "break-word";
+            div.textContent = item.contenido; // Corrección de la línea errónea
+        } else if (item.tipo === 'imagen') {
+            div.style.background = "#333";
+            div.style.alignSelf = "flex-start";
+            const img = document.createElement('img');
+            img.src = item.contenido;
+            img.style.width = "100%";
+            img.style.borderRadius = "4px";
+            div.appendChild(img);
+        }
+        cajaChat.appendChild(div);
+    }
+
+    // Funciones multimedia de la cámara
     async function activarCamara() {
         try {
             streamLocal = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" }, audio: false });
@@ -2566,7 +2608,7 @@ window.addEventListener('load', () => {
             video.style.display = "block";
             btnActivar.style.display = "none";
             btnCapturar.style.display = "block";
-        } catch (err) { alert("Permiso de cámara denegado."); }
+        } catch (err) { alert("Permiso de cámara denegado o no disponible."); }
     }
 
     function capturarFoto() {
@@ -2588,33 +2630,11 @@ window.addEventListener('load', () => {
         }
     }
 
-    function enviarMensaje() {
-        const input = document.getElementById('msg-input');
-        if (input.value.trim() !== "") {
-            guardarDatoCifrado('texto', input.value.trim());
-            input.value = "";
-        }
-    }
-
-    function renderizarElemento(item) {
-        const div = document.createElement('div');
-        div.style.padding = "8px"; div.style.borderRadius = "4px"; div.style.maxWidth = "85%";
-        
-        if (item.tipo === 'texto') {
-            div.style.background = "#ff3366"; div.style.color = "#fff"; div.style.alignSelf = "flex-end";
-            div.textContent = item.textContent = item.contenido;
-        } else if (item.tipo === 'imagen') {
-            div.style.background = "#333"; div.style.alignSelf = "flex-start";
-            const img = document.createElement('img');
-            img.src = item.contenido; img.style.width = "100%"; img.style.borderRadius = "4px";
-            div.appendChild(img);
-        }
-        cajaChat.appendChild(div);
-    }
-
     function apagarCamara() {
         if(streamLocal) streamLocal.getTracks().forEach(track => track.stop());
-        video.style.display = "none"; btnActivar.style.display = "block"; btnCapturar.style.display = "none";
+        video.style.display = "none"; 
+        btnActivar.style.display = "block"; 
+        btnCapturar.style.display = "none";
     }
 
     function cerrarSesion() {
@@ -2623,8 +2643,10 @@ window.addEventListener('load', () => {
         document.getElementById('clave-maestra').value = "";
         document.getElementById('panel-boveda').style.display = "none";
         document.getElementById('zona-candado').style.display = "block";
+        cajaChat.innerHTML = "";
     }
 </script>
+
 
 
    
