@@ -2444,7 +2444,148 @@ window.addEventListener('load', () => {
     </button>
   </div>
 </div>
-                  
+
+
+
+<!---=========================================--->
+
+<!-- SECCIÓN: BÓVEDA DE MENSAJERÍA, CHAT Y CÁMARA -->
+<section id="bovedas" style="padding: 20px; background-color: #111; color: #fff; font-family: sans-serif; max-width: 600px; margin: 20px auto; border-radius: 10px; border: 1px solid #00ffcc;">
+    <h2 style="color: #00ffcc; text-align: center; margin-top: 0;">🔒 Bóveda de Mensajería y Multimedia</h2>
+    
+    <!-- Zona de Cámara Privada -->
+    <div style="background: #222; padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px solid #333;">
+        <h3 style="color: #ffcc00; margin-top: 0; font-size: 16px;">📷 Captura de Evidencia / Fotos</h3>
+        <video id="video" autoplay playsinline style="width: 100%; max-height: 200px; background: #000; border-radius: 6px; display: none;"></video>
+        <canvas id="canvas" style="display:none;"></canvas>
+        
+        <div style="margin-top: 10px; display: flex; gap: 10px;">
+            <button id="btn-activar" onclick="activarCamara()" style="background: #00ffcc; color: #000; border: none; padding: 8px 12px; font-weight: bold; border-radius: 4px; cursor: pointer; flex: 1;">Activar Cámara</button>
+            <button id="btn-capturar" onclick="capturarFoto()" style="background: #ffcc00; color: #000; border: none; padding: 8px 12px; font-weight: bold; border-radius: 4px; cursor: pointer; flex: 1; display: none;">Tomar Foto</button>
+        </div>
+        
+        <div style="margin-top: 10px;">
+            <label style="background: #333; display: block; text-align: center; padding: 8px; border-radius: 4px; cursor: pointer; border: 1px dashed #666;">
+                📁 Subir Imagen desde Archivos
+                <input type="file" id="file-input" accept="image/*" onchange="subirImagen(event)" style="display: none;">
+            </label>
+        </div>
+    </div>
+
+    <!-- Zona de Chat y Mensajes -->
+    <div style="background: #222; padding: 15px; border-radius: 8px; border: 1px solid #333;">
+        <h3 style="color: #00ffcc; margin-top: 0; font-size: 16px;">💬 Historial de Mensajes y Archivos</h3>
+        <div id="caja-chat" style="height: 250px; overflow-y: auto; background: #1a1a1a; padding: 10px; border-radius: 6px; border: 1px solid #333; margin-bottom: 10px; display: flex; flex-direction: column; gap: 8px;"></div>
+        
+        <div style="display: flex; gap: 5px;">
+            <input type="text" id="msg-input" placeholder="Escribe un mensaje seguro..." style="flex: 1; padding: 10px; background: #333; color: #fff; border: 1px solid #444; border-radius: 4px; outline: none;">
+            <button onclick="enviarMensaje()" style="background: #00ffcc; color: #000; border: none; padding: 10px 15px; font-weight: bold; border-radius: 4px; cursor: pointer;">Enviar</button>
+        </div>
+    </div>
+</section>
+
+<script>
+    const cajaChat = document.getElementById('caja-chat');
+    const video = document.getElementById('video');
+    const canvas = document.getElementById('canvas');
+    const btnActivar = document.getElementById('btn-activar');
+    const btnCapturar = document.getElementById('btn-capturar');
+    let streamLocal = null;
+
+    // Cargar datos guardados al iniciar
+    window.onload = () => {
+        const guardados = JSON.parse(localStorage.getItem('boveda_datos')) || [];
+        guardados.forEach(item => renderizarElemento(item));
+        cajaChat.scrollTop = cajaChat.scrollHeight;
+    };
+
+    // Función para activar la cámara del celular
+    async function activarCamara() {
+        try {
+            streamLocal = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" }, audio: false });
+            video.srcObject = streamLocal;
+            video.style.display = "block";
+            btnActivar.style.display = "none";
+            btnCapturar.style.display = "block";
+        } catch (err) {
+            alert("Error al acceder a la cámara. Asegúrate de dar permisos.");
+        }
+    }
+
+    // Función para tomar la foto
+    function capturarFoto() {
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        canvas.getContext('2d').drawImage(video, 0, 0);
+        const dataUrl = canvas.toDataURL('image/jpeg');
+        
+        guardarDato({ tipo: 'imagen', contenido: dataUrl });
+        
+        // Apagar cámara para ahorrar batería
+        if(streamLocal) streamLocal.getTracks().forEach(track => track.stop());
+        video.style.display = "none";
+        btnActivar.style.display = "block";
+        btnCapturar.style.display = "none";
+    }
+
+    // Función para subir imagen desde el almacenamiento del celular
+    function subirImagen(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                guardarDato({ tipo: 'imagen', contenido: e.target.result });
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+
+    // Función para enviar mensajes de texto
+    function enviarMensaje() {
+        const input = document.getElementById('msg-input');
+        if (input.value.trim() !== "") {
+            guardarDato({ tipo: 'texto', contenido: input.value.trim() });
+            input.value = "";
+        }
+    }
+
+    // Guardar en LocalStorage para que no se borre al recargar
+    function guardarDato(item) {
+        const guardados = JSON.parse(localStorage.getItem('boveda_datos')) || [];
+        guardados.push(item);
+        localStorage.setItem('boveda_datos', JSON.stringify(guardados));
+        renderizarElemento(item);
+        cajaChat.scrollTop = cajaChat.scrollHeight;
+    }
+
+    // Mostrar los elementos en la pantalla
+    function renderizarElemento(item) {
+        const div = document.createElement('div');
+        div.style.padding = "8px";
+        div.style.borderRadius = "4px";
+        div.style.maxWidth = "85%";
+        
+        if (item.tipo === 'texto') {
+            div.style.background = "#2b2b2b";
+            div.style.color = "#fff";
+            div.style.alignSelf = "flex-end";
+            div.textContent = item.contenido;
+        } else if (item.tipo === 'imagen') {
+            div.style.background = "#333";
+            div.style.alignSelf = "flex-start";
+            const img = document.createElement('img');
+            img.src = item.contenido;
+            img.style.width = "100%";
+            img.style.borderRadius = "4px";
+            div.appendChild(img);
+        }
+        cajaChat.appendChild(div);
+    }
+</script>
+
+
+
+   
 
    
                   
@@ -3191,235 +3332,9 @@ function calcularFlujoCapital() {
       </button>
     </div>
   </div>
-</section>
+   </section> 
 
 
-
-
-                  
-             
-
-                  <script>
-                     // CONFIGURACIÓN DE ACCESO DE LA BÓVEDA
-const CLAVE_ACCESO_TITAN = "ABRIR2026"; // <- Puedes cambiar esta clave por la que tú quieras
-
-function solicitarAccesoBovedaMultimedia() {
-    // 1. Capturamos los elementos de la interfaz
-    const bloqueAcceso = document.getElementById('bloque-acceso-boveda');
-    const consolaPrivada = document.getElementById('consola-privada-titan');
-    const alertaError = document.getElementById('error-titan-guard');
-
-    // 2. Ocultamos cualquier error previo para limpiar la pantalla
-    if (alertaError) alertaError.style.display = 'none';
-
-    // 3. Solicitamos la credencial mediante un cuadro inmersivo
-    const credencialIngresada = prompt("🔐 SISTEMA DE SEGURIDAD TITÁN-GUARD\n\nIntroduzca la credencial táctica de operador para abrir canal:");
-
-    // Si el usuario cancela o no escribe nada, salimos sin hacer nada
-    if (credencialIngresada === null) return;
-
-    // 4. VALIDACIÓN TÁCTICA DE LA CONTRASEÑA
-    if (credencialIngresada.trim() === CLAVE_ACCESO_TITAN) {
-        // ACCESO CONCEDIDO: Intercambiamos los paneles visuales
-        if (bloqueAcceso) bloqueAcceso.style.display = 'none';
-        if (consolaPrivada) consolaPrivada.style.display = 'block';
-        
-        alert("🟢 ACCESO CONCEDIDO\n\nCanal local encriptado. Bienvenido, Operador.");
-    } else {
-        // ACCESO RECHAZADO: Mostramos la alerta roja neón en el panel
-        if (alertaError) {
-            alertaError.style.display = 'block';
-            alertaError.innerHTML = "⚡ [ ERROR: CREDENCIAL INVÁLIDA o CANAL RECHAZADO ]";
-        }
-        alert("❌ ACCESO DENEGADO\n\nLa credencial introducida no coincide con los registros del sistema.");
-    }
-}
-
-
-
-// CONTROL DE PERSISTENCIA: Carga el archivo guardado automáticamente al refrescar la página
-document.addEventListener("DOMContentLoaded", () => {
-    const archivoGuardado = localStorage.getItem("boveda_multimedia_permanente");
-    const tipoGuardado = localStorage.getItem("boveda_multimedia_tipo");
-    const nombreGuardado = localStorage.getItem("boveda_multimedia_nombre");
-
-    if (archivoGuardado && tipoGuardado) {
-        renderizarDesdeMemoria(archivoGuardado, tipoGuardado, nombreGuardado);
-    }
-});
-
-// 3. PROCESADOR MULTIMEDIA UNIVERSAL (Modificado para persistencia permanente)
-function procesarCargaMultimediaBoveda() {
-    const input = document.getElementById('archivo-tactico-input');
-    const archivo = input.files[0];
-    if (!archivo) return;
-
-    const lector = new FileReader();
-
-    lector.onload = function(e) {
-        const resultadoBase64 = e.target.result;
-
-        // NUEVO: Guardamos el archivo y sus propiedades de forma fija en el teléfono
-        try {
-            localStorage.setItem("boveda_multimedia_permanente", resultadoBase64);
-            localStorage.setItem("boveda_multimedia_tipo", archivo.type);
-            localStorage.setItem("boveda_multimedia_nombre", archivo.name);
-            
-            // Pintamos el recurso en pantalla
-            renderizarDesdeMemoria(resultadoBase64, archivo.type, archivo.name);
-        } catch (error) {
-            console.error("Error de almacenamiento:", error);
-            alert("⚠️ ALERTA: El archivo es demasiado pesado para la memoria local rápida. Intenta con un archivo de menor tamaño.");
-        }
-    };
-
-    lector.readAsDataURL(archivo);
-}
-
-// FUNCIÓN AUXILIAR: Se encarga de pintar los componentes tácticos en el HTML
-function renderizarDesdeMemoria(datosBase64, tipoArchivo, nombreArchivo) {
-    const visor = document.getElementById('visor-multimedia-boveda');
-    const contenedor = document.getElementById('contenedor-render-archivo');
-    
-    if (!visor || !contenedor) return;
-    
-    visor.style.display = 'block';
-    contenedor.innerHTML = ""; // Limpieza previa
-
-    // EVALUACIÓN DINÁMICA DEL TIPO DE ARCHIVO (Tu lógica original intacta)
-    if (tipoArchivo.startsWith('image/')) {
-        contenedor.innerHTML = `<img src="${datosBase64}" style="max-width:100%; max-height:300px; border: 1px solid #ffcc00; border-radius:4px; margin-top:10px;">`;
-    } 
-    else if (tipoArchivo.startsWith('video/')) {
-        contenedor.innerHTML = `<video src="${datosBase64}" controls style="max-width:100%; max-height:300px; margin-top:10px;"></video>`;
-    } 
-    else if (tipoArchivo.startsWith('audio/')) {
-        contenedor.innerHTML = `<audio src="${datosBase64}" controls style="width:100%; margin-top:10px;"></audio>`;
-    } 
-    else if (tipoArchivo === 'application/pdf') {
-        contenedor.innerHTML = `<embed src="${datosBase64}" type="application/pdf" width="100%" height="400px" style="border:1px solid #222;">`;
-    } 
-    else {
-        contenedor.innerHTML = `
-            <div style="padding: 20px; background: #111; border: 1px dashed #ffcc00; margin-top:10px;">
-                <p style="color: #ffcc00; margin: 0;">💼 DOCUMENTO DESBLOQUEADO</p>
-                <span style="font-size: 12px; color: #aaa;">${nombreArchivo || "Archivo de Respaldo"}</span>
-            </div>`;
-    }
-}
-
-// 4. CIERRE Y ENCRIPTACIÓN COMPLETA (Modificado para limpiar también la memoria local si se desea)
-function cerrarSesionBovedaMultimedia() {
-    document.getElementById('consola-privada-titan').style.display = 'none';
-    document.getElementById('bloque-acceso-boveda').style.display = 'block';
-    
-    document.getElementById('archivo-tactico-input').value = "";
-    document.getElementById('visor-multimedia-boveda').style.display = 'none';
-    document.getElementById('contenedor-render-archivo').innerHTML = "";
-    
-    // NOTA TÁCTICA: Si quieres que al cerrar sesión el archivo se destruya por seguridad, quita las barras '//' de abajo:
-    // localStorage.removeItem("boveda_multimedia_permanente");
-    // localStorage.removeItem("boveda_multimedia_tipo");
-    // localStorage.removeItem("boveda_multimedia_nombre");
-}
-
-                     //AGREGAMOS 
-
-            //BOTON PARA PURGAR ARCHIVOS 
-                     
-                     function renderizarDesdeMemoria(datosBase64, tipoArchivo, nombreArchivo) {
-    const visor = document.getElementById('visor-multimedia-boveda');
-    const contenedor = document.getElementById('contenedor-render-archivo');
-    
-    if (!visor || !contenedor) return;
-    
-    visor.style.display = 'block';
-    contenedor.innerHTML = ""; // Limpieza previa
-
-    let bloqueContenido = "";
-
-    // EVALUACIÓN DINÁMICA DEL TIPO DE ARCHIVO
-    if (tipoArchivo.startsWith('image/')) {
-        bloqueContenido = `<img src="${datosBase64}" style="max-width:100%; max-height:300px; border: 1px solid #ffcc00; border-radius:4px; margin-top:10px;">`;
-    } 
-    else if (tipoArchivo.startsWith('video/')) {
-        bloqueContenido = `<video src="${datosBase64}" controls style="max-width:100%; max-height:300px; margin-top:10px;"></video>`;
-    } 
-    else if (tipoArchivo.startsWith('audio/')) {
-        bloqueContenido = `<audio src="${datosBase64}" controls style="width:100%; margin-top:10px;"></audio>`;
-    } 
-    else if (tipoArchivo === 'application/pdf') {
-        bloqueContenido = `<embed src="${datosBase64}" type="application/pdf" width="100%" height="400px" style="border:1px solid #222;">`;
-    } 
-    else {
-        bloqueContenido = `
-            <div style="padding: 20px; background: #111; border: 1px dashed #ffcc00; margin-top:10px;">
-                <p style="color: #ffcc00; margin: 0;">💼 DOCUMENTO DESBLOQUEADO</p>
-                <span style="font-size: 12px; color: #aaa;">${nombreArchivo || "Archivo de Respaldo"}</span>
-            </div>`;
-    }
-
-    // INYECCIÓN: Agregamos el contenido y el Botón de Purga al final
-    contenedor.innerHTML = `
-        ${bloqueContenido}
-        <div style="margin-top: 15px; text-align: center;">
-            <button onclick="purgarArchivoPermanente()" style="padding: 6px 12px; background: #220000; color: #ff3333; border: 1px solid #ff3333; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 11px; font-family: inherit; text-transform: uppercase;">
-                💥 PURGAR ARCHIVO DE LA MEMORIA
-            </button>
-        </div>
-    `;
-}
-                     //FUNCION DE PUERGA MANUAL 
-
-                     // FUNCIÓN DE PURGA MANUAL
-function purgarArchivoPermanente() {
-    if (confirm("🚨 ¿Confirmas la destrucción absoluta de este archivo en la memoria del dispositivo?")) {
-        // Borramos los registros del localStorage
-        localStorage.removeItem("boveda_multimedia_permanente");
-        localStorage.removeItem("boveda_multimedia_tipo");
-        localStorage.removeItem("boveda_multimedia_nombre");
-
-        // Limpiamos la interfaz de inmediato
-        document.getElementById('archivo-tactico-input').value = "";
-        document.getElementById('visor-multimedia-boveda').style.display = 'none';
-        document.getElementById('contenedor-render-archivo').innerHTML = "";
-        
-        alert("💥 SISTEMA: Datos purgados y sector de memoria sobreescrito con éxito.");
-    }
-}
-
-                     //AUTODESTRUCCION DE CHAT CADA 24HORAS 
-
-                     // ESCUCHAR EN TIEMPO REAL CON FILTRO DE AUTODESTRUCCIÓN
-baseDatos.ref("chat_boveda").on("value", (snapshot) => {
-    const cajaChat = document.getElementById("caja-mensajes-chat");
-    if (!cajaChat) return;
-    
-    cajaChat.innerHTML = ""; 
-    const datos = snapshot.val();
-    const tiempoActual = Date.now();
-    const LIMITE_24_HORAS = 24 * 60 * 60 * 1000; // Milisegundos en un día
-
-    for (let id in datos) {
-        const msg = datos[id];
-        
-        // Verificación de caducidad
-        if (tiempoActual - msg.timestamp > LIMITE_24_HORAS) {
-            // Si el mensaje es más viejo de 24 horas, se borra de la nube automáticamente
-            baseDatos.ref("chat_boveda").child(id).remove();
-        } else {
-            // Si está vigente, se imprime en pantalla
-            const parrafo = document.createElement("p");
-            parrafo.style.margin = "5px 0";
-            parrafo.innerHTML = `<strong style="color: #ffcc00;">[${msg.operador}]:</strong> ${msg.texto}`;
-            cajaChat.appendChild(parrafo);
-        }
-    }
-    cajaChat.scrollTop = cajaChat.scrollHeight;
-});
-
-
-                  </script>
                   
                   
                   <!--SCRIPT DE BLOQUE DE OFERTA RELAMPAGO YORVIS TECH-->
