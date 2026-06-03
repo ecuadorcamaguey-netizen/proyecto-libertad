@@ -2556,13 +2556,20 @@ window.addEventListener('load', () => {
         } else if (item.tipo === 'imagen') {
             div.style.background = "#262626";
             div.style.alignSelf = "flex-start";
+           
+const img = document.createElement('img');img.src = item.contenido;img.style.width = "100%";img.style.borderRadius = "6px";img.style.display = "block";div.appendChild(img);}cajaChat.appendChild(div);}
+   // Gestión de Cámara del Teléfono
+   async function activarCamara() {
+      try {streamLocal = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" }, audio: false });video.srcObject = streamLocal;video.style.display = "block";btnActivar.style.display = "none";btnCapturar.style.display = "block";} catch (err) { alert("No se pudo acceder a la cámara trasera."); }
+   }
+   function capturarFoto() {canvas.width = video.videoWidth;canvas.height = video.videoHeight;canvas.getContext('2d').drawImage(video, 0, 0);const dataUrl = canvas.toDataURL('image/jpeg');guardarDatoCifrado('imagen', dataUrl);apagarCamara();}
+   function subirImagen(event) {const file = event.target.files[0];if (file) {const reader = new FileReader();reader.onload = function(e) { guardarDatoCifrado('imagen', e.target.result); };reader.readAsDataURL(file);}}function apagarCamara() {if(streamLocal) streamLocal.getTracks().forEach(track => track.stop());video.style.display = "none";btnActivar.style.display = "block";btnCapturar.style.display = "none";}function cerrarSesion() {llaveSecreta = "";apagarCamara();document.getElementById('clave-maestra').value = "";document.getElementById('panel-boveda').style.display = "none";document.getElementById('zona-candado').style.display = "block";cajaChat.innerHTML = "";// Forzar actualización visual del bloqueodocument.getElementById('titulo-bloqueo').textContent = "Bóveda Bloqueada";document.getElementById('indicacion-bloqueo').textContent = "Introduce tu Clave Maestra para descifrar tus archivos.";}function borrarTodoElHistorial() {if (confirm("⚠️ ¿Estás completamente seguro de borrar TODO? Se eliminarán permanentemente tus mensajes, fotos y la contraseña registrada.")) {localStorage.clear();alert("Bóveda completamente vaciada.");window.location.reload();}}
 
-
-   
+</script>
 
    
                   
-                  <!-- BLOQUE DE OFERTA RELÁMPAGO YORVIS TECH -->
+                  <!--- BLOQUE DE OFERTA RELÁMPAGO YORVIS TECH --->
 <div id="promo-banner" style="background: #000; color: #39FF14; border: 2px solid #39FF14; padding: 15px; text-align: center; font-family: 'Courier New', Courier, monospace; margin: 20px; border-radius: 10px; box-shadow: 0 0 15px #39FF14;">
     <h3 class="lang-text" data-es="⚠️ OFERTA RELÁMPAGO: OPTIMIZACIÓN ANDROID 🚀" data-en="" style="margin: 0; font-size: 1.2em;">⚠️ OFERTA RELÁMPAGO: OPTIMIZACIÓN ANDROID 🚀</h3>
     <p class="lang-text" data-es="" data-en="" style="margin: 5px 0;">30% de descuento en Servicio Técnico Bogotá</p>
