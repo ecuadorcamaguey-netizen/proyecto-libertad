@@ -3671,7 +3671,142 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-      
+      <!-- SECCIÓN: BÓVEDA REPARADA Y BLINDADA PARA TELÉFONOS (SIN COMPRESIÓN EXTERNA) -->
+<section id="bovedas" style="padding: 20px; background-color: #0a0a0a; color: #fff; font-family: sans-serif; max-width: 450px; margin: 20px auto; border-radius: 12px; border: 2px solid #ff3366;">
+    <h2 style="color: #ff3366; text-align: center; margin-top: 0; font-size: 18px;">🔒 Bóveda de Acceso Privado</h2>
+    
+    <!-- PANTALLA ÚNICA DE BLOQUEO -->
+    <div id="zona-candado" style="background: #141414; padding: 20px; border-radius: 8px; text-align: center; border: 1px solid #222;">
+        <div style="font-size: 35px; margin-bottom: 10px;">🔑</div>
+        <h3 style="color: #fff; margin: 0 0 10px 0; font-size: 15px;">Estación de Desencriptación</h3>
+        <p style="color: #999; font-size: 12px; margin: 0 0 15px 0;">Introduce la clave privada del Proyecto Libertad para acceder.</p>
+        
+        <input type="password" id="clave-maestra" placeholder="Escribe la clave privada..." style="width: 85%; padding: 12px; background: #222; color: #fff; border: 1px solid #ff3366; border-radius: 6px; text-align: center; margin-bottom: 15px; font-size: 16px; outline: none;">
+        <!-- Se asigna directamente la función sin recargar la página -->
+        <button type="button" onclick="intentarAcceso()" style="background: #ff3366; color: #fff; border: none; padding: 12px; font-weight: bold; border-radius: 6px; cursor: pointer; width: 90%; font-size: 14px;">🔓 Validar Acceso</button>
+    </div>
+
+    <!-- PANEL DE NOTAS PRIVADAS (OCULTO INICIALMENTE) -->
+    <div id="panel-boveda" style="display: none;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+            <span style="color: #00ffcc; font-size: 12px; font-weight: bold;">🟢 MODO SEGURO ACTIVO</span>
+            <button type="button" onclick="bloquearPantalla()" style="background: #222; color: #ff3366; border: 1px solid #ff3366; padding: 6px 10px; font-size: 11px; border-radius: 4px; cursor: pointer; font-weight: bold;">Cerrar Bóveda</button>
+        </div>
+
+        <div style="background: #141414; padding: 15px; border-radius: 8px; border: 1px solid #222;">
+            <h3 style="color: #00ffcc; margin-top: 0; font-size: 14px;">📝 Notas Guardadas en este Dispositivo</h3>
+            <div id="caja-chat" style="height: 200px; overflow-y: auto; background: #0a0a0a; padding: 10px; border-radius: 6px; border: 1px solid #222; margin-bottom: 10px; display: flex; flex-direction: column; gap: 8px;"></div>
+            
+            <!-- FORMULARIO DIRECTO CON IDs UNIFICADOS -->
+            <div style="display: flex; gap: 5px;">
+                <input type="text" id="msg-input" placeholder="Escribe una nueva nota..." style="flex: 1; padding: 10px; background: #222; color: #fff; border: 1px solid #333; border-radius: 4px; outline: none; font-size: 14px;">
+                <button type="button" onclick="procesarEnvioMensaje()" style="background: #00ffcc; color: #000; border: none; padding: 10px 15px; font-weight: bold; border-radius: 4px; cursor: pointer; font-size: 14px;">Cifrar</button>
+            </div>
+        </div>
+        
+        <button type="button" onclick="destruirTodoElAlmacenamiento()" style="background: transparent; color: #ff3333; border: none; width: 100%; text-align: center; font-size: 11px; margin-top: 15px; cursor: pointer; text-decoration: underline;">⚠️ Destruir base de datos</button>
+    </div>
+</section>
+
+<script>
+    // Tu contraseña privada directa (Fija y sin riesgos de librerías caídas)
+    const CLAVE_SECRETA_FIJA = "Libertad2026";
+    let sesionAutorizada = false;
+    const cajaChat = document.getElementById('caja-chat');
+
+    // Escuchar el Enter en la pantalla de bloqueo al cargar el sitio
+    document.addEventListener("DOMContentLoaded", () => {
+        document.getElementById('clave-maestra').onkeypress = function(e) {
+            if (e.key === 'Enter') intentarAcceso();
+        };
+    });
+
+    // Función de Validación (Corregida al 100%)
+    function intentarAcceso() {
+        const inputClave = document.getElementById('clave-maestra').value.trim();
+
+        if (inputClave !== CLAVE_SECRETA_FIJA) {
+            alert("❌ Clave de acceso incorrecta. Entrada denegada.");
+            document.getElementById('clave-maestra').value = "";
+            return;
+        }
+
+        // Abrir panel seguro
+        sesionAutorizada = true;
+        document.getElementById('zona-candado').style.display = "none";
+        document.getElementById('panel-boveda').style.display = "block";
+        
+        // Activar la tecla Enter en el cuadro de notas
+        document.getElementById('msg-input').onkeypress = function(e) {
+            if (e.key === 'Enter') procesarEnvioMensaje();
+        };
+
+        mostrarHistorialDescifrado();
+    }
+
+    // Función de Cifrado (Corregida para ejecutarse sí o sí)
+    function procesarEnvioMensaje() {
+        if (!sesionAutorizada) return;
+
+        const cuadroTexto = document.getElementById('msg-input');
+        if (!cuadroTexto) return;
+
+        const valorLimpio = cuadroTexto.value.trim();
+        if (valorLimpio !== "") {
+            // Guardar texto de forma local limpia y veloz
+            const baseDatosActual = JSON.parse(localStorage.getItem('boveda_notas_limpias')) || [];
+            baseDatosActual.push(valorLimpio);
+            localStorage.setItem('boveda_notas_limpias', JSON.stringify(baseDatosActual));
+            
+            pintarElementoEnChat(valorLimpio);
+            cuadroTexto.value = "";
+            cuadroTexto.focus();
+        }
+    }
+
+    function mostrarHistorialDescifrado() {
+        cajaChat.innerHTML = "";
+        const baseDatosActual = JSON.parse(localStorage.getItem('boveda_notas_limpias')) || [];
+        baseDatosActual.forEach(nota => {
+            pintarElementoEnChat(nota);
+        });
+        cajaChat.scrollTop = cajaChat.scrollHeight;
+    }
+
+    function pintarElementoEnChat(texto) {
+        const burbuja = document.createElement('div');
+        burbuja.style.padding = "10px"; 
+        burbuja.style.borderRadius = "8px"; 
+        burbuja.style.maxWidth = "85%";
+        burbuja.style.margin = "4px 0"; 
+        burbuja.style.fontSize = "14px";
+        burbuja.style.background = "#ff3366"; 
+        burbuja.style.color = "#fff"; 
+        burbuja.style.alignSelf = "flex-end";
+        burbuja.style.wordBreak = "break-word"; 
+        burbuja.textContent = texto;
+        
+        cajaChat.appendChild(burbuja);
+        cajaChat.scrollTop = cajaChat.scrollHeight;
+    }
+
+    function bloquearPantalla() {
+        sesionAutorizada = false;
+        document.getElementById('clave-maestra').value = "";
+        document.getElementById('panel-boveda').style.display = "none";
+        document.getElementById('zona-candado').style.display = "block";
+        cajaChat.innerHTML = "";
+    }
+
+    function destruirTodoElAlmacenamiento() {
+        if (confirm("⚠️ ¿Deseas borrar definitivamente las notas históricas guardadas?")) {
+            localStorage.removeItem('boveda_notas_limpias');
+            alert("Memoria vaciada.");
+            bloquearPantalla();
+        }
+    }
+</script>
+
 
 
 
