@@ -2303,40 +2303,40 @@ window.addEventListener('load', () => {
 
 
 
-   <!-- SECCIÓN: BÓVEDA EXCLUSIVA DE TEXTO Y NOTAS CIFRADAS -->
-<section id="bovedas" style="padding: 20px; background-color: #0a0a0a; color: #fff; font-family: sans-serif; max-width: 450px; margin: 20px auto; border-radius: 12px; border: 2px solid #ff3366; box-shadow: 0 0 15px rgba(255, 51, 102, 0.2);">
-    <h2 style="color: #ff3366; text-align: center; margin-top: 0; font-size: 18px;">🔒 Bóveda de Notas Seguras</h2>
+
+<!-- SECCIÓN: BÓVEDA EXCLUSIVA DE TEXTO CON CLAVE FIJA CORREGIDA -->
+<section id="bovedas" style="padding: 20px; background-color: #0a0a0a; color: #fff; font-family: sans-serif; max-width: 450px; margin: 20px auto; border-radius: 12px; border: 2px solid #ff3366;">
+    <h2 style="color: #ff3366; text-align: center; margin-top: 0; font-size: 18px;">🔒 Bóveda de Acceso Privado</h2>
     
-    <!-- PANTALLA 1: INGRESO DE CONTRASEÑA -->
+    <!-- PANTALLA ÚNICA DE BLOQUEO -->
     <div id="zona-candado" style="background: #141414; padding: 20px; border-radius: 8px; text-align: center; border: 1px solid #222;">
         <div style="font-size: 35px; margin-bottom: 10px;">🔑</div>
-        <h3 id="titulo-bloqueo" style="color: #fff; margin: 0 0 10px 0; font-size: 15px;">Control de Acceso Privado</h3>
-        <p id="info-bloqueo" style="color: #999; font-size: 12px; margin: 0 0 15px 0;">Crea una contraseña si es tu primera vez, o ingresa la que ya guardaste.</p>
+        <h3 style="color: #fff; margin: 0 0 10px 0; font-size: 15px;">Estación de Desencriptación</h3>
+        <p style="color: #999; font-size: 12px; margin: 0 0 15px 0;">Introduce la clave privada del Proyecto Libertad para descifrar los archivos.</p>
         
-        <input type="password" id="clave-maestra" placeholder="Escribe tu contraseña..." style="width: 85%; padding: 12px; background: #222; color: #fff; border: 1px solid #ff3366; border-radius: 6px; text-align: center; margin-bottom: 15px; font-size: 16px; outline: none;">
-        <button type="button" onclick="intentarAcceso()" style="background: #ff3366; color: #fff; border: none; padding: 12px; font-weight: bold; border-radius: 6px; cursor: pointer; width: 90%; font-size: 14px;">🔓 Validar Contraseña</button>
+        <input type="password" id="clave-maestra" placeholder="Escribe la clave privada..." style="width: 85%; padding: 12px; background: #222; color: #fff; border: 1px solid #ff3366; border-radius: 6px; text-align: center; margin-bottom: 15px; font-size: 16px; outline: none;">
+        <button type="button" id="btn-validar" style="background: #ff3366; color: #fff; border: none; padding: 12px; font-weight: bold; border-radius: 6px; cursor: pointer; width: 90%; font-size: 14px;">🔓 Validar Acceso</button>
     </div>
 
-    <!-- PANTALLA 2: PANEL DE TEXTO SEGURO (OCULTO POR DEFECTO) -->
+    <!-- PANEL DE NOTAS PRIVADAS -->
     <div id="panel-boveda" style="display: none;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-            <button type="button" onclick="solicitarNuevoCambio()" style="background: #222; color: #00ffcc; border: 1px solid #00ffcc; padding: 6px 10px; font-size: 11px; border-radius: 4px; cursor: pointer; font-weight: bold;">⚙️ Cambiar Clave</button>
-            <button type="button" onclick="bloquearPantalla()" style="background: #222; color: #ff3366; border: 1px solid #ff3366; padding: 6px 10px; font-size: 11px; border-radius: 4px; cursor: pointer; font-weight: bold;">Cerrar Bóveda</button>
+            <span style="color: #00ffcc; font-size: 12px; font-weight: bold;">🟢 MODO ENCRIPTADO</span>
+            <button type="button" id="btn-cerrar" style="background: #222; color: #ff3366; border: 1px solid #ff3366; padding: 6px 10px; font-size: 11px; border-radius: 4px; cursor: pointer; font-weight: bold;">Cerrar Bóveda</button>
         </div>
 
-        <!-- Historial de Notas -->
         <div style="background: #141414; padding: 15px; border-radius: 8px; border: 1px solid #222;">
-            <h3 style="color: #00ffcc; margin-top: 0; font-size: 14px;">📝 Tus Notas Guardadas (Cifradas en Memoria)</h3>
+            <h3 style="color: #00ffcc; margin-top: 0; font-size: 14px;">📝 Notas Históricas Guardadas</h3>
             <div id="caja-chat" style="height: 200px; overflow-y: auto; background: #0a0a0a; padding: 10px; border-radius: 6px; border: 1px solid #222; margin-bottom: 10px; display: flex; flex-direction: column; gap: 8px;"></div>
             
-            <!-- Formulario de Envío -->
+            <!-- FORMULARIO TOTALMENTE VINCULADO CON ID TRIPLE -->
             <div style="display: flex; gap: 5px;">
-                <input type="text" id="msg-input" placeholder="Escribe una nota privada..." style="flex: 1; padding: 10px; background: #222; color: #fff; border: 1px solid #333; border-radius: 4px; outline: none; font-size: 14px;">
+                <input type="text" id="msg-input" placeholder="Escribe una nueva nota..." style="flex: 1; padding: 10px; background: #222; color: #fff; border: 1px solid #333; border-radius: 4px; outline: none; font-size: 14px;">
                 <button type="button" id="btn-forzar-cifrado" style="background: #00ffcc; color: #000; border: none; padding: 10px 15px; font-weight: bold; border-radius: 4px; cursor: pointer; font-size: 14px;">Cifrar</button>
             </div>
         </div>
-
-        <button type="button" onclick="destruirTodoElAlmacenamiento()" style="background: transparent; color: #ff3333; border: none; width: 100%; text-align: center; font-size: 11px; margin-top: 15px; cursor: pointer; text-decoration: underline;">⚠️ Eliminar todos los datos permanentemente</button>
+        
+        <button type="button" id="btn-purgar" style="background: transparent; color: #ff3333; border: none; width: 100%; text-align: center; font-size: 11px; margin-top: 15px; cursor: pointer; text-decoration: underline;">⚠️ Destruir base de datos</button>
     </div>
 </section>
 
@@ -2344,64 +2344,59 @@ window.addEventListener('load', () => {
 <script src="https://cloudflare.com"></script>
 
 <script>
+    // Tu contraseña 'Libertad2026' está oculta en este Hash seguro
+    const HASH_PRIVADO = "cb7b33df64c676d9fb7429188d374bf94a974b8893cd2ef35b2e3c0b11f3d8a7";
     let claveActivaSesion = "";
     const cajaChat = document.getElementById('caja-chat');
 
-    // Verificar si ya existe contraseña al cargar la página
+    // Amarre mecánico absoluto al cargar la página
     document.addEventListener("DOMContentLoaded", () => {
-        const passVerificador = localStorage.getItem('boveda_llave_maestra');
-        if (passVerificador) {
-            document.getElementById('titulo-bloqueo').textContent = "Bóveda Bloqueada";
-            document.getElementById('info-bloqueo').textContent = "Escribe tu Clave Maestra establecida para descifrar tus archivos.";
-        }
+        document.getElementById('btn-validar').onclick = intentarAcceso;
+        
+        document.getElementById('clave-maestra').onkeypress = function(e) {
+            if (e.key === 'Enter') intentarAcceso();
+        };
     });
 
-    // Validar contraseña de acceso
     function intentarAcceso() {
-        const inputCampos = document.getElementById('clave-maestra').value.trim();
-        if (!inputCampos) { alert("Ingresa una contraseña."); return; }
+        const inputClave = document.getElementById('clave-maestra').value.trim();
+        const hashInput = CryptoJS.SHA256(inputClave).toString();
 
-        const passExistente = localStorage.getItem('boveda_llave_maestra');
-
-        if (!passExistente) {
-            localStorage.setItem('boveda_llave_maestra', inputCampos);
-            alert("¡Contraseña guardada con éxito! No la olvides.");
-        } else if (inputCampos !== passExistente) {
-            alert("❌ Contraseña Incorrecta. Acceso denegado.");
+        if (hashInput !== HASH_PRIVADO) {
+            alert("❌ Clave de acceso incorrecta. Entrada denegada.");
             document.getElementById('clave-maestra').value = "";
             return;
         }
 
-        claveActivaSesion = inputCampos;
+        // Acceso concedido con tu clave fija
+        claveActivaSesion = inputClave;
         document.getElementById('zona-candado').style.display = "none";
         document.getElementById('panel-boveda').style.display = "block";
         
-        // Activar mecánicamente el botón y el Enter al abrir el panel
-        document.getElementById('btn-forzar-cifrado').onclick = function() {
-            procesarEnvioMensaje();
-        };
-
+        // Conexión física directa de los botones internos para evitar que fallen en el celular
+        document.getElementById('btn-forzar-cifrado').onclick = procesarEnvioMensaje;
+        document.getElementById('btn-cerrar').onclick = bloquearPantalla;
+        document.getElementById('btn-purgar').onclick = destruirTodoElAlmacenamiento;
+        
         document.getElementById('msg-input').onkeypress = function(e) {
-            if (e.key === 'Enter') { 
-                procesarEnvioMensaje(); 
-            }
+            if (e.key === 'Enter') procesarEnvioMensaje();
         };
 
         mostrarHistorialDescifrado();
     }
 
-    // Guardar y Cifrar nota
     function procesarEnvioMensaje() {
         const cuadroTexto = document.getElementById('msg-input');
         if (!cuadroTexto) return;
         
         const valorLimpio = cuadroTexto.value.trim();
         if (valorLimpio !== "") {
+            // Encriptación AES pura
             const textoCifrado = CryptoJS.AES.encrypt(valorLimpio, claveActivaSesion).toString();
-            const baseDatosActual = JSON.parse(localStorage.getItem('boveda_notas_texto')) || [];
+            const baseDatosActual = JSON.parse(localStorage.getItem('boveda_notas_fijas')) || [];
             
             baseDatosActual.push(textoCifrado);
-            localStorage.setItem('boveda_notas_texto', JSON.stringify(baseDatosActual));
+            localStorage.setItem('boveda_notas_fijas', JSON.stringify(baseDatosActual));
             
             pintarElementoEnChat(valorLimpio);
             cuadroTexto.value = "";
@@ -2409,26 +2404,20 @@ window.addEventListener('load', () => {
         }
     }
 
-    // Mostrar el historial limpio
     function mostrarHistorialDescifrado() {
         cajaChat.innerHTML = "";
-        const baseDatosActual = JSON.parse(localStorage.getItem('boveda_notas_texto')) || [];
+        const baseDatosActual = JSON.parse(localStorage.getItem('boveda_notas_fijas')) || [];
         
         baseDatosActual.forEach(notaCifrada => {
             try {
                 const bytes = CryptoJS.AES.decrypt(notaCifrada, claveActivaSesion);
                 const textoOriginal = bytes.toString(CryptoJS.enc.Utf8);
-                if (textoOriginal) {
-                    pintarElementoEnChat(textoOriginal);
-                }
-            } catch (e) {
-                console.log("Error al procesar bloque.");
-            }
+                if (textoOriginal) pintarElementoEnChat(textoOriginal);
+            } catch (e) {}
         });
         cajaChat.scrollTop = cajaChat.scrollHeight;
     }
 
-    // Dibujar la burbuja de texto en la pantalla del celular
     function pintarElementoEnChat(texto) {
         const burbuja = document.createElement('div');
         burbuja.style.padding = "10px"; 
@@ -2446,37 +2435,6 @@ window.addEventListener('load', () => {
         cajaChat.scrollTop = cajaChat.scrollHeight;
     }
 
-    // Cambiar contraseña re-encriptando el texto
-    function solicitarNuevoCambio() {
-        const nuevaClave = prompt("Escribe tu nueva Contraseña Maestra:");
-        if (!nuevaClave || nuevaClave.trim() === "") { alert("Acción cancelada."); return; }
-        
-        const nuevaClaveLimpia = nuevaClave.trim();
-        const baseDatosActual = JSON.parse(localStorage.getItem('boveda_notas_texto')) || [];
-        const baseTemporalDescifrada = [];
-
-        baseDatosActual.forEach(notaCifrada => {
-            try {
-                const bytes = CryptoJS.AES.decrypt(notaCifrada, claveActivaSesion);
-                const descifrado = bytes.toString(CryptoJS.enc.Utf8);
-                if (descifrado) baseTemporalDescifrada.push(descifrado);
-            } catch(e) {}
-        });
-
-        const nuevaBaseCifrada = [];
-        baseTemporalDescifrada.forEach(textoPuro => {
-            const nuevoCifrado = CryptoJS.AES.encrypt(textoPuro, nuevaClaveLimpia).toString();
-            nuevaBaseCifrada.push(nuevoCifrado);
-        });
-
-        localStorage.setItem('boveda_llave_maestra', nuevaClaveLimpia);
-        localStorage.setItem('boveda_notas_texto', JSON.stringify(nuevaBaseCifrada));
-        claveActivaSesion = nuevaClaveLimpia;
-        
-        alert("🔒 Clave cambiada. Tus notas de texto fueron protegidas con la nueva contraseña.");
-        mostrarHistorialDescifrado();
-    }
-
     function bloquearPantalla() {
         claveActivaSesion = "";
         document.getElementById('clave-maestra').value = "";
@@ -2486,14 +2444,15 @@ window.addEventListener('load', () => {
     }
 
     function destruirTodoElAlmacenamiento() {
-        if (confirm("⚠️ ¿Deseas eliminar permanentemente todas tus notas escritas y reiniciar el sistema?")) {
-            localStorage.clear();
-            alert("Sistema vaciado por completo.");
-            window.location.reload();
+        if (confirm("⚠️ ¿Deseas vaciar tus notas guardadas por completo?")) {
+            localStorage.removeItem('boveda_notas_fijas');
+            alert("Notas eliminadas de la memoria local.");
+            bloquearPantalla();
         }
     }
 </script>
 
+        
    
 
 
