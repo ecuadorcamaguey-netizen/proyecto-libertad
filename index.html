@@ -2337,8 +2337,9 @@ window.addEventListener('load', () => {
     </div>
 </section>
 
+   
 <script>
-    // Variables de control y selectores de la interfaz
+    // Unificación de selectores del DOM
     const visualizadorVideo = document.getElementById('camara-video');
     const capturaCanvas = document.getElementById('camara-canvas');
     const gatilloAbrirCamara = document.getElementById('btn-abrir-cam');
@@ -2351,18 +2352,18 @@ window.addEventListener('load', () => {
     
     let flujoVideoCamara = null;
 
-    // Ejecución inicial: Cargar el almacenamiento al abrir el sitio
+    // Inicialización del sistema al cargar la página
     document.addEventListener("DOMContentLoaded", () => {
         cargarDatosGuardados();
 
-        // Enlazar los botones con sus funciones de JavaScript de forma segura
-        gatilloAbrirCamara.addEventListener('click', iniciarCamaraDispositivo);
-        gatilloTomarFoto.addEventListener('click', procesarCapturaFoto);
-        selectorArchivos.addEventListener('change', procesarSubidaArchivo);
-        gatilloEnviarTexto.addEventListener('click', ejecutarEnvioDeTexto);
-        gatilloBorrarMemoria.addEventListener('click', borrarTodoElContenido);
+        // Enlaces de eventos seguros para evitar bloqueos táctiles
+        if(gatilloAbrirCamara) gatilloAbrirCamara.onclick = iniciarCamaraDispositivo;
+        if(gatilloTomarFoto) gatilloTomarFoto.onclick = procesarCapturaFoto;
+        if(selectorArchivos) selectorArchivos.onchange = procesarSubidaArchivo;
+        if(gatilloEnviarTexto) gatilloEnviarTexto.onclick = ejecutarEnvioDeTexto;
+        if(gatilloBorrarMemoria) gatilloBorrarMemoria.onclick = borrarTodoElContenido;
 
-        // Permitir envío inmediato al presionar Enter en el teclado táctil
+        // Soporte para enviar con la tecla Enter en teléfonos
         cajaEntradaTexto.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
                 ejecutarEnvioDeTexto();
@@ -2401,7 +2402,7 @@ window.addEventListener('load', () => {
         const filaContenedora = document.createElement('div');
         filaContenedora.style.display = "flex";
         filaContenedora.style.width = "100%";
-        filaContenedora.style.margin = "2px 0";
+        filaContenedora.style.margin = "4px 0";
 
         const tarjeta = document.createElement('div');
         tarjeta.style.padding = "10px";
@@ -2414,13 +2415,13 @@ window.addEventListener('load', () => {
             filaContenedora.style.justifyContent = "flex-end";
             tarjeta.style.background = "#00ffcc";
             tarjeta.style.color = "#000";
-            tarjeta.style.fontWeight = "500";
+            tarjeta.style.fontWeight = "bold";
             tarjeta.style.wordBreak = "break-word";
             tarjeta.textContent = bloque.contenido;
         } else if (bloque.tipo === 'imagen') {
             filaContenedora.style.justifyContent = "flex-start";
-            tarjeta.style.background = "#1a1a1a";
-            tarjeta.style.border = "1px solid #333";
+            tarjeta.style.background = "#141414";
+            tarjeta.style.border = "1px solid #00ffcc";
             const visualizadorImagen = document.createElement('img');
             visualizadorImagen.src = bloque.contenido;
             visualizadorImagen.style.width = "100%";
@@ -2434,35 +2435,49 @@ window.addEventListener('load', () => {
         areaMensajes.scrollTop = areaMensajes.scrollHeight;
     }
 
-    // Funciones del hardware de la cámara
+    // ARREGLO CRÍTICO: Cámara Adaptativa para Navegación Móvil
     async function iniciarCamaraDispositivo() {
-        try {
-            flujoVideoCamara = await navigator.mediaDevices.getUserMedia({ 
-                video: { facingMode: "environment" }, 
-                audio: false 
-            });
-            visualizadorVideo.srcObject = flujoVideoCamara;
-            visualizadorVideo.style.display = "block";
-            gatilloAbrirCamara.style.display = "none";
-            gatilloTomarFoto.style.display = "block";
-        } catch (error) {
-            alert("No se detectó una cámara activa o faltan permisos en el navegador.");
+        // Opciones de intento: Primero trasera, si falla, cualquiera disponible
+        const intentosOpciones = [
+            { video: { facingMode: "environment" }, audio: false },
+            { video: true, audio: false }
+        ];
+
+        for (let opciones of intentosOpciones) {
+            try {
+                flujoVideoCamara = await navigator.mediaDevices.getUserMedia(opciones);
+                visualizadorVideo.srcObject = flujoVideoCamara;
+                visualizadorVideo.style.display = "block";
+                gatilloAbrirCamara.style.display = "none";
+                gatilloTomarFoto.style.display = "block";
+                return; // Éxito obtenido, salimos de la función
+            } catch (error) {
+                console.log("Intento de cámara fallido, probando alternativa...");
+            }
         }
+        alert("Error multimedia: Activa los permisos de la cámara en la barra de direcciones de tu navegador Chrome/Safari.");
     }
 
     function procesarCapturaFoto() {
-        capturaCanvas.width = visualizadorVideo.videoWidth;
-        capturaCanvas.height = visualizadorVideo.videoHeight;
-        capturaCanvas.getContext('2d').drawImage(visualizadorVideo, 0, 0);
-        const urlImagenBase64 = capturaCanvas.toDataURL('image/jpeg');
+        if (!flujoVideoCamara) return;
         
-        registrarEnAlmacenamiento('imagen', urlImagenBase64);
+        capturaCanvas.width = visualizadorVideo.videoWidth || 640;
+        capturaCanvas.height = visualizadorVideo.videoHeight || 480;
+        capturaCanvas.getContext('2d').drawImage(visualizadorVideo, 0, 0);
+        
+        try {
+            const urlImagenBase64 = capturaCanvas.toDataURL('image/jpeg');
+            registrarEnAlmacenamiento('imagen', urlImagenBase64);
+        } catch(e) {
+            alert("No se pudo procesar la captura de la imagen.");
+        }
         apagarCamaraHardware();
     }
 
+    // ARREGLO CRÍTICO: Carga limpia de archivos locales
     function procesarSubidaArchivo(evento) {
         const archivosSeleccionados = evento.target.files;
-        if (archivosSeleccionados.length > 0) {
+        if (archivosSeleccionados && archivosSeleccionados.length > 0) {
             const lectorArchivos = new FileReader();
             lectorArchivos.onload = function(e) {
                 registrarEnAlmacenamiento('imagen', e.target.result);
@@ -2474,8 +2489,10 @@ window.addEventListener('load', () => {
     function apagarCamaraHardware() {
         if (flujoVideoCamara) {
             flujoVideoCamara.getTracks().forEach(track => track.stop());
+            flujoVideoCamara = null;
         }
         visualizadorVideo.style.display = "none";
+        visualizadorVideo.srcObject = null;
         gatilloAbrirCamara.style.display = "block";
         gatilloTomarFoto.style.display = "none";
     }
@@ -2489,9 +2506,6 @@ window.addEventListener('load', () => {
         }
     }
 </script>
-
-
-
 
 
 
