@@ -2445,10 +2445,9 @@ window.addEventListener('load', () => {
         function persistirDato(tipo, plano) {
 if (!claveActiva) return;
            const cifrado = CryptoJS.AES.encrypt(plano, 
-                                                claveActiva).toString();
+           claveActiva).toString();
            const baseDeDatos = 
-              JSON.parse(localStorage.getItem('bvd_data_secure')) || [];
-           baseDeDatos.push({ tipo: tipo, data: cifrado });
+              JSON.parse(localStorage.getItem('bvd_data_secure')) || baseDeDatos.push({ tipo: tipo, data: cifrado });
            localStorage.setItem('bvd_data_secure', JSON.stringify(baseDeDatos));
            descifrarYMostrar();
         }return {autenticar: function() 
