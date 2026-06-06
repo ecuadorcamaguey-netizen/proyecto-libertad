@@ -3193,6 +3193,61 @@ function iniciarTemporizadorOferta() {
   </button>
 
 </div>
+                                <!-- Barra de Progreso Visual -->
+<div class="contenedor-barra" style="width: 100%; background: #222; border-radius: 8px; padding: 4px;">
+    <div id="barraProgreso" style="width: 0%; height: 25px; background: #00ffcc; transition: width 0.5s ease; border-radius: 6px;"></div>
+</div>
+
+<!-- Texto de Monitoreo Financiero -->
+<p>Acumulado: <span id="textoAcumulado">$0</span> / $1.200.000 COP</p>
+
+<!-- Botón de Acción del Servicio -->
+<button id="opt_android" style="padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">
+    ⚡ Contratar Ahora (Optimización Android)
+</button>
+<script>
+    // Configuración de las variables base de la Bóveda Financiera
+    let fondoAcumulado = 0;
+    const METAFINAL = 1200000; // $1.200.000 COP
+    const VALOR_SERVICIO = 50000; // Valor asignado por cada optimización ($50.000 COP)
+
+    // Captura de los elementos del DOM (Interfaz Gráfica)
+    const botonContratar = document.getElementById('opt_android');
+    const barra = document.getElementById('barraProgreso');
+    const textoFondo = document.getElementById('textoAcumulado');
+
+    // Función encargada de recalcular los flujos y renderizar la barra
+    function actualizarFlujoFinanciero() {
+        // Evitamos que el fondo supere la meta establecida
+        if (fondoAcumulado > METAFINAL) {
+            fondoAcumulado = METAFINAL;
+        }
+
+        // Cálculo exacto del porcentaje matemático
+        let porcentaje = (fondoAcumulado / METAFINAL) * 100;
+
+        // Modificación del DOM en tiempo real (Animación visual de la barra)
+        barra.style.width = porcentaje + '%';
+        
+        // Formateo del texto a moneda local colombiana (COP)
+        textoFondo.innerText = new Intl.NumberFormat('es-CO', {
+            style: 'currency',
+            currency: 'COP',
+            maximumFractionDigits: 0
+        }).format(fondoAcumulado);
+    }
+
+    // Escuchador de eventos: Se activa al presionar "⚡ Contratar Ahora"
+    botonContratar.addEventListener('click', () => {
+        if (fondoAcumulado < METAFINAL) {
+            fondoAcumulado += VALOR_SERVICIO;
+            actualizarFlujoFinanciero();
+        } else {
+            alert("¡Meta del Fondo de Arraigo cumplida con éxito! 🚀");
+        }
+    });
+</script>
+
 
 
                   <!---SCRIPT DE CLAVE DE INGRESO AL GENERADOR DE ALGORITMO--->
