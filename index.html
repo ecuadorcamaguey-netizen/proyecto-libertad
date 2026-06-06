@@ -3280,7 +3280,81 @@ function calcularFlujoCapital() {
     
     <span id="texto-porcentaje-flujo">0% COMPLETADO</span>
 </div>
+         <script>                       
+// ========================================================
+// 🪙 ALGORITMO DE FLUJO V1.0 - NETIZEN COIN (NTZN)
+// PROYECTO LIBERTAD 2026 / YORVIS TECH
+// ========================================================
 
+// Configuración de metas e ingresos iniciales (COP)
+const META_FONDO = 1200000;
+let balanceAcumulado = 350000; // Puedes inicializarlo con tu fondo actual recaudado
+
+// Catálogo de Servicios y Tarifas Oficiales de Yorvis Tech
+const SERVICIOS_YORVIS_TECH = {
+    "opt_android": { nombre: "Optimización Avanzada Android", precio: 25000 },
+    "rescate_doc": { nombre: "Rescate Digital de Documentos", precio: 30000 },
+    "soporte_remoto": { nombre: "Asistencia Técnica Remota", precio: 40000 }
+};
+
+// Función principal para calcular y renderizar el flujo financiero
+function actualizarAlgoritmoFlujo() {
+    // 1. Calculamos el porcentaje matemático exacto alcanzado
+    let porcentajeCompletado = (balanceAcumulado / META_FONDO) * 100;
+    
+    // Evitamos que supere el 100% visual en la barra
+    if (porcentajeCompletado > 100) porcentajeCompletado = 100;
+    
+    // 2. Formateamos el balance a moneda COP de forma limpia
+    let balanceFormateado = new Intl.NumberFormat('es-CO', {
+        style: 'currency',
+        currency: 'COP',
+        maximumFractionDigits: 0
+    }).format(balanceAcumulado);
+
+    // 3. Actualizamos los elementos visuales de la interfaz de usuario (HTML)
+    // Asegúrate de que los IDs coincidan con los de tu página web
+    const elementoBarra = document.getElementById("barra-progreso-flujo");
+    const elementoTextoBalance = document.getElementById("texto-balance-flujo");
+    const elementoPorcentaje = document.getElementById("texto-porcentaje-flujo");
+
+    if (elementoBarra) {
+        elementoBarra.style.width = porcentajeCompletado.toFixed(2) + "%";
+    }
+    if (elementoTextoBalance) {
+        elementoTextoBalance.innerText = `${balanceFormateado} / $1.200.000 COP`;
+    }
+    if (elementoPorcentaje) {
+        elementoPorcentaje.innerText = `${porcentajeCompletado.toFixed(1)}% COMPLETADO`;
+    }
+
+    console.log(`[Flujo NTZN] Balance: ${balanceFormateado} | Progreso: ${porcentajeCompletado.toFixed(2)}%`);
+}
+
+// Función estratégica para registrar un nuevo ingreso de servicio técnico en el fondo
+function registrarServicioPrestado(idServicio) {
+    const servicio = SERVICIOS_YORVIS_TECH[idServicio];
+    
+    if (servicio) {
+        balanceAcumulado += servicio.precio;
+        console.log(`✅ ¡Servicio Registrado! +${servicio.precio} COP de: ${servicio.nombre}`);
+        
+        // Recalculamos la barra e interfaz inmediatamente
+        actualizarAlgoritmoFlujo();
+        
+        // Retornamos true para confirmar el éxito del flujo
+        return true;
+    } else {
+        console.error("❌ Código de servicio no identificado en el catálogo.");
+        return false;
+    }
+}
+
+// Lanzamos el cálculo inicial de forma automática al cargar la web
+document.addEventListener("DOMContentLoaded", () => {
+    actualizarAlgoritmoFlujo();
+});
+                             </script>
 
      
     <!-- Bloque de Validación -->
@@ -3293,6 +3367,14 @@ function calcularFlujoCapital() {
     </div>
   </div>
    </section> 
+
+                           
+               <script>
+
+                                
+        registrarServicioPrestado("opt_android");
+               </script>
+ 
                                 <!---SCRIPT DE CALCULADORA DE FLUJO---
 
 
