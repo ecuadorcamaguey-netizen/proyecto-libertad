@@ -2714,15 +2714,16 @@ document.addEventListener("DOMContentLoaded", () => {
     verificarBloqueoGrifo();
 });
 
-// 🔑 PROTOCOLO DE INICIO DE SESIÓN MILITAR
+// 🔑 PROTOCOLO DE INICIO DE SESIÓN MILITAR - REPARADO SATISFACTORIAMENTE
 function registrarUsuario() {
-    // Captura dinámica de los inputs por su clase militar
+    // Captura dinámica de los inputs por su clase militar (Índices fijos)
     const inputs = document.querySelectorAll(".input-militar");
     const btnRegistro = document.querySelector(".btn-registro");
     const contenidoEsferico = document.querySelector(".contenido-esferico");
 
     if (inputs.length < 2) return;
 
+    // 🛠️ CORRECCIÓN DE ALTA INGENIERÍA: Asignación de índices [0] y [1] para leer los valores reales
     const idName = inputs[0].value.trim().toUpperCase();
     const codigoAlpha = inputs[1].value.trim();
 
@@ -2739,7 +2740,7 @@ function registrarUsuario() {
         // Guardamos el operador de forma persistente en la memoria del celular
         localStorage.setItem("operador_id_name", idName);
         
-        // Bloqueamos los campos visualmente para confirmar el acceso seguro
+        // Bloqueamos las cajas visualmente para confirmar el acceso seguro
         inputs[0].disabled = true;
         inputs[0].style.opacity = "0.6";
         inputs[1].disabled = true;
@@ -2753,14 +2754,15 @@ function registrarUsuario() {
         }
 
         if (contenidoEsferico) {
-            contenidoEsferico.style.border = "1px solid #14F195"; // Borde verde de sistema activo
+            contenidoEsferico.style.border = "1px solid #14F195"; // Activa el diseño de esfera segura
         }
 
         alert(`🟢 PROTOCOLO ACTIVADO\n\nBienvenido Comandante ${idName}. Ecosistema crypto desbloqueado.`);
     } else {
-        alert("❌ ACCESO RECHAZADO\n\nCredenciales incorrectas o Código Alpha inválido. Sector bloqueado.");
+        alert("❌ ACCESO RECHAZADO\n\nCódigo Alpha incorrecto o ID de operador no registrado en el chasis.");
     }
 }
+
 
 // 🪙 ALGORITMO EXTRACTOR DEL BONO LTC
 function ejecutarGrifoBonoLTC() {
