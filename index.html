@@ -2799,6 +2799,144 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // ALGORITMO EXTRACTOR DEL BONO LTC
+
+// CONFIGURACIÓN INTEGRADA DEL GRIFO CRYPTO & PROTOCOLO DE DESTRUCCIÓN v2.5 --->
+<script>
+// 🪙 ALGORITMO EXTRACTOR DEL BONO LTC
+function ejecutarGrifoBonoLTC() {
+    const ultimoReclamo = localStorage.getItem("ltc_ultimo_reclamo");
+    const tiempoActual = Date.now();
+    const COOLDOWN_24H = 24 * 60 * 60 * 1000; // 24 Horas reales
+
+    // Si ya reclamó y no han pasado 24h, bloqueamos la extracción
+    if (ultimoReclamo && (tiempoActual - ultimoReclamo < COOLDOWN_24H)) {
+        alert("🔒 SISTEMA: Extracción denegada. El grifo está recargando energía.");
+        return;
+    }
+
+    // Cálculo matemático del bono aleatorio de LTC
+    const recompensaBase = 0.0005;
+    const recompensaAleatoria = Math.random() * 0.0020;
+    const ltcGanado = recompensaBase + recompensaAleatoria;
+
+    // Guardado persistente en la memoria del celular
+    let saldoActual = parseFloat(localStorage.getItem("ltc_saldo_acumulado") || "0.00000000");
+    saldoActual += ltcGanado;
+    
+    localStorage.setItem("ltc_saldo_acumulado", saldoActual.toFixed(8));
+    localStorage.setItem("ltc_ultimo_reclamo", tiempoActual);
+
+    // Actualizamos la interfaz del menú de inmediato
+    const visorSaldo = document.getElementById("saldo-ltc-grifo");
+    if (visorSaldo) {
+        visorSaldo.innerHTML = saldoActual.toFixed(8);
+    }
+    
+    alert(`🟢 EXTRACCIÓN EXITOSA\n\nInyección de +${ltcGanado.toFixed(8)} LTC completada en el registro militar.`);
+    
+    // Iniciamos la cuenta regresiva en el menú
+    verificarBloqueoGrifo();
+}
+
+// 📡 INSPECTOR DE TIEMPO PARA EL ENLACE DEL PANEL
+function verificarBloqueoGrifo() {
+    const ultimoReclamo = localStorage.getItem("ltc_ultimo_reclamo");
+    if (!ultimoReclamo) return;
+
+    const btnGrifo = document.getElementById("btn-activar-grifo");
+    const visorReloj = document.getElementById("tiempo-espera-grifo");
+
+    const tiempoActual = Date.now();
+    const COOLDOWN_24H = 24 * 60 * 60 * 1000;
+    const tiempoTranscurrido = tiempoActual - ultimoReclamo;
+
+    if (tiempoTranscurrido < COOLDOWN_24H) {
+        // Estilo visual del enlace bloqueado (Estilo Criptográfico Seguro)
+        if (btnGrifo) {
+            btnGrifo.style.color = "#555555";
+            btnGrifo.style.cursor = "not-allowed";
+            btnGrifo.disabled = true;
+        }
+
+        const intervaloGrifo = setInterval(() => {
+            const ahora = Date.now();
+            const restante = (parseInt(ultimoReclamo) + COOLDOWN_24H) - ahora;
+
+            if (restante <= 0) {
+                clearInterval(intervaloGrifo);
+                // Liberamos el botón cuando se cumpla el día
+                if (btnGrifo) {
+                    btnGrifo.style.color = "#14F195";
+                    btnGrifo.style.cursor = "pointer";
+                    btnGrifo.disabled = false;
+                }
+                if (visorReloj) visorReloj.innerHTML = "";
+            } else {
+                // Conversión de milisegundos a formato militar HH:MM:SS
+                let horas = Math.floor(restante / (1000 * 60 * 60));
+                let minutos = Math.floor((restante % (1000 * 60 * 60)) / (1000 * 60));
+                let segundos = Math.floor((restante % (1000 * 60)) / 1000);
+
+                // 🛠️ REPARACIÓN CRÍTICA: Corrección ortográfica de variable (minutes -> minutos)
+                horas = horas < 10 ? "0" + horas : horas;
+                minutos = minutos < 10 ? "0" + minutos : minutos;
+                segundos = segundos < 10 ? "0" + segundos : segundos;
+
+                if (visorReloj) {
+                    visorReloj.innerHTML = `[ ⏳ ENFRIAMIENTO: ${horas}:${minutos}:${segundos} ]`;
+                }
+            }
+        }, 1000);
+    }
+}
+
+// 🚨 FUNCIÓN PARA CERRAR SESIÓN Y LIMPIAR PERFIL
+function cerrarSesionProtocolo() {
+    if (confirm("🚨 ¿Confirmas el cierre del protocolo? Se borrará tu ID de operador de este dispositivo por seguridad.")) {
+        
+        // 1. Borramos el ID Name de la memoria del teléfono
+        localStorage.removeItem("operador_id_name");
+
+        // 2. Capturamos los elementos para restaurarlos
+        const inputs = document.querySelectorAll(".input-militar");
+        const btnRegistro = document.querySelector(".btn-registro");
+        const contenidoEsferico = document.querySelector(".contenido-esferico");
+
+        if (inputs.length >= 2) {
+            inputs[0].value = "";
+            inputs[0].disabled = false;
+            inputs[0].style.opacity = "1";
+            
+            inputs[1].value = "";
+            inputs[1].disabled = false;
+            inputs[1].style.opacity = "1";
+        }
+
+        // 3. Devolvemos el botón de inicio a su estado original militar
+        if (btnRegistro) {
+            btnRegistro.innerHTML = "INICIAR PROTOCOLO";
+            btnRegistro.style.background = "#4b5320";
+            btnRegistro.style.borderColor = "#d4af37";
+            btnRegistro.disabled = false;
+            btnRegistro.style.cursor = "pointer";
+        }
+
+        // 4. Restauramos el diseño del contenedor
+        if (contenidoEsferico) {
+            contenidoEsferico.style.border = "none";
+        }
+
+        alert("💥 PROTOCOLO CERRADO: Datos de sesión destruidos con éxito. Interfaz bloqueada.");
+        window.location.reload();
+    }
+}
+
+// Ejecutar revisión automática al cargar la página para mantener congelado el grifo si es necesario
+document.addEventListener("DOMContentLoaded", verificarBloqueoGrifo);
+</script>
+
+
+  <script>                   
 function ejecutarGrifoBonoLTC() {
     const ultimoReclamo = localStorage.getItem("ltc_ultimo_reclamo");
     const tiempoActual = Date.now();
@@ -2847,36 +2985,6 @@ function verificarBloqueoGrifo() {
         // Estilo visual del enlace bloqueado
         if (btnGrifo) {
             btnGrifo.style.color = "#555555";
-            btnGrifo.style.cursor = "not-allowed";
-        }
-
-        const intervaloGrifo = setInterval(() => {
-            const ahora = Date.now();
-            const restante = (parseInt(ultimoReclamo) + COOLDOWN_24H) - ahora;
-
-            if (restante <= 0) {
-                clearInterval(intervaloGrifo);
-                // Liberamos el botón cuando se cumpla el día
-                if (btnGrifo) {
-                    btnGrifo.style.color = "#14F195";
-                    btnGrifo.style.cursor = "pointer";
-                }
-                if (visorReloj) visorReloj.innerHTML = "";
-            } else {
-                // Conversión de milisegundos a formato militar HH:MM:SS
-                let horas = Math.floor(restante / (1000 * 60 * 60));
-                let minutos = Math.floor((restante % (1000 * 60 * 60)) / (1000 * 60));
-                let segundos = Math.floor((restante % (1000 * 60)) / 1000);
-
-                horas = horas < 10 ? "0" + horas : horas;
-                minutos = minutes < 10 ? "0" + minutos : minutos;
-                segundos = segundos < 10 ? "0" + segundos : segundos;
-
-                if (visorReloj) visorReloj.innerHTML = `[ ⏳ ENFRIAMIENTO: ${horas}:${minutos}:${segundos} ]`;
-            }
-        }, 1000);
-    }
-}
 
          // FUNCIÓN PARA CERRAR SESIÓN Y LIMPIAR PERFIL
 function cerrarSesionProtocolo() {
