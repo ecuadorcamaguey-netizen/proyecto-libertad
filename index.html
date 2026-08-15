@@ -3429,6 +3429,59 @@ document.addEventListener("DOMContentLoaded", () => {
                                 
         registrarServicioPrestado("opt_android");
                </script>
+
+                                <!---ALGORITMO DE FONDO DE ARRAIGO--->
+                                <script>
+
+                                // 📊 ALGORITMO INTERACTIVO DE PROYECCIÓN DE CAPITAL - PROYECTO LIBERTAD 2026
+document.addEventListener("DOMContentLoaded", () => {
+    // 🛠️ Anclaje de componentes del chasis web
+    const botonCalcular = document.querySelector("button:contains('EJECUTAR CÁLCULO')") || document.getElementById("btn-calcular");
+    const textoCapital = document.getElementById("capital-actual") || document.querySelector(".capital-texto");
+    const textoPorcentaje = document.getElementById("porcentaje-completado") || document.querySelector(".porcentaje-texto");
+    const barraProgreso = document.getElementById("barra-progreso") || document.querySelector(".progress-bar");
+    const contenedorHash = document.getElementById("hash-validacion") || document.querySelector(".hash-container");
+
+    const META_ARRANGO = 1200000; // Meta definitiva de $1.200.000 COP
+    let capitalActual = 0;
+
+    if (botonCalcular) {
+        botonCalcular.addEventListener("click", () => {
+            // 🔥 Algoritmo Lineal Táctico: Simulación de ingresos combinados por servicios
+            const servicioAndroid = 25000; // Optimización Android de $25.000 COP
+            const servicioSoftware = 50 * 500; // 50 NTZN valorados a tasa proxy
+            
+            // Añadimos una carga de flujo aleatoria simulando clientes matutinos
+            const serviciosCompletados = Math.floor(Math.random() * 3) + 1;
+            const incremento = (servicioAndroid + servicioSoftware) * serviciosCompletados;
+            
+            capitalActual += incremento;
+            if (capitalActual > META_ARRANGO) capitalActual = META_ARRANGO;
+
+            // Calcular el porcentaje real del fondo
+            const porcentaje = ((capitalActual / META_ARRANGO) * 100).toFixed(1);
+
+            // 🪐 Renderizado Dinámico en Pantalla (Perfecta Definición)
+            if (textoCapital) textoCapital.innerText = `$${capitalActual.toLocaleString('es-CO')} COP`;
+            if (textoPorcentaje) textoPorcentaje.innerText = `${porcentaje}% COMPLETADO`;
+            if (barraProgreso) barraProgreso.style.width = `${porcentaje}%`;
+
+            // 🔐 Generador de Firma Criptográfica GHOST en vivo
+            const marcaTiempo = new Date().getTime();
+            const semillaHash = `${marcaTiempo}|${capitalActual}|TITÁN`;
+            // Simulación rápida de hash SHA-256 para la terminal web
+            const tokenTitan = "TTN-" + Math.random().toString(36).substring(2, 10).toUpperCase();
+
+            if (contenedorHash) {
+                contenedorHash.innerHTML = `<span style="color: #00FF00;">[🟢] ÉXITO: Flujo Proyectado Satisfactoriamente. Firma: ${tokenTitan}</span>`;
+            }
+
+            console.log(`[🛰️] Chasis Actualizado: $${capitalActual} COP (${porcentaje}%) | ${tokenTitan}`);
+        });
+    }
+});
+                                </script>
+
  
                                 <!---SCRIPT DE CALCULADORA DE FLUJO---
 
