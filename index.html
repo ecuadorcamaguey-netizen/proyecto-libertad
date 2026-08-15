@@ -3251,17 +3251,16 @@ function iniciarTemporizadorOferta() {
 
 
                   <!---SCRIPT DE CLAVE DE INGRESO AL GENERADOR DE ALGORITMO--->
+                                
+<!---SCRIPT DE CLAVE DE INGRESO AL GENERADOR DE ALGORITMO - OPTIMIZADO TITÁN v2.5--->
 <script>
-
-   // ALGORITMO GENERADOR CON FILTRO DE PRIVACIDAD DE CLAVE
 function calcularFlujoCapital() {
     // 🚨 CLAVE TÁCTICA PARA ESTA SECCIÓN FINANCIERA
     const CLAVE_FLUJO_MAESTRA = "FLUJO-2026"; 
 
-    // Solicita la contraseña mediante un cuadro inmersivo compatible con tu teléfono antiguo
+    // Solicita la contraseña mediante un cuadro inmersivo compatible con tu teléfono
     const credencialIngresada = prompt("📊 SEGURIDAD FINANCIERA [PROYECTO LIBERTAD]\n\nIntroduzca el Código de Autorización para ejecutar la proyección:");
 
-    // Si el usuario cancela o deja el cuadro vacío, salimos en silencio
     if (credencialIngresada === null) return;
 
     // Validación estricta de la credencial
@@ -3270,15 +3269,23 @@ function calcularFlujoCapital() {
         return;
     }
 
-    // --- CONTINUACIÓN DEL MOTOR MATEMÁTICO (SI LA CLAVE ES CORRECTA) ---
+    // --- MOTOR MATEMÁTICO INTEGRADO Y INTERACTIVO ---
     const META_TOTAL = 1200000; // Meta base establecida en COP
     
-    // Lee el saldo acumulado de tu grifo LTC y lo suma simuladamente al fondo base
+    // Lee el saldo acumulado de tu grifo LTC y lo convierte a COP
     const ltcSaldo = parseFloat(localStorage.getItem("ltc_saldo_acumulado") || "0.00000000");
     const ltcConvertidoACop = Math.floor(ltcSaldo * 380000); 
     
-    const capitalBaseAhorro = 350000; // Tu base fija de ahorro
-    const capitalTotalProyectado = capitalBaseAhorro + ltcConvertidoACop;
+    // 🛠️ INJECCIÓN DE FLUJO DINÁMICO: Recupera e incrementa el ahorro acumulado por servicios reales
+    let ahorroFijoAcumulado = parseInt(localStorage.getItem("ahorro_fijo_acumulado") || "350000");
+    
+    // Simula la entrada de un servicio real del portafolio (Optimización Android de $25.000 COP)
+    if (ahorroFijoAcumulado < META_TOTAL) {
+        ahorroFijoAcumulado += 25000; 
+        localStorage.setItem("ahorro_fijo_acumulado", ahorroFijoAcumulado);
+    }
+    
+    const capitalTotalProyectado = Math.min(ahorroFijoAcumulado + ltcConvertidoACop, META_TOTAL);
 
     const barra = document.getElementById("progreso-barra-flujo");
     const visor = document.getElementById("visor-capital-flujo");
@@ -3290,13 +3297,13 @@ function calcularFlujoCapital() {
     // Bloqueamos el botón temporalmente para simular el procesamiento de datos
     botonFlujo.disabled = true;
     botonFlujo.innerHTML = "DECODIFICANDO MATRIZ NUMÉRICA... ⚡";
-    botonFlujo.style.borderColor = "#666";
-    botonFlujo.style.color = "#666";
+    botonFlujo.style.borderColor = "#555";
+    botonFlujo.style.color = "#555";
 
     let porcentaje = Math.floor((capitalTotalProyectado / META_TOTAL) * 100);
     if (porcentaje > 100) porcentaje = 100; 
 
-    // Efecto dinámico de conteo progresivo
+    // Efecto dinámico de conteo progresivo (Definición Perfecta)
     let capitalContador = 0;
     const saltoDinamic = Math.ceil(capitalTotalProyectado / 40); 
     
@@ -3319,9 +3326,13 @@ function calcularFlujoCapital() {
         }
     }, 30); 
 }
-
-   
 </script>
+
+
+
+
+
+                                
                                 <!---pruaba por trbajo con termux CALCULADORA DE FLUJO--->
                   <!-- Contenedor del fondo estratégico -->
 <div class="contenedor-flujo">
