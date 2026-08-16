@@ -2657,9 +2657,10 @@ function calcularMeta() {
 }
 </script>
      
- 
 
-                  <!--HTML MENU DESPEGABLE TRES LINIA TIPO ESFERA (ACTUALIZADO CON EL GRIFO DE BONO)-->
+
+                     
+<!--HTML PANEL TÁCTICO REPARADO CON IDENTIFICADORES ÚNICOS DE NÚCLEO-->
 <section class="servicio-tecnologico" id="panelLibertad">
     <button class="activador-nucleo" onclick="activarServicio()">
         [ ACCEDER AL SISTEMA DE LIBERTAD ]
@@ -2668,8 +2669,9 @@ function calcularMeta() {
     <div class="contenido-esferico">
         <h2 style="color: #d4af37;">PANEL TÁCTICO</h2>
         
-        <input type="text" class="input-militar" placeholder="ID NAME">
-        <input type="password" class="input-militar" placeholder="CÓDIGO ALPHA">
+        <!-- 🛠️ SE INYECTAN IDs ÚNICOS PARA EVITAR ERRORES DE LECTURA -->
+        <input type="text" id="operador-id-input" class="input-militar" placeholder="ID NAME">
+        <input type="password" id="operador-alpha-input" class="input-militar" placeholder="CÓDIGO ALPHA">
         
         <button class="btn-registro" onclick="registrarUsuario()" style="background:#4b5320; color:white; padding:10px 20px; border:1px solid #d4af37; cursor:pointer;">
             INICIAR PROTOCOLO
@@ -2689,20 +2691,22 @@ function calcularMeta() {
                 > ACCESO BILLETERA LTC
             </a>
             
-            <!-- BOTÓN DEL GRIFO CON ESTILO DE ENLACE QUE CAMBIA SI ESTÁ BLOQUEADO -->
+            <!-- BOTÓN DEL GRIFO CON ESTILO DE ENLACE -->
             <a href="#" id="btn-activar-grifo" onclick="ejecutarGrifoBonoLTC(); return false;" style="color:#14F195; text-decoration:none; display:block;">
                 > ACTIVAR GRIFO DE BONO <span id="tiempo-espera-grifo" style="color:#ff3333; font-size:11px; margin-left:5px;"></span>
             </a>
-           <!-- NUEVO: BOTÓN TÁCTICO PARA CERRAR SESIÓN -->
-    <div style="margin-top: 15px; border-top: 1px dashed #333; padding-top: 10px; text-align: center;">
-        <button onclick="cerrarSesionProtocolo()" style="background: #220000; color: #ff3333; border: 1px solid #ff3333; padding: 5px 10px; font-family: inherit; font-size: 11px; font-weight: bold; cursor: pointer; text-transform: uppercase; border-radius: 4px; width: 100%;">
-            🚨 CERRAR PROTOCOLO Y BORRAR PERFIL
-        </button>
-    </div>
+
+            <!-- NUEVO: BOTÓN TÁCTICO PARA CERRAR SESIÓN -->
+            <div style="margin-top: 15px; border-top: 1px dashed #333; padding-top: 10px; text-align: center;">
+                <button onclick="cerrarSesionProtocolo()" style="background: #220000; color: #ff3333; border: 1px solid #ff3333; padding: 5px 10px; font-family: inherit; font-size: 11px; font-weight: bold; cursor: pointer; text-transform: uppercase; border-radius: 4px; width: 100%;">
+                    🚨 CERRAR PROTOCOLO Y BORRAR PERFIL
+                </button>
+            </div>
             
         </div>
     </div>
 </section>
+
 
 
                      
@@ -2714,22 +2718,22 @@ document.addEventListener("DOMContentLoaded", () => {
     verificarBloqueoGrifo();
 });
 
-// 🔑 PROTOCOLO DE INICIO DE SESIÓN MILITAR - REPARADO SATISFACTORIAMENTE
+// 🔑 PROTOCOLO DE INICIO DE SESIÓN MILITAR - LECTURA ABSOLUTA POR ID
 function registrarUsuario() {
-    // Captura dinámica de los inputs por su clase militar (Índices fijos)
-    const inputs = document.querySelectorAll(".input-militar");
+    const inputId = document.getElementById("operador-id-input");
+    const inputAlpha = document.getElementById("operador-alpha-input");
     const btnRegistro = document.querySelector(".btn-registro");
     const contenidoEsferico = document.querySelector(".contenido-esferico");
 
-    if (inputs.length < 2) return;
+    if (!inputId || !inputAlpha) return;
 
-    // 🛠️ CORRECCIÓN DE ALTA INGENIERÍA: Asignación de índices [0] y [1] para leer los valores reales
-    const idName = inputs[0].value.trim().toUpperCase();
-    const codigoAlpha = inputs[1].value.trim();
+    // Captura los valores directo de la raíz del ID
+    const idName = inputId.value.trim().toUpperCase();
+    const codigoAlpha = inputAlpha.value.trim();
 
-    // CREDENCIALES ESTRICTAS DEL SISTEMA TITÁN
+    // CREDENCIALES EXCLUSIVAS DE TU SITIO WEB
     const ID_AUTORIZADO = "YORVIS"; 
-    const CLAVE_ALPHA_MAESTRA = "FLUJO-2026"; // Tu llave táctica de acceso
+    const CLAVE_ALPHA_MAESTRA = "FLUJO-2026"; 
 
     if (idName === "" || codigoAlpha === "") {
         alert("⚠️ SISTEMA:\n\nTodos los campos de la credencial militar deben ser diligenciados.");
@@ -2737,14 +2741,13 @@ function registrarUsuario() {
     }
 
     if (idName === ID_AUTORIZADO && codigoAlpha === CLAVE_ALPHA_MAESTRA) {
-        // Guardamos el operador de forma persistente en la memoria del celular
+        // Guardamos de forma persistente en la memoria del navegador
         localStorage.setItem("operador_id_name", idName);
         
-        // Bloqueamos las cajas visualmente para confirmar el acceso seguro
-        inputs[0].disabled = true;
-        inputs[0].style.opacity = "0.6";
-        inputs[1].disabled = true;
-        inputs[1].style.opacity = "0.6";
+        inputId.disabled = true;
+        inputId.style.opacity = "0.6";
+        inputAlpha.disabled = true;
+        inputAlpha.style.opacity = "0.6";
 
         if (btnRegistro) {
             btnRegistro.innerHTML = "ACCESO CONCEDIDO ✓";
@@ -2754,8 +2757,51 @@ function registrarUsuario() {
         }
 
         if (contenidoEsferico) {
-            contenidoEsferico.style.border = "1px solid #14F195"; // Activa el diseño de esfera segura
+            contenidoEsferico.style.border = "1px solid #14F195"; // Activa el reborde verde de esfera segura
         }
+
+        alert(`🟢 PROTOCOLO ACTIVADO\n\nBienvenido Comandante ${idName}. Ecosistema crypto y de control liberado.`);
+    } else {
+        alert("❌ ACCESO RECHAZADO\n\nCódigo Alpha incorrecto o ID de operador no registrado en el chasis.");
+    }
+}
+
+// 🛰️ RESTAURADOR PASIVO DE ESTADO CON IDs MAESTROS
+function restaurarSesionActiva() {
+    const sesionGuardada = localStorage.getItem("operador_id_name");
+    const saldoGuardado = localStorage.getItem("ltc_saldo_acumulado") || "0.00000000";
+    
+    const visorSaldo = document.getElementById("saldo-ltc-grifo");
+    if (visorSaldo) visorSaldo.innerHTML = parseFloat(saldoGuardado).toFixed(8);
+
+    if (sesionGuardada) {
+        const inputId = document.getElementById("operador-id-input");
+        const inputAlpha = document.getElementById("operador-alpha-input");
+        const btnRegistro = document.querySelector(".btn-registro");
+        const contenidoEsferico = document.querySelector(".contenido-esferico");
+
+        if (inputId && inputAlpha) {
+            inputId.value = sesionGuardada;
+            inputId.disabled = true;
+            inputId.style.opacity = "0.6";
+            inputAlpha.value = "••••••••";
+            inputAlpha.disabled = true;
+            inputAlpha.style.opacity = "0.6";
+        }
+
+        if (btnRegistro) {
+            btnRegistro.innerHTML = "SISTEMA ACTIVO ✓";
+            btnRegistro.style.background = "#14F195";
+            btnRegistro.style.color = "#000";
+            btnRegistro.disabled = true;
+        }
+
+        if (contenidoEsferico) {
+            contenidoEsferico.style.border = "1px solid #14F195";
+        }
+    }
+}
+
 
         alert(`🟢 PROTOCOLO ACTIVADO\n\nBienvenido Comandante ${idName}. Ecosistema crypto desbloqueado.`);
     } else {
