@@ -2709,110 +2709,117 @@ function calcularMeta() {
 
 
 
-                     
-<!--- SCRIPT DE CONTROL SOBERANO: ACCESO, GRIFO LTC & DESTRUCCIÓN v3.0 --->
+   <!--- SCRIPT DE CONTROL SOBERANO: ACCESO DECODIFICADO, GRIFO LTC & DESTRUCCIÓN v4.0 --->
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-    // 🛠️ Al cargar la página, verificamos si hay una sesión activa y el estado del grifo
-    restaurarSesionActiva();
+    // 🛠️ Al cargar la página, restauramos la sesión y verificamos el temporizador del grifo
+    controlarSesionAlCargar();
     verificarBloqueoGrifo();
 });
 
-// 🔑 PROTOCOLO DE INICIO DE SESIÓN MILITAR - LECTURA ABSOLUTA POR ID
-function registrarUsuario() {
-    const inputId = document.getElementById("operador-id-input");
-    const inputAlpha = document.getElementById("operador-alpha-input");
+// 📡 CONTROL DE SESIÓN AL CARGAR EL NÚCLEO
+function controlarSesionAlCargar() {
+    const operadorExistente = localStorage.getItem("operador_id_name");
+    const inputsMilitar = document.querySelectorAll(".input-militar");
     const btnRegistro = document.querySelector(".btn-registro");
-    const contenidoEsferico = document.querySelector(".contenido-esferico");
-
-    if (!inputId || !inputAlpha) return;
-
-    // Captura los valores directo de la raíz del ID
-    const idName = inputId.value.trim().toUpperCase();
-    const codigoAlpha = inputAlpha.value.trim();
-
-    // CREDENCIALES EXCLUSIVAS DE TU SITIO WEB
-    const ID_AUTORIZADO = "YORVIS"; 
-    const CLAVE_ALPHA_MAESTRA = "Tierra1234"; 
-
-    if (idName === "" || codigoAlpha === "") {
-        alert("⚠️ SISTEMA:\n\nTodos los campos de la credencial militar deben ser diligenciados.");
-        return;
-    }
-
-    if (idName === ID_AUTORIZADO && codigoAlpha === CLAVE_ALPHA_MAESTRA) {
-        // Guardamos de forma persistente en la memoria del navegador
-        localStorage.setItem("operador_id_name", idName);
-        
-        inputId.disabled = true;
-        inputId.style.opacity = "0.6";
-        inputAlpha.disabled = true;
-        inputAlpha.style.opacity = "0.6";
-
-        if (btnRegistro) {
-            btnRegistro.innerHTML = "ACCESO CONCEDIDO ✓";
-            btnRegistro.style.background = "#14F195";
-            btnRegistro.style.color = "#000";
-            btnRegistro.disabled = true;
-        }
-
-        if (contenidoEsferico) {
-            contenidoEsferico.style.border = "1px solid #14F195"; // Activa el reborde verde de esfera segura
-        }
-
-        alert(`🟢 PROTOCOLO ACTIVADO\n\nBienvenido Comandante ${idName}. Ecosistema crypto y de control liberado.`);
-    } else {
-        alert("❌ ACCESO RECHAZADO\n\nCódigo Alpha incorrecto o ID de operador no registrado en el chasis.");
-    }
-}
-
-// 🛰️ RESTAURADOR PASIVO DE ESTADO CON IDs MAESTROS
-function restaurarSesionActiva() {
-    const sesionGuardada = localStorage.getItem("operador_id_name");
     const saldoGuardado = localStorage.getItem("ltc_saldo_acumulado") || "0.00000000";
     
+    // Restauramos el saldo de Litecoin de forma pasiva en tu visor HTML
     const visorSaldo = document.getElementById("saldo-ltc-grifo");
     if (visorSaldo) visorSaldo.innerHTML = parseFloat(saldoGuardado).toFixed(8);
 
-    if (sesionGuardada) {
-        const inputId = document.getElementById("operador-id-input");
-        const inputAlpha = document.getElementById("operador-alpha-input");
-        const btnRegistro = document.querySelector(".btn-registro");
+    // Si ya hay un operador registrado en la memoria del teléfono
+    if (operadorExistente && btnRegistro && inputsMilitar.length > 0) {
+        inputsMilitar[0].value = operadorExistente; // Autocompleta su ID Name
+        inputsMilitar[0].disabled = true; // Bloquea la casilla para que sea fija
+        inputsMilitar[0].style.opacity = "0.6";
+        
+        // Colocamos un indicador visual en el campo de contraseña para el reingreso
+        inputsMilitar[1].placeholder = "INTRUDUZCA CÓDIGO MAESTRO";
+        
+        // Modifica el botón para simular acceso de usuario registrado
+        btnRegistro.innerHTML = "DESBLOQUEAR NÚCLEO 🛰️";
+        btnRegistro.style.background = "#112200";
+        btnRegistro.style.borderColor = "#14F195";
+        btnRegistro.style.color = "#14F195";
+
         const contenidoEsferico = document.querySelector(".contenido-esferico");
-
-        if (inputId && inputAlpha) {
-            inputId.value = sesionGuardada;
-            inputId.disabled = true;
-            inputId.style.opacity = "0.6";
-            inputAlpha.value = "••••••••";
-            inputAlpha.disabled = true;
-            inputAlpha.style.opacity = "0.6";
-        }
-
-        if (btnRegistro) {
-            btnRegistro.innerHTML = "SISTEMA ACTIVO ✓";
-            btnRegistro.style.background = "#14F195";
-            btnRegistro.style.color = "#000";
-            btnRegistro.disabled = true;
-        }
-
         if (contenidoEsferico) {
-            contenidoEsferico.style.border = "1px solid #14F195";
+            contenidoEsferico.style.border = "1px solid #345d9d"; // Borde azul de espera táctica
         }
     }
 }
 
+// 🔑 FUNCIÓN PRINCIPAL: INICIAR PROTOCOLO Y VALIDAR CREDENCIALES
+function registrarUsuario() {
+    const inputs = document.querySelectorAll(".input-militar");
+    const btnRegistro = document.querySelector(".btn-registro");
+    
+    if (inputs.length < 2) return;
 
-        alert(`🟢 PROTOCOLO ACTIVADO\n\nBienvenido Comandante ${idName}. Ecosistema crypto desbloqueado.`);
-    } else {
-        alert("❌ ACCESO RECHAZADO\n\nCódigo Alpha incorrecto o ID de operador no registrado en el chasis.");
+    const idName = inputs[0].value.trim();
+    const codigoAlpha = inputs[1].value.trim();
+    const CODIGO_MAESTRO = "ALPHA-2026"; // <- Tu clave táctica de acceso real
+
+    // Validación elemental: campos vacíos
+    if (idName === "" || codigoAlpha === "") {
+        alert("⚠️ SEGURIDAD: Todos los campos del protocolo de acceso deben ser diligenciados.");
+        return;
     }
-}
 
+    // Validación del Código de Acceso
+    if (codigoAlpha !== CODIGO_MAESTRO) {
+        alert("❌ ERROR ALPHA: Credenciales de encriptación inválidas. Acceso denegado.");
+        inputs[1].value = ""; // Limpiamos la casilla de contraseña por seguridad
+        return;
+    }
+
+    // TÁCTICA: EFECTO DE DECODIFICACIÓN EN TIEMPO REAL
+    btnRegistro.disabled = true;
+    btnRegistro.style.cursor = "not-allowed";
+    btnRegistro.style.background = "#222";
+    btnRegistro.style.color = "#fff";
+    let porcentaje = 0;
+
+    const temporizadorCarga = setInterval(() => {
+        porcentaje += 25;
+        btnRegistro.innerHTML = `DECODIFICANDO... ${porcentaje}% ⚡`;
+
+        if (porcentaje >= 100) {
+            clearInterval(temporizadorCarga);
+            
+            // Guardamos el nombre del operador permanentemente en el teléfono
+            localStorage.setItem("operador_id_name", idName);
+
+            // Bloqueamos los inputs de forma limpia para congelar el estado de éxito
+            inputs[0].disabled = true;
+            inputs[0].style.opacity = "0.6";
+            inputs[1].disabled = true;
+            inputs[1].style.opacity = "0.6";
+            inputs[1].value = "••••••••";
+
+            alert(`🟢 ACCESO PERMITIDO\n\nIdentidad verificada: Operador [ ${idName} ]. Iniciando interfaz del Proyecto Libertad.`);
+
+            // Activamos la visualización de tu consola esférica completa
+            const contenidoEsferico = document.querySelector(".contenido-esferico");
+            if (contenidoEsferico) {
+                contenidoEsferico.style.border = "1px solid #14F195"; // Cambia el borde a verde de activo
+            }
+
+            // Restauramos el botón con el estado de sesión activa
+            btnRegistro.disabled = true; 
+            btnRegistro.style.cursor = "default";
+            btnRegistro.innerHTML = "SESIÓN ACTIVA ✔";
+            btnRegistro.style.background = "#112200";
+            btnRegistro.style.borderColor = "#14F195";
+            btnRegistro.style.color = "#14F195";
+        }
+    }, 400); 
+}
 
 // 🪙 ALGORITMO EXTRACTOR DEL BONO LTC
 function ejecutarGrifoBonoLTC() {
-    // Verificamos si el operador ha iniciado sesión primero
+    // Verificación estricta de sesión activa antes de extraer
     if (!localStorage.getItem("operador_id_name")) {
         alert("🔒 SISTEMA RECHAZADO:\n\nDebe iniciar el protocolo con su Código Alpha para activar el extractor.");
         return;
@@ -2820,14 +2827,13 @@ function ejecutarGrifoBonoLTC() {
 
     const ultimoReclamo = localStorage.getItem("ltc_ultimo_reclamo");
     const tiempoActual = Date.now();
-    const COOLDOWN_24H = 24 * 60 * 60 * 1000; // 24 Horas reales de enfriamiento
+    const COOLDOWN_24H = 24 * 60 * 60 * 1000; 
 
     if (ultimoReclamo && (tiempoActual - ultimoReclamo < COOLDOWN_24H)) {
         alert("🔒 SISTEMA: Extracción denegada. El grifo está recargando energía.");
         return;
     }
 
-    // Cálculo matemático del bono aleatorio de LTC
     const recompensaBase = 0.0005;
     const recompensaAleatoria = Math.random() * 0.0020;
     const ltcGanado = recompensaBase + recompensaAleatoria;
@@ -2838,18 +2844,15 @@ function ejecutarGrifoBonoLTC() {
     localStorage.setItem("ltc_saldo_acumulado", saldoActual.toFixed(8));
     localStorage.setItem("ltc_ultimo_reclamo", tiempoActual);
 
-    // Actualizamos el saldo en pantalla usando el ID exacto de tu HTML
     const visorSaldo = document.getElementById("saldo-ltc-grifo");
-    if (visorSaldo) {
-        visorSaldo.innerHTML = saldoActual.toFixed(8);
-    }
+    if (visorSaldo) visorSaldo.innerHTML = saldoActual.toFixed(8);
     
     alert(`🟢 EXTRACCIÓN EXITOSA\n\nInyección de +${ltcGanado.toFixed(8)} LTC completada en el registro militar.`);
     
     verificarBloqueoGrifo();
 }
 
-// ⏳ INSPECTOR DE TIEMPO Y RELOJ EN FORMATO MILITAR
+// ⏳ INSPECTOR DE TIEMPO Y RELOJ MILITAR (REPARADO DEFINITIVAMENTE)
 function verificarBloqueoGrifo() {
     const ultimoReclamo = localStorage.getItem("ltc_ultimo_reclamo");
     if (!ultimoReclamo) return;
@@ -2879,16 +2882,16 @@ function verificarBloqueoGrifo() {
                 if (visorReloj) visorReloj.innerHTML = "";
             } else {
                 let horas = Math.floor(restante / (1000 * 60 * 60));
-                let minutos = Math.floor((restante % (1000 * 60 * 60)) / (1000 * 60));
+                let minutesVal = Math.floor((restante % (1000 * 60 * 60)) / (1000 * 60));
                 let segundos = Math.floor((restante % (1000 * 60)) / 1000);
 
-                // 🛠️ AJUSTE DE ALTA DEFINICIÓN: Corrección total de la variable de minutos
+                // 🛠️ REPARACIÓN QUIRÚRGICA: Se eliminan variables en inglés para evitar cuelgues
                 horas = horas < 10 ? "0" + horas : horas;
-                minutos = minutos < 10 ? "0" + minutos : minutos;
+                minutesVal = minutesVal < 10 ? "0" + minutesVal : minutesVal;
                 segundos = segundos < 10 ? "0" + segundos : segundos;
 
                 if (visorReloj) {
-                    visorReloj.innerHTML = `[ ⏳ ENFRIAMIENTO: ${horas}:${minutos}:${segundos} ]`;
+                    visorReloj.innerHTML = `[ ⏳ ENFRIAMIENTO: ${horas}:${minutesVal}:${segundos} ]`;
                 }
             }
         }, 1000);
@@ -2898,76 +2901,13 @@ function verificarBloqueoGrifo() {
 // 🚨 FUNCIÓN PARA CERRAR SESIÓN Y LIMPIAR PERFIL
 function cerrarSesionProtocolo() {
     if (confirm("🚨 ¿Confirmas el cierre del protocolo?\n\nSe borrará tu ID de operador de este dispositivo por seguridad.")) {
-        
         localStorage.removeItem("operador_id_name");
-        
-        const inputs = document.querySelectorAll(".input-militar");
-        const btnRegistro = document.querySelector(".btn-registro");
-        const contenidoEsferico = document.querySelector(".contenido-esferico");
-
-        if (inputs.length >= 2) {
-            inputs[0].value = "";
-            inputs[0].disabled = false;
-            inputs[0].style.opacity = "1";
-            
-            inputs[1].value = "";
-            inputs[1].disabled = false;
-            inputs[1].style.opacity = "1";
-        }
-
-        if (btnRegistro) {
-            btnRegistro.innerHTML = "INICIAR PROTOCOLO";
-            btnRegistro.style.background = "#4b5320";
-            btnRegistro.style.borderColor = "#d4af37";
-            btnRegistro.style.color = "white";
-            btnRegistro.disabled = false;
-        }
-
-        if (contenidoEsferico) {
-            contenidoEsferico.style.border = "none";
-        }
-
         alert("💥 PROTOCOLO CERRADO: Datos de sesión destruidos con éxito. Interfaz bloqueada.");
         window.location.reload();
     }
 }
-
-// 🛰️ RESTAURADOR PASIVO DE ESTADO
-function restaurarSesionActiva() {
-    const sesionGuardada = localStorage.getItem("operador_id_name");
-    const saldoGuardado = localStorage.getItem("ltc_saldo_acumulado") || "0.00000000";
-    
-    // Restauramos el saldo en pantalla de forma pasiva
-    const visorSaldo = document.getElementById("saldo-ltc-grifo");
-    if (visorSaldo) visorSaldo.innerHTML = parseFloat(saldoGuardado).toFixed(8);
-
-    if (sesionGuardada) {
-        const inputs = document.querySelectorAll(".input-militar");
-        const btnRegistro = document.querySelector(".btn-registro");
-        const contenidoEsferico = document.querySelector(".contenido-esferico");
-
-        if (inputs.length >= 2) {
-            inputs[0].value = sesionGuardada;
-            inputs[0].disabled = true;
-            inputs[0].style.opacity = "0.6";
-            inputs[1].value = "••••••••";
-            inputs[1].disabled = true;
-            inputs[1].style.opacity = "0.6";
-        }
-
-        if (btnRegistro) {
-            btnRegistro.innerHTML = "SISTEMA ACTIVO ✓";
-            btnRegistro.style.background = "#14F195";
-            btnRegistro.style.color = "#000";
-            btnRegistro.disabled = true;
-        }
-
-        if (contenidoEsferico) {
-            contenidoEsferico.style.border = "1px solid #14F195";
-        }
-    }
-}
 </script>
+                  
 
 
         
@@ -3756,61 +3696,7 @@ function registrarUsuario() {
     // Capturamos los inputs por su orden de aparición en tu HTML
     const inputs = document.querySelectorAll(".input-militar");
     const btnRegistro = document.querySelector(".btn-registro");
-    
-    if (inputs.length < 2) return;
-
-    const idName = inputs[0].value.trim();
-    const codigoAlpha = inputs[1].value.trim();
-    const CODIGO_MAESTRO = "ALPHA-2026"; // <- Esta es tu clave táctica de acceso
-
-    // Validación elemental: campos vacíos
-    if (idName === "" || codigoAlpha === "") {
-        alert("⚠️ SEGURIDAD: Todos los campos del protocolo de acceso deben ser diligenciados.");
-        return;
-    }
-
-    // Validación del Código de Acceso
-    if (codigoAlpha !== CODIGO_MAESTRO) {
-        alert("❌ ERROR ALPHA: Credenciales de encriptación inválidas. Acceso denegado.");
-        inputs[1].value = ""; // Limpiamos la casilla de contraseña por seguridad
-        return;
-    }
-
-    // TÁCTICA 2: EFECTO DE DECODIFICACIÓN EN TIEMPO REAL
-    btnRegistro.disabled = true;
-    btnRegistro.style.cursor = "not-allowed";
-    let porcentaje = 0;
-
-    const temporizadorCarga = setInterval(() => {
-        porcentaje += 25;
-        btnRegistro.innerHTML = `DECODIFICANDO... ${porcentaje}%`;
-
-        if (porcentaje >= 100) {
-            clearInterval(temporizadorCarga);
-            
-            // Guardamos el nombre del operador permanentemente en el teléfono
-            localStorage.setItem("operador_id_name", idName);
-
-            alert(`🟢 ACCESO PERMITIDO\n\nIdentidad verificada: Operador [ ${idName} ]. Iniciando interfaz del Proyecto Libertad.`);
-
-            // AQUÍ CONECTAS CON LA ACCIÓN DE DESPLEGAR EL MENÚ O MOSTRAR EL PANEL
-            // Ejemplo: Activamos la visualización de tu consola esférica completa
-            const contenidoEsferico = document.querySelector(".contenido-esferico");
-            if (contenidoEsferico) {
-                contenidoEsferico.style.border = "1px solid #14F195"; // Cambia el borde a verde de activo
-            }
-
-            // Restauramos el botón por si cierra sesión después
-            btnRegistro.disabled = false;
-            btnRegistro.style.cursor = "pointer";
-            btnRegistro.innerHTML = "SESIÓN ACTIVA ✔";
-        }
-    }, 400); // Velocidad de la carga (400ms por cada salto de 25%)
-}
-      
-
-                  
-               </script>
+   </script>
                   
                <script>
 
