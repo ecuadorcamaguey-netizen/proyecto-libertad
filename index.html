@@ -2708,14 +2708,29 @@ function calcularMeta() {
 </section>
 
 
-
-   <!--- SCRIPT DE CONTROL SOBERANO: ACCESO DECODIFICADO, GRIFO LTC & DESTRUCCIÓN v4.0 --->
+<!--- SCRIPT DE CONTROL SOBERANO: DESPLIEGUE DE ESFERA, ACCESO DECODIFICADO & GRIFO LTC v4.5 --->
 <script>
 document.addEventListener("DOMContentLoaded", () => {
     // 🛠️ Al cargar la página, restauramos la sesión y verificamos el temporizador del grifo
     controlarSesionAlCargar();
     verificarBloqueoGrifo();
 });
+
+// 🧠 NUEVA FUNCIÓN CRÍTICA: GATILLAR EL DESPLIEGUE FÍSICO DE LA ESFERA
+function activarServicio() {
+    const contenidoEsferico = document.querySelector(".contenido-esferico");
+    if (!contenidoEsferico) return;
+
+    // Si la esfera está oculta o no tiene estilo asignado, la desplegamos en bloque
+    if (contenidoEsferico.style.display === "none" || contenidoEsferico.style.display === "") {
+        contenidoEsferico.style.display = "block";
+        contenidoEsferico.style.animation = "fadeIn 0.5s ease-in-out"; // Efecto de entrada nítido
+        console.log("[🛰️] SISTEMA: Despliegue de Esfera Táctica inicializado con éxito.");
+    } else {
+        // Si se vuelve a presionar, se contrae de forma controlada y lineal
+        contenidoEsferico.style.display = "none";
+    }
+}
 
 // 📡 CONTROL DE SESIÓN AL CARGAR EL NÚCLEO
 function controlarSesionAlCargar() {
@@ -2724,29 +2739,20 @@ function controlarSesionAlCargar() {
     const btnRegistro = document.querySelector(".btn-registro");
     const saldoGuardado = localStorage.getItem("ltc_saldo_acumulado") || "0.00000000";
     
-    // Restauramos el saldo de Litecoin de forma pasiva en tu visor HTML
     const visorSaldo = document.getElementById("saldo-ltc-grifo");
     if (visorSaldo) visorSaldo.innerHTML = parseFloat(saldoGuardado).toFixed(8);
 
     // Si ya hay un operador registrado en la memoria del teléfono
     if (operadorExistente && btnRegistro && inputsMilitar.length > 0) {
-        inputsMilitar[0].value = operadorExistente; // Autocompleta su ID Name
-        inputsMilitar[0].disabled = true; // Bloquea la casilla para que sea fija
+        inputsMilitar[0].value = operadorExistente; 
+        inputsMilitar[0].disabled = true; 
         inputsMilitar[0].style.opacity = "0.6";
-        
-        // Colocamos un indicador visual en el campo de contraseña para el reingreso
         inputsMilitar[1].placeholder = "INTRUDUZCA CÓDIGO MAESTRO";
         
-        // Modifica el botón para simular acceso de usuario registrado
         btnRegistro.innerHTML = "DESBLOQUEAR NÚCLEO 🛰️";
         btnRegistro.style.background = "#112200";
         btnRegistro.style.borderColor = "#14F195";
         btnRegistro.style.color = "#14F195";
-
-        const contenidoEsferico = document.querySelector(".contenido-esferico");
-        if (contenidoEsferico) {
-            contenidoEsferico.style.border = "1px solid #345d9d"; // Borde azul de espera táctica
-        }
     }
 }
 
@@ -2759,22 +2765,20 @@ function registrarUsuario() {
 
     const idName = inputs[0].value.trim();
     const codigoAlpha = inputs[1].value.trim();
-    const CODIGO_MAESTRO = "ALPHA-2026"; // <- Tu clave táctica de acceso real
+    const CODIGO_MAESTRO = "ALPHA-2026"; // <- Tu clave de acceso real
 
-    // Validación elemental: campos vacíos
     if (idName === "" || codigoAlpha === "") {
         alert("⚠️ SEGURIDAD: Todos los campos del protocolo de acceso deben ser diligenciados.");
         return;
     }
 
-    // Validación del Código de Acceso
     if (codigoAlpha !== CODIGO_MAESTRO) {
         alert("❌ ERROR ALPHA: Credenciales de encriptación inválidas. Acceso denegado.");
-        inputs[1].value = ""; // Limpiamos la casilla de contraseña por seguridad
+        inputs[1].value = ""; 
         return;
     }
 
-    // TÁCTICA: EFECTO DE DECODIFICACIÓN EN TIEMPO REAL
+    // TÁCTICA: EFECTO DE DECODIFICACIÓN EN TIEMPO REAL (SALTO DE 25%)
     btnRegistro.disabled = true;
     btnRegistro.style.cursor = "not-allowed";
     btnRegistro.style.background = "#222";
@@ -2788,10 +2792,8 @@ function registrarUsuario() {
         if (porcentaje >= 100) {
             clearInterval(temporizadorCarga);
             
-            // Guardamos el nombre del operador permanentemente en el teléfono
             localStorage.setItem("operador_id_name", idName);
 
-            // Bloqueamos los inputs de forma limpia para congelar el estado de éxito
             inputs[0].disabled = true;
             inputs[0].style.opacity = "0.6";
             inputs[1].disabled = true;
@@ -2800,13 +2802,11 @@ function registrarUsuario() {
 
             alert(`🟢 ACCESO PERMITIDO\n\nIdentidad verificada: Operador [ ${idName} ]. Iniciando interfaz del Proyecto Libertad.`);
 
-            // Activamos la visualización de tu consola esférica completa
             const contenidoEsferico = document.querySelector(".contenido-esferico");
             if (contenidoEsferico) {
-                contenidoEsferico.style.border = "1px solid #14F195"; // Cambia el borde a verde de activo
+                contenidoEsferico.style.border = "1px solid #14F195"; // Reborde verde nativo de Termux
             }
 
-            // Restauramos el botón con el estado de sesión activa
             btnRegistro.disabled = true; 
             btnRegistro.style.cursor = "default";
             btnRegistro.innerHTML = "SESIÓN ACTIVA ✔";
@@ -2819,7 +2819,6 @@ function registrarUsuario() {
 
 // 🪙 ALGORITMO EXTRACTOR DEL BONO LTC
 function ejecutarGrifoBonoLTC() {
-    // Verificación estricta de sesión activa antes de extraer
     if (!localStorage.getItem("operador_id_name")) {
         alert("🔒 SISTEMA RECHAZADO:\n\nDebe iniciar el protocolo con su Código Alpha para activar el extractor.");
         return;
@@ -2852,7 +2851,7 @@ function ejecutarGrifoBonoLTC() {
     verificarBloqueoGrifo();
 }
 
-// ⏳ INSPECTOR DE TIEMPO Y RELOJ MILITAR (REPARADO DEFINITIVAMENTE)
+// ⏳ INSPECTOR DE TIEMPO Y RELOJ MILITAR CONTRA CUELGUES
 function verificarBloqueoGrifo() {
     const ultimoReclamo = localStorage.getItem("ltc_ultimo_reclamo");
     if (!ultimoReclamo) return;
@@ -2885,7 +2884,6 @@ function verificarBloqueoGrifo() {
                 let minutesVal = Math.floor((restante % (1000 * 60 * 60)) / (1000 * 60));
                 let segundos = Math.floor((restante % (1000 * 60)) / 1000);
 
-                // 🛠️ REPARACIÓN QUIRÚRGICA: Se eliminan variables en inglés para evitar cuelgues
                 horas = horas < 10 ? "0" + horas : horas;
                 minutesVal = minutesVal < 10 ? "0" + minutesVal : minutesVal;
                 segundos = segundos < 10 ? "0" + segundos : segundos;
@@ -2907,14 +2905,7 @@ function cerrarSesionProtocolo() {
     }
 }
 </script>
-                  
-
-
-        
-
-
-
-                   
+               
                   
                   <!-- ========================================== -->
 <!-- NUEVA ÁREA PRIVADA EXCLUSIVA TITÁN-GUARD CON CARGA LOCAL -->
@@ -2928,7 +2919,7 @@ function cerrarSesionProtocolo() {
     
     <div style="font-size: 14px; line-height: 1.6; color: #e0e0e0; margin-bottom: 15px;">
       <p><strong>ESTADO:</strong> OPERACIÓN LIBERTAD CONFIDENCIAL</p>
-      <p><strong>CÓDIGO DE RESPALDO:</strong> TITÁN-RECARGA-2026-FINAL</p>
+      <p><strong>CÓDIGO DE RESPALDO:</strong> TITÁN-RE2026-FINAL</p>
     </div>
 
     <!-- SECCIÓN DE CARGA DE ARCHIVOS -->
