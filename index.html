@@ -3648,47 +3648,7 @@ function toggleMenu() {
     const icono = document.querySelector(".menu-icono");
     
     // Alterna la clase 'activo' para expandir la esfera
-    menu.classList.toggle("activo");
-    
-    // Efecto de rotación en el botón al activar
-    if (menu.classList.contains("activo")) {
-        icono.style.transform = "rotate(90deg)";
-    } else {
-        icono.style.transform = "rotate(0deg)";
-    }
-}
-function activarServicio() {
-    const panel = document.getElementById("panelLibertad");
-    panel.classList.toggle("activo");
-}
 
-       //COMTROL DE SECCION AL CARGAR EL NUCLEO 
-       //EN EL PANEL TACTICO
-       
- // CONTROL DE SESIÓN AL CARGAR EL NÚCLEO
-document.addEventListener("DOMContentLoaded", () => {
-    const operadorExistente = localStorage.getItem("operador_id_name");
-    const inputsMilitar = document.querySelectorAll(".input-militar");
-    const btnRegistro = document.querySelector(".btn-registro");
-
-    // Si ya hay un operador registrado en la memoria del teléfono
-    if (operadorExistente && btnRegistro && inputsMilitar.length > 0) {
-        inputsMilitar[0].value = operadorExistente; // Autocompleta su ID Name
-        inputsMilitar[0].disabled = true; // Bloquea la casilla para que sea fija
-        inputsMilitar[0].style.opacity = "0.6";
-        
-        // Modifica el botón para simular acceso de usuario registrado
-        btnRegistro.innerHTML = "DESBLOQUEAR NÚCLEO 🛰️";
-        btnRegistro.style.background = "#112200";
-        btnRegistro.style.borderColor = "#14F195";
-    }
-});
-
-// FUNCIÓN PRINCIPAL: INICIAR PROTOCOLO
-function registrarUsuario() {
-    // Capturamos los inputs por su orden de aparición en tu HTML
-    const inputs = document.querySelectorAll(".input-militar");
-    const btnRegistro = document.querySelector(".btn-registro");
    </script>
                   
                <script>
