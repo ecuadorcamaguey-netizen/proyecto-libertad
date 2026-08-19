@@ -1828,15 +1828,56 @@ async function procesarTransaccionNetizen() {
   </div>
 </div>
 
+                             
+
+   <script>
+// 🛰️ PUENTE WEB3 INTERACTIVO SIMULADO (RED SOLANA - NTZN)
+document.addEventListener("DOMContentLoaded", () => {
+    const btnSolana = document.querySelector("button:contains('CONECTAR PHANTOM')") || document.getElementById("btn-conectar-web3");
+    const visorWallet = document.getElementById("estado-billetera-blockchain") || document.querySelector(".billetera-texto");
+    const balanceNetizen = document.getElementById("balance-ntzn-estimado") || document.querySelector(".balance-texto");
+
+    if (btnSolana) {
+        btnSolana.addEventListener("click", () => {
+            // Verificamos primero si el operador ya inició el Protocolo Libertad
+            if (!localStorage.getItem("operador_id_name")) {
+                alert("🔒 SISTEMA RECHAZADO:\n\nDebe iniciar el protocolo con su Código Alpha en el Panel Táctico antes de enlazar su llave Web3.");
+                return;
+            }
+
+            // Cambiamos el estado visual para simular la decodificación del contrato inteligente
+            btnSolana.disabled = true;
+            btnSolana.innerHTML = "ENLAZANDO CON PHANTOM WALLET... ⚡";
+            btnSolana.style.borderColor = "#917J5Y";
+
+            setTimeout(() => {
+                // Sincronización exitosa con la Mint Address del token NTZN
+                const balanceSimulado = "130.00 NTZN"; // Pack Full Netizen de tu portafolio
+                
+                if (visorWallet) {
+                    visorWallet.innerHTML = `<span style="color: #14F195;">[ SOLANA MAINNET: CONECTADA ✓ ]</span>`;
+                }
+                if (balanceNetizen) {
+                    balanceNetizen.innerHTML = `<strong>${balanceSimulado}</strong>`;
+                    balanceNetizen.style.color = "#14F195";
+                }
+
+                btnSolana.innerHTML = "BILLETERA AUTENTICADA 🛡️";
+                btnSolana.style.background = "#112200";
+                btnSolana.style.borderColor = "#14F195";
+                btnSolana.style.color = "#14F195";
+
+                alert("🟢 CONEXIÓN WEB3 COMPLETADA\n\nGarantía Digital verificada en la Blockchain de Solana (#NTZN-2024). Parámetros acoplados.");
+            }, 1500); // Retardo controlado de 1.5 segundos de procesamiento
+        });
+    }
+});
 
 
-
-
-
-
+   </script>
                                 
                                 
- <!--- Librería Oficial Web3 de Solana para Navegadores --->
+ // Librería Oficial Web3 de Solana para Navegadores
 <script src="https://unpkg.com"></script>
 
 <script>
@@ -1909,31 +1950,6 @@ async function gestionarWalletSolana() {
    <br>                             
 
          
-
-
-
-
-                                
-
-
-                  
-
-
-
-
-
-
-
-                                
-
-
-
-
-
-
-
-
-
 
 
  
