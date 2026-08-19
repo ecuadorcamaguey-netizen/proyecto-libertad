@@ -2708,10 +2708,7 @@ function calcularMeta() {
 </section>
 
 
- 
-
-              
-     <!--- SCRIPT DE CONTROL SOBERANO: DESPLIEGUE DE ESFERA, ACCESO DECODIFICADO & GRIFO LTC v4.5 --->
+ <!--- SCRIPT DE CONTROL SOBERANO: CONMUTACIÓN DE BANNER, ACCESO DECODIFICADO & GRIFO LTC v5.0 --->
 <script>
 document.addEventListener("DOMContentLoaded", () => {
     // 🛠️ Al cargar la página, restauramos la sesión y verificamos el temporizador del grifo
@@ -2719,20 +2716,19 @@ document.addEventListener("DOMContentLoaded", () => {
     verificarBloqueoGrifo();
 });
 
-// 🧠 NUEVA FUNCIÓN CRÍTICA: GATILLAR EL DESPLIEGUE FÍSICO DE LA ESFERA
+// 🧠 FUNCIÓN DE DESPLIEGUE EXACTA: CONMUTACIÓN DE LA CLASE ACTIVO (CSS INTERACTIVO)
 function activarServicio() {
-    const contenidoEsferico = document.querySelector(".contenido-esferico");
-    if (!contenidoEsferico) return;
-
-    // Si la esfera está oculta o no tiene estilo asignado, la desplegamos en bloque
-    if (contenidoEsferico.style.display === "none" || contenidoEsferico.style.display === "") {
-        contenidoEsferico.style.display = "block";
-        contenidoEsferico.style.animation = "fadeIn 0.5s ease-in-out"; // Efecto de entrada nítido
-        console.log("[🛰️] SISTEMA: Despliegue de Esfera Táctica inicializado con éxito.");
-    } else {
-        // Si se vuelve a presionar, se contrae de forma controlada y lineal
-        contenidoEsferico.style.display = "none";
+    // Capturamos el contenedor principal de la sección por su ID del HTML
+    const seccionTecnologica = document.getElementById("panelLibertad");
+    
+    if (!seccionTecnologica) {
+        console.log("[❌] ERROR: No se localizó la sección con ID #panelLibertad.");
+        return;
     }
+
+    // Conmutamos (añadimos/quitamos) la clase 'activo' para activar las reglas del CSS
+    seccionTecnologica.classList.toggle("activo");
+    console.log("[🛰️] SISTEMA: Conmutación de Banner Táctico ejecutada en el chasis.");
 }
 
 // 📡 CONTROL DE SESIÓN AL CARGAR EL NÚCLEO
@@ -2807,7 +2803,7 @@ function registrarUsuario() {
 
             const contenidoEsferico = document.querySelector(".contenido-esferico");
             if (contenidoEsferico) {
-                contenidoEsferico.style.border = "1px solid #14F195"; // Reborde verde nativo de Termux
+                contenidoEsferico.style.border = "1px solid #14F195"; 
             }
 
             btnRegistro.disabled = true; 
@@ -2908,6 +2904,12 @@ function cerrarSesionProtocolo() {
     }
 }
 </script>
+
+
+              
+ 
+ 
+
                      
 <!-- ========================================== -->
 <!-- NUEVA ÁREA PRIVADA EXCLUSIVA TITÁN-GUARD CON CARGA LOCAL -->
