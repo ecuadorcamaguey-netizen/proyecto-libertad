@@ -2931,8 +2931,142 @@ function cerrarSesionProtocolo() {
 }
 </script>
 
+                     
 
-              
+   <!-- CHASSIS VISUAL DEL SÚPER CHAT CRYPTO (INYECCIÓN DE ALTA INGENIERÍA) -->
+<div id="crypto-chat-bunker" style="background: rgba(10,10,10,0.9); border: 2px solid #14F195; border-radius: 10px; padding: 15px; margin-top: 20px; font-family: monospace; color: #14F195;">
+    <h3 style="color: #d4af37; border-bottom: 1px solid #4b5320; padding-bottom: 5px; margin-top: 0;">🛰️ SÚPER CHAT INTEGRADO [ENTORNO AISLADO]</h3>
+    
+    <!-- Visor de Mensajes e Imágenes -->
+    <div id="chat-box-visor" style="height: 250px; overflow-y: auto; background: #000; border: 1px solid #4b5320; padding: 10px; margin-bottom: 10px; border-radius: 4px;">
+        <span style="color: #666;">[ Sistema Ready: Esperando transmisión de datos... ]</span>
+    </div>
+
+    <!-- Controles de Entrada -->
+    <div style="display: flex; flex-direction: column; gap: 8px;">
+        <input type="text" id="chat-msg-input" class="input-militar" placeholder="ESCRIBA MENSAJE CRIPTOGRÁFICO..." style="width: 100%; box-sizing: border-box; margin: 0;">
+        
+        <div style="display: flex; gap: 10px;">
+            <!-- Botón para importar imágenes en caliente -->
+            <label class="btn-registro" style="background: #222; border: 1px solid #345d9d; color: #345d9d; padding: 8px 12px; font-size: 11px; cursor: pointer; text-align: center; flex: 1; border-radius: 4px;">
+                📷 ADJUNTAR EVIDENCIA
+                <input type="file" id="chat-file-input" accept="image/*" style="display: none;" onchange="procesarImagenHot(this)">
+            </label>
+            
+            <button onclick="transmitirMensajeBunker()" style="background: #112200; color: #14F195; border: 1px solid #14F195; padding: 8px 15px; font-family: inherit; font-size: 11px; font-weight: bold; cursor: pointer; flex: 1; border-radius: 4px; text-transform: uppercase;">
+                TRANSMITIR 🚀
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+// 🚀 MOTOR DE PERSISTENCIA Y CARGA DEL CHAT
+document.addEventListener("DOMContentLoaded", () => {
+    cargarHistorialChat();
+});
+
+// ⚡ TRANSMITIR MENSAJE TEXTUAL AL COMPUESTO LOCAL
+function transmitirMensajeBunker() {
+    // Verificación de rango: El operador debe estar logueado con su Código Alpha primero
+    const operador = localStorage.getItem("operador_id_name");
+    if (!operador) {
+        alert("🔒 ACCESO DENEGADO:\n\nDebe activar el protocolo con su Código Alpha antes de usar el canal de transmisión.");
+        return;
+    }
+
+    const inputMsg = document.getElementById("chat-msg-input");
+    if (!inputMsg || inputMsg.value.trim() === "") return;
+
+    const textoMensaje = inputMsg.value.trim();
+    const fecha = new Date().toLocaleTimeString();
+
+    // Estructuración del paquete de datos
+    const paqueteData = {
+        tipo: "texto",
+        emisor: operador,
+        contenido: textoMensaje,
+        tiempo: fecha
+    };
+
+    guardarPaqueteChat(paqueteData);
+    inputMsg.value = ""; // Limpieza rápida de la casilla por seguridad
+}
+
+// 📷 PROCESAR IMAGEN COMPACTA EN CALIENTE (CONVERSIÓN BASE64 PARA LOCALSTORAGE)
+function procesarImagenHot(input) {
+    const operador = localStorage.getItem("operador_id_name");
+    if (!operador) {
+        alert("🔒 ACCESO DENEGADO:\n\nDebe estar autenticado para cargar evidencia técnica.");
+        return;
+    }
+
+    if (input.files && input.files[0]) {
+        const lectorBinario = new FileReader();
+        const fecha = new Date().toLocaleTimeString();
+
+        lectorBinario.onload = function(e) {
+            const paqueteData = {
+                tipo: "imagen",
+                emisor: operador,
+                contenido: e.target.result, // Datos de la imagen en formato Base64
+                tiempo: fecha
+            };
+            guardarPaqueteChat(paqueteData);
+        };
+        lectorBinario.readAsDataURL(input.files[0]); // Convierte el archivo físico a string interactivo
+    }
+}
+
+// 📁 ESCRIBIR EN LA BÓVEDA LOCAL DE MEMORIA
+function guardarPaqueteChat(paquete) {
+    let historial = JSON.parse(localStorage.getItem("bunker_chat_log") || "[]");
+    historial.push(paquete);
+    
+    // Almacenamiento persistente e inmune del lado del celular
+    localStorage.setItem("bunker_chat_log", JSON.stringify(historial));
+    renderizarMensajes(historial);
+}
+
+// 🪐 RENDERIZADO VISUAL EN PANTALLA CON ALTA DEFINICIÓN
+function renderizarMensajes(historial) {
+    const visor = document.getElementById("chat-box-visor");
+    if (!visor) return;
+
+    if (historial.length === 0) {
+        visor.innerHTML = `<span style="color: #666;">[ Canal Cifrado Vacío. Listo para transmisión ]</span>`;
+        return;
+    }
+
+    visor.innerHTML = ""; // Limpieza del visor base
+    historial.forEach(pkg => {
+        const itemBox = document.createElement("div");
+        itemBox.style.marginBottom = "8px";
+        itemBox.style.borderBottom = "1px dashed #222";
+        itemBox.style.paddingBottom = "5px";
+
+        if (pkg.tipo === "texto") {
+            itemBox.innerHTML = `<span style="color: #d4af37;">[${pkg.tiempo}] ${pkg.emisor}:</span> <span style="color: #fff;">${pkg.contenido}</span>`;
+        } else if (pkg.tipo === "imagen") {
+            itemBox.innerHTML = `
+                <span style="color: #345d9d;">[${pkg.tiempo}] ${pkg.emisor} (EVIDENCIA):</span><br>
+                <img src="${pkg.contenido}" style="max-width: 100%; max-height: 150px; border: 1px solid #14F195; margin-top: 5px; border-radius: 4px;">
+            `;
+        }
+        visor.appendChild(itemBox);
+    });
+
+    // Desplazamiento automático hacia el último mensaje enviado (Fluido Placentero)
+    visor.scrollTop = visor.scrollHeight;
+}
+
+// 📜 REGENERAR EL HISTORIAL AL ENTRAR AL NÚCLEO
+function cargarHistorialChat() {
+    const historial = JSON.parse(localStorage.getItem("bunker_chat_log") || "[]");
+    renderizarMensajes(historial);
+}
+</script>
+           
  
  
 
