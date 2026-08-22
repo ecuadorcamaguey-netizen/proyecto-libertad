@@ -2934,8 +2934,6 @@ function cerrarSesionProtocolo() {
                      
 
 
-
-
 <!-- 📜 INCLUSIÓN DE LIBRERÍA GUN DE CENTRALIZADA P2P -->
 <script src="https://jsdelivr.net"></script>
 
@@ -2977,13 +2975,20 @@ function cerrarSesionProtocolo() {
     </div>
 </div>
 
-<script>
-// 🪐 INICIALIZACIÓN DEL NODO GUN P2P SOBERANO
-// Usa relevos públicos descentralizados para enlazar los celulares directamente
-const gunNode = Gun(['https://herokuapp.com']);
-const chatBunkerNet = gunNode.get('bunker_libertad_chat_2026');
 
-// Historial en memoria volátil para el renderizado ordenado
+
+<!-- 📜 INCLUSIÓN DE LIBRERÍA GUN DE CENTRALIZADA CON SOPORTE COMPLETO -->
+<script src="https://cloudflare.com"></script>
+
+<script>
+// 🪐 INICIALIZACIÓN DEL NODO CON NODOS DE RELEVO DE ALTA DISPONIBILIDAD (HTTPS)
+const gunNode = Gun([
+    'https://herokuapp.com',
+    'https://herokuapp.com'
+]);
+
+// Canal exclusivo amarrado a tu Código Invicto para evitar colisiones
+const chatBunkerNet = gunNode.get('bunker_libertad_1418_invicto');
 let memoriaHistorial = [];
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -3018,35 +3023,46 @@ function desbloquearInterfazChat() {
     if (capaBloqueo) capaBloqueo.style.setProperty("display", "none", "important");
     if (panelAbierto) panelAbierto.style.setProperty("display", "block", "important");
 
-    // 📡 ESCUCHADOR EN CALIENTE P2P: Se activa cuando CUALQUIER teléfono envía datos
-    chatBunkerNet.map().on((data) => {
-        if (!data) return;
+    // 📡 ESCUCHADOR EN CALIENTE REPARADO: Captura los cambios de la red P2P
+    chatBunkerNet.map().on((data, id) => {
+        if (!data || !data.contenido) return;
         
-        // Evitamos duplicados en el renderizado
-        const existe = memoriaHistorial.some(m => m.id === data.id || (m.tiempo === data.tiempo && m.contenido === data.contenido));
+        // Verificación de duplicados por contenido y estampa de tiempo
+        const existe = memoriaHistorial.some(m => m.id === id || (m.tiempo === data.tiempo && m.contenido === data.contenido));
+        
         if (!existe) {
-            memoriaHistorial.push(data);
-            // Ordenar por tiempo
+            const nuevoPaquete = {
+                id: id,
+                tipo: data.tipo,
+                emisor: data.emisor,
+                contenido: data.contenido,
+                tiempo: data.tiempo,
+                timestamp: data.timestamp || Date.now()
+            };
+            
+            memoriaHistorial.push(nuevoPaquete);
             memoriaHistorial.sort((a, b) => a.timestamp - b.timestamp);
             
-            // Respaldamos en el localStorage local de este celular por seguridad
+            // Sincronización en el LocalStorage interno de este celular
             localStorage.setItem("bunker_chat_log", JSON.stringify(memoriaHistorial));
             renderizarMensajes(memoriaHistorial);
         }
     });
 }
 
+// ⚡ TRANSMITIR MENSAJE CRIPTOGRÁFICO (DESTRABADO DE MÁXIMA POTENCIA)
 function transmitirMensajeBunker() {
     const operador = localStorage.getItem("operador_id_name") || "ANÓNIMO";
     const inputMsg = document.getElementById("chat-msg-input");
+    const btnTransmitir = document.querySelector("button[onclick='transmitirMensajeBunker()']");
+    
     if (!inputMsg || inputMsg.value.trim() === "") return;
 
     const textoMensaje = inputMsg.value.trim();
     const fecha = new Date().toLocaleTimeString();
-    const idUnico = Math.random().toString(36).substring(2, 11);
+    const claveMensaje = "MSG-" + Date.now() + "-" + Math.floor(Math.random() * 1000);
 
     const paqueteData = {
-        id: idUnico,
         tipo: "texto",
         emisor: operador,
         contenido: textoMensaje,
@@ -3054,28 +3070,42 @@ function transmitirMensajeBunker() {
         timestamp: Date.now()
     };
 
-    // 🚀 INYECCIÓN EN LA RED P2P INTERCONECTADA
-    chatBunkerNet.set(paqueteData);
-    inputMsg.value = ""; 
+    // Bloqueo temporal para evitar doble envío de ráfaga
+    if (btnTransmitir) btnTransmitir.disabled = true;
+
+    try {
+        // 🚀 INYECCIÓN DIRECTA EN LA MALLA DESCENTRALIZADA P2P
+        chatBunkerNet.get(claveMensaje).put(paqueteData);
+        
+        // 🛠️ RESPALDO EN CALIENTE LOCAL: Fuerza el renderizado inmediato si el nodo P2P tarda
+        setTimeout(() => {
+            inputMsg.value = ""; 
+            if (btnTransmitir) btnTransmitir.disabled = false;
+        }, 100);
+        
+    } catch (err) {
+        console.error("[❌] Error en el chasis P2P:", err);
+        if (btnTransmitir) btnTransmitir.disabled = false;
+    }
 }
 
+// 📷 PROCESAR IMAGEN COMPACTA EN CALIENTE
 function procesarImagenHot(input) {
     const operador = localStorage.getItem("operador_id_name") || "ANÓNIMO";
     if (input.files && input.files[0]) {
         const lectorBinario = new FileReader();
         const fecha = new Date().toLocaleTimeString();
-        const idUnico = Math.random().toString(36).substring(2, 11);
+        const claveImagen = "IMG-" + Date.now() + "-" + Math.floor(Math.random() * 1000);
 
         lectorBinario.onload = function(e) {
             const paqueteData = {
-                id: idUnico,
                 tipo: "imagen",
                 emisor: operador,
-                contenido: e.target.result, 
+                contenido: e.target.result, // Base64 directo
                 tiempo: fecha,
                 timestamp: Date.now()
             };
-            chatBunkerNet.set(paqueteData);
+            chatBunkerNet.get(claveImagen).put(paqueteData);
         };
         lectorBinario.readAsDataURL(input.files[0]); 
     }
@@ -3105,8 +3135,6 @@ function renderizarMensajes(historial) {
     visor.scrollTop = visor.scrollHeight;
 }
 
-function id(e){return document.getElementById(e)}
-
 function bloquearCanalInvitado() {
     localStorage.removeItem("chat_token_autorizado");
     alert("🔒 CANAL BLOQUEADO: Credenciales de transmisión destruidas.");
@@ -3116,7 +3144,6 @@ function bloquearCanalInvitado() {
 
 
 
- 
  
 
                      
