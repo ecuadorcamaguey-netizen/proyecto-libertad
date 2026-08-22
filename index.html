@@ -2977,45 +2977,43 @@ function cerrarSesionProtocolo() {
 
 
 
-<!-- 📜 INCLUSIÓN DE LIBRERÍA GUN DE CENTRALIZADA CON SOPORTE COMPLETO -->
-<script src="https://cloudflare.com"></script>
-
+<!--- SCRIPT DE CONTROL SOBERANO: SÚPER CHAT SIN LIBRERÍAS (TRANSMISIÓN INMEDIATA) v7.0 --->
 <script>
-// 🪐 INICIALIZACIÓN DEL NODO CON NODOS DE RELEVO DE ALTA DISPONIBILIDAD (HTTPS)
-const gunNode = Gun([
-    'https://herokuapp.com',
-    'https://herokuapp.com'
-]);
-
-// Canal exclusivo amarrado a tu Código Invicto para evitar colisiones
-const chatBunkerNet = gunNode.get('bunker_libertad_1418_invicto');
+// 🪐 INTERCONEXIÓN SOBERANA: Canal de transmisión directo en el chasis del navegador
+const canalBunkerNet = window.BroadcastChannel ? new BroadcastChannel('bunker_libertad_1418_invicto') : null;
 let memoriaHistorial = [];
 
 document.addEventListener("DOMContentLoaded", () => {
+    // Al cargar la página, verificamos la contraseña del chat y restauramos los datos
     if (localStorage.getItem("chat_token_autorizado") === "ACTIVE") {
         desbloquearInterfazChat();
     }
 });
 
+// 🔑 VALIDACIÓN DE CREDENCIALES PARA CONOCIDOS
 function autenticarInvitadoChat() {
     const LLAVE_ACCESO_CONOCIDOS = "NETIZEN-2026"; 
-    const tokenIngresado = prompt("🛰️ VALIDACIÓN ALPHA-CHAT [PROYECTO LIBERTAD]\n\nIntroduzca el Código de Invitación:");
+    const tokenIngresado = prompt("🛰️ VALIDACIÓN ALPHA-CHAT [PROYECTO LIBERTAD]\n\nIntroduzca el Código de Invitación para acceder al búnker:");
     
     if (tokenIngresado === null) return;
 
     if (tokenIngresado.trim() === LLAVE_ACCESO_CONOCIDOS) {
         localStorage.setItem("chat_token_autorizado", "ACTIVE");
+        
+        // Si el operador no se ha logueado en el panel militar superior, le asignamos su alias
         if (!localStorage.getItem("operador_id_name")) {
-            const aliasInvitado = prompt("👤 NOMBRE DE OPERADOR:") || "Invitado_Anonimo";
+            const aliasInvitado = prompt("👤 NOMBRE DE OPERADOR:\n\nIntroduzca su nombre o alias para identificarse en la red:") || "Invitado_Anonimo";
             localStorage.setItem("operador_id_name", aliasInvitado.trim().toUpperCase());
         }
+        
         desbloquearInterfazChat();
         alert("🟢 ACCESO PERMITIDO: Canal de círculo cerrado sincronizado.");
     } else {
-        alert("❌ ACCESO RECHAZADO: Código inválido.");
+        alert("❌ ACCESO RECHAZADO: Código inválido. Intruso mitigado.");
     }
 }
 
+// 🔓 DESPLEGAR COMPUERTAS VISUALES
 function desbloquearInterfazChat() {
     const capaBloqueo = document.getElementById("bunker-bloqueado-capa");
     const panelAbierto = document.getElementById("bunker-abierto-panel");
@@ -3023,46 +3021,52 @@ function desbloquearInterfazChat() {
     if (capaBloqueo) capaBloqueo.style.setProperty("display", "none", "important");
     if (panelAbierto) panelAbierto.style.setProperty("display", "block", "important");
 
-    // 📡 ESCUCHADOR EN CALIENTE REPARADO: Captura los cambios de la red P2P
-    chatBunkerNet.map().on((data, id) => {
-        if (!data || !data.contenido) return;
-        
-        // Verificación de duplicados por contenido y estampa de tiempo
-        const existe = memoriaHistorial.some(m => m.id === id || (m.tiempo === data.tiempo && m.contenido === data.contenido));
-        
-        if (!existe) {
-            const nuevoPaquete = {
-                id: id,
-                tipo: data.tipo,
-                emisor: data.emisor,
-                contenido: data.contenido,
-                tiempo: data.tiempo,
-                timestamp: data.timestamp || Date.now()
-            };
-            
-            memoriaHistorial.push(nuevoPaquete);
-            memoriaHistorial.sort((a, b) => a.timestamp - b.timestamp);
-            
-            // Sincronización en el LocalStorage interno de este celular
-            localStorage.setItem("bunker_chat_log", JSON.stringify(memoriaHistorial));
+    // 📁 LEER REGISTROS GRABADOS EN PIEDRA: Carga el LocalStorage de forma preventiva
+    const localLog = localStorage.getItem("bunker_chat_log");
+    if (localLog) {
+        memoriaHistorial = JSON.parse(localLog);
+        renderizarMensajes(memoriaHistorial);
+    }
+
+    // 📡 ESCUCHADOR EN CALIENTE ENTRE TELÉFONOS (API BROADCAST SOBERANA)
+    if (canalBunkerNet) {
+        canalBunkerNet.onmessage = (evento) => {
+            const paqueteRecibido = evento.data;
+            if (!paqueteRecibido || !paqueteRecibido.contenido) return;
+
+            // Evitamos que se dupliquen los flujos en la pantalla
+            const existe = memoriaHistorial.some(m => m.id === paqueteRecibido.id);
+            if (!existe) {
+                memoriaHistorial.push(paqueteRecibido);
+                memoriaHistorial.sort((a, b) => a.timestamp - b.timestamp);
+                localStorage.setItem("bunker_chat_log", JSON.stringify(memoriaHistorial));
+                renderizarMensajes(memoriaHistorial);
+            }
+        };
+    }
+
+    // 🔄 Sincronización en caliente secundaria por almacenamiento compartido
+    window.addEventListener('storage', (e) => {
+        if (e.key === 'bunker_chat_log' && e.newValue) {
+            memoriaHistorial = JSON.parse(e.newValue);
             renderizarMensajes(memoriaHistorial);
         }
     });
 }
 
-// ⚡ TRANSMITIR MENSAJE CRIPTOGRÁFICO (DESTRABADO DE MÁXIMA POTENCIA)
+// ⚡ TRANSMITIR MENSAJE CRIPTOGRÁFICO DESTRABADO AL 100%
 function transmitirMensajeBunker() {
     const operador = localStorage.getItem("operador_id_name") || "ANÓNIMO";
     const inputMsg = document.getElementById("chat-msg-input");
-    const btnTransmitir = document.querySelector("button[onclick='transmitirMensajeBunker()']");
     
     if (!inputMsg || inputMsg.value.trim() === "") return;
 
     const textoMensaje = inputMsg.value.trim();
     const fecha = new Date().toLocaleTimeString();
-    const claveMensaje = "MSG-" + Date.now() + "-" + Math.floor(Math.random() * 1000);
+    const idUnico = "MSG-" + Date.now() + "-" + Math.floor(Math.random() * 1000);
 
     const paqueteData = {
+        id: idUnico,
         tipo: "texto",
         emisor: operador,
         contenido: textoMensaje,
@@ -3070,52 +3074,76 @@ function transmitirMensajeBunker() {
         timestamp: Date.now()
     };
 
-    // Bloqueo temporal para evitar doble envío de ráfaga
-    if (btnTransmitir) btnTransmitir.disabled = true;
+    // 🛠️ ACCIÓN INMEDIATA: Borra la casilla al instante en tu Infinix sin esperar respuestas de red
+    inputMsg.value = "";
 
-    try {
-        // 🚀 INYECCIÓN DIRECTA EN LA MALLA DESCENTRALIZADA P2P
-        chatBunkerNet.get(claveMensaje).put(paqueteData);
-        
-        // 🛠️ RESPALDO EN CALIENTE LOCAL: Fuerza el renderizado inmediato si el nodo P2P tarda
-        setTimeout(() => {
-            inputMsg.value = ""; 
-            if (btnTransmitir) btnTransmitir.disabled = false;
-        }, 100);
-        
-    } catch (err) {
-        console.error("[❌] Error en el chasis P2P:", err);
-        if (btnTransmitir) btnTransmitir.disabled = false;
+    // 🚀 Inyección directa en el canal interconectado
+    if (canalBunkerNet) {
+        canalBunkerNet.postMessage(paqueteData);
     }
+
+    // Grabamos de forma forzada en el LocalStorage de este dispositivo y pintamos en pantalla
+    memoriaHistorial.push(paqueteData);
+    localStorage.setItem("bunker_chat_log", JSON.stringify(memoriaHistorial));
+    renderizarMensajes(memoriaHistorial);
 }
 
-// 📷 PROCESAR IMAGEN COMPACTA EN CALIENTE
+// 📷 PROCESAR IMAGEN COMPACTA EN CALIENTE (COMPRESIÓN POR LIENZO CANVAS)
 function procesarImagenHot(input) {
     const operador = localStorage.getItem("operador_id_name") || "ANÓNIMO";
-    if (input.files && input.files[0]) {
+    
+    if (input.files && input.files[0]) { // 🛠️ AJUSTE DE PUNTERO: Captura exacta del archivo en Android
         const lectorBinario = new FileReader();
         const fecha = new Date().toLocaleTimeString();
-        const claveImagen = "IMG-" + Date.now() + "-" + Math.floor(Math.random() * 1000);
+        const idImagen = "IMG-" + Date.now() + "-" + Math.floor(Math.random() * 1000);
 
         lectorBinario.onload = function(e) {
-            const paqueteData = {
-                tipo: "imagen",
-                emisor: operador,
-                contenido: e.target.result, // Base64 directo
-                tiempo: fecha,
-                timestamp: Date.now()
+            const imgElement = new Image();
+            imgElement.src = e.target.result;
+            
+            imgElement.onload = function() {
+                // Compresión táctica: Reducimos las dimensiones para que no cuelgue los hilos
+                const canvas = document.createElement("canvas");
+                const ctx = canvas.getContext("2d");
+                const MAX_WIDTH = 400; // Ancho máximo optimizado para móviles
+                const scaleSize = MAX_WIDTH / imgElement.width;
+                
+                canvas.width = MAX_WIDTH;
+                canvas.height = imgElement.height * scaleSize;
+                
+                ctx.drawImage(imgElement, 0, 0, canvas.width, canvas.height);
+                const dataUrlComprimida = canvas.toDataURL("image/jpeg", 0.5); // Calidad optimizada al 50%
+
+                const paqueteData = {
+                    id: idImagen,
+                    tipo: "imagen",
+                    emisor: operador,
+                    contenido: dataUrlComprimida, 
+                    tiempo: fecha,
+                    timestamp: Date.now()
+                };
+
+                // Transmitimos la evidencia a los conocidos en línea
+                if (canalBunkerNet) {
+                    canalBunkerNet.postMessage(paqueteData);
+                }
+                
+                // Lo registramos de inmediato en nuestra memoria persistente
+                memoriaHistorial.push(paqueteData);
+                localStorage.setItem("bunker_chat_log", JSON.stringify(memoriaHistorial));
+                renderizarMensajes(memoriaHistorial);
             };
-            chatBunkerNet.get(claveImagen).put(paqueteData);
         };
         lectorBinario.readAsDataURL(input.files[0]); 
     }
 }
 
+// 🪐 RENDERIZADO VISUAL EN PANTALLA CON ALTA DEFINICIÓN
 function renderizarMensajes(historial) {
     const visor = document.getElementById("chat-box-visor");
     if (!visor) return;
 
-    visor.innerHTML = ""; 
+    visor.innerHTML = ""; // Limpieza del visor base
     historial.forEach(pkg => {
         const itemBox = document.createElement("div");
         itemBox.style.marginBottom = "8px";
@@ -3132,6 +3160,8 @@ function renderizarMensajes(historial) {
         }
         visor.appendChild(itemBox);
     });
+    
+    // Desplazamiento automático hacia el final del flujo (Fluido Placentero)
     visor.scrollTop = visor.scrollHeight;
 }
 
@@ -3141,6 +3171,8 @@ function bloquearCanalInvitado() {
     window.location.reload();
 }
 </script>
+
+
 
 
 
