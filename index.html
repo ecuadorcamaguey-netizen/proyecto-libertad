@@ -2977,43 +2977,49 @@ function cerrarSesionProtocolo() {
 
 
 
-<!--- SCRIPT DE CONTROL SOBERANO: SÚPER CHAT SIN LIBRERÍAS (TRANSMISIÓN INMEDIATA) v7.0 --->
+
+<!-- 📜 INCLUSIÓN DE LAS COMPUERTAS DE RED CORE DE FIREBASE DESDE CDN -->
+<script src="https://gstatic.com"></script>
+<script src="https://gstatic.com"></script>
+
 <script>
-// 🪐 INTERCONEXIÓN SOBERANA: Canal de transmisión directo en el chasis del navegador
-const canalBunkerNet = window.BroadcastChannel ? new BroadcastChannel('bunker_libertad_1418_invicto') : null;
+// 🪐 CONFIGURACIÓN DEL REPETIDOR GLOBAL SEGURO (CONEXIÓN EN CALIENTE)
+const firebaseConfig = {
+    databaseURL: "https://firebaseio.com"
+};
+
+// Inicialización forzada del chasis de red
+if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+}
+const chatBunkerNet = firebase.database().ref('bunker_chat_P2P_2026');
 let memoriaHistorial = [];
 
 document.addEventListener("DOMContentLoaded", () => {
-    // Al cargar la página, verificamos la contraseña del chat y restauramos los datos
     if (localStorage.getItem("chat_token_autorizado") === "ACTIVE") {
         desbloquearInterfazChat();
     }
 });
 
-// 🔑 VALIDACIÓN DE CREDENCIALES PARA CONOCIDOS
 function autenticarInvitadoChat() {
     const LLAVE_ACCESO_CONOCIDOS = "NETIZEN-2026"; 
-    const tokenIngresado = prompt("🛰️ VALIDACIÓN ALPHA-CHAT [PROYECTO LIBERTAD]\n\nIntroduzca el Código de Invitación para acceder al búnker:");
+    const tokenIngresado = prompt("🛰️ VALIDACIÓN ALPHA-CHAT [PROYECTO LIBERTAD]\n\nIntroduzca el Código de Invitación:");
     
     if (tokenIngresado === null) return;
 
     if (tokenIngresado.trim() === LLAVE_ACCESO_CONOCIDOS) {
         localStorage.setItem("chat_token_autorizado", "ACTIVE");
-        
-        // Si el operador no se ha logueado en el panel militar superior, le asignamos su alias
         if (!localStorage.getItem("operador_id_name")) {
-            const aliasInvitado = prompt("👤 NOMBRE DE OPERADOR:\n\nIntroduzca su nombre o alias para identificarse en la red:") || "Invitado_Anonimo";
+            const aliasInvitado = prompt("👤 NOMBRE DE OPERADOR:") || "Invitado_Anonimo";
             localStorage.setItem("operador_id_name", aliasInvitado.trim().toUpperCase());
         }
-        
         desbloquearInterfazChat();
         alert("🟢 ACCESO PERMITIDO: Canal de círculo cerrado sincronizado.");
     } else {
-        alert("❌ ACCESO RECHAZADO: Código inválido. Intruso mitigado.");
+        alert("❌ ACCESO RECHAZADO: Código inválido.");
     }
 }
 
-// 🔓 DESPLEGAR COMPUERTAS VISUALES
 function desbloquearInterfazChat() {
     const capaBloqueo = document.getElementById("bunker-bloqueado-capa");
     const panelAbierto = document.getElementById("bunker-abierto-panel");
@@ -3021,40 +3027,26 @@ function desbloquearInterfazChat() {
     if (capaBloqueo) capaBloqueo.style.setProperty("display", "none", "important");
     if (panelAbierto) panelAbierto.style.setProperty("display", "block", "important");
 
-    // 📁 LEER REGISTROS GRABADOS EN PIEDRA: Carga el LocalStorage de forma preventiva
-    const localLog = localStorage.getItem("bunker_chat_log");
-    if (localLog) {
-        memoriaHistorial = JSON.parse(localLog);
+    // 📡 ESCUCHADOR MULTI-DISPOSITIVO EN VIVO: Se gatilla en el celular de todos los conocidos
+    chatBunkerNet.limitToLast(50).on('value', (snapshot) => {
+        const dataLog = snapshot.val();
+        if (!dataLog) return;
+
+        memoriaHistorial = [];
+        Object.keys(dataLog).forEach(key => {
+            memoriaHistorial.push(dataLog[key]);
+        });
+
+        // Ordenar cronológicamente el flujo de datos
+        memoriaHistorial.sort((a, b) => a.timestamp - b.timestamp);
+        
+        // Guardado de respaldo en el almacenamiento local del teléfono
+        localStorage.setItem("bunker_chat_log", JSON.stringify(memoriaHistorial));
         renderizarMensajes(memoriaHistorial);
-    }
-
-    // 📡 ESCUCHADOR EN CALIENTE ENTRE TELÉFONOS (API BROADCAST SOBERANA)
-    if (canalBunkerNet) {
-        canalBunkerNet.onmessage = (evento) => {
-            const paqueteRecibido = evento.data;
-            if (!paqueteRecibido || !paqueteRecibido.contenido) return;
-
-            // Evitamos que se dupliquen los flujos en la pantalla
-            const existe = memoriaHistorial.some(m => m.id === paqueteRecibido.id);
-            if (!existe) {
-                memoriaHistorial.push(paqueteRecibido);
-                memoriaHistorial.sort((a, b) => a.timestamp - b.timestamp);
-                localStorage.setItem("bunker_chat_log", JSON.stringify(memoriaHistorial));
-                renderizarMensajes(memoriaHistorial);
-            }
-        };
-    }
-
-    // 🔄 Sincronización en caliente secundaria por almacenamiento compartido
-    window.addEventListener('storage', (e) => {
-        if (e.key === 'bunker_chat_log' && e.newValue) {
-            memoriaHistorial = JSON.parse(e.newValue);
-            renderizarMensajes(memoriaHistorial);
-        }
     });
 }
 
-// ⚡ TRANSMITIR MENSAJE CRIPTOGRÁFICO DESTRABADO AL 100%
+// ⚡ TRANSMITIR MENSAJE CRIPTOGRÁFICO DESTRABADO ENTRE TELÉFONOS
 function transmitirMensajeBunker() {
     const operador = localStorage.getItem("operador_id_name") || "ANÓNIMO";
     const inputMsg = document.getElementById("chat-msg-input");
@@ -3062,11 +3054,9 @@ function transmitirMensajeBunker() {
     if (!inputMsg || inputMsg.value.trim() === "") return;
 
     const textoMensaje = inputMsg.value.trim();
-    const fecha = new Date().toLocaleTimeString();
-    const idUnico = "MSG-" + Date.now() + "-" + Math.floor(Math.random() * 1000);
+    const fecha = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit'});
 
     const paqueteData = {
-        id: idUnico,
         tipo: "texto",
         emisor: operador,
         contenido: textoMensaje,
@@ -3074,48 +3064,39 @@ function transmitirMensajeBunker() {
         timestamp: Date.now()
     };
 
-    // 🛠️ ACCIÓN INMEDIATA: Borra la casilla al instante en tu Infinix sin esperar respuestas de red
+    // 🛠️ ACCIÓN INMEDIATA: Vaciamos la casilla al instante sin retrasos lógicos
     inputMsg.value = "";
 
-    // 🚀 Inyección directa en el canal interconectado
-    if (canalBunkerNet) {
-        canalBunkerNet.postMessage(paqueteData);
-    }
-
-    // Grabamos de forma forzada en el LocalStorage de este dispositivo y pintamos en pantalla
-    memoriaHistorial.push(paqueteData);
-    localStorage.setItem("bunker_chat_log", JSON.stringify(memoriaHistorial));
-    renderizarMensajes(memoriaHistorial);
+    // Lanzamos el paquete hacia el repetidor para que cruce la red pública de forma segura
+    chatBunkerNet.push(paqueteData);
 }
 
-// 📷 PROCESAR IMAGEN COMPACTA EN CALIENTE (COMPRESIÓN POR LIENZO CANVAS)
+// 📷 PROCESAR IMAGEN COMPACTA EN CALIENTE Y TRANSMITIRLA POR LA RED
 function procesarImagenHot(input) {
     const operador = localStorage.getItem("operador_id_name") || "ANÓNIMO";
     
-    if (input.files && input.files[0]) { // 🛠️ AJUSTE DE PUNTERO: Captura exacta del archivo en Android
+    if (input.files && input.files[0]) {
         const lectorBinario = new FileReader();
-        const fecha = new Date().toLocaleTimeString();
-        const idImagen = "IMG-" + Date.now() + "-" + Math.floor(Math.random() * 1000);
+        const fecha = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit'});
 
         lectorBinario.onload = function(e) {
             const imgElement = new Image();
             imgElement.src = e.target.result;
             
             imgElement.onload = function() {
-                // Compresión táctica: Reducimos las dimensiones para que no cuelgue los hilos
+                // Compresión por lienzo para evitar desbordes en el canal
                 const canvas = document.createElement("canvas");
                 const ctx = canvas.getContext("2d");
-                const MAX_WIDTH = 400; // Ancho máximo optimizado para móviles
+                const MAX_WIDTH = 300; 
                 const scaleSize = MAX_WIDTH / imgElement.width;
                 
                 canvas.width = MAX_WIDTH;
                 canvas.height = imgElement.height * scaleSize;
                 
                 ctx.drawImage(imgElement, 0, 0, canvas.width, canvas.height);
-                const dataUrlComprimida = canvas.toDataURL("image/jpeg", 0.5); // Calidad optimizada al 50%
+                const dataUrlComprimida = canvas.toDataURL("image/jpeg", 0.4); // Compresión optimizada al 40%
 
                 const paqueteData = {
-                    id: idImagen,
                     tipo: "imagen",
                     emisor: operador,
                     contenido: dataUrlComprimida, 
@@ -3123,27 +3104,18 @@ function procesarImagenHot(input) {
                     timestamp: Date.now()
                 };
 
-                // Transmitimos la evidencia a los conocidos en línea
-                if (canalBunkerNet) {
-                    canalBunkerNet.postMessage(paqueteData);
-                }
-                
-                // Lo registramos de inmediato en nuestra memoria persistente
-                memoriaHistorial.push(paqueteData);
-                localStorage.setItem("bunker_chat_log", JSON.stringify(memoriaHistorial));
-                renderizarMensajes(memoriaHistorial);
+                chatBunkerNet.push(paqueteData);
             };
         };
         lectorBinario.readAsDataURL(input.files[0]); 
     }
 }
 
-// 🪐 RENDERIZADO VISUAL EN PANTALLA CON ALTA DEFINICIÓN
 function renderizarMensajes(historial) {
     const visor = document.getElementById("chat-box-visor");
     if (!visor) return;
 
-    visor.innerHTML = ""; // Limpieza del visor base
+    visor.innerHTML = ""; 
     historial.forEach(pkg => {
         const itemBox = document.createElement("div");
         itemBox.style.marginBottom = "8px";
@@ -3160,8 +3132,6 @@ function renderizarMensajes(historial) {
         }
         visor.appendChild(itemBox);
     });
-    
-    // Desplazamiento automático hacia el final del flujo (Fluido Placentero)
     visor.scrollTop = visor.scrollHeight;
 }
 
@@ -3171,9 +3141,6 @@ function bloquearCanalInvitado() {
     window.location.reload();
 }
 </script>
-
-
-
 
 
  
