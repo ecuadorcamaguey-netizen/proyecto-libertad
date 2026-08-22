@@ -2934,15 +2934,19 @@ function cerrarSesionProtocolo() {
                      
 
 
-<!-- CHASSIS VISUAL DEL SÚPER CHAT CRYPTO CON ACCESO EXCLUSIVO DE CÍRCULO CERRADO v5.5 -->
+
+
+<!-- 📜 INCLUSIÓN DE LIBRERÍA GUN DE CENTRALIZADA P2P -->
+<script src="https://jsdelivr.net"></script>
+
+<!-- CHASSIS VISUAL DEL SÚPER CHAT CRYPTO DESCENTRALIZADO P2P v6.0 -->
 <div id="crypto-chat-bunker" style="background: rgba(10,10,10,0.95); border: 2px solid #14F195; border-radius: 10px; padding: 15px; margin-top: 20px; font-family: monospace; color: #14F195;">
     <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #4b5320; padding-bottom: 5px; margin-bottom: 10px;">
-        <h3 style="color: #d4af37; margin: 0;">🛰️ SÚPER CHAT INTEGRADO [ENTORNO AISLADO]</h3>
-        <!-- Botón para forzar bloqueo inmediato -->
+        <h3 style="color: #d4af37; margin: 0;">🛰️ SÚPER CHAT P2P [RED DESCENTRALIZADA]</h3>
         <button onclick="bloquearCanalInvitado()" style="background: #220000; color: #ff3333; border: 1px solid #ff3333; font-size: 10px; padding: 2px 6px; cursor: pointer; border-radius: 4px; font-weight: bold;">LOCK 🔒</button>
     </div>
     
-    <!-- Zona de Bloqueo Visual Pasivo para No Autorizados -->
+    <!-- Capa de Bloqueo Visual -->
     <div id="bunker-bloqueado-capa" style="display: block; text-align: center; padding: 40px 10px; background: #050505; border: 1px dashed #ff3333; margin-bottom: 10px; border-radius: 4px;">
         <span style="color: #ff3333; font-weight: bold; display: block; margin-bottom: 15px;">🔒 ACCESO RESTRINGIDO: CÍRCULO EXCLUSIVO TITÁN</span>
         <button onclick="autenticarInvitadoChat()" class="btn-registro" style="background: #4b5320; color: white; padding: 8px 15px; border: 1px solid #d4af37; cursor: pointer; font-size: 11px; font-weight: bold;">
@@ -2950,19 +2954,16 @@ function cerrarSesionProtocolo() {
         </button>
     </div>
 
-    <!-- Panel de Transmisión (Oculto por defecto hasta validar credenciales) -->
+    <!-- Panel de Transmisión Activo -->
     <div id="bunker-abierto-panel" style="display: none;">
-        <!-- Visor de Mensajes e Imágenes -->
         <div id="chat-box-visor" style="height: 250px; overflow-y: auto; background: #000; border: 1px solid #4b5320; padding: 10px; margin-bottom: 10px; border-radius: 4px;">
-            <span style="color: #666;">[ Sistema Ready: Esperando transmisión de datos... ]</span>
+            <span style="color: #666;">[ Red P2P Conectada: Esperando flujos... ]</span>
         </div>
 
-        <!-- Controles de Entrada -->
         <div style="display: flex; flex-direction: column; gap: 8px;">
             <input type="text" id="chat-msg-input" class="input-militar" placeholder="ESCRIBA MENSAJE CRIPTOGRÁFICO..." style="width: 100%; box-sizing: border-box; margin: 0;">
             
             <div style="display: flex; gap: 10px;">
-                <!-- Botón para importar imágenes en caliente -->
                 <label class="btn-registro" style="background: #222; border: 1px solid #345d9d; color: #345d9d; padding: 8px 12px; font-size: 11px; cursor: pointer; text-align: center; flex: 1; border-radius: 4px;">
                     📷 ADJUNTAR EVIDENCIA
                     <input type="file" id="chat-file-input" accept="image/*" style="display: none;" onchange="procesarImagenHot(this)">
@@ -2977,41 +2978,39 @@ function cerrarSesionProtocolo() {
 </div>
 
 <script>
-// 🚀 MOTOR DE PERSISTENCIA Y CARGA AL CARGAR EL NÚCLEO
+// 🪐 INICIALIZACIÓN DEL NODO GUN P2P SOBERANO
+// Usa relevos públicos descentralizados para enlazar los celulares directamente
+const gunNode = Gun(['https://herokuapp.com']);
+const chatBunkerNet = gunNode.get('bunker_libertad_chat_2026');
+
+// Historial en memoria volátil para el renderizado ordenado
+let memoriaHistorial = [];
+
 document.addEventListener("DOMContentLoaded", () => {
-    // Verificamos de forma pasiva si la máquina ya guardó la llave de invitado antes
     if (localStorage.getItem("chat_token_autorizado") === "ACTIVE") {
         desbloquearInterfazChat();
     }
 });
 
-// 🔑 VALIDACIÓN DE CREDENCIALES PARA CONOCIDOS
 function autenticarInvitadoChat() {
-    // Código de autorización exclusivo para tus conocidos
     const LLAVE_ACCESO_CONOCIDOS = "NETIZEN-2026"; 
-    
-    const tokenIngresado = prompt("🛰️ VALIDACIÓN ALPHA-CHAT [PROYECTO LIBERTAD]\n\nIntroduzca el Código de Invitación para acceder al búnker de comunicación:");
+    const tokenIngresado = prompt("🛰️ VALIDACIÓN ALPHA-CHAT [PROYECTO LIBERTAD]\n\nIntroduzca el Código de Invitación:");
     
     if (tokenIngresado === null) return;
 
     if (tokenIngresado.trim() === LLAVE_ACCESO_CONOCIDOS) {
-        // Si es el comandante o un conocido con la clave, se asienta el permiso en el teléfono
         localStorage.setItem("chat_token_autorizado", "ACTIVE");
-        
-        // Si no está logueado como Yorvis, le asignamos un alias temporal de invitado
         if (!localStorage.getItem("operador_id_name")) {
-            const aliasInvitado = prompt("👤 NOMBRE DE OPERADOR:\n\nIntroduzca su nombre o alias para identificarse en la red:") || "Invitado_Anonimo";
+            const aliasInvitado = prompt("👤 NOMBRE DE OPERADOR:") || "Invitado_Anonimo";
             localStorage.setItem("operador_id_name", aliasInvitado.trim().toUpperCase());
         }
-
         desbloquearInterfazChat();
-        alert("🟢 ACCESO PERMITIDO: Canal de círculo cerrado sincronizado satisfactoriamente.");
+        alert("🟢 ACCESO PERMITIDO: Canal de círculo cerrado sincronizado.");
     } else {
-        alert("❌ ACCESO RECHAZADO: Código de invitación inválido. Intruso mitigado.");
+        alert("❌ ACCESO RECHAZADO: Código inválido.");
     }
 }
 
-// 🔓 DESPLEGAR COMPUERTAS VISUALES
 function desbloquearInterfazChat() {
     const capaBloqueo = document.getElementById("bunker-bloqueado-capa");
     const panelAbierto = document.getElementById("bunker-abierto-panel");
@@ -3019,77 +3018,72 @@ function desbloquearInterfazChat() {
     if (capaBloqueo) capaBloqueo.style.setProperty("display", "none", "important");
     if (panelAbierto) panelAbierto.style.setProperty("display", "block", "important");
 
-    // Cargamos los mensajes guardados en piedra del disco del teléfono
-    cargarHistorialChat();
+    // 📡 ESCUCHADOR EN CALIENTE P2P: Se activa cuando CUALQUIER teléfono envía datos
+    chatBunkerNet.map().on((data) => {
+        if (!data) return;
+        
+        // Evitamos duplicados en el renderizado
+        const existe = memoriaHistorial.some(m => m.id === data.id || (m.tiempo === data.tiempo && m.contenido === data.contenido));
+        if (!existe) {
+            memoriaHistorial.push(data);
+            // Ordenar por tiempo
+            memoriaHistorial.sort((a, b) => a.timestamp - b.timestamp);
+            
+            // Respaldamos en el localStorage local de este celular por seguridad
+            localStorage.setItem("bunker_chat_log", JSON.stringify(memoriaHistorial));
+            renderizarMensajes(memoriaHistorial);
+        }
+    });
 }
 
-// 🔒 LOGOUT DEL CANAL (CIERRE DE EMERGENCIA)
-function bloquearCanalInvitado() {
-    localStorage.removeItem("chat_token_autorizado");
-    // Conservamos las monedas LTC pero forzamos el bloqueo del chat por seguridad
-    alert("🔒 CANAL BLOQUEADO: Credenciales de transmisión destruidas con éxito.");
-    window.location.reload();
-}
-
-// ⚡ TRANSMITIR MENSAJE TEXTUAL AL COMPUESTO LOCAL
 function transmitirMensajeBunker() {
     const operador = localStorage.getItem("operador_id_name") || "ANÓNIMO";
     const inputMsg = document.getElementById("chat-msg-input");
-    
     if (!inputMsg || inputMsg.value.trim() === "") return;
 
     const textoMensaje = inputMsg.value.trim();
     const fecha = new Date().toLocaleTimeString();
+    const idUnico = Math.random().toString(36).substring(2, 11);
 
     const paqueteData = {
+        id: idUnico,
         tipo: "texto",
         emisor: operador,
         contenido: textoMensaje,
-        tiempo: fecha
+        tiempo: fecha,
+        timestamp: Date.now()
     };
 
-    guardarPaqueteChat(paqueteData);
+    // 🚀 INYECCIÓN EN LA RED P2P INTERCONECTADA
+    chatBunkerNet.set(paqueteData);
     inputMsg.value = ""; 
 }
 
-// 📷 PROCESAR IMAGEN COMPACTA EN CALIENTE 
 function procesarImagenHot(input) {
     const operador = localStorage.getItem("operador_id_name") || "ANÓNIMO";
-
     if (input.files && input.files[0]) {
         const lectorBinario = new FileReader();
         const fecha = new Date().toLocaleTimeString();
+        const idUnico = Math.random().toString(36).substring(2, 11);
 
         lectorBinario.onload = function(e) {
             const paqueteData = {
+                id: idUnico,
                 tipo: "imagen",
                 emisor: operador,
                 contenido: e.target.result, 
-                tiempo: fecha
+                tiempo: fecha,
+                timestamp: Date.now()
             };
-            guardarPaqueteChat(paqueteData);
+            chatBunkerNet.set(paqueteData);
         };
         lectorBinario.readAsDataURL(input.files[0]); 
     }
 }
 
-// 📁 ESCRIBIR EN LA BÓVEDA LOCAL DE MEMORIA
-function guardarPaqueteChat(paquete) {
-    let historial = JSON.parse(localStorage.getItem("bunker_chat_log") || "[]");
-    historial.push(paquete);
-    localStorage.setItem("bunker_chat_log", JSON.stringify(historial));
-    renderizarMensajes(historial);
-}
-
-// 🪐 RENDERIZADO VISUAL EN PANTALLA
 function renderizarMensajes(historial) {
     const visor = document.getElementById("chat-box-visor");
     if (!visor) return;
-
-    if (historial.length === 0) {
-        visor.innerHTML = `<span style="color: #666;">[ Canal Cifrado Vacío. Listo para transmisión ]</span>`;
-        return;
-    }
 
     visor.innerHTML = ""; 
     historial.forEach(pkg => {
@@ -3108,16 +3102,19 @@ function renderizarMensajes(historial) {
         }
         visor.appendChild(itemBox);
     });
-
     visor.scrollTop = visor.scrollHeight;
 }
 
-// 📜 REGENERAR EL HISTORIAL AL ENTRAR AL NÚCLEO
-function cargarHistorialChat() {
-    const historial = JSON.parse(localStorage.getItem("bunker_chat_log") || "[]");
-    renderizarMensajes(historial);
+function id(e){return document.getElementById(e)}
+
+function bloquearCanalInvitado() {
+    localStorage.removeItem("chat_token_autorizado");
+    alert("🔒 CANAL BLOQUEADO: Credenciales de transmisión destruidas.");
+    window.location.reload();
 }
 </script>
+
+
 
  
  
