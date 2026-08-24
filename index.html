@@ -2978,43 +2978,36 @@ function cerrarSesionProtocolo() {
 
 
 <script>
-// 🪐 CONFIGURACIÓN DEL REPOSITORIO DE DATOS VIRTUAL (ESPEJO GLOBAL)
-// Contenedor público libre para el Proyecto Libertad 2026
+// 🪐 CONFIGURACIÓN DEL REPOSITORIO DE DATOS VIRTUAL (ESPEJO GLOBAL UNIFICADO)
 const BIN_URL = "https://jsonbin.io";
 let memoriaHistorial = [];
 let bucleActualizador = null;
 
 document.addEventListener("DOMContentLoaded", () => {
-    // Al cargar la página, restauramos el acceso autorizado si ya existe en la memoria
     if (localStorage.getItem("chat_token_autorizado") === "ACTIVE") {
         desbloquearInterfazChat();
     }
 });
 
-// 🔑 VALIDACIÓN DE CREDENCIALES PARA CONOCIDOS
 function autenticarInvitadoChat() {
     const LLAVE_ACCESO_CONOCIDOS = "NETIZEN-2026"; 
-    const tokenIngresado = prompt("🛰️ VALIDACIÓN ALPHA-CHAT [PROYECTO LIBERTAD]\n\nIntroduzca el Código de Invitación para acceder al búnker:");
+    const tokenIngresado = prompt("🛰️ VALIDACIÓN ALPHA-CHAT [PROYECTO LIBERTAD]\n\nIntroduzca el Código de Invitación:");
     
     if (tokenIngresado === null) return;
 
     if (tokenIngresado.trim() === LLAVE_ACCESO_CONOCIDOS) {
         localStorage.setItem("chat_token_autorizado", "ACTIVE");
-        
-        // Si el operador no se ha logueado en el panel militar superior, le asignamos su alias
         if (!localStorage.getItem("operador_id_name")) {
-            const aliasInvitado = prompt("👤 NOMBRE DE OPERADOR:\n\nIntroduzca su nombre o alias para identificarse en la red:") || "Invitado_Anonimo";
+            const aliasInvitado = prompt("👤 NOMBRE DE OPERADOR:") || "Invitado_Anonimo";
             localStorage.setItem("operador_id_name", aliasInvitado.trim().toUpperCase());
         }
-        
         desbloquearInterfazChat();
         alert("🟢 ACCESO PERMITIDO: Canal de círculo cerrado sincronizado.");
     } else {
-        alert("❌ ACCESO RECHAZADO: Código inválido. Intruso mitigado.");
+        alert("❌ ACCESO RECHAZADO: Código inválido.");
     }
 }
 
-// 🔓 DESPLEGAR COMPUERTAS VISUALES Y ARRANCAR MONITOR EN VIVO
 function desbloquearInterfazChat() {
     const capaBloqueo = document.getElementById("bunker-bloqueado-capa");
     const panelAbierto = document.getElementById("bunker-abierto-panel");
@@ -3022,35 +3015,33 @@ function desbloquearInterfazChat() {
     if (capaBloqueo) capaBloqueo.style.setProperty("display", "none", "important");
     if (panelAbierto) panelAbierto.style.setProperty("display", "block", "important");
 
-    // 📁 LEER REGISTROS LOCALES PREVENTIVOS: Muestra los mensajes de inmediato en la pantalla
     const localLog = localStorage.getItem("bunker_chat_log");
     if (localLog) {
         memoriaHistorial = JSON.parse(localLog);
         renderizarMensajes(memoriaHistorial);
     }
 
-    // 📡 DESCARGA INICIAL DE RED INALÁMBRICA
     descargarMensajesDeRed();
 
-    // 🔄 BUCLE DE CONSULTA EN CALIENTE: Sincroniza los teléfonos cada 2 segundos solo si el chat está abierto
+    // Sincronización en caliente continua cada 2 segundos
     if (!bucleActualizador) {
         bucleActualizador = setInterval(descargarMensajesDeRed, 2000);
     }
 }
 
-// 📡 ALGORITMO FETCH: DESCARGAR DATOS DESDE EL CONTENEDOR MUNDIAL
+// 📡 DESCARGAR Y AMALGAMAR DATOS DESDE LA MALLA MUNDIAL
 function descargarMensajesDeRed() {
     if (localStorage.getItem("chat_token_autorizado") !== "ACTIVE") return;
 
     fetch(BIN_URL, {
         method: "GET",
-        headers: { "X-Bin-Meta": "false" }
+        headers: { "X-Bin-Meta": "false", "Cache-Control": "no-cache" }
     })
     .then(res => { if (res.ok) return res.json(); })
     .then(data => {
-        if (data && Array.isArray(data) && data.length > 0) {
-            // Unificamos el historial remoto con el local evitando duplicados por ID único
+        if (data && Array.isArray(data)) {
             let huboCambios = false;
+            
             data.forEach(pkgRemoto => {
                 const existe = memoriaHistorial.some(m => m.id === pkgRemoto.id);
                 if (!existe) {
@@ -3060,17 +3051,16 @@ function descargarMensajesDeRed() {
             });
 
             if (huboCambios) {
-                // Ordenamos cronológicamente todas las transmisiones cruzadas
                 memoriaHistorial.sort((a, b) => a.timestamp - b.timestamp);
                 localStorage.setItem("bunker_chat_log", JSON.stringify(memoriaHistorial));
                 renderizarMensajes(memoriaHistorial);
             }
         }
     })
-    .catch(err => console.log("[🛰️] Sincronizador en espera..."));
+    .catch(err => console.log("[🛰️] Sincronizando hilos..."));
 }
 
-// ⚡ TRANSMITIR MENSAJE CRIPTOGRÁFICO DESTRABADO ENTRE TELÉFONOS
+// ⚡ TRANSMITIR CON ALGORITMO DE AMALGAMADA PRE-ENVÍO (CRUZA DE TELÉFONOS REAL)
 function transmitirMensajeBunker() {
     const operador = localStorage.getItem("operador_id_name") || "ANÓNIMO";
     const inputMsg = document.getElementById("chat-msg-input");
@@ -3090,23 +3080,33 @@ function transmitirMensajeBunker() {
         timestamp: Date.now()
     };
 
-    // 🛠️ ACCIÓN INMEDIATA EN PANTALLA: Pintamos localmente y vaciamos la casilla en 0ms
-    inputMsg.value = "";
-    memoriaHistorial.push(paqueteData);
-    renderizarMensajes(memoriaHistorial);
-    localStorage.setItem("bunker_chat_log", JSON.stringify(memoriaHistorial));
+    inputMsg.value = ""; // Vaciado instantáneo en 0ms
 
-    // 🚀 ENVÍO INALÁMBRICO AL CONTENEDOR COMPARTIDO POR INTERNET
-    fetch(BIN_URL, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(memoriaHistorial)
+    // 🛠️ ALGORITMO DE AMALGAMADA: Descargamos el estado actual antes de empujar el nuevo mensaje
+    fetch(BIN_URL, { method: "GET", headers: { "X-Bin-Meta": "false", "Cache-Control": "no-cache" } })
+    .then(res => res.json())
+    .then(historialRemoto => {
+        let poolUnificado = Array.isArray(historialRemoto) ? historialRemoto : [];
+        
+        // Inyectamos el mensaje en la matriz común
+        poolUnificado.push(paqueteData);
+        
+        // Empujamos el bloque consolidado completo a Internet
+        return fetch(BIN_URL, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(poolUnificado)
+        });
     })
-    .then(res => { if (res.ok) console.log("[🟢] Transmisión cruzada exitosa."); })
-    .catch(err => console.error("[❌] Error al empujar datos a la malla:", err));
+    .then(res => { if (res.ok) descargarMensajesDeRed(); })
+    .catch(err => {
+        // Respaldo de contingencia local si la red satura
+        memoriaHistorial.push(paqueteData);
+        renderizarMensajes(memoriaHistorial);
+    });
 }
 
-// 📷 PROCESAR IMAGEN COMPACTA EN CALIENTE Y TRANSMITIRLA A LOS CONOCIDOS
+// 📷 PROCESAR IMAGEN COMPACTA CON AMALGAMADA CRUCIAL
 function procesarImagenHot(input) {
     const operador = localStorage.getItem("operador_id_name") || "ANÓNIMO";
     
@@ -3120,10 +3120,9 @@ function procesarImagenHot(input) {
             imgElement.src = e.target.result;
             
             imgElement.onload = function() {
-                // Compresión quirúrgica por lienzo canvas para evitar saturar el JSON
                 const canvas = document.createElement("canvas");
                 const ctx = canvas.getContext("2d");
-                const MAX_WIDTH = 250; // Ancho ultra-optimizado para redes móviles
+                const MAX_WIDTH = 250; 
                 const scaleSize = MAX_WIDTH / imgElement.width;
                 
                 canvas.width = MAX_WIDTH;
@@ -3141,29 +3140,30 @@ function procesarImagenHot(input) {
                     timestamp: Date.now()
                 };
 
-                memoriaHistorial.push(paqueteData);
-                renderizarMensajes(memoriaHistorial);
-                localStorage.setItem("bunker_chat_log", JSON.stringify(memoriaHistorial));
-
-                // Empujamos la imagen comprimida a la malla global
-                fetch(BIN_URL, {
-                    method: "PUT",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(memoriaHistorial)
-                });
+                // Descargamos, fusionamos la foto y subimos el paquete consolidado
+                fetch(BIN_URL, { method: "GET", headers: { "X-Bin-Meta": "false", "Cache-Control": "no-cache" } })
+                .then(res => res.json())
+                .then(historialRemoto => {
+                    let poolUnificado = Array.isArray(historialRemoto) ? historialRemoto : [];
+                    poolUnificado.push(paqueteData);
+                    return fetch(BIN_URL, {
+                        method: "PUT",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(poolUnificado)
+                    });
+                })
+                .then(res => { if (res.ok) descargarMensajesDeRed(); });
             };
         };
         lectorBinario.readAsDataURL(input.files[0]); 
     }
 }
 
-// 🪐 RENDERIZADO VISUAL EN PANTALLA CON TOTAL NITIDEZ
-// 🪐 RENDERIZADO VISUAL EN PANTALLA CON TOTAL NITIDEZ (REPARACIÓN DE ETIQUETA FOTO)
 function renderizarMensajes(historial) {
     const visor = document.getElementById("chat-box-visor");
     if (!visor) return;
 
-    visor.innerHTML = ""; // Limpieza quirúrgica del visor base
+    visor.innerHTML = ""; 
     historial.forEach(pkg => {
         const itemBox = document.createElement("div");
         itemBox.style.marginBottom = "8px";
@@ -3173,7 +3173,6 @@ function renderizarMensajes(historial) {
         if (pkg.tipo === "texto") {
             itemBox.innerHTML = `<span style="color: #d4af37;">[${pkg.tiempo}] ${pkg.emisor}:</span> <span style="color: #fff;">${pkg.contenido}</span>`;
         } else if (pkg.tipo === "imagen") {
-            // 🎯 CAMBIO TÁCTICO: Se revoca "EVIDENCIA" y se inyecta "FOTO" en color azul seguro
             itemBox.innerHTML = `
                 <span style="color: #345d9d;">[${pkg.tiempo}] ${pkg.emisor} (FOTO):</span><br>
                 <img src="${pkg.contenido}" style="max-width: 100%; max-height: 150px; border: 1px solid #14F195; margin-top: 5px; border-radius: 4px;">
@@ -3181,8 +3180,6 @@ function renderizarMensajes(historial) {
         }
         visor.appendChild(itemBox);
     });
-    
-    // Desplazamiento automático hacia abajo (Fluido Placentero)
     visor.scrollTop = visor.scrollHeight;
 }
 
@@ -3193,7 +3190,6 @@ function bloquearCanalInvitado() {
     window.location.reload();
 }
 </script>
-
 
 
 
