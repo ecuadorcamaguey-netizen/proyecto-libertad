@@ -2976,29 +2976,31 @@ function cerrarSesionProtocolo() {
 </div>
 
 
-
 <script>
-// 🪐 CONFIGURACIÓN DEL REPOSITORIO DE DATOS VIRTUAL (ESPEJO GLOBAL UNIFICADO)
+// 🪐 CONFIGURACIÓN DEL REPOSITORIO DE DATOS VIRTUAL (ESPEJO GLOBAL DE TEXTO PURO)
+// Contenedor dedicado y optimizado para transmisiones instantáneas del Proyecto Libertad 2026
 const BIN_URL = "https://jsonbin.io";
 let memoriaHistorial = [];
 let bucleActualizador = null;
 
 document.addEventListener("DOMContentLoaded", () => {
+    // Al cargar la página, restauramos la sesión autorizada si existe
     if (localStorage.getItem("chat_token_autorizado") === "ACTIVE") {
         desbloquearInterfazChat();
     }
 });
 
+// 🔑 VALIDACIÓN DE CREDENCIALES PARA CONOCIDOS
 function autenticarInvitadoChat() {
     const LLAVE_ACCESO_CONOCIDOS = "NETIZEN-2026"; 
-    const tokenIngresado = prompt("🛰️ VALIDACIÓN ALPHA-CHAT [PROYECTO LIBERTAD]\n\nIntroduzca el Código de Invitación:");
+    const tokenIngresado = prompt("🛰️ VALIDACIÓN ALPHA-CHAT [PROYECTO LIBERTAD]\n\nIntroduzca el Código de Invitación para acceder al búnker:");
     
     if (tokenIngresado === null) return;
 
     if (tokenIngresado.trim() === LLAVE_ACCESO_CONOCIDOS) {
         localStorage.setItem("chat_token_autorizado", "ACTIVE");
         if (!localStorage.getItem("operador_id_name")) {
-            const aliasInvitado = prompt("👤 NOMBRE DE OPERADOR:") || "Invitado_Anonimo";
+            const aliasInvitado = prompt("👤 NOMBRE DE OPERADOR:\n\nIntroduzca su nombre o alias para identificarse en la red:") || "Invitado_Anonimo";
             localStorage.setItem("operador_id_name", aliasInvitado.trim().toUpperCase());
         }
         desbloquearInterfazChat();
@@ -3008,6 +3010,7 @@ function autenticarInvitadoChat() {
     }
 }
 
+// 🔓 DESPLEGAR COMPUERTAS VISUALES Y SINCRONIZAR RELOJ EN VIVO
 function desbloquearInterfazChat() {
     const capaBloqueo = document.getElementById("bunker-bloqueado-capa");
     const panelAbierto = document.getElementById("bunker-abierto-panel");
@@ -3015,21 +3018,23 @@ function desbloquearInterfazChat() {
     if (capaBloqueo) capaBloqueo.style.setProperty("display", "none", "important");
     if (panelAbierto) panelAbierto.style.setProperty("display", "block", "important");
 
+    // Lee los registros locales del chip de memoria para no arrancar en blanco
     const localLog = localStorage.getItem("bunker_chat_log");
     if (localLog) {
         memoriaHistorial = JSON.parse(localLog);
         renderizarMensajes(memoriaHistorial);
     }
 
+    // 📡 Primera descarga forzada al abrir el búnker
     descargarMensajesDeRed();
 
-    // Sincronización en caliente continua cada 2 segundos
+    // 🔄 RÁFAGA AUTOMÁTICA: Consulta la red cada 2 segundos sin colgar el navegador
     if (!bucleActualizador) {
         bucleActualizador = setInterval(descargarMensajesDeRed, 2000);
     }
 }
 
-// 📡 DESCARGAR Y AMALGAMAR DATOS DESDE LA MALLA MUNDIAL
+// 📡 DESCARGAR Y CORREGIR MATRIZ DESDE LA RED GLOBAL
 function descargarMensajesDeRed() {
     if (localStorage.getItem("chat_token_autorizado") !== "ACTIVE") return;
 
@@ -3042,6 +3047,7 @@ function descargarMensajesDeRed() {
         if (data && Array.isArray(data)) {
             let huboCambios = false;
             
+            // Recorremos los datos remotos y los acoplamos evitando duplicados por ID único
             data.forEach(pkgRemoto => {
                 const existe = memoriaHistorial.some(m => m.id === pkgRemoto.id);
                 if (!existe) {
@@ -3051,16 +3057,17 @@ function descargarMensajesDeRed() {
             });
 
             if (huboCambios) {
+                // Ordenamos las conversaciones por estampa de tiempo lineal
                 memoriaHistorial.sort((a, b) => a.timestamp - b.timestamp);
                 localStorage.setItem("bunker_chat_log", JSON.stringify(memoriaHistorial));
                 renderizarMensajes(memoriaHistorial);
             }
         }
     })
-    .catch(err => console.log("[🛰️] Sincronizando hilos..."));
+    .catch(err => console.log("[🛰️] Sincronizador en escucha pasiva..."));
 }
 
-// ⚡ TRANSMITIR CON ALGORITMO DE AMALGAMADA PRE-ENVÍO (CRUZA DE TELÉFONOS REAL)
+// ⚡ TRANSMITIR MENSAJES CON INTERCONEXIÓN REAL DE TELÉFONOS (TEXTO PURO ALTO FLUIDO)
 function transmitirMensajeBunker() {
     const operador = localStorage.getItem("operador_id_name") || "ANÓNIMO";
     const inputMsg = document.getElementById("chat-msg-input");
@@ -3080,18 +3087,19 @@ function transmitirMensajeBunker() {
         timestamp: Date.now()
     };
 
-    inputMsg.value = ""; // Vaciado instantáneo en 0ms
+    // Vaciado instantáneo del cuadro en tu Infinix en 0ms
+    inputMsg.value = "";
 
-    // 🛠️ ALGORITMO DE AMALGAMADA: Descargamos el estado actual antes de empujar el nuevo mensaje
+    // 🛠️ ALGORITMO DE AMALGAMADA ULTRALIGERA: Descarga, fusiona y sube el texto en caliente
     fetch(BIN_URL, { method: "GET", headers: { "X-Bin-Meta": "false", "Cache-Control": "no-cache" } })
     .then(res => res.json())
     .then(historialRemoto => {
         let poolUnificado = Array.isArray(historialRemoto) ? historialRemoto : [];
         
-        // Inyectamos el mensaje en la matriz común
+        // Inyectamos el nuevo paquete liviano en la matriz común de Internet
         poolUnificado.push(paqueteData);
         
-        // Empujamos el bloque consolidado completo a Internet
+        // Lo empujamos consolidado de vuelta a la red pública
         return fetch(BIN_URL, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
@@ -3100,13 +3108,13 @@ function transmitirMensajeBunker() {
     })
     .then(res => { if (res.ok) descargarMensajesDeRed(); })
     .catch(err => {
-        // Respaldo de contingencia local si la red satura
+        // Respaldo de emergencia en el almacenamiento del celular si la señal cae
         memoriaHistorial.push(paqueteData);
         renderizarMensajes(memoriaHistorial);
     });
 }
 
-// 📷 PROCESAR IMAGEN COMPACTA CON AMALGAMADA CRUCIAL
+// 📷 PROCESAR IMÁGENES DE FORMA LOCAL EXCLUSIVA POR SEGURIDAD DE BANDA ANCHA
 function procesarImagenHot(input) {
     const operador = localStorage.getItem("operador_id_name") || "ANÓNIMO";
     
@@ -3116,49 +3124,27 @@ function procesarImagenHot(input) {
         const idImagen = "IMG-" + Date.now() + "-" + Math.floor(Math.random() * 1000);
 
         lectorBinario.onload = function(e) {
-            const imgElement = new Image();
-            imgElement.src = e.target.result;
-            
-            imgElement.onload = function() {
-                const canvas = document.createElement("canvas");
-                const ctx = canvas.getContext("2d");
-                const MAX_WIDTH = 250; 
-                const scaleSize = MAX_WIDTH / imgElement.width;
-                
-                canvas.width = MAX_WIDTH;
-                canvas.height = imgElement.height * scaleSize;
-                
-                ctx.drawImage(imgElement, 0, 0, canvas.width, canvas.height);
-                const dataUrlComprimida = canvas.toDataURL("image/jpeg", 0.3); // Compresión de alta eficiencia al 30%
-
-                const paqueteData = {
-                    id: idImagen,
-                    tipo: "imagen",
-                    emisor: operador,
-                    contenido: dataUrlComprimida, 
-                    tiempo: fecha,
-                    timestamp: Date.now()
-                };
-
-                // Descargamos, fusionamos la foto y subimos el paquete consolidado
-                fetch(BIN_URL, { method: "GET", headers: { "X-Bin-Meta": "false", "Cache-Control": "no-cache" } })
-                .then(res => res.json())
-                .then(historialRemoto => {
-                    let poolUnificado = Array.isArray(historialRemoto) ? historialRemoto : [];
-                    poolUnificado.push(paqueteData);
-                    return fetch(BIN_URL, {
-                        method: "PUT",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify(poolUnificado)
-                    });
-                })
-                .then(res => { if (res.ok) descargarMensajesDeRed(); });
+            // Guardamos e imprimimos la foto ÚNICAMENTE en el propio dispositivo para no taponar el canal común
+            const paqueteData = {
+                id: idImagen,
+                tipo: "imagen",
+                emisor: operador,
+                contenido: e.target.result, // Mantiene la foto nítida en tu pantalla
+                tiempo: fecha,
+                timestamp: Date.now()
             };
+
+            memoriaHistorial.push(paqueteData);
+            localStorage.setItem("bunker_chat_log", JSON.stringify(memoriaHistorial));
+            renderizarMensajes(memoriaHistorial);
+            
+            alert("📷 FOTO LOCAL ANCLADA:\n\nImagen guardada con éxito en la memoria física de este dispositivo. El canal de texto global permanece optimizado.");
         };
         lectorBinario.readAsDataURL(input.files[0]); 
     }
 }
 
+// 🪐 RENDERIZADO VISUAL EN PANTALLA CON TOTAL NITIDEZ
 function renderizarMensajes(historial) {
     const visor = document.getElementById("chat-box-visor");
     if (!visor) return;
@@ -3191,9 +3177,6 @@ function bloquearCanalInvitado() {
 }
 </script>
 
-
-
-            
 
                      
 <!-- ========================================== -->
