@@ -3158,11 +3158,12 @@ function procesarImagenHot(input) {
 }
 
 // 🪐 RENDERIZADO VISUAL EN PANTALLA CON TOTAL NITIDEZ
+// 🪐 RENDERIZADO VISUAL EN PANTALLA CON TOTAL NITIDEZ (REPARACIÓN DE ETIQUETA FOTO)
 function renderizarMensajes(historial) {
     const visor = document.getElementById("chat-box-visor");
     if (!visor) return;
 
-    visor.innerHTML = ""; 
+    visor.innerHTML = ""; // Limpieza quirúrgica del visor base
     historial.forEach(pkg => {
         const itemBox = document.createElement("div");
         itemBox.style.marginBottom = "8px";
@@ -3172,13 +3173,16 @@ function renderizarMensajes(historial) {
         if (pkg.tipo === "texto") {
             itemBox.innerHTML = `<span style="color: #d4af37;">[${pkg.tiempo}] ${pkg.emisor}:</span> <span style="color: #fff;">${pkg.contenido}</span>`;
         } else if (pkg.tipo === "imagen") {
+            // 🎯 CAMBIO TÁCTICO: Se revoca "EVIDENCIA" y se inyecta "FOTO" en color azul seguro
             itemBox.innerHTML = `
-                <span style="color: #345d9d;">[${pkg.tiempo}] ${pkg.emisor} (EVIDENCIA):</span><br>
+                <span style="color: #345d9d;">[${pkg.tiempo}] ${pkg.emisor} (FOTO):</span><br>
                 <img src="${pkg.contenido}" style="max-width: 100%; max-height: 150px; border: 1px solid #14F195; margin-top: 5px; border-radius: 4px;">
             `;
         }
         visor.appendChild(itemBox);
     });
+    
+    // Desplazamiento automático hacia abajo (Fluido Placentero)
     visor.scrollTop = visor.scrollHeight;
 }
 
