@@ -2977,46 +2977,44 @@ function cerrarSesionProtocolo() {
 
 
 
-<!-- 📜 INCLUSIÓN DE LA LIBRERÍA DE TRANSMISIÓN DE ALTA VELOCIDAD PUBNUB -->
-<script src="https://pubnub.com"></script>
-
 <script>
-// 🪐 INICIALIZACIÓN DEL CANAL SOBERANO DE TRANSMISIÓN GLOBAL
-// Llaves tácticas proxy universales para el Proyecto Libertad 2026
-const pubnubBunker = new PubNub({
-    publishKey: 'pub-c-469b6188-75c1-4043-9842-835b0bcf9e6e',
-    subscribeKey: 'sub-c-1a525dc0-dca7-4c74-8b65-e9ccda4fa377',
-    uuid: 'operador_' + Math.floor(Math.random() * 1000)
-});
-
-const CANAL_TACTICO = 'bunker_chat_P2P_2026';
+// 🪐 CONFIGURACIÓN DEL REPOSITORIO DE DATOS VIRTUAL (ESPEJO GLOBAL)
+// Contenedor público libre para el Proyecto Libertad 2026
+const BIN_URL = "https://jsonbin.io";
 let memoriaHistorial = [];
+let bucleActualizador = null;
 
 document.addEventListener("DOMContentLoaded", () => {
+    // Al cargar la página, restauramos el acceso autorizado si ya existe en la memoria
     if (localStorage.getItem("chat_token_autorizado") === "ACTIVE") {
         desbloquearInterfazChat();
     }
 });
 
+// 🔑 VALIDACIÓN DE CREDENCIALES PARA CONOCIDOS
 function autenticarInvitadoChat() {
     const LLAVE_ACCESO_CONOCIDOS = "NETIZEN-2026"; 
-    const tokenIngresado = prompt("🛰️ VALIDACIÓN ALPHA-CHAT [PROYECTO LIBERTAD]\n\nIntroduzca el Código de Invitación:");
+    const tokenIngresado = prompt("🛰️ VALIDACIÓN ALPHA-CHAT [PROYECTO LIBERTAD]\n\nIntroduzca el Código de Invitación para acceder al búnker:");
     
     if (tokenIngresado === null) return;
 
     if (tokenIngresado.trim() === LLAVE_ACCESO_CONOCIDOS) {
         localStorage.setItem("chat_token_autorizado", "ACTIVE");
+        
+        // Si el operador no se ha logueado en el panel militar superior, le asignamos su alias
         if (!localStorage.getItem("operador_id_name")) {
-            const aliasInvitado = prompt("👤 NOMBRE DE OPERADOR:") || "Invitado_Anonimo";
+            const aliasInvitado = prompt("👤 NOMBRE DE OPERADOR:\n\nIntroduzca su nombre o alias para identificarse en la red:") || "Invitado_Anonimo";
             localStorage.setItem("operador_id_name", aliasInvitado.trim().toUpperCase());
         }
+        
         desbloquearInterfazChat();
         alert("🟢 ACCESO PERMITIDO: Canal de círculo cerrado sincronizado.");
     } else {
-        alert("❌ ACCESO RECHAZADO: Código inválido.");
+        alert("❌ ACCESO RECHAZADO: Código inválido. Intruso mitigado.");
     }
 }
 
+// 🔓 DESPLEGAR COMPUERTAS VISUALES Y ARRANCAR MONITOR EN VIVO
 function desbloquearInterfazChat() {
     const capaBloqueo = document.getElementById("bunker-bloqueado-capa");
     const panelAbierto = document.getElementById("bunker-abierto-panel");
@@ -3024,39 +3022,55 @@ function desbloquearInterfazChat() {
     if (capaBloqueo) capaBloqueo.style.setProperty("display", "none", "important");
     if (panelAbierto) panelAbierto.style.setProperty("display", "block", "important");
 
-    // 📁 LEER RESPALDO LOCAL PREVENTIVO: Recupera lo que tenga guardado el celular
+    // 📁 LEER REGISTROS LOCALES PREVENTIVOS: Muestra los mensajes de inmediato en la pantalla
     const localLog = localStorage.getItem("bunker_chat_log");
     if (localLog) {
         memoriaHistorial = JSON.parse(localLog);
         renderizarMensajes(memoriaHistorial);
     }
 
-    // 📡 ESCUCHADOR MULTI-TELÉFONO EN VIVO (CAPTURA LAS ONDAS DE INTERNET DE INMEDIATO)
-    pubnubBunker.addListener({
-        message: function(event) {
-            const paqueteRecibido = event.message;
-            if (!paqueteRecibido || !paqueteRecibido.contenido) return;
+    // 📡 DESCARGA INICIAL DE RED INALÁMBRICA
+    descargarMensajesDeRed();
 
-            // Evitamos duplicidad de flujos visuales en la pantalla
-            const existe = memoriaHistorial.some(m => m.id === paqueteRecibido.id);
-            if (!existe) {
-                memoriaHistorial.push(paqueteRecibido);
+    // 🔄 BUCLE DE CONSULTA EN CALIENTE: Sincroniza los teléfonos cada 2 segundos solo si el chat está abierto
+    if (!bucleActualizador) {
+        bucleActualizador = setInterval(descargarMensajesDeRed, 2000);
+    }
+}
+
+// 📡 ALGORITMO FETCH: DESCARGAR DATOS DESDE EL CONTENEDOR MUNDIAL
+function descargarMensajesDeRed() {
+    if (localStorage.getItem("chat_token_autorizado") !== "ACTIVE") return;
+
+    fetch(BIN_URL, {
+        method: "GET",
+        headers: { "X-Bin-Meta": "false" }
+    })
+    .then(res => { if (res.ok) return res.json(); })
+    .then(data => {
+        if (data && Array.isArray(data) && data.length > 0) {
+            // Unificamos el historial remoto con el local evitando duplicados por ID único
+            let huboCambios = false;
+            data.forEach(pkgRemoto => {
+                const existe = memoriaHistorial.some(m => m.id === pkgRemoto.id);
+                if (!existe) {
+                    memoriaHistorial.push(pkgRemoto);
+                    huboCambios = true;
+                }
+            });
+
+            if (huboCambios) {
+                // Ordenamos cronológicamente todas las transmisiones cruzadas
                 memoriaHistorial.sort((a, b) => a.timestamp - b.timestamp);
-                
-                // Guardamos en la persistencia física del chip del teléfono
                 localStorage.setItem("bunker_chat_log", JSON.stringify(memoriaHistorial));
                 renderizarMensajes(memoriaHistorial);
             }
         }
-    });
-
-    // Suscribir el dispositivo al canal táctico interconectado
-    pubnubBunker.subscribe({
-        channels: [CANAL_TACTICO]
-    });
+    })
+    .catch(err => console.log("[🛰️] Sincronizador en espera..."));
 }
 
-// ⚡ TRANSMITIR MENSAJE CRIPTOGRÁFICO DESTRABADO DE MÁXIMA VELOCIDAD
+// ⚡ TRANSMITIR MENSAJE CRIPTOGRÁFICO DESTRABADO ENTRE TELÉFONOS
 function transmitirMensajeBunker() {
     const operador = localStorage.getItem("operador_id_name") || "ANÓNIMO";
     const inputMsg = document.getElementById("chat-msg-input");
@@ -3076,29 +3090,27 @@ function transmitirMensajeBunker() {
         timestamp: Date.now()
     };
 
-    // 🛠️ ACCIÓN QUIRÚRGICA: Borramos la casilla en 0 milisegundos en tu Infinix
+    // 🛠️ ACCIÓN INMEDIATA EN PANTALLA: Pintamos localmente y vaciamos la casilla en 0ms
     inputMsg.value = "";
+    memoriaHistorial.push(paqueteData);
+    renderizarMensajes(memoriaHistorial);
+    localStorage.setItem("bunker_chat_log", JSON.stringify(memoriaHistorial));
 
-    // 🚀 LANZAMIENTO SUPERSÓNICO AL CANAL COMPARTIDO
-    pubnubBunker.publish({
-        channel: CANAL_TACTICO,
-        message: paqueteData
-    }, function(status, response) {
-        if (status.error) {
-            console.log("[❌] Falla en hilos de red, guardando de forma local forzada...");
-            // Si Internet falla, se pinta en pantalla de respaldo local
-            memoriaHistorial.push(paqueteData);
-            localStorage.setItem("bunker_chat_log", JSON.stringify(memoriaHistorial));
-            renderizarMensajes(memoriaHistorial);
-        }
-    });
+    // 🚀 ENVÍO INALÁMBRICO AL CONTENEDOR COMPARTIDO POR INTERNET
+    fetch(BIN_URL, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(memoriaHistorial)
+    })
+    .then(res => { if (res.ok) console.log("[🟢] Transmisión cruzada exitosa."); })
+    .catch(err => console.error("[❌] Error al empujar datos a la malla:", err));
 }
 
-// 📷 PROCESAR IMAGEN COMPACTA EN CALIENTE Y MULTI-TELÉFONO
+// 📷 PROCESAR IMAGEN COMPACTA EN CALIENTE Y TRANSMITIRLA A LOS CONOCIDOS
 function procesarImagenHot(input) {
     const operador = localStorage.getItem("operador_id_name") || "ANÓNIMO";
     
-    if (input.files && input.files[0]) {
+    if (input.files && input.files[0]) { 
         const lectorBinario = new FileReader();
         const fecha = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit'});
         const idImagen = "IMG-" + Date.now() + "-" + Math.floor(Math.random() * 1000);
@@ -3108,16 +3120,17 @@ function procesarImagenHot(input) {
             imgElement.src = e.target.result;
             
             imgElement.onload = function() {
+                // Compresión quirúrgica por lienzo canvas para evitar saturar el JSON
                 const canvas = document.createElement("canvas");
                 const ctx = canvas.getContext("2d");
-                const MAX_WIDTH = 300; 
+                const MAX_WIDTH = 250; // Ancho ultra-optimizado para redes móviles
                 const scaleSize = MAX_WIDTH / imgElement.width;
                 
                 canvas.width = MAX_WIDTH;
                 canvas.height = imgElement.height * scaleSize;
                 
                 ctx.drawImage(imgElement, 0, 0, canvas.width, canvas.height);
-                const dataUrlComprimida = canvas.toDataURL("image/jpeg", 0.4); // Compresión optimizada para la malla
+                const dataUrlComprimida = canvas.toDataURL("image/jpeg", 0.3); // Compresión de alta eficiencia al 30%
 
                 const paqueteData = {
                     id: idImagen,
@@ -3128,9 +3141,15 @@ function procesarImagenHot(input) {
                     timestamp: Date.now()
                 };
 
-                pubnubBunker.publish({
-                    channel: CANAL_TACTICO,
-                    message: paqueteData
+                memoriaHistorial.push(paqueteData);
+                renderizarMensajes(memoriaHistorial);
+                localStorage.setItem("bunker_chat_log", JSON.stringify(memoriaHistorial));
+
+                // Empujamos la imagen comprimida a la malla global
+                fetch(BIN_URL, {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(memoriaHistorial)
                 });
             };
         };
@@ -3138,6 +3157,7 @@ function procesarImagenHot(input) {
     }
 }
 
+// 🪐 RENDERIZADO VISUAL EN PANTALLA CON TOTAL NITIDEZ
 function renderizarMensajes(historial) {
     const visor = document.getElementById("chat-box-visor");
     if (!visor) return;
@@ -3163,12 +3183,12 @@ function renderizarMensajes(historial) {
 }
 
 function bloquearCanalInvitado() {
+    if (bucleActualizador) { clearInterval(bucleActualizador); bucleActualizador = null; }
     localStorage.removeItem("chat_token_autorizado");
     alert("🔒 CANAL BLOQUEADO: Credenciales de transmisión destruidas.");
     window.location.reload();
 }
 </script>
-
 
 
 
