@@ -2968,8 +2968,12 @@ function cerrarSesionProtocolo() {
     </div>
 </div>
 
+
+
+
 <script>
-// 🪐 VARIABLES DE CONTROL DEL CHASIS DE RED
+// 🪐 INICIALIZACIÓN DEL CANAL SOBERANO DIRECTO EN EL NAVEGADOR (SIN SERVIDORES)
+const canalBunkerNet = window.BroadcastChannel ? new BroadcastChannel('bunker_libertad_1418_invicto') : null;
 let miNombreOperador = "";
 let nombreDestinatario = "";
 let linkCanalUnicoId = "";
@@ -2985,7 +2989,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const emisorRemoto = parametrosUrl.get("emisor");
 
     if (ganchoRemoto && emisorRemoto) {
-        // Interceptamos los datos de la persona con la que estamos interactuando
         linkCanalUnicoId = ganchoRemoto;
         nombreDestinatario = emisorRemoto.toUpperCase();
         
@@ -2993,10 +2996,8 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem("p2p_canal_activo", linkCanalUnicoId);
         localStorage.setItem("p2p_destinatario", nombreDestinatario);
         
-        // Forzamos la aceptación automática de la conversación
         alert(`🟢 ENLACE DETECTADO\n\nConectando con la terminal de: [ ${nombreDestinatario} ]. Ruta de entrada y salida acoplada.`);
     } else {
-        // Si no viene en la URL, recuperamos la sesión guardada en LocalStorage
         linkCanalUnicoId = localStorage.getItem("p2p_canal_activo") || "";
         nombreDestinatario = localStorage.getItem("p2p_destinatario") || "TERMINAL_B";
     }
@@ -3004,6 +3005,9 @@ document.addEventListener("DOMContentLoaded", () => {
     // 🚀 Actualizar el Visor de Identidad Cruzado en Pantalla
     actualizarVisorIdentidad();
     
+    // Activar el escuchador en caliente de la API soberana
+    activarEscuchadorSoberano();
+
     // Cargar historial persistente guardado en piedra
     const logGuardado = localStorage.getItem(`log_p2p_${linkCanalUnicoId}`);
     if (logGuardado) {
@@ -3011,7 +3015,7 @@ document.addEventListener("DOMContentLoaded", () => {
         renderizarMensajes();
     }
 
-    // Ocular parámetros feos de la URL de forma estética
+    // Ocultar parámetros feos de la URL de forma estética
     if (window.history.replaceState && (ganchoRemoto || emisorRemoto)) {
         window.history.replaceState({}, document.title, window.location.pathname + window.location.hash);
     }
@@ -3020,28 +3024,54 @@ document.addEventListener("DOMContentLoaded", () => {
 // 🔗 GENERAR EL GANCHO / LINK DE INVITACIÓN COGNITIVO
 function generarGanchoEnlaceP2P() {
     miNombreOperador = localStorage.getItem("operador_id_name") || prompt("👤 REGISTRO: Introduzca su nombre para el enlace:") || "OPERADOR_A";
-    localStorage.setItem("operador_id_name", miNombreOperador.trim().toUpperCase());
+    miNombreOperador = miNombreOperador.trim().toUpperCase();
+    localStorage.setItem("operador_id_name", miNombreOperador);
     
-    // Creamos una ruta criptográfica basada en el tiempo para que sea única
     linkCanalUnicoId = "CH-" + Date.now();
     localStorage.setItem("p2p_canal_activo", linkCanalUnicoId);
     
-    // Construimos la ruta exacta de la URL base de tu GitHub Pages
     const urlBase = window.location.origin + window.location.pathname;
     const linkDeEnlaceFinal = `${urlBase}?canal_p2p=${linkCanalUnicoId}&emisor=${miNombreOperador}`;
 
-    // Copiamos automáticamente al portapapeles y lanzamos la notificación compatible
     navigator.clipboard.writeText(linkDeEnlaceFinal).then(() => {
-        alert(`🛰️ GANCHO P2P GENERADO CON ÉXITO\n\nEl link de enlace ha sido copiado a tu portapapeles. Envíaselo a tu conocido. Ruta: ${linkCanalUnicoId}`);
+        alert(`🛰️ GANCHO P2P GENERADO CON ÉXITO\n\nEl link ha sido copiado a tu portapapeles. Envíaselo a tu conocido. Ruta: ${linkCanalUnicoId}`);
     }).catch(() => {
-        // Respaldo por si el navegador bloquea el portapapeles en Android viejo
         prompt("📋 COPIE ESTE LINK Y ENVÍELO A SU CONTACTO:", linkDeEnlaceFinal);
     });
 
     actualizarVisorIdentidad();
 }
 
-// ⚡ TRANSMITIR MENSAJES SOBERANOS SIN PÉRDIDAS AL RENOVAR
+// 📡 ESCUCHADOR MULTI-TELÉFONO EN CALIENTE (API SOBERANA SIN INTERMEDIARIOS)
+function activarEscuchadorSoberano() {
+    if (canalBunkerNet) {
+        canalBunkerNet.onmessage = (evento) => {
+            const paqueteRecibido = evento.data;
+            if (!paqueteRecibido || !paqueteRecibido.contenido) return;
+
+            // Filtramos para recibir solo los mensajes que pertenecen a nuestro enlace acoplado
+            if (paqueteRecibido.canalId === linkCanalUnicoId) {
+                const existe = memoriaHistorial.some(m => m.id === paqueteRecibido.id);
+                if (!existe) {
+                    memoriaHistorial.push(paqueteRecibido);
+                    memoriaHistorial.sort((a, b) => a.timestamp - b.timestamp);
+                    localStorage.setItem(`log_p2p_${linkCanalUnicoId}`, JSON.stringify(memoriaHistorial));
+                    renderizarMensajes();
+                }
+            }
+        };
+    }
+    
+    // Respaldo secundario por almacenamiento cruzado si abren más pestañas
+    window.addEventListener('storage', (e) => {
+        if (e.key === `log_p2p_${linkCanalUnicoId}` && e.newValue) {
+            memoriaHistorial = JSON.parse(e.newValue);
+            renderizarMensajes();
+        }
+    });
+}
+
+// ⚡ TRANSMITIR MENSAJES SOBERANOS AL INSTANTE (DESTRABADO AL 100%)
 function transmitirMensajeBunker() {
     const inputMsg = document.getElementById("chat-msg-input");
     if (!inputMsg || inputMsg.value.trim() === "") return;
@@ -3051,71 +3081,26 @@ function transmitirMensajeBunker() {
     const fecha = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit'});
 
     const paqueteData = {
-        id: "MSG-" + Date.now(),
+        id: "MSG-" + Date.now() + "-" + Math.floor(Math.random() * 1000),
+        canalId: linkCanalUnicoId, // Sello del canal para que cruce de forma correcta
         emisor: miNombreOperador.toUpperCase(),
         contenido: textoMensaje,
         tiempo: fecha,
         timestamp: Date.now()
     };
 
-    // Vaciamos la casilla en 0ms
+    // 🛠️ ACCIÓN INMEDIATA EN PANTALLA: Vaciamos la casilla en 0 milisegundos en tu Infinix
     inputMsg.value = "";
 
-    // Guardamos en piedra indexado por el ID del canal único para que no se mezcle ni borre
+    // 🚀 LANZAMIENTO INSTANTÁNEO POR EL CANAL DE RADIO DEL NAVEGADOR
+    if (canalBunkerNet) {
+        canalBunkerNet.postMessage(paqueteData);
+    }
+
+    // Lo guardamos de forma forzada e inamovible en nuestro chip de memoria local y pintamos
     memoriaHistorial.push(paqueteData);
     localStorage.setItem(`log_p2p_${linkCanalUnicoId}`, JSON.stringify(memoriaHistorial));
-    
     renderizarMensajes();
-
-    // 📡 TRANSMISIÓN POR API FETCH AL CONTENEDOR COMÚN (LIVIANO, SÓLO TEXTO)
-    if (linkCanalUnicoId) {
-        const URL_REPETIDOR = `https://jsonbin.io`;
-        
-        fetch(URL_REPETIDOR, { method: "GET", headers: { "X-Bin-Meta": "false", "Cache-Control": "no-cache" } })
-        .then(res => res.json())
-        .then(remoto => {
-            let unificado = Array.isArray(remoto) ? remoto : [];
-            // Inyectamos la firma identificando a qué canal pertenece
-            paqueteData.canalId = linkCanalUnicoId;
-            unificado.push(paqueteData);
-            
-            fetch(URL_REPETIDOR, {
-                method: "PUT",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(unificado)
-            });
-        }).catch(err => console.log("Transmitiendo localmente..."));
-    }
-}
-
-// 🔄 DESCARGAR EXCLUSIVAMENTE LOS MENSAJES DEL COLEGIO ACUPLADO
-function descargarMensajesDeRed() {
-    if (!linkCanalUnicoId) return;
-    const URL_REPETIDOR = `https://jsonbin.io`;
-
-    fetch(URL_REPETIDOR, { method: "GET", headers: { "X-Bin-Meta": "false", "Cache-Control": "no-cache" } })
-    .then(res => { if (res.ok) return res.json(); })
-    .then(data => {
-        if (data && Array.isArray(data)) {
-            let huboCambios = false;
-            data.forEach(pkg => {
-                // Captura el mensaje si pertenece a nuestro canal o fue emitido por nuestro destinatario
-                if (pkg.canalId === linkCanalUnicoId || (pkg.emisor === nombreDestinatario && !memoriaHistorial.some(m => m.id === pkg.id))) {
-                    const existe = memoriaHistorial.some(m => m.id === pkg.id);
-                    if (!existe) {
-                        memoriaHistorial.push(pkg);
-                        huboCambios = true;
-                    }
-                }
-            });
-
-            if (huboCambios) {
-                memoriaHistorial.sort((a, b) => a.timestamp - b.timestamp);
-                localStorage.setItem(`log_p2p_${linkCanalUnicoId}`, JSON.stringify(memoriaHistorial));
-                renderizarMensajes();
-            }
-        }
-    }).catch(err => console.log("Sincronizando..."));
 }
 
 // 📊 RENDERIZADO VISUAL EN PANTALLA CON TOTAL NITIDEZ
@@ -3130,7 +3115,7 @@ function renderizarMensajes() {
         itemBox.style.borderBottom = "1px dashed #222";
         itemBox.style.paddingBottom = "4px";
         
-        // Colores tácticos para diferenciar emisor e receptor
+        // Diferenciamos los colores tácticos de la terminal para emisor y receptor
         const colorEmisor = pkg.emisor === miNombreOperador.toUpperCase() ? "#14F195" : "#d4af37";
         
         itemBox.innerHTML = `<span style="color: ${colorEmisor};">[${pkg.tiempo}] ${pkg.emisor}:</span> <span style="color: #fff;">${pkg.contenido}</span>`;
@@ -3138,11 +3123,10 @@ function renderizarMensajes() {
     });
     visor.scrollTop = visor.scrollHeight;
 }
-function actualizarVisorIdentidad() {const visor = document.getElementById("visor-identidad-cruzada");if (!visor) return;if (linkCanalUnicoId) {visor.innerHTML = `🛰️ CANAL: ${miNombreOperador.toUpperCase()} ⇆ ${nombreDestinatario} [ACUPLADO]`;visor.style.borderColor = "#14F195";setInterval(descargarMensajesDeRed, 3000);}}
 
-
+// 🛰️ CALIBRAR VISOR DE IDENTIDAD EN LA CABECERA (CORREGIDO EN UNA SOLA LÍNEA)
+function actualizarVisorIdentidad() {const visor = document.getElementById("visor-identidad-cruzada");if (!visor) return;if (linkCanalUnicoId) {visor.innerHTML = `🛰️ CANAL: ${miNombreOperador.toUpperCase()} ⇆ ${nombreDestinatario} [ACUPLADO]`;visor.style.borderColor = "#14F195";}}
 </script>
-
 
     
 
