@@ -2931,21 +2931,27 @@ function cerrarSesionProtocolo() {
 }
 </script>
 
-
-<!-- CHASSIS VISUAL DEL SÚPER CHAT P2P POR ENLACE DINÁMICO v12.5 (SIN PÉRDIDAS) -->
+<!-- CHASSIS VISUAL DEL SÚPER CHAT P2P CON ACCESO RESTRINGIDO v12.5_SECURE -->
 <div id="crypto-chat-bunker" style="background: rgba(10,10,10,0.95); border: 2px solid #14F195; border-radius: 10px; padding: 15px; margin-top: 20px; font-family: monospace; color: #14F195;">
     
     <!-- ENCABEZADO CON VISOR DE IDENTIDAD EN CALIENTE -->
     <div style="border-bottom: 1px solid #4b5320; padding-bottom: 8px; margin-bottom: 10px; text-align: center;">
-        <h3 style="color: #d4af37; margin: 0 0 5px 0;">🛰️ SÚPER CHAT: INTERCONEXIÓN DIRECTA</h3>
-        <div id="visor-identidad-cruzada" style="background: #000; border: 1px dashed #345d9d; padding: 4px; font-size: 11px; color: #14F195; font-weight: bold;">
-            [ 🛑 ESTADO: ESPERANDO ENLACE DE TERMINALES ]
+        <h3 style="color: #d4af37; margin: 0 0 5px 0;">🛰️ SÚPER CHAT: INTERCONEXIÓN SECURE</h3>
+        <div id="visor-identidad-cruzada" style="background: #000; border: 1px dashed #ff3333; padding: 4px; font-size: 11px; color: #ff3333; font-weight: bold;">
+            [ 🔒 ACCESO RESTRINGIDO: SECTOR BLOQUEADO ]
         </div>
     </div>
     
-    <!-- PANEL OPERATIVO PRINCIPAL -->
-    <div id="bunker-abierto-panel">
-        
+    <!-- CAPA DE BLOQUEO VISUAL PASIVO PARA INTRUSOS -->
+    <div id="bunker-bloqueado-capa" style="display: block; text-align: center; padding: 30px 10px; background: #050505; border: 1px dashed #ff3333; margin-bottom: 10px; border-radius: 4px;">
+        <span style="color: #ff3333; font-weight: bold; display: block; margin-bottom: 15px;">🔒 REQUIERE AUTENTICACIÓN ALPHA-CHAT</span>
+        <button onclick="autenticarInvitadoChat()" class="btn-registro" style="background: #4b5320; color: white; padding: 8px 15px; border: 1px solid #d4af37; cursor: pointer; font-size: 11px; font-weight: bold; border-radius: 4px;">
+            INTRODUCIR CÓDIGO ALPHA-CHAT
+        </button>
+    </div>
+
+    <!-- PANEL OPERATIVO PRINCIPAL (OCULTO POR DEFECTO) -->
+    <div id="bunker-abierto-panel" style="display: none;">
         <!-- Botón para Generar el Gancho / Link de Invitación -->
         <div style="margin-bottom: 10px; text-align: center;">
             <button onclick="generarGanchoEnlaceP2P()" class="btn-registro" style="background: #4b5320; color: white; padding: 6px 12px; border: 1px solid #d4af37; cursor: pointer; font-size: 11px; font-weight: bold; border-radius: 4px; width: 100%;">
@@ -2955,7 +2961,7 @@ function cerrarSesionProtocolo() {
 
         <!-- Visor de Mensajes Indestructible -->
         <div id="chat-box-visor" style="height: 220px; overflow-y: auto; background: #000; border: 1px solid #4b5320; padding: 10px; margin-bottom: 10px; border-radius: 4px;">
-            <span style="color: #666;">[ Sistema Listo. Genere un link o use un enlace recibido para conectar ]</span>
+            <span style="color: #666;">[ Sistema acoplado. Listo para transmisión ]</span>
         </div>
 
         <!-- Controles de Entrada -->
@@ -2967,6 +2973,7 @@ function cerrarSesionProtocolo() {
         </div>
     </div>
 </div>
+
 
 
 <script>
@@ -3127,7 +3134,7 @@ function actualizarVisorIdentidad() {const visor = document.getElementById("viso
 </script>
 
 
-<script>
+      <script>
 const canalBunkerNet = window.BroadcastChannel ? new BroadcastChannel('bunker_libertad_1418_invicto') : null;
 let miNombreOperador = "";
 let nombreDestinatario = "";
@@ -3135,47 +3142,85 @@ let linkCanalUnicoId = "";
 let memoriaHistorial = [];
 
 document.addEventListener("DOMContentLoaded", () => {
-    miNombreOperador = localStorage.getItem("operador_id_name") || "OPERADOR_A";
-    const parametrosUrl = new URLSearchParams(window.location.search);
-    const ganchoRemoto = parametrosUrl.get("canal_p2p");
-    const emisorRemoto = parametrosUrl.get("emisor");
+    // Si ya validó sus credenciales previamente, destrabamos el chasis directo
+    if (localStorage.getItem("chat_token_autorizado") === "ACTIVE") {
+        desbloquearInterfazChat();
+    }
+});
 
-    if (ganchoRemoto && emisorRemoto) {
-        linkCanalUnicoId = ganchoRemoto;
-        nombreDestinatario = emisorRemoto.toUpperCase();
+// 🔑 VALIDACIÓN DE CREDENCIALES ALPHA-CHAT CON CLAVE REAL
+function autenticarInvitadoChat() {
+    const CLAVE_ALPHA_REAL = "ALPHA-2026"; // Llave inviolable del búnker
+    
+    const tokenIngresado = prompt("🛰️ VALIDACIÓN ALPHA-CHAT [PROYECTO LIBERTAD]\n\nIntroduzca el Código de Invitación para acceder al búnker:");
+    
+    if (tokenIngresado === null) return;
+
+    if (tokenIngresado.trim() === CLAVE_ALPHA_REAL) {
+        localStorage.setItem("chat_token_autorizado", "ACTIVE");
+        
+        // Si no está registrado en el panel superior, le pide su alias de operador
+        if (!localStorage.getItem("operador_id_name")) {
+            const alias = prompt("👤 NOMBRE DE OPERADOR:\n\nIntroduzca su nombre o alias para identificarse en la red:") || "INVITADO";
+            localStorage.setItem("operador_id_name", alias.trim().toUpperCase());
+        }
+        
+        desbloquearInterfazChat();
+        alert("🟢 ACCESO PERMITIDO: Canal de círculo cerrado sincronizado.");
+    } else {
+        alert("❌ ACCESO RECHAZADO: Código Alpha-Chat inválido. Sector bloqueado.");
+    }
+}
+
+function desbloquearInterfazChat() {
+    miNombreOperador = localStorage.getItem("operador_id_name") || "OPERADOR_A";
+    
+    // Capturamos las variables de enlace de la URL
+    const parametrosUrl = new URLSearchParams(window.location.search);
+    const gRemoto = parametrosUrl.get("canal_p2p");
+    const eRemoto = parametrosUrl.get("emisor");
+
+    if (gRemoto && eRemoto) {
+        linkCanalUnicoId = gRemoto;
+        nombreDestinatario = eRemoto.toUpperCase();
         localStorage.setItem("p2p_canal_activo", linkCanalUnicoId);
         localStorage.setItem("p2p_destinatario", nombreDestinatario);
-        alert(`🟢 ENLACE DETECTADO\n\nConectando con la terminal de: [ ${nombreDestinatario} ]. Ruta de entrada y salida acoplada.`);
     } else {
         linkCanalUnicoId = localStorage.getItem("p2p_canal_activo") || "";
         nombreDestinatario = localStorage.getItem("p2p_destinatario") || "TERMINAL_B";
     }
 
+    // Cambiamos los estados visuales del HTML de forma controlada
+    const capaBloqueo = document.getElementById("bunker-bloqueado-capa");
+    const panelAbierto = document.getElementById("bunker-abierto-panel");
+    if (capaBloqueo) capaBloqueo.style.setProperty("display", "none", "important");
+    if (panelAbierto) panelAbierto.style.setProperty("display", "block", "important");
+
     actualizarVisorIdentidad();
     activarEscuchadorSoberano();
 
+    // Restauramos el registro de mensajes guardados en piedra del chip del teléfono
     const logGuardado = localStorage.getItem(`log_p2p_${linkCanalUnicoId}`);
     if (logGuardado) {
         memoriaHistorial = JSON.parse(logGuardado);
         renderizarMensajes();
     }
 
-    if (window.history.replaceState && (ganchoRemoto || emisorRemoto)) {
+    if (window.history.replaceState && (gRemoto || eRemoto)) {
         window.history.replaceState({}, document.title, window.location.pathname + window.location.hash);
     }
-});
+}
 
 function generarGanchoEnlaceP2P() {
-    miNombreOperador = localStorage.getItem("operador_id_name") || prompt("👤 REGISTRO: Introduzca su nombre para el enlace:") || "OPERADOR_A";
-    miNombreOperador = miNombreOperador.trim().toUpperCase();
-    localStorage.setItem("operador_id_name", miNombreOperador);
+    miNombreOperador = localStorage.getItem("operador_id_name") || "OPERADOR_A";
     linkCanalUnicoId = "CH-" + Date.now();
     localStorage.setItem("p2p_canal_activo", linkCanalUnicoId);
+    
     const urlBase = window.location.origin + window.location.pathname;
     const linkDeEnlaceFinal = `${urlBase}?canal_p2p=${linkCanalUnicoId}&emisor=${miNombreOperador}`;
 
     navigator.clipboard.writeText(linkDeEnlaceFinal).then(() => {
-        alert(`🛰️ GANCHO P2P GENERADO CON ÉXITO\n\nEl link ha sido copiado a tu portapapeles. Envíaselo a tu conocido. Ruta: ${linkCanalUnicoId}`);
+        alert(`🛰️ GANCHO P2P GENERADO CON ÉXITO\n\nEl link ha sido copiado. Envíeselo a su conocido.`);
     }).catch(() => {
         prompt("📋 COPIE ESTE LINK Y ENVÍELO A SU CONTACTO:", linkDeEnlaceFinal);
     });
@@ -3185,16 +3230,15 @@ function generarGanchoEnlaceP2P() {
 function activarEscuchadorSoberano() {
     if (canalBunkerNet) {
         canalBunkerNet.onmessage = (evento) => {
-            const paqueteRecibido = evento.data;
-            if (!paqueteRecibido || !paqueteRecibido.contenido) return;
-            if (paqueteRecibido.canalId === linkCanalUnicoId) {
-                const existe = memoriaHistorial.some(m => m.id === paqueteRecibido.id);
-                if (!existe) {
-                    memoriaHistorial.push(paqueteRecibido);
-                    memoriaHistorial.sort((a, b) => a.timestamp - b.timestamp);
-                    localStorage.setItem(`log_p2p_${linkCanalUnicoId}`, JSON.stringify(memoriaHistorial));
-                    renderizarMensajes();
-                }
+            const pkg = evento.data;
+            if (!pkg || !pkg.contenido || pkg.canalId !== linkCanalUnicoId) return;
+
+            const existe = memoriaHistorial.some(m => m.id === pkg.id);
+            if (!existe) {
+                memoriaHistorial.push(pkg);
+                memoriaHistorial.sort((a, b) => a.timestamp - b.timestamp);
+                localStorage.setItem(`log_p2p_${linkCanalUnicoId}`, JSON.stringify(memoriaHistorial));
+                renderizarMensajes();
             }
         };
     }
@@ -3210,7 +3254,6 @@ function transmitirMensajeBunker() {
     const inputMsg = document.getElementById("chat-msg-input");
     if (!inputMsg || inputMsg.value.trim() === "") return;
 
-    miNombreOperador = localStorage.getItem("operador_id_name") || "OPERADOR_A";
     const textoMensaje = inputMsg.value.trim();
     const fecha = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit'});
 
@@ -3248,8 +3291,7 @@ function renderizarMensajes() {
 
 function actualizarVisorIdentidad() {const visor = document.getElementById("visor-identidad-cruzada");if (!visor) return;if (linkCanalUnicoId) {visor.innerHTML = `🛰️ CANAL: ${miNombreOperador.toUpperCase()} ⇆ ${nombreDestinatario} [ACUPLADO]`;visor.style.borderColor = "#14F195";}}
 </script>
-
-                     
+               
 
                      
 <!-- ========================================== -->
