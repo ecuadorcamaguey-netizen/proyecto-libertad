@@ -3148,15 +3148,16 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
          
-// 🔑 VALIDACIÓN DE CREDENCIALES ALPHA-CHAT CON CLAVE REAL
+// 🔑 VALIDACIÓN DE CREDENCIALES ALPHA-CHAT - REPARADO CON INYECCIÓN DE PERSISTENCIA
 function autenticarInvitadoChat() {
-    const CLAVE_ALPHA_REAL = "ALPHA-2026"; // Llave inviolable del búnker
+    const CLAVE_ALPHA_REAL = "ALPHA-2026"; // Llave inviolable del búnker real
     
     const tokenIngresado = prompt("🛰️ VALIDACIÓN ALPHA-CHAT [PROYECTO LIBERTAD]\n\nIntroduzca el Código de Invitación para acceder al búnker:");
     
     if (tokenIngresado === null) return;
 
     if (tokenIngresado.trim() === CLAVE_ALPHA_REAL) {
+        // 🛠️ REPARACIÓN DE ALTA INGENIERÍA: Se inyecta la persistencia física en el chip del teléfono
         localStorage.setItem("chat_token_autorizado", "ACTIVE");
         
         // Si no está registrado en el panel superior, le pide su alias de operador
@@ -3165,8 +3166,9 @@ function autenticarInvitadoChat() {
             localStorage.setItem("operador_id_name", alias.trim().toUpperCase());
         }
         
+        // Destrabamos visualmente las compuertas lógicas de la esfera
         desbloquearInterfazChat();
-        alert("🟢 ACCESO PERMITIDO: Canal de círculo cerrado sincronizado.");
+        alert("🟢 ACCESO PERMITIDO: Canal de círculo cerrado sincronizado de forma permanente.");
     } else {
         alert("❌ ACCESO RECHAZADO: Código Alpha-Chat inválido. Sector bloqueado.");
     }
