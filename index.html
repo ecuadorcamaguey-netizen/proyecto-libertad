@@ -3138,16 +3138,8 @@ function renderizarMensajes() {
     });
     visor.scrollTop = visor.scrollHeight;
 }
+function actualizarVisorIdentidad() {const visor = document.getElementById("visor-identidad-cruzada");if (!visor) return;if (linkCanalUnicoId) {visor.innerHTML = `🛰️ CANAL: ${miNombreOperador.toUpperCase()} ⇆ ${nombreDestinatario} [ACUPLADO]`;visor.style.borderColor = "#14F195";setInterval(descargarMensajesDeRed, 3000);}}
 
-// 🛰️ CALIBRAR VISOR DE IDENTIDAD EN LA CABECERA
-function actualizarVisorIdentidad() {
-   const visor = document.getElementById("visor-identidad-cruzada");
-   if (!visor) return;
-   if (linkCanalUnicoId) {
-      visor.innerHTML = 🛰️ CANAL: 
-      ${miNombreOperador.toUpperCase()} ⇆ 
-         ${nombreDestinatario} [ACUPLADO];
-      visor.style.borderColor = "#14F195";// Arrancamos el bucle actualizador de fondo si hay un canal activosetInterval(descargarMensajesDeRed, 3000);}}
 
 </script>
 
