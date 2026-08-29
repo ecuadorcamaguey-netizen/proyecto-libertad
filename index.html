@@ -2972,40 +2972,59 @@ function cerrarSesionProtocolo() {
 
 
 
+<!--- SCRIPT DE CONTROL SOBERANO: VENTANA UNIFICADA CON ARREGLO DE CREDENCIALES v14.3 --->
 <script>
-// 🪐 ENLACE DEL REPETIDOR SOBERANO DE INTERNET
+// 🪐 ENLACE DEL REPETIDOR SOBERANO DE INTERNET (CANAL COMPARTIDO YORVIS ⇆ ANDRUS)
 const BIN_URL = "https://jsonbin.io";
 let miNombreOperador = "";
 let memoriaHistorial = [];
 let bucleActualizador = null;
 
+// 🛠️ CONTROL DE ARRANQUE MILITAR
 document.addEventListener("DOMContentLoaded", () => {
+    // Si el usuario ya se autenticó con éxito, abrimos el panel directo sin bloquearlo
     if (localStorage.getItem("chat_token_autorizado") === "ACTIVE") {
         desbloquearInterfazChat();
+    } else {
+        // Si no hay sesión, aseguramos el estado blindado en negro por seguridad perimetral
+        const capaBloqueo = document.getElementById("bunker-bloqueado-capa");
+        const panelAbierto = document.getElementById("bunker-abierto-panel");
+        const visorIdentidad = document.getElementById("visor-identidad-cruzada");
+
+        if (capaBloqueo) capaBloqueo.style.setProperty("display", "block", "important");
+        if (panelAbierto) panelAbierto.style.setProperty("display", "none", "important");
+        if (visorIdentidad) {
+            visorIdentidad.innerHTML = "[ 🔒 REQUIERE CRIPTOCLAVE DE INGRESO ]";
+            visorIdentidad.style.color = "#ff3333";
+            visorIdentidad.style.borderColor = "#ff3333";
+        }
     }
 });
 
+// 🔑 VALIDACIÓN DE CREDENCIALES CON ENTRADA DIRECTA REPARADA
 function autenticarInvitadoChat() {
-    const CLAVE_ALPHA_REAL = "ALPHA-2026"; 
-    const tokenIngresado = prompt("🛰️ VALIDACIÓN ALPHA-CHAT [PROYECTO LIBERTAD]\n\nIntroduzca el Código de Invitación:");
+    const CLAVE_ALPHA_REAL = "ALPHA-2026"; // Tu contraseña maestra inviolable
+    const tokenIngresado = prompt("🛰️ VALIDACIÓN ALPHA-CHAT [PROYECTO LIBERTAD]\n\nIntroduzca el Código de Invitación para acceder al búnker:");
     
     if (tokenIngresado === null) return;
 
     if (tokenIngresado.trim() === CLAVE_ALPHA_REAL) {
+        // Inyectamos la persistencia física en el almacenamiento del celular
         localStorage.setItem("chat_token_autorizado", "ACTIVE");
         
-        if (!localStorage.getItem("operador_id_name")) {
-            const alias = prompt("👤 NOMBRE DE OPERADOR:\n\nIntroduzca su alias (Ej: YORVIS o ANDRUS):") || "OPERADOR";
-            localStorage.setItem("operador_id_name", alias.trim().toUpperCase());
-        }
+        // Solicita el nombre para rotular la ventana unificada de interacción
+        const alias = prompt("👤 NOMBRE DE OPERADOR:\n\nIntroduzca su alias (Ej: YORVIS o ANDRUS):") || "OPERADOR";
+        localStorage.setItem("operador_id_name", alias.trim().toUpperCase());
         
+        // Destrabamos el chasis de forma inmediata
         desbloquearInterfazChat();
-        alert("🟢 ACCESO PERMITIDO: Canal interconectado con éxito.");
+        alert("🟢 ACCESO PERMITIDO: Canal interconectado con éxito de Grandes Ligas.");
     } else {
-        alert("❌ ACCESO RECHAZADO: Código Alpha-Chat inválido.");
+        alert("❌ ACCESO RECHAZADO: Código Alpha-Chat inválido. Sector bloqueado.");
     }
 }
 
+// 🔓 DESPLEGAR COMPUERTAS VISUALES DE LA ESFERA (CORRECCIÓN DE ANIMACIÓN CSS)
 function desbloquearInterfazChat() {
     miNombreOperador = localStorage.getItem("operador_id_name") || "OPERADOR";
     
@@ -3013,9 +3032,10 @@ function desbloquearInterfazChat() {
     const panelAbierto = document.getElementById("bunker-abierto-panel");
     const seccionTecnologica = document.getElementById("panelLibertad");
 
+    // Rompemos las ataduras ocultas de la plantilla
     if (capaBloqueo) capaBloqueo.style.setProperty("display", "none", "important");
     if (panelAbierto) panelAbierto.style.setProperty("display", "block", "important");
-    if (seccionTecnologica) seccionTecnologica.classList.add("activo");
+    if (seccionTecnologica) seccionTecnologica.classList.add("activo"); // Fuerza la expansión a 600px en el CSS
 
     const visorIdentidad = document.getElementById("visor-identidad-cruzada");
     if (visorIdentidad) {
@@ -3024,7 +3044,7 @@ function desbloquearInterfazChat() {
         visorIdentidad.style.color = "#14F195";
     }
 
-    // 📡 Descarga inicial inmediata y activación del radar cada 2 segundos
+    // Activamos la lectura de hilos en tiempo real
     descargarMensajesDeRed();
     if (!bucleActualizador) {
         bucleActualizador = setInterval(descargarMensajesDeRed, 2000);
@@ -3042,9 +3062,7 @@ function descargarMensajesDeRed() {
     .then(data => {
         if (data && Array.isArray(data)) {
             let huboCambios = false;
-            
             data.forEach(pkgRemoto => {
-                // Sincroniza e inyecta si el mensaje no existe en la memoria del teléfono
                 const existe = memoriaHistorial.some(m => m.id === pkgRemoto.id);
                 if (!existe) {
                     memoriaHistorial.push(pkgRemoto);
@@ -3057,7 +3075,7 @@ function descargarMensajesDeRed() {
                 renderizarMensajes();
             }
         }
-    }).catch(err => console.log("[🛰️] Sincronizando canales..."));
+    }).catch(err => console.log("[🛰️] Malla de red en escucha..."));
 }
 
 function transmitirMensajeBunker() {
@@ -3078,7 +3096,7 @@ function transmitirMensajeBunker() {
 
     inputMsg.value = ""; // Vaciado en 0ms
 
-    // 🛠️ ALGORITMO DE AMALGAMADA DE RED: Descarga la ventana común, le suma tu mensaje y la resube
+    // Algoritmo de amalgama para fundir los textos en la misma ventana de interacción
     fetch(BIN_URL, { method: "GET", headers: { "X-Bin-Meta": "false", "Cache-Control": "no-cache" } })
     .then(res => res.json())
     .then(historialRemoto => {
@@ -3109,9 +3127,7 @@ function renderizarMensajes() {
         itemBox.style.borderBottom = "1px dashed #222";
         itemBox.style.paddingBottom = "4px";
         
-        // 🎯 CROMÁTICA TÁCTICA: Si el mensaje es tuyo se pinta en verde Termux, si es de tu conocido en amarillo oro
         const colorEmisor = pkg.emisor === miNombreOperador.toUpperCase() ? "#14F195" : "#d4af37";
-        
         itemBox.innerHTML = `<span style="color: ${colorEmisor};">[${pkg.tiempo}] ${pkg.emisor}:</span> <span style="color: #fff;">${pkg.contenido}</span>`;
         visor.appendChild(itemBox);
     });
