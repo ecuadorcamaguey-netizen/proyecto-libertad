@@ -2926,7 +2926,8 @@ function verificarBloqueoGrifo() {
 }
 </script>
 
-<!--- CHASSIS VISUAL DEL SÚPER CHAT P2P CON BOTÓN DE NOTIFICACIÓN v16.5 --->
+
+<!-- CHASSIS VISUAL DEL SÚPER CHAT P2P CON PERSISTENCIA REFORZADA v17.0 -->
 <div id="crypto-chat-bunker" style="background: rgba(10,10,10,0.95); border: 2px solid #14F195; border-radius: 10px; padding: 15px; margin-top: 20px; font-family: monospace; color: #14F195;">
     
     <!-- ENCABEZADO CON VISOR DE IDENTIDAD EN CALIENTE -->
@@ -2939,6 +2940,7 @@ function verificarBloqueoGrifo() {
     
     <!-- CAPA DE BLOQUEO DE SEGURIDAD -->
     <div id="bunker-bloqueado-capa" style="display: block; text-align: center; padding: 30px 10px; background: #050505; border: 1px dashed #ff3333; margin-bottom: 10px; border-radius: 4px;">
+        <span style="color: #ff3333; font-weight: bold; display: block; margin-bottom: 15px;">🔒 SECTOR RESTRINGIDO: ACCESO ALPHA-CHAT</span>
         <button class="btn-registro" onclick="autenticarInvitadoChat()" style="background:#4b5320; color:white; padding:10px 20px; border:1px solid #d4af37; cursor:pointer; font-family: monospace; font-size: 11px; font-weight: bold; text-transform: uppercase;">
             INTRODUCIR CREDENCIALES ALPHA
         </button>
@@ -2950,32 +2952,38 @@ function verificarBloqueoGrifo() {
         <!-- SISTEMA DE NOTIFICACIÓN DE RUTA DIRECTA -->
         <div style="margin-bottom: 12px; text-align: center;">
             <button onclick="generarEnlaceNotificacion()" style="background: #220000; color: #14F195; border: 1px solid #14F195; padding: 6px 12px; font-family: inherit; font-size: 11px; font-weight: bold; cursor: pointer; border-radius: 4px; width: 100%;">
-                🔗 GENERAR ENLACE DE NOTIFICACIÓN P2P
+                🔗 GENERAR LINK DE ENLACE COGNITIVO
             </button>
         </div>
 
-        <!-- Visor Indestructible Compartido -->
+        <!-- Visor Indestructible Compartido (Almacenamiento Fijo) -->
         <div id="chat-box-visor" style="height: 220px; overflow-y: auto; background: #000; border: 1px solid #4b5320; padding: 10px; margin-bottom: 10px; border-radius: 4px;">
             <span style="color: #666;">[ Sincronizando hilos con la malla de Internet... ]</span>
         </div>
 
-        <!-- Controles de Entrada de Texto Ligero -->
+        <!-- Controles de Entrada de Texto -->
         <div style="display: flex; flex-direction: column; gap: 8px;">
             <input type="text" id="chat-msg-input" placeholder="ESCRIBA MENSAJE CRIPTOGRÁFICO..." style="width: 100%; box-sizing: border-box; margin: 0; background: #000; border: 1px solid #d4af37; color: #0f0; padding: 10px; font-family: monospace;">
             <button onclick="transmitirMensajeBunker()" style="background: #112200; color: #14F195; border: 1px solid #14F195; padding: 8px 15px; font-family: inherit; font-size: 11px; font-weight: bold; cursor: pointer; border-radius: 4px; text-transform: uppercase; width: 100%;">
                 TRANSMITIR AL CANAL 🚀
             </button>
         </div>
+
+        <!-- 🛠️ NUEVO: BOTÓN TÁCTICO DE PURGA PARA DEPURACIÓN -->
+        <div style="margin-top: 15px; border-top: 1px dashed #333; padding-top: 10px; text-align: center;">
+            <button onclick="purgarHistorialChatBunker()" style="background: #220000; color: #ff3333; border: 1px solid #ff3333; padding: 5px 10px; font-family: inherit; font-size: 11px; font-weight: bold; cursor: pointer; text-transform: uppercase; border-radius: 4px; width: 100%;">
+                🚨 PURGAR MENSAJES Y LIMPIAR MEMORIA CACHÉ
+            </button>
+        </div>
     </div>
 </div>
 
-<!-- 🛠️ LLAMADO AL ENLACE LÓGICO INDEPENDIENTE DE LA RED -->
+<!-- Enlace al script lógico independiente -->
 <script src="chat.js"></script>
 
 
-    
 <script>
-   // 🪐 CORDÓN UMBILICAL INALÁMBRICO DE ALTA VELOCIDAD COMPARTIDO (YORVIS ⇆ ANDRUS)
+  // 🪐 CORDÓN UMBILICAL INALÁMBRICO DE ALTA VELOCIDAD REFORZADO (npoint SSL)
 const BIN_URL = "https://npoint.io";
 let miNombreOperador = "";
 let nombreDestinatario = "TERMINAL_B";
@@ -2983,8 +2991,12 @@ let linkCanalUnicoId = "GLOBAL";
 let memoriaHistorial = [];
 let bucleActualizador = null;
 
+// 🛠️ CONTROL DE ARRANQUE MILITAR ESTRICTO
 document.addEventListener("DOMContentLoaded", () => {
-    // Captura los parámetros de la notificación de ruta en la URL si existen
+    // Forzamos que siempre pida la contraseña al recargar para que no quede a la intemperie
+    localStorage.removeItem("chat_token_autorizado");
+    
+    // Captura los parámetros del enlace recibido por correo/chat
     const parametrosUrl = new URLSearchParams(window.location.search);
     const ganchoRemoto = parametrosUrl.get("canal_p2p");
     const emisorRemoto = parametrosUrl.get("emisor");
@@ -2996,11 +3008,21 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem("p2p_destinatario", nombreDestinatario);
     }
 
-    if (localStorage.getItem("chat_token_autorizado") === "ACTIVE") {
-        desbloquearInterfazChat();
+    // Inicializamos el estado visual bloqueado rígido
+    const capaBloqueo = document.getElementById("bunker-bloqueado-capa");
+    const panelAbierto = document.getElementById("bunker-abierto-panel");
+    const visorIdentidad = document.getElementById("visor-identidad-cruzada");
+
+    if (capaBloqueo) capaBloqueo.style.setProperty("display", "block", "important");
+    if (panelAbierto) panelAbierto.style.setProperty("display", "none", "important");
+    if (visorIdentidad) {
+        visorIdentidad.innerHTML = "[ 🔒 REQUIERE CRIPTOCLAVE DE INGRESO ]";
+        visorIdentidad.style.color = "#ff3333";
+        visorIdentidad.style.borderColor = "#ff3333";
     }
 });
 
+// 🔑 VALIDACIÓN DE CREDENCIALES ALPHA-CHAT
 function autenticarInvitadoChat() {
     const CLAVE_ALPHA_REAL = "ALPHA-2026"; 
     const tokenIngresado = prompt("🛰️ VALIDACIÓN ALPHA-CHAT [PROYECTO LIBERTAD]\n\nIntroduzca el Código de Invitación para acceder al búnker:");
@@ -3022,7 +3044,7 @@ function autenticarInvitadoChat() {
     }
 }
 
-// 🔗 GENERAR EL GANCHO / LINK DE NOTIFICACIÓN DINÁMICA
+// 🔗 GENERAR LINK DE NOTIFICACIÓN DIRECTA EN PANTALLA
 function generarEnlaceNotificacion() {
     miNombreOperador = localStorage.getItem("operador_id_name") || "YORVIS";
     linkCanalUnicoId = "CH-" + Math.floor(1000 + Math.random() * 9000);
@@ -3031,10 +3053,11 @@ function generarEnlaceNotificacion() {
     const urlBase = window.location.origin + window.location.pathname;
     const linkDeEnlaceFinal = `${urlBase}?canal_p2p=${linkCanalUnicoId}&emisor=${miNombreOperador}`;
 
+    // Forzamos una notificación visual interna en la misma página usando un alert táctico
     navigator.clipboard.writeText(linkDeEnlaceFinal).then(() => {
-        alert("🛰️ NOTIFICACIÓN: RUTA GENERADA\n\nEl enlace dinámico de acople se copió al portapapeles. Envíaselo a tu contacto para abrir la compuerta.");
+        alert(`🛰️ NOTIFICACIÓN DE RUTA:\n\nLink copiado al portapapeles con éxito. Envíaselo a Andrus por email o chat para acoplar la entrada y la salida.\n\nLink: ${linkDeEnlaceFinal}`);
     }).catch(() => {
-        prompt("📋 COPIE ESTE LINK Y ENVÍELO A SU CONTACTO:", linkDeEnlaceFinal);
+        prompt("📋 NOTIFICACIÓN DE RESPALDO: Copie este link manualmente:", linkDeEnlaceFinal);
     });
 }
 
@@ -3056,6 +3079,13 @@ function desbloquearInterfazChat() {
         visorIdentidad.innerHTML = `🛰️ CANAL: ${miNombreOperador.toUpperCase()} ⇆ ${nombreDestinatario} [ACUPLADO]`;
         visorIdentidad.style.borderColor = "#14F195";
         visorIdentidad.style.color = "#14F195";
+    }
+
+    // 📁 CARGAR DESDE EL CHIP LOCAL ANTES DE IR A INTERNET: Evita que la pantalla se quede en blanco
+    const logGuardado = localStorage.getItem("bunker_chat_log");
+    if (logGuardado) {
+        memoriaHistorial = JSON.parse(logGuardado);
+        renderizarMensajes();
     }
 
     descargarMensajesDeRed();
@@ -3086,10 +3116,11 @@ function descargarMensajesDeRed() {
 
         if (huboCambios) {
             memoriaHistorial.sort((a, b) => a.timestamp - b.timestamp);
+            // Grabado forzado en piedra en el celular para que no se borren al actualizar
             localStorage.setItem("bunker_chat_log", JSON.stringify(memoriaHistorial));
             renderizarMensajes();
         }
-    }).catch(err => console.log("[🛰️] Sincronizando hilos..."));
+    }).catch(err => console.log("Sincronizando..."));
 }
 
 function transmitirMensajeBunker() {
@@ -3108,13 +3139,23 @@ function transmitirMensajeBunker() {
         timestamp: Date.now()
     };
 
-    inputMsg.value = ""; // Vaciado instantáneo en 0ms
+    inputMsg.value = ""; // Vaciado instantáneo en 0ms en tu Infinix
 
+    // Primero lo inyectamos de forma local forzada para asegurar visualización inmediata
+    memoriaHistorial.push(paqueteData);
+    localStorage.setItem("bunker_chat_log", JSON.stringify(memoriaHistorial));
+    renderizarMensajes();
+
+    // Luego empujamos la actualización amalgamada a Internet
     fetch(`${BIN_URL}?nocache=${Date.now()}`, { method: "GET", headers: { "Cache-Control": "no-cache" } })
     .then(res => res.ok ? res.json() : [])
     .then(historialRemoto => {
         let poolUnificado = Array.isArray(historialRemoto) ? historialRemoto : [];
-        poolUnificado.push(paqueteData);
+        
+        // Evitamos duplicar nuestro propio mensaje en la red
+        if (!poolUnificado.some(m => m.id === paqueteData.id)) {
+            poolUnificado.push(paqueteData);
+        }
         
         return fetch(BIN_URL, {
             method: "PUT",
@@ -3123,10 +3164,7 @@ function transmitirMensajeBunker() {
         });
     })
     .then(res => { if (res.ok) descargarMensajesDeRed(); })
-    .catch(err => {
-        memoriaHistorial.push(paqueteData);
-        renderizarMensajes();
-    });
+    .catch(err => console.log("Registrado de forma local persistente."));
 }
 
 function renderizarMensajes() {
@@ -3147,8 +3185,17 @@ function renderizarMensajes() {
     visor.scrollTop = visor.scrollHeight;
 }
 
+// 🛠️ FUNCIÓN DE PURGA EXTRA: Limpia los registros físicos del teléfono para pruebas limpias
+function purgarHistorialChatBunker() {
+    if (confirm("🚨 ¿CONFIRMAS LA PURGA DEL CANAL?\n\nSe borrarán todos los mensajes guardados en este dispositivo para reiniciar la depuración.")) {
+        localStorage.removeItem("bunker_chat_log");
+        memoriaHistorial = [];
+        renderizarMensajes();
+        alert("🟢 PURGA COMPLETADA: Zona de memoria limpia. Listo para registrar nuevos flujos.");
+    }
+}
 </script>
-
+  
 
 
 
