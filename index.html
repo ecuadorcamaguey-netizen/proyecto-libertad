@@ -2974,46 +2974,51 @@ function cerrarSesionProtocolo() {
 
 
     
-<!--- SCRIPT DE CONTROL SOBERANO: VENTANA UNIFICADA MULTI-CELULAR v15.0 (MÁXIMA FUERZA) --->
+
+
+<!--- SCRIPT DE CONTROL SOBERANO: CERROJO DE INGRESO FORZADO v15.2 (MÁXIMA FUERZA) --->
 <script>
-// 🪐 NUEVO CORDÓN UMBILICAL INALÁMBRICO DE ALTA VELOCIDAD Y ACCESO LIBRE
+// 🪐 CORDÓN UMBILICAL INALÁMBRICO DE ALTA VELOCIDAD (YORVIS ⇆ ANDRUS)
 const BIN_URL = "https://npoint.io";
 let miNombreOperador = "";
 let memoriaHistorial = [];
 let bucleActualizador = null;
 
-// 🛠️ CONTROL DE ARRANQUE MILITAR
+// 🛠️ CONTROL DE ARRANQUE MILITAR: Destruye la caché vieja para que NUNCA arranque a la intemperie
 document.addEventListener("DOMContentLoaded", () => {
-    if (localStorage.getItem("chat_token_autorizado") === "ACTIVE") {
-        desbloquearInterfazChat();
-    } else {
-        const capaBloqueo = document.getElementById("bunker-bloqueado-capa");
-        const panelAbierto = document.getElementById("bunker-abierto-panel");
-        const visorIdentidad = document.getElementById("visor-identidad-cruzada");
+    // 🚨 LIMPIEZA FORZADA DE MEMORIA CACHÉ AL RECARGAR
+    localStorage.removeItem("chat_token_autorizado");
+    
+    // Forzamos el estado visual blindado y bloqueado en la esfera
+    const capaBloqueo = document.getElementById("bunker-bloqueado-capa");
+    const panelAbierto = document.getElementById("bunker-abierto-panel");
+    const visorIdentidad = document.getElementById("visor-identidad-cruzada");
 
-        if (capaBloqueo) capaBloqueo.style.setProperty("display", "block", "important");
-        if (panelAbierto) panelAbierto.style.setProperty("display", "none", "important");
-        if (visorIdentidad) {
-            visorIdentidad.innerHTML = "[ 🔒 REQUIERE CRIPTOCLAVE DE INGRESO ]";
-            visorIdentidad.style.color = "#ff3333";
-            visorIdentidad.style.borderColor = "#ff3333";
-        }
+    if (capaBloqueo) capaBloqueo.style.setProperty("display", "block", "important");
+    if (panelAbierto) panelAbierto.style.setProperty("display", "none", "important");
+    if (visorIdentidad) {
+        visorIdentidad.innerHTML = "[ 🔒 REQUIERE CRIPTOCLAVE DE INGRESO ]";
+        visorIdentidad.style.color = "#ff3333";
+        visorIdentidad.style.borderColor = "#ff3333";
     }
 });
 
 // 🔑 VALIDACIÓN DE CREDENCIALES ALPHA-CHAT
 function autenticarInvitadoChat() {
-    const CLAVE_ALPHA_REAL = "ALPHA-2026"; 
+    const CLAVE_ALPHA_REAL = "ALPHA-2026"; // Tu contraseña maestra real
     const tokenIngresado = prompt("🛰️ VALIDACIÓN ALPHA-CHAT [PROYECTO LIBERTAD]\n\nIntroduzca el Código de Invitación para acceder al búnker:");
     
     if (tokenIngresado === null) return;
 
     if (tokenIngresado.trim() === CLAVE_ALPHA_REAL) {
+        // Sembramos el éxito en piedra en el chip del teléfono
         localStorage.setItem("chat_token_autorizado", "ACTIVE");
         
+        // Solicita el nombre para rotular la interacción en la ventana unificada
         const alias = prompt("👤 NOMBRE DE OPERADOR:\n\nIntroduzca su alias (Ej: YORVIS o ANDRUS):") || "OPERADOR";
         localStorage.setItem("operador_id_name", alias.trim().toUpperCase());
         
+        // Destrabamos el panel operativo
         desbloquearInterfazChat();
         alert("🟢 ACCESO PERMITIDO: Canal interconectado con éxito de Grandes Ligas.");
     } else {
@@ -3031,7 +3036,7 @@ function desbloquearInterfazChat() {
 
     if (capaBloqueo) capaBloqueo.style.setProperty("display", "none", "important");
     if (panelAbierto) panelAbierto.style.setProperty("display", "block", "important");
-    if (seccionTecnologica) seccionTecnologica.classList.add("activo"); 
+    if (seccionTecnologica) seccionTecnologica.classList.add("activo"); // Expande el banner en el CSS
 
     const visorIdentidad = document.getElementById("visor-identidad-cruzada");
     if (visorIdentidad) {
@@ -3040,14 +3045,13 @@ function desbloquearInterfazChat() {
         visorIdentidad.style.color = "#14F195";
     }
 
-    // 📡 Inicialización y activación del radar cada 2 segundos
+    // Activamos la lectura automática de la red
     descargarMensajesDeRed();
     if (!bucleActualizador) {
         bucleActualizador = setInterval(descargarMensajesDeRed, 2000);
     }
 }
 
-// 📡 ALGORITMO FETCH: DESCARGA AUTOMÁTICA Y PREVENCIÓN DE DUPLICADOS
 function descargarMensajesDeRed() {
     if (localStorage.getItem("chat_token_autorizado") !== "ACTIVE") return;
 
@@ -3057,7 +3061,6 @@ function descargarMensajesDeRed() {
     })
     .then(res => { if (res.ok) return res.json(); })
     .then(data => {
-        // Si el contenedor remoto está vacío, inicializamos la matriz limpia
         const poolRemoto = (data && Array.isArray(data)) ? data : [];
         let huboCambios = false;
 
@@ -3075,10 +3078,9 @@ function descargarMensajesDeRed() {
             renderizarMensajes();
         }
     })
-    .catch(err => console.log("[🛰️] Sincronizando ondas de la malla..."));
+    .catch(err => console.log("[🛰️] Sincronizando hilos..."));
 }
 
-// ⚡ TRANSMITIR CON ALGORITMO DE AMALGAMADA INMUNE (DANDO DE MÁXIMA FUERZA)
 function transmitirMensajeBunker() {
     const inputMsg = document.getElementById("chat-msg-input");
     if (!inputMsg || inputMsg.value.trim() === "") return;
@@ -3095,10 +3097,9 @@ function transmitirMensajeBunker() {
         timestamp: Date.now()
     };
 
-    // Vaciado en caliente de la interfaz móvil en 0ms
-    inputMsg.value = "";
+    inputMsg.value = ""; // Vaciado en 0ms
 
-    // 🛠️ AMALGAMADA DE RED FUSIONADA: Descarga, acopla vuestra ráfaga y la empuja a la red pública
+    // Algoritmo de amalgama para fundir vuestras transmisiones en la misma pantalla
     fetch(BIN_URL, { method: "GET", headers: { "Cache-Control": "no-cache" } })
     .then(res => res.ok ? res.json() : [])
     .then(historialRemoto => {
@@ -3106,7 +3107,7 @@ function transmitirMensajeBunker() {
         poolUnificado.push(paqueteData);
         
         return fetch(BIN_URL, {
-            method: "POST", // Inyección forzada por método POST estructurado
+            method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(poolUnificado)
         });
@@ -3118,7 +3119,6 @@ function transmitirMensajeBunker() {
     });
 }
 
-// 🪐 RENDERIZADO VISUAL EN PANTALLA CON CROMÁTICA TÁCTICA
 function renderizarMensajes() {
     const visor = document.getElementById("chat-box-visor");
     if (!visor) return;
@@ -3137,10 +3137,6 @@ function renderizarMensajes() {
     visor.scrollTop = visor.scrollHeight;
 }
 </script>
-
-
- 
-
 
 
 
