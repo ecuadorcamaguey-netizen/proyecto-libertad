@@ -7,6 +7,10 @@
 <title>Servicio Técnico Celulares Cuba | Yorvis Tech - Optimización Android</title>
 <meta name="description" content="Especialistas en Huawei P9 Lite y Android. Reparación rápida en Bogotá con 9 años de experiencia. ¡Reserva tu cita de optimización hoy!">
 <meta name="keywords" content="Servicio técnico Bogotá, arreglar celular Bogotá, optimización Android, Yorvis Tech, Huawei P9 Lite reparación">
+<!-- METATAGS TÁCTICOS ANTI-CACHÉ - PROYECTO LIBERTAD 2026 -->
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 
              <title>Operación Libertad - Yorvis Tech</title>
            <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com">
@@ -2976,20 +2980,20 @@ function cerrarSesionProtocolo() {
     
 
 
-<!--- SCRIPT DE CONTROL SOBERANO: CERROJO DE INGRESO FORZADO v15.2 (MÁXIMA FUERZA) --->
+
+
+<!--- SCRIPT DE CONTROL SOBERANO: MULTI-CELULAR CON FUSIÓN DE RED REPARADA v16.0 --->
 <script>
-// 🪐 CORDÓN UMBILICAL INALÁMBRICO DE ALTA VELOCIDAD (YORVIS ⇆ ANDRUS)
+// 🪐 CORDÓN UMBILICAL INALÁMBRICO DE ALTA VELOCIDAD COMPARTIDO (YORVIS ⇆ ANDRUS)
 const BIN_URL = "https://npoint.io";
 let miNombreOperador = "";
 let memoriaHistorial = [];
 let bucleActualizador = null;
 
-// 🛠️ CONTROL DE ARRANQUE MILITAR: Destruye la caché vieja para que NUNCA arranque a la intemperie
+// 🛠️ CONTROL DE ARRANQUE MILITAR
 document.addEventListener("DOMContentLoaded", () => {
-    // 🚨 LIMPIEZA FORZADA DE MEMORIA CACHÉ AL RECARGAR
-    localStorage.removeItem("chat_token_autorizado");
+    localStorage.removeItem("chat_token_autorizado"); // Forzamos el cerrojo manual en cada recarga
     
-    // Forzamos el estado visual blindado y bloqueado en la esfera
     const capaBloqueo = document.getElementById("bunker-bloqueado-capa");
     const panelAbierto = document.getElementById("bunker-abierto-panel");
     const visorIdentidad = document.getElementById("visor-identidad-cruzada");
@@ -3005,20 +3009,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // 🔑 VALIDACIÓN DE CREDENCIALES ALPHA-CHAT
 function autenticarInvitadoChat() {
-    const CLAVE_ALPHA_REAL = "ALPHA-2026"; // Tu contraseña maestra real
+    const CLAVE_ALPHA_REAL = "ALPHA-2026"; 
     const tokenIngresado = prompt("🛰️ VALIDACIÓN ALPHA-CHAT [PROYECTO LIBERTAD]\n\nIntroduzca el Código de Invitación para acceder al búnker:");
     
     if (tokenIngresado === null) return;
 
     if (tokenIngresado.trim() === CLAVE_ALPHA_REAL) {
-        // Sembramos el éxito en piedra en el chip del teléfono
         localStorage.setItem("chat_token_autorizado", "ACTIVE");
         
-        // Solicita el nombre para rotular la interacción en la ventana unificada
         const alias = prompt("👤 NOMBRE DE OPERADOR:\n\nIntroduzca su alias (Ej: YORVIS o ANDRUS):") || "OPERADOR";
         localStorage.setItem("operador_id_name", alias.trim().toUpperCase());
         
-        // Destrabamos el panel operativo
         desbloquearInterfazChat();
         alert("🟢 ACCESO PERMITIDO: Canal interconectado con éxito de Grandes Ligas.");
     } else {
@@ -3036,7 +3037,7 @@ function desbloquearInterfazChat() {
 
     if (capaBloqueo) capaBloqueo.style.setProperty("display", "none", "important");
     if (panelAbierto) panelAbierto.style.setProperty("display", "block", "important");
-    if (seccionTecnologica) seccionTecnologica.classList.add("activo"); // Expande el banner en el CSS
+    if (seccionTecnologica) seccionTecnologica.classList.add("activo"); 
 
     const visorIdentidad = document.getElementById("visor-identidad-cruzada");
     if (visorIdentidad) {
@@ -3045,19 +3046,26 @@ function desbloquearInterfazChat() {
         visorIdentidad.style.color = "#14F195";
     }
 
-    // Activamos la lectura automática de la red
+    // 📡 Activación del bucle del radar de descarga cada 2 segundos sin almacenar caché
     descargarMensajesDeRed();
     if (!bucleActualizador) {
         bucleActualizador = setInterval(descargarMensajesDeRed, 2000);
     }
 }
 
+// 📡 ALGORITMO FETCH REMOTO CON CONTROLES ESTRICTOS ANTI-CACHÉ
 function descargarMensajesDeRed() {
     if (localStorage.getItem("chat_token_autorizado") !== "ACTIVE") return;
 
-    fetch(BIN_URL, {
+    // Inyectamos una marca de tiempo aleatoria en la URL para romper la caché del chip del teléfono
+    const urlDestruyeCache = `${BIN_URL}?nocache=${Date.now()}`;
+
+    fetch(urlDestruyeCache, {
         method: "GET",
-        headers: { "Cache-Control": "no-cache" }
+        headers: {
+            "Cache-Control": "no-cache, no-store, must-revalidate",
+            "Pragma": "no-cache"
+        }
     })
     .then(res => { if (res.ok) return res.json(); })
     .then(data => {
@@ -3078,9 +3086,10 @@ function descargarMensajesDeRed() {
             renderizarMensajes();
         }
     })
-    .catch(err => console.log("[🛰️] Sincronizando hilos..."));
+    .catch(err => console.log("[🛰️] Sincronizando hilos de la malla..."));
 }
 
+// ⚡ TRANSMITIR CON METODO PUT DE INTEGRACIÓN ABSOLUTA (MÁXIMA POTENCIA DE CRUCE)
 function transmitirMensajeBunker() {
     const inputMsg = document.getElementById("chat-msg-input");
     if (!inputMsg || inputMsg.value.trim() === "") return;
@@ -3097,17 +3106,18 @@ function transmitirMensajeBunker() {
         timestamp: Date.now()
     };
 
-    inputMsg.value = ""; // Vaciado en 0ms
+    inputMsg.value = ""; // Vaciado en caliente inmediato en tu Infinix en 0ms
 
-    // Algoritmo de amalgama para fundir vuestras transmisiones en la misma pantalla
-    fetch(BIN_URL, { method: "GET", headers: { "Cache-Control": "no-cache" } })
+    // 🛠️ ALGORITMO DE AMALGAMADA POR MÉTODO PUT: Descarga, acopla el hilo y actualiza el espejo global
+    fetch(`${BIN_URL}?nocache=${Date.now()}`, { method: "GET", headers: { "Cache-Control": "no-cache" } })
     .then(res => res.ok ? res.json() : [])
     .then(historialRemoto => {
         let poolUnificado = Array.isArray(historialRemoto) ? historialRemoto : [];
         poolUnificado.push(paqueteData);
         
+        // 🚀 MÉTODO PUT DEFINITIVO: Sobreescritura limpia y rápida del canal compartido
         return fetch(BIN_URL, {
-            method: "POST",
+            method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(poolUnificado)
         });
@@ -3119,6 +3129,7 @@ function transmitirMensajeBunker() {
     });
 }
 
+// 🪐 RENDERIZADO VISUAL EN PANTALLA CON CROMÁTICA TÁCTICA COGNITIVA
 function renderizarMensajes() {
     const visor = document.getElementById("chat-box-visor");
     if (!visor) return;
@@ -3137,8 +3148,6 @@ function renderizarMensajes() {
     visor.scrollTop = visor.scrollHeight;
 }
 </script>
-
-
 
 
 
