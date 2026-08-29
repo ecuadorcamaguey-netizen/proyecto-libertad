@@ -2924,23 +2924,12 @@ function verificarBloqueoGrifo() {
         }, 1000);
     }
 }
-
-// 🚨 FUNCIÓN PARA CERRAR SESIÓN Y LIMPIAR PERFIL
-function cerrarSesionProtocolo() {
-    if (confirm("🚨 ¿Confirmas el cierre del protocolo?\n\nSe borrará tu ID de operador de este dispositivo por seguridad.")) {
-        localStorage.removeItem("operador_id_name");
-        alert("💥 PROTOCOLO CERRADO: Datos de sesión destruidos con éxito. Interfaz bloqueada.");
-        window.location.reload();
-    }
-}
 </script>
 
-
-
-<!-- CHASSIS VISUAL DEL SÚPER CHAT UNIFICADO REPARADO v14.1 (BOTÓN RESTABLECIDO) -->
+<!--- CHASSIS VISUAL DEL SÚPER CHAT P2P CON BOTÓN DE NOTIFICACIÓN v16.5 --->
 <div id="crypto-chat-bunker" style="background: rgba(10,10,10,0.95); border: 2px solid #14F195; border-radius: 10px; padding: 15px; margin-top: 20px; font-family: monospace; color: #14F195;">
     
-    <!-- VISOR DE IDENTIDAD INTERCONECTADO -->
+    <!-- ENCABEZADO CON VISOR DE IDENTIDAD EN CALIENTE -->
     <div style="border-bottom: 1px solid #4b5320; padding-bottom: 8px; margin-bottom: 10px; text-align: center;">
         <h3 style="color: #d4af37; margin: 0 0 5px 0;">🛰️ SÚPER CHAT: VENTANA UNIFICADA P2P</h3>
         <div id="visor-identidad-cruzada" style="background: #000; border: 1px dashed #ff3333; padding: 4px; font-size: 11px; color: #ff3333; font-weight: bold;">
@@ -2948,19 +2937,25 @@ function cerrarSesionProtocolo() {
         </div>
     </div>
     
-    <!-- CAPA DE BLOQUEO DE SEGURIDAD CON BOTÓN MILITAR RESTABLECIDO -->
+    <!-- CAPA DE BLOQUEO DE SEGURIDAD -->
     <div id="bunker-bloqueado-capa" style="display: block; text-align: center; padding: 30px 10px; background: #050505; border: 1px dashed #ff3333; margin-bottom: 10px; border-radius: 4px;">
-        <span style="color: #ff3333; font-weight: bold; display: block; margin-bottom: 15px;">🔒 SECTOR RESTRINGIDO: ACCESO ALPHA-CHAT</span>
-        <!-- 🛠️ REPARACIÓN QUIRÚRGICA: Se inyecta el botón con tus estilos esféricos nativos -->
-        <button class="btn-registro" onclick="autenticarInvitadoChat()" style="background:#4b5320; color:white; padding:10px 20px; border:1px solid #d4af37; cursor:pointer; font-family: monospace; font-size: 12px; font-weight: bold; text-transform: uppercase;">
+        <button class="btn-registro" onclick="autenticarInvitadoChat()" style="background:#4b5320; color:white; padding:10px 20px; border:1px solid #d4af37; cursor:pointer; font-family: monospace; font-size: 11px; font-weight: bold; text-transform: uppercase;">
             INTRODUCIR CREDENCIALES ALPHA
         </button>
     </div>
 
     <!-- PANEL OPERATIVO UNIFICADO (YORVIS ⇆ ANDRUS) -->
     <div id="bunker-abierto-panel" style="display: none;">
+        
+        <!-- SISTEMA DE NOTIFICACIÓN DE RUTA DIRECTA -->
+        <div style="margin-bottom: 12px; text-align: center;">
+            <button onclick="generarEnlaceNotificacion()" style="background: #220000; color: #14F195; border: 1px solid #14F195; padding: 6px 12px; font-family: inherit; font-size: 11px; font-weight: bold; cursor: pointer; border-radius: 4px; width: 100%;">
+                🔗 GENERAR ENLACE DE NOTIFICACIÓN P2P
+            </button>
+        </div>
+
         <!-- Visor Indestructible Compartido -->
-        <div id="chat-box-visor" style="height: 240px; overflow-y: auto; background: #000; border: 1px solid #4b5320; padding: 10px; margin-bottom: 10px; border-radius: 4px;">
+        <div id="chat-box-visor" style="height: 220px; overflow-y: auto; background: #000; border: 1px solid #4b5320; padding: 10px; margin-bottom: 10px; border-radius: 4px;">
             <span style="color: #666;">[ Sincronizando hilos con la malla de Internet... ]</span>
         </div>
 
@@ -2974,180 +2969,11 @@ function cerrarSesionProtocolo() {
     </div>
 </div>
 
-
+<!-- 🛠️ LLAMADO AL ENLACE LÓGICO INDEPENDIENTE DE LA RED -->
+<script src="chat.js"></script>
 
 
     
-
-
-
-
-<!--- SCRIPT DE CONTROL SOBERANO: MULTI-CELULAR CON FUSIÓN DE RED REPARADA v16.0 --->
-<script>
-// 🪐 CORDÓN UMBILICAL INALÁMBRICO DE ALTA VELOCIDAD COMPARTIDO (YORVIS ⇆ ANDRUS)
-const BIN_URL = "https://npoint.io";
-let miNombreOperador = "";
-let memoriaHistorial = [];
-let bucleActualizador = null;
-
-// 🛠️ CONTROL DE ARRANQUE MILITAR
-document.addEventListener("DOMContentLoaded", () => {
-    localStorage.removeItem("chat_token_autorizado"); // Forzamos el cerrojo manual en cada recarga
-    
-    const capaBloqueo = document.getElementById("bunker-bloqueado-capa");
-    const panelAbierto = document.getElementById("bunker-abierto-panel");
-    const visorIdentidad = document.getElementById("visor-identidad-cruzada");
-
-    if (capaBloqueo) capaBloqueo.style.setProperty("display", "block", "important");
-    if (panelAbierto) panelAbierto.style.setProperty("display", "none", "important");
-    if (visorIdentidad) {
-        visorIdentidad.innerHTML = "[ 🔒 REQUIERE CRIPTOCLAVE DE INGRESO ]";
-        visorIdentidad.style.color = "#ff3333";
-        visorIdentidad.style.borderColor = "#ff3333";
-    }
-});
-
-// 🔑 VALIDACIÓN DE CREDENCIALES ALPHA-CHAT
-function autenticarInvitadoChat() {
-    const CLAVE_ALPHA_REAL = "ALPHA-2026"; 
-    const tokenIngresado = prompt("🛰️ VALIDACIÓN ALPHA-CHAT [PROYECTO LIBERTAD]\n\nIntroduzca el Código de Invitación para acceder al búnker:");
-    
-    if (tokenIngresado === null) return;
-
-    if (tokenIngresado.trim() === CLAVE_ALPHA_REAL) {
-        localStorage.setItem("chat_token_autorizado", "ACTIVE");
-        
-        const alias = prompt("👤 NOMBRE DE OPERADOR:\n\nIntroduzca su alias (Ej: YORVIS o ANDRUS):") || "OPERADOR";
-        localStorage.setItem("operador_id_name", alias.trim().toUpperCase());
-        
-        desbloquearInterfazChat();
-        alert("🟢 ACCESO PERMITIDO: Canal interconectado con éxito de Grandes Ligas.");
-    } else {
-        alert("❌ ACCESO RECHAZADO: Código Alpha-Chat inválido. Sector bloqueado.");
-    }
-}
-
-// 🔓 DESPLEGAR COMPUERTAS VISUALES DE LA ESFERA
-function desbloquearInterfazChat() {
-    miNombreOperador = localStorage.getItem("operador_id_name") || "OPERADOR";
-    
-    const capaBloqueo = document.getElementById("bunker-bloqueado-capa");
-    const panelAbierto = document.getElementById("bunker-abierto-panel");
-    const seccionTecnologica = document.getElementById("panelLibertad");
-
-    if (capaBloqueo) capaBloqueo.style.setProperty("display", "none", "important");
-    if (panelAbierto) panelAbierto.style.setProperty("display", "block", "important");
-    if (seccionTecnologica) seccionTecnologica.classList.add("activo"); 
-
-    const visorIdentidad = document.getElementById("visor-identidad-cruzada");
-    if (visorIdentidad) {
-        visorIdentidad.innerHTML = `🛰️ OPERANDO COMO: ${miNombreOperador.toUpperCase()} [EN RED]`;
-        visorIdentidad.style.borderColor = "#14F195";
-        visorIdentidad.style.color = "#14F195";
-    }
-
-    // 📡 Activación del bucle del radar de descarga cada 2 segundos sin almacenar caché
-    descargarMensajesDeRed();
-    if (!bucleActualizador) {
-        bucleActualizador = setInterval(descargarMensajesDeRed, 2000);
-    }
-}
-
-// 📡 ALGORITMO FETCH REMOTO CON CONTROLES ESTRICTOS ANTI-CACHÉ
-function descargarMensajesDeRed() {
-    if (localStorage.getItem("chat_token_autorizado") !== "ACTIVE") return;
-
-    // Inyectamos una marca de tiempo aleatoria en la URL para romper la caché del chip del teléfono
-    const urlDestruyeCache = `${BIN_URL}?nocache=${Date.now()}`;
-
-    fetch(urlDestruyeCache, {
-        method: "GET",
-        headers: {
-            "Cache-Control": "no-cache, no-store, must-revalidate",
-            "Pragma": "no-cache"
-        }
-    })
-    .then(res => { if (res.ok) return res.json(); })
-    .then(data => {
-        const poolRemoto = (data && Array.isArray(data)) ? data : [];
-        let huboCambios = false;
-
-        poolRemoto.forEach(pkgRemoto => {
-            const existe = memoriaHistorial.some(m => m.id === pkgRemoto.id);
-            if (!existe) {
-                memoriaHistorial.push(pkgRemoto);
-                huboCambios = true;
-            }
-        });
-
-        if (huboCambios) {
-            memoriaHistorial.sort((a, b) => a.timestamp - b.timestamp);
-            localStorage.setItem("bunker_chat_log", JSON.stringify(memoriaHistorial));
-            renderizarMensajes();
-        }
-    })
-    .catch(err => console.log("[🛰️] Sincronizando hilos de la malla..."));
-}
-
-// ⚡ TRANSMITIR CON METODO PUT DE INTEGRACIÓN ABSOLUTA (MÁXIMA POTENCIA DE CRUCE)
-function transmitirMensajeBunker() {
-    const inputMsg = document.getElementById("chat-msg-input");
-    if (!inputMsg || inputMsg.value.trim() === "") return;
-
-    const textoMensaje = inputMsg.value.trim();
-    const fecha = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit'});
-    const idUnico = "MSG-" + Date.now() + "-" + Math.floor(Math.random() * 1000);
-
-    const paqueteData = {
-        id: idUnico,
-        emisor: miNombreOperador.toUpperCase(),
-        contenido: textoMensaje,
-        tiempo: fecha,
-        timestamp: Date.now()
-    };
-
-    inputMsg.value = ""; // Vaciado en caliente inmediato en tu Infinix en 0ms
-
-    // 🛠️ ALGORITMO DE AMALGAMADA POR MÉTODO PUT: Descarga, acopla el hilo y actualiza el espejo global
-    fetch(`${BIN_URL}?nocache=${Date.now()}`, { method: "GET", headers: { "Cache-Control": "no-cache" } })
-    .then(res => res.ok ? res.json() : [])
-    .then(historialRemoto => {
-        let poolUnificado = Array.isArray(historialRemoto) ? historialRemoto : [];
-        poolUnificado.push(paqueteData);
-        
-        // 🚀 MÉTODO PUT DEFINITIVO: Sobreescritura limpia y rápida del canal compartido
-        return fetch(BIN_URL, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(poolUnificado)
-        });
-    })
-    .then(res => { if (res.ok) descargarMensajesDeRed(); })
-    .catch(err => {
-        memoriaHistorial.push(paqueteData);
-        renderizarMensajes();
-    });
-}
-
-// 🪐 RENDERIZADO VISUAL EN PANTALLA CON CROMÁTICA TÁCTICA COGNITIVA
-function renderizarMensajes() {
-    const visor = document.getElementById("chat-box-visor");
-    if (!visor) return;
-    visor.innerHTML = "";
-    
-    memoriaHistorial.forEach(pkg => {
-        const itemBox = document.createElement("div");
-        itemBox.style.marginBottom = "6px";
-        itemBox.style.borderBottom = "1px dashed #222";
-        itemBox.style.paddingBottom = "4px";
-        
-        const colorEmisor = pkg.emisor === miNombreOperador.toUpperCase() ? "#14F195" : "#d4af37";
-        itemBox.innerHTML = `<span style="color: ${colorEmisor};">[${pkg.tiempo}] ${pkg.emisor}:</span> <span style="color: #fff;">${pkg.contenido}</span>`;
-        visor.appendChild(itemBox);
-    });
-    visor.scrollTop = visor.scrollHeight;
-}
-</script>
 
 
 
