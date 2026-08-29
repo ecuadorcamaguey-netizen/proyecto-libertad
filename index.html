@@ -2972,21 +2972,21 @@ function cerrarSesionProtocolo() {
 
 
 
-<!--- SCRIPT DE CONTROL SOBERANO: VENTANA UNIFICADA CON ARREGLO DE CREDENCIALES v14.3 --->
+
+    
+<!--- SCRIPT DE CONTROL SOBERANO: VENTANA UNIFICADA MULTI-CELULAR v15.0 (MÁXIMA FUERZA) --->
 <script>
-// 🪐 ENLACE DEL REPETIDOR SOBERANO DE INTERNET (CANAL COMPARTIDO YORVIS ⇆ ANDRUS)
-const BIN_URL = "https://jsonbin.io";
+// 🪐 NUEVO CORDÓN UMBILICAL INALÁMBRICO DE ALTA VELOCIDAD Y ACCESO LIBRE
+const BIN_URL = "https://npoint.io";
 let miNombreOperador = "";
 let memoriaHistorial = [];
 let bucleActualizador = null;
 
 // 🛠️ CONTROL DE ARRANQUE MILITAR
 document.addEventListener("DOMContentLoaded", () => {
-    // Si el usuario ya se autenticó con éxito, abrimos el panel directo sin bloquearlo
     if (localStorage.getItem("chat_token_autorizado") === "ACTIVE") {
         desbloquearInterfazChat();
     } else {
-        // Si no hay sesión, aseguramos el estado blindado en negro por seguridad perimetral
         const capaBloqueo = document.getElementById("bunker-bloqueado-capa");
         const panelAbierto = document.getElementById("bunker-abierto-panel");
         const visorIdentidad = document.getElementById("visor-identidad-cruzada");
@@ -3001,22 +3001,19 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
-// 🔑 VALIDACIÓN DE CREDENCIALES CON ENTRADA DIRECTA REPARADA
+// 🔑 VALIDACIÓN DE CREDENCIALES ALPHA-CHAT
 function autenticarInvitadoChat() {
-    const CLAVE_ALPHA_REAL = "ALPHA-2026"; // Tu contraseña maestra inviolable
+    const CLAVE_ALPHA_REAL = "ALPHA-2026"; 
     const tokenIngresado = prompt("🛰️ VALIDACIÓN ALPHA-CHAT [PROYECTO LIBERTAD]\n\nIntroduzca el Código de Invitación para acceder al búnker:");
     
     if (tokenIngresado === null) return;
 
     if (tokenIngresado.trim() === CLAVE_ALPHA_REAL) {
-        // Inyectamos la persistencia física en el almacenamiento del celular
         localStorage.setItem("chat_token_autorizado", "ACTIVE");
         
-        // Solicita el nombre para rotular la ventana unificada de interacción
         const alias = prompt("👤 NOMBRE DE OPERADOR:\n\nIntroduzca su alias (Ej: YORVIS o ANDRUS):") || "OPERADOR";
         localStorage.setItem("operador_id_name", alias.trim().toUpperCase());
         
-        // Destrabamos el chasis de forma inmediata
         desbloquearInterfazChat();
         alert("🟢 ACCESO PERMITIDO: Canal interconectado con éxito de Grandes Ligas.");
     } else {
@@ -3024,7 +3021,7 @@ function autenticarInvitadoChat() {
     }
 }
 
-// 🔓 DESPLEGAR COMPUERTAS VISUALES DE LA ESFERA (CORRECCIÓN DE ANIMACIÓN CSS)
+// 🔓 DESPLEGAR COMPUERTAS VISUALES DE LA ESFERA
 function desbloquearInterfazChat() {
     miNombreOperador = localStorage.getItem("operador_id_name") || "OPERADOR";
     
@@ -3032,10 +3029,9 @@ function desbloquearInterfazChat() {
     const panelAbierto = document.getElementById("bunker-abierto-panel");
     const seccionTecnologica = document.getElementById("panelLibertad");
 
-    // Rompemos las ataduras ocultas de la plantilla
     if (capaBloqueo) capaBloqueo.style.setProperty("display", "none", "important");
     if (panelAbierto) panelAbierto.style.setProperty("display", "block", "important");
-    if (seccionTecnologica) seccionTecnologica.classList.add("activo"); // Fuerza la expansión a 600px en el CSS
+    if (seccionTecnologica) seccionTecnologica.classList.add("activo"); 
 
     const visorIdentidad = document.getElementById("visor-identidad-cruzada");
     if (visorIdentidad) {
@@ -3044,40 +3040,45 @@ function desbloquearInterfazChat() {
         visorIdentidad.style.color = "#14F195";
     }
 
-    // Activamos la lectura de hilos en tiempo real
+    // 📡 Inicialización y activación del radar cada 2 segundos
     descargarMensajesDeRed();
     if (!bucleActualizador) {
         bucleActualizador = setInterval(descargarMensajesDeRed, 2000);
     }
 }
 
+// 📡 ALGORITMO FETCH: DESCARGA AUTOMÁTICA Y PREVENCIÓN DE DUPLICADOS
 function descargarMensajesDeRed() {
     if (localStorage.getItem("chat_token_autorizado") !== "ACTIVE") return;
 
     fetch(BIN_URL, {
         method: "GET",
-        headers: { "X-Bin-Meta": "false", "Cache-Control": "no-cache" }
+        headers: { "Cache-Control": "no-cache" }
     })
     .then(res => { if (res.ok) return res.json(); })
     .then(data => {
-        if (data && Array.isArray(data)) {
-            let huboCambios = false;
-            data.forEach(pkgRemoto => {
-                const existe = memoriaHistorial.some(m => m.id === pkgRemoto.id);
-                if (!existe) {
-                    memoriaHistorial.push(pkgRemoto);
-                    huboCambios = true;
-                }
-            });
+        // Si el contenedor remoto está vacío, inicializamos la matriz limpia
+        const poolRemoto = (data && Array.isArray(data)) ? data : [];
+        let huboCambios = false;
 
-            if (huboCambios) {
-                memoriaHistorial.sort((a, b) => a.timestamp - b.timestamp);
-                renderizarMensajes();
+        poolRemoto.forEach(pkgRemoto => {
+            const existe = memoriaHistorial.some(m => m.id === pkgRemoto.id);
+            if (!existe) {
+                memoriaHistorial.push(pkgRemoto);
+                huboCambios = true;
             }
+        });
+
+        if (huboCambios) {
+            memoriaHistorial.sort((a, b) => a.timestamp - b.timestamp);
+            localStorage.setItem("bunker_chat_log", JSON.stringify(memoriaHistorial));
+            renderizarMensajes();
         }
-    }).catch(err => console.log("[🛰️] Malla de red en escucha..."));
+    })
+    .catch(err => console.log("[🛰️] Sincronizando ondas de la malla..."));
 }
 
+// ⚡ TRANSMITIR CON ALGORITMO DE AMALGAMADA INMUNE (DANDO DE MÁXIMA FUERZA)
 function transmitirMensajeBunker() {
     const inputMsg = document.getElementById("chat-msg-input");
     if (!inputMsg || inputMsg.value.trim() === "") return;
@@ -3094,17 +3095,18 @@ function transmitirMensajeBunker() {
         timestamp: Date.now()
     };
 
-    inputMsg.value = ""; // Vaciado en 0ms
+    // Vaciado en caliente de la interfaz móvil en 0ms
+    inputMsg.value = "";
 
-    // Algoritmo de amalgama para fundir los textos en la misma ventana de interacción
-    fetch(BIN_URL, { method: "GET", headers: { "X-Bin-Meta": "false", "Cache-Control": "no-cache" } })
-    .then(res => res.json())
+    // 🛠️ AMALGAMADA DE RED FUSIONADA: Descarga, acopla vuestra ráfaga y la empuja a la red pública
+    fetch(BIN_URL, { method: "GET", headers: { "Cache-Control": "no-cache" } })
+    .then(res => res.ok ? res.json() : [])
     .then(historialRemoto => {
         let poolUnificado = Array.isArray(historialRemoto) ? historialRemoto : [];
         poolUnificado.push(paqueteData);
         
         return fetch(BIN_URL, {
-            method: "PUT",
+            method: "POST", // Inyección forzada por método POST estructurado
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(poolUnificado)
         });
@@ -3116,6 +3118,7 @@ function transmitirMensajeBunker() {
     });
 }
 
+// 🪐 RENDERIZADO VISUAL EN PANTALLA CON CROMÁTICA TÁCTICA
 function renderizarMensajes() {
     const visor = document.getElementById("chat-box-visor");
     if (!visor) return;
@@ -3134,6 +3137,9 @@ function renderizarMensajes() {
     visor.scrollTop = visor.scrollHeight;
 }
 </script>
+
+
+ 
 
 
 
