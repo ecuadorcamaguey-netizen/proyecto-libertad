@@ -2974,7 +2974,180 @@ function verificarBloqueoGrifo() {
 
 
     
+<script>
+   // 🪐 CORDÓN UMBILICAL INALÁMBRICO DE ALTA VELOCIDAD COMPARTIDO (YORVIS ⇆ ANDRUS)
+const BIN_URL = "https://npoint.io";
+let miNombreOperador = "";
+let nombreDestinatario = "TERMINAL_B";
+let linkCanalUnicoId = "GLOBAL";
+let memoriaHistorial = [];
+let bucleActualizador = null;
 
+document.addEventListener("DOMContentLoaded", () => {
+    // Captura los parámetros de la notificación de ruta en la URL si existen
+    const parametrosUrl = new URLSearchParams(window.location.search);
+    const ganchoRemoto = parametrosUrl.get("canal_p2p");
+    const emisorRemoto = parametrosUrl.get("emisor");
+
+    if (ganchoRemoto && emisorRemoto) {
+        linkCanalUnicoId = ganchoRemoto;
+        nombreDestinatario = emisorRemoto.toUpperCase();
+        localStorage.setItem("p2p_canal_activo", linkCanalUnicoId);
+        localStorage.setItem("p2p_destinatario", nombreDestinatario);
+    }
+
+    if (localStorage.getItem("chat_token_autorizado") === "ACTIVE") {
+        desbloquearInterfazChat();
+    }
+});
+
+function autenticarInvitadoChat() {
+    const CLAVE_ALPHA_REAL = "ALPHA-2026"; 
+    const tokenIngresado = prompt("🛰️ VALIDACIÓN ALPHA-CHAT [PROYECTO LIBERTAD]\n\nIntroduzca el Código de Invitación para acceder al búnker:");
+    
+    if (tokenIngresado === null) return;
+
+    if (tokenIngresado.trim() === CLAVE_ALPHA_REAL) {
+        localStorage.setItem("chat_token_autorizado", "ACTIVE");
+        
+        if (!localStorage.getItem("operador_id_name")) {
+            const alias = prompt("👤 NOMBRE DE OPERADOR:\n\nIntroduzca su alias (Ej: YORVIS o ANDRUS):") || "OPERADOR";
+            localStorage.setItem("operador_id_name", alias.trim().toUpperCase());
+        }
+        
+        desbloquearInterfazChat();
+        alert("🟢 ACCESO PERMITIDO: Canal interconectado con éxito de Grandes Ligas.");
+    } else {
+        alert("❌ ACCESO RECHAZADO: Código Alpha-Chat inválido.");
+    }
+}
+
+// 🔗 GENERAR EL GANCHO / LINK DE NOTIFICACIÓN DINÁMICA
+function generarEnlaceNotificacion() {
+    miNombreOperador = localStorage.getItem("operador_id_name") || "YORVIS";
+    linkCanalUnicoId = "CH-" + Math.floor(1000 + Math.random() * 9000);
+    localStorage.setItem("p2p_canal_activo", linkCanalUnicoId);
+    
+    const urlBase = window.location.origin + window.location.pathname;
+    const linkDeEnlaceFinal = `${urlBase}?canal_p2p=${linkCanalUnicoId}&emisor=${miNombreOperador}`;
+
+    navigator.clipboard.writeText(linkDeEnlaceFinal).then(() => {
+        alert("🛰️ NOTIFICACIÓN: RUTA GENERADA\n\nEl enlace dinámico de acople se copió al portapapeles. Envíaselo a tu contacto para abrir la compuerta.");
+    }).catch(() => {
+        prompt("📋 COPIE ESTE LINK Y ENVÍELO A SU CONTACTO:", linkDeEnlaceFinal);
+    });
+}
+
+function desbloquearInterfazChat() {
+    miNombreOperador = localStorage.getItem("operador_id_name") || "OPERADOR";
+    linkCanalUnicoId = localStorage.getItem("p2p_canal_activo") || "GLOBAL";
+    nombreDestinatario = localStorage.getItem("p2p_destinatario") || "CONTACTO";
+    
+    const capaBloqueo = document.getElementById("bunker-bloqueado-capa");
+    const panelAbierto = document.getElementById("bunker-abierto-panel");
+    const seccionTecnologica = document.getElementById("panelLibertad");
+
+    if (capaBloqueo) capaBloqueo.style.setProperty("display", "none", "important");
+    if (panelAbierto) panelAbierto.style.setProperty("display", "block", "important");
+    if (seccionTecnologica) seccionTecnologica.classList.add("activo"); 
+
+    const visorIdentidad = document.getElementById("visor-identidad-cruzada");
+    if (visorIdentidad) {
+        visorIdentidad.innerHTML = `🛰️ CANAL: ${miNombreOperador.toUpperCase()} ⇆ ${nombreDestinatario} [ACUPLADO]`;
+        visorIdentidad.style.borderColor = "#14F195";
+        visorIdentidad.style.color = "#14F195";
+    }
+
+    descargarMensajesDeRed();
+    if (!bucleActualizador) {
+        bucleActualizador = setInterval(descargarMensajesDeRed, 2500);
+    }
+}
+
+function descargarMensajesDeRed() {
+    if (localStorage.getItem("chat_token_autorizado") !== "ACTIVE") return;
+
+    fetch(`${BIN_URL}?nocache=${Date.now()}`, {
+        method: "GET",
+        headers: { "Cache-Control": "no-cache" }
+    })
+    .then(res => { if (res.ok) return res.json(); })
+    .then(data => {
+        const poolRemoto = (data && Array.isArray(data)) ? data : [];
+        let huboCambios = false;
+
+        poolRemoto.forEach(pkgRemoto => {
+            const existe = memoriaHistorial.some(m => m.id === pkgRemoto.id);
+            if (!existe) {
+                memoriaHistorial.push(pkgRemoto);
+                huboCambios = true;
+            }
+        });
+
+        if (huboCambios) {
+            memoriaHistorial.sort((a, b) => a.timestamp - b.timestamp);
+            localStorage.setItem("bunker_chat_log", JSON.stringify(memoriaHistorial));
+            renderizarMensajes();
+        }
+    }).catch(err => console.log("[🛰️] Sincronizando hilos..."));
+}
+
+function transmitirMensajeBunker() {
+    const inputMsg = document.getElementById("chat-msg-input");
+    if (!inputMsg || inputMsg.value.trim() === "") return;
+
+    const textoMensaje = inputMsg.value.trim();
+    const fecha = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit'});
+    const idUnico = "MSG-" + Date.now() + "-" + Math.floor(Math.random() * 1000);
+
+    const paqueteData = {
+        id: idUnico,
+        emisor: miNombreOperador.toUpperCase(),
+        contenido: textoMensaje,
+        tiempo: fecha,
+        timestamp: Date.now()
+    };
+
+    inputMsg.value = ""; // Vaciado instantáneo en 0ms
+
+    fetch(`${BIN_URL}?nocache=${Date.now()}`, { method: "GET", headers: { "Cache-Control": "no-cache" } })
+    .then(res => res.ok ? res.json() : [])
+    .then(historialRemoto => {
+        let poolUnificado = Array.isArray(historialRemoto) ? historialRemoto : [];
+        poolUnificado.push(paqueteData);
+        
+        return fetch(BIN_URL, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(poolUnificado)
+        });
+    })
+    .then(res => { if (res.ok) descargarMensajesDeRed(); })
+    .catch(err => {
+        memoriaHistorial.push(paqueteData);
+        renderizarMensajes();
+    });
+}
+
+function renderizarMensajes() {
+    const visor = document.getElementById("chat-box-visor");
+    if (!visor) return;
+    visor.innerHTML = "";
+    
+    memoriaHistorial.forEach(pkg => {
+        const itemBox = document.createElement("div");
+        itemBox.style.marginBottom = "6px";
+        itemBox.style.borderBottom = "1px dashed #222";
+        itemBox.style.paddingBottom = "4px";
+        
+        const colorEmisor = pkg.emisor === miNombreOperador.toUpperCase() ? "#14F195" : "#d4af37";
+        itemBox.innerHTML = `<span style="color: ${colorEmisor};">[${pkg.tiempo}] ${pkg.emisor}:</span> <span style="color: #fff;">${pkg.contenido}</span>`;
+        visor.appendChild(itemBox);
+    });
+    visor.scrollTop = visor.scrollHeight;
+}
+
+</script>
 
 
 
