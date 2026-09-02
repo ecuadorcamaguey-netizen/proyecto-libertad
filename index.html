@@ -3216,6 +3216,186 @@ function purgarHistorialChatBunker() {
 
 
 
+
+
+
+
+
+
+
+                     
+
+<!---PRUEBA DE NUESTRO 🧐TRABAJO ELIMINAR LUEGO DE HACER LA PRUEBA--->
+
+
+<!-- CHASSIS VISUAL DEL SÚPER CHAT UNIFICADO POR WEBSOCKETS v18.0 (TODO EN UNO) -->
+<div id="crypto-chat-bunker" style="background: rgba(10,10,10,0.95); border: 2px solid #14F195; border-radius: 10px; padding: 15px; margin-top: 20px; font-family: monospace; color: #14F195;">
+    
+    <!-- ENCABEZADO CON VISOR DE IDENTIDAD EN CALIENTE -->
+    <div style="border-bottom: 1px solid #4b5320; padding-bottom: 8px; margin-bottom: 10px; text-align: center;">
+        <h3 style="color: #d4af37; margin: 0 0 5px 0;">🛰️ SÚPER CHAT: VENTANA UNIFICADA P2P</h3>
+        <div id="visor-identidad-cruzada" style="background: #000; border: 1px dashed #14F195; padding: 4px; font-size: 11px; color: #14F195; font-weight: bold;">
+            [ 🟢 ESTADO: MODULO WEBSOCKET EN LINEA ]
+        </div>
+    </div>
+    
+    <!-- PANEL OPERATIVO UNIFICADO (SIN PASO DE CREDENCIALES PREVIO) -->
+    <div id="bunker-abierto-panel">
+        
+        <!-- ENLACE DE CONEXIÓN COGNITIVA -->
+        <div style="margin-bottom: 12px; text-align: center;">
+            <button onclick="generarEnlaceNotificacion()" style="background: #220000; color: #14F195; border: 1px solid #14F195; padding: 6px 12px; font-family: inherit; font-size: 11px; font-weight: bold; cursor: pointer; border-radius: 4px; width: 100%;">
+                🔗 GENERAR LINK DE ENLACE COGNITIVO
+            </button>
+        </div>
+
+        <!-- Visor Indestructible Realtime -->
+        <div id="chat-box-visor" style="height: 220px; overflow-y: auto; background: #000; border: 1px solid #4b5320; padding: 10px; margin-bottom: 10px; border-radius: 4px;">
+            <span style="color: #666;">[ Sistema Listo: Esperando transmisión de datos... ]</span>
+        </div>
+
+        <!-- Controles de Entrada de Texto -->
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+            <input type="text" id="chat-msg-input" placeholder="ESCRIBA MENSAJE CRIPTOGRÁFICO..." style="width: 100%; box-sizing: border-box; margin: 0; background: #000; border: 1px solid #d4af37; color: #0f0; padding: 10px; font-family: monospace;">
+            <button onclick="transmitirMensajeBunker()" style="background: #112200; color: #14F195; border: 1px solid #14F195; padding: 8px 15px; font-family: inherit; font-size: 11px; font-weight: bold; cursor: pointer; border-radius: 4px; text-transform: uppercase; width: 100%;">
+                TRANSMITIR AL CANAL 🚀
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- 📜 INYECCIÓN DEL REPETIDOR DE ALTA VELOCIDAD ABLY DESDE CDN -->
+<script src="https://ably.com"></script>
+
+<script>
+// 🪐 MOTOR MAESTRO DE RADIO DIGITAL EN CALIENTE (v18.0)
+let miNombreOperador = "";
+let nombreDestinatario = "TERMINAL_B";
+let linkCanalUnicoId = "GLOBAL";
+let memoriaHistorial = [];
+let canalComunRealtime = null;
+
+// Inicialización forzada de la instancia de red
+const ablyReal = new Ably.Realtime('M-268Q.bVqZSw:b3k_76Z4N97p8w4L1418_Invicto');
+
+document.addEventListener("DOMContentLoaded", () => {
+    miNombreOperador = localStorage.getItem("operador_id_name") || "YORVIS";
+    
+    // Captura los parámetros de acople de la URL
+    const parametrosUrl = new URLSearchParams(window.location.search);
+    const ganchoRemoto = parametrosUrl.get("canal_p2p");
+    const emisorRemoto = parametrosUrl.get("emisor");
+
+    if (ganchoRemoto && emisorRemoto) {
+        linkCanalUnicoId = ganchoRemoto;
+        nombreDestinatario = emisorRemoto.toUpperCase();
+        localStorage.setItem("p2p_canal_activo", linkCanalUnicoId);
+        localStorage.setItem("p2p_destinatario", nombreDestinatario);
+    } else {
+        linkCanalUnicoId = localStorage.getItem("p2p_canal_activo") || "GLOBAL";
+        nombreDestinatario = localStorage.getItem("p2p_destinatario") || "CONTACTO";
+    }
+
+    // Forzamos la autorización interna para la prueba en limpio
+    localStorage.setItem("chat_token_autorizado", "ACTIVE");
+    
+    // Conectamos el canal asincrónico inmediatamente
+    conectarCanalWebsocket();
+});
+
+function conectarCanalWebsocket() {
+    const visorIdentidad = document.getElementById("visor-identidad-cruzada");
+    if (visorIdentidad) {
+        visorIdentidad.innerHTML = `🛰️ CANAL: ${miNombreOperador.toUpperCase()} ⇆ ${nombreDestinatario} [ACUPLADO]`;
+    }
+
+    // Abre el flujo de radio digital amarrado al ID único del canal
+    canalComunRealtime = ablyReal.channels.get('bunker_canal_' + linkCanalUnicoId);
+    
+    // Escuchador en vivo: Imprime en pantalla en cuanto el otro teléfono transmite
+    canalComunRealtime.subscribe('mensaje_bunker', (nodo) => {
+        const pkg = nodo.data;
+        const existe = memoriaHistorial.some(m => m.id === pkg.id);
+        
+        if (!existe) {
+            memoriaHistorial.push(pkg);
+            memoriaHistorial.sort((a, b) => a.timestamp - b.timestamp);
+            renderizarMensajes();
+        }
+    });
+}
+
+function generarEnlaceNotificacion() {
+    miNombreOperador = localStorage.getItem("operador_id_name") || "YORVIS";
+    linkCanalUnicoId = "CH-" + Math.floor(1000 + Math.random() * 9000);
+    localStorage.setItem("p2p_canal_activo", linkCanalUnicoId);
+    
+    const urlBase = window.location.origin + window.location.pathname;
+    const linkDeEnlaceFinal = urlBase + "?canal_p2p=" + linkCanalUnicoId + "&emisor=" + miNombreOperador;
+
+    navigator.clipboard.writeText(linkDeEnlaceFinal).then(() => {
+        alert("🛰️ NOTIFICACIÓN: RUTA ACUPLADA\n\nLink dinámico copiado al portapapeles. Envíaselo a Andreus por email o chat.");
+    });
+    
+    conectarCanalWebsocket();
+}
+
+function transmitirMensajeBunker() {
+    const inputMsg = document.getElementById("chat-msg-input");
+    if (!inputMsg || inputMsg.value.trim() === "") return;
+
+    const textoMensaje = inputMsg.value.trim();
+    const fecha = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit'});
+    
+    const paqueteData = {
+        id: "MSG-" + Date.now() + "-" + Math.floor(Math.random() * 1000),
+        emisor: miNombreOperador.toUpperCase(),
+        contenido: textoMensaje,
+        tiempo: fecha,
+        timestamp: Date.now()
+    };
+
+    inputMsg.value = ""; // Vaciado en 0 milisegundos
+
+    // 🚀 DISPARO WEBSOCKET SUPERSÓNICO
+    if (canalComunRealtime) {
+        canalComunRealtime.publish('mensaje_bunker', paqueteData);
+    }
+}
+
+function renderizarMensajes() {
+    const visor = document.getElementById("chat-box-visor");
+    if (!visor) return;
+    visor.innerHTML = "";
+    
+    memoriaHistorial.forEach(pkg => {
+        const itemBox = document.createElement("div");
+        itemBox.style.marginBottom = "6px";
+        itemBox.style.borderBottom = "1px dashed #222";
+        itemBox.style.paddingBottom = "4px";
+        
+        const colorEmisor = pkg.emisor === miNombreOperador.toUpperCase() ? "#14F195" : "#d4af37";
+        itemBox.innerHTML = "<span style='color: " + colorEmisor + ";'>[" + pkg.tiempo + "] " + pkg.emisor + ":</span> <span style='color: #fff;'>" + pkg.contenido + "</span>";
+        visor.appendChild(itemBox);
+    });
+    visor.scrollTop = visor.scrollHeight;
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+                     
+
+
+
                      
 <!--- ========================================== --->
 <!--- NUEVA ÁREA PRIVADA EXCLUSIVA TITÁN-GUARD CON CARGA LOCAL --->
