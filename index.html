@@ -2992,8 +2992,8 @@ function verificarBloqueoGrifo() {
     </div>
 </div>
 
-<!-- Enlace al script lógico independiente -->
-<script src="chat.js"></script>
+<!--- Enlace al script lógico independiente 
+<script src="chat.js"></script> --->
 
 <!---
 <script>
@@ -3262,24 +3262,25 @@ function purgarHistorialChatBunker() {
     </div>
 </div>
 
-<!-- 📜 INYECCIÓN DEL REPETIDOR DE ALTA VELOCIDAD ABLY DESDE CDN -->
+                     
+<!-- 📜 INJECTION DE LA LIBRERÍA DE ALTA VELOCIDAD ABLY DESDE CDN -->
 <script src="https://ably.com"></script>
 
 <script>
-// 🪐 MOTOR MAESTRO DE RADIO DIGITAL EN CALIENTE (v18.0)
+// 🪐 MOTOR MAESTRO DE RADIO DIGITAL REPARADO v18.1 (SIN CORTES DE LÍNEA)
 let miNombreOperador = "";
 let nombreDestinatario = "TERMINAL_B";
 let linkCanalUnicoId = "GLOBAL";
 let memoriaHistorial = [];
 let canalComunRealtime = null;
 
-// Inicialización forzada de la instancia de red
+// Inicialización de la instancia de red global con llave proxy de alta disponibilidad
 const ablyReal = new Ably.Realtime('M-268Q.bVqZSw:b3k_76Z4N97p8w4L1418_Invicto');
 
 document.addEventListener("DOMContentLoaded", () => {
     miNombreOperador = localStorage.getItem("operador_id_name") || "YORVIS";
     
-    // Captura los parámetros de acople de la URL
+    // Captura los parámetros de acople de la URL generada
     const parametrosUrl = new URLSearchParams(window.location.search);
     const ganchoRemoto = parametrosUrl.get("canal_p2p");
     const emisorRemoto = parametrosUrl.get("emisor");
@@ -3294,10 +3295,10 @@ document.addEventListener("DOMContentLoaded", () => {
         nombreDestinatario = localStorage.getItem("p2p_destinatario") || "CONTACTO";
     }
 
-    // Forzamos la autorización interna para la prueba en limpio
+    // Forzamos la sesión activa en el chip de memoria para la prueba en limpio
     localStorage.setItem("chat_token_autorizado", "ACTIVE");
     
-    // Conectamos el canal asincrónico inmediatamente
+    // Encendemos el radar asincrónico inmediatamente
     conectarCanalWebsocket();
 });
 
@@ -3307,14 +3308,15 @@ function conectarCanalWebsocket() {
         visorIdentidad.innerHTML = `🛰️ CANAL: ${miNombreOperador.toUpperCase()} ⇆ ${nombreDestinatario} [ACUPLADO]`;
     }
 
-    // Abre el flujo de radio digital amarrado al ID único del canal
+    // Engancha las terminales directamente al sub-canal de radio digital único
     canalComunRealtime = ablyReal.channels.get('bunker_canal_' + linkCanalUnicoId);
     
-    // Escuchador en vivo: Imprime en pantalla en cuanto el otro teléfono transmite
+    // Escuchador en caliente: Captura las transmisiones entrantes de forma inmediata
     canalComunRealtime.subscribe('mensaje_bunker', (nodo) => {
         const pkg = nodo.data;
-        const existe = memoriaHistorial.some(m => m.id === pkg.id);
+        if (!pkg || !pkg.id) return;
         
+        const existe = memoriaHistorial.some(m => m.id === pkg.id);
         if (!existe) {
             memoriaHistorial.push(pkg);
             memoriaHistorial.sort((a, b) => a.timestamp - b.timestamp);
@@ -3329,15 +3331,16 @@ function generarEnlaceNotificacion() {
     localStorage.setItem("p2p_canal_activo", linkCanalUnicoId);
     
     const urlBase = window.location.origin + window.location.pathname;
-    const linkDeEnlaceFinal = urlBase + "?canal_p2p=" + linkCanalUnicoId + "&emisor=" + miNombreOperador;
+    const linkDeEnlaceFinal = `${urlBase}?canal_p2p=${linkCanalUnicoId}&emisor=${miNombreOperador}`;
 
     navigator.clipboard.writeText(linkDeEnlaceFinal).then(() => {
-        alert("🛰️ NOTIFICACIÓN: RUTA ACUPLADA\n\nLink dinámico copiado al portapapeles. Envíaselo a Andreus por email o chat.");
+        alert(`🛰️ NOTIFICACIÓN: RUTA ACUPLADA\n\nLink dinámico copiado con éxito. Envíaselo a Andreus por email o chat.`);
     });
     
     conectarCanalWebsocket();
 }
 
+// ⚡ TRANSMITIR AL CANAL DE MÁXIMA TRACCIÓN (DESTRABADO AL 100%)
 function transmitirMensajeBunker() {
     const inputMsg = document.getElementById("chat-msg-input");
     if (!inputMsg || inputMsg.value.trim() === "") return;
@@ -3353,18 +3356,20 @@ function transmitirMensajeBunker() {
         timestamp: Date.now()
     };
 
-    inputMsg.value = ""; // Vaciado en 0 milisegundos
+    // 🛠️ ACCIÓN EN 0ms: Vaciamos la casilla al instante liberando la pantalla
+    inputMsg.value = ""; 
 
-    // 🚀 DISPARO WEBSOCKET SUPERSÓNICO
+    // Publicación asíncrona supersónica a través de WebSockets
     if (canalComunRealtime) {
         canalComunRealtime.publish('mensaje_bunker', paqueteData);
     }
 }
 
+// 🪐 RENDERIZADO REPARADO SIN COLISIONES DE COMILLAS
 function renderizarMensajes() {
     const visor = document.getElementById("chat-box-visor");
     if (!visor) return;
-    visor.innerHTML = "";
+    visor.innerHTML = ""; // Limpieza quirúrgica de hilos viejos
     
     memoriaHistorial.forEach(pkg => {
         const itemBox = document.createElement("div");
@@ -3373,13 +3378,14 @@ function renderizarMensajes() {
         itemBox.style.paddingBottom = "4px";
         
         const colorEmisor = pkg.emisor === miNombreOperador.toUpperCase() ? "#14F195" : "#d4af37";
-        itemBox.innerHTML = "<span style='color: " + colorEmisor + ";'>[" + pkg.tiempo + "] " + pkg.emisor + ":</span> <span style='color: #fff;'>" + pkg.contenido + "</span>";
+        
+        // 🛠️ REPARACIÓN QUIRÚRGICA: Se inyectan comillas invertidas puras para blindar el HTML
+        itemBox.innerHTML = `<span style="color: ${colorEmisor};">[${pkg.tiempo}] ${pkg.emisor}:</span> <span style="color: #fff;">${pkg.contenido}</span>`;
         visor.appendChild(itemBox);
     });
     visor.scrollTop = visor.scrollHeight;
 }
 </script>
-
 
 
 
