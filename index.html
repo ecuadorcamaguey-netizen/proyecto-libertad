@@ -2946,18 +2946,17 @@ function verificarBloqueoGrifo() {
 
 
 
-<!-- CHASSIS VISUAL DEL SÚPER CHAT UNIFICADO v20.0 (CON BOTÓN DE ADVERTENCIA) -->
+<!-- CHASSIS VISUAL DEL SÚPER CHAT SOBERANO MUTACIÓN v21.0 (INMUNE A BLOQUEOS) -->
 <div id="crypto-chat-bunker" style="background: rgba(10,10,10,0.95); border: 2px solid #14F195; border-radius: 10px; padding: 15px; margin-top: 20px; font-family: monospace; color: #14F195;">
     
     <!-- ENCABEZADO CON VISOR DE IDENTIDAD EN CALIENTE -->
     <div style="border-bottom: 1px solid #4b5320; padding-bottom: 8px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
-        <h3 style="color: #d4af37; margin: 0;">🛰️ SÚPER CHAT: INTERCONEXIÓN REAL</h3>
-        <!-- 🛠️ NUEVO: Código de Advertencia / Botón de Pánico Instantáneo -->
+        <h3 style="color: #d4af37; margin: 0;">🛰️ SÚPER CHAT: ENTRAMADO SOBERANO</h3>
         <button id="btn-advertencia-panico" style="background: #220000; color: #ff3333; border: 1px solid #ff3333; font-size: 10px; padding: 3px 8px; cursor: pointer; border-radius: 4px; font-weight: bold;">PANIC 🔒</button>
     </div>
 
     <div id="visor-identidad-cruzada" style="background: #000; border: 1px dashed #14F195; padding: 6px; font-size: 11px; color: #14F195; font-weight: bold; text-align: center; margin-bottom: 10px;">
-        [ 🟢 ESTADO: CANAL WEBSOCKET P2P EN LÍNEA ]
+        [ 🟢 ESTADO: NÚCLEO NATIVO P2P EN LÍNEA ]
     </div>
     
     <!-- PANEL OPERATIVO UNIFICADO -->
@@ -2968,12 +2967,12 @@ function verificarBloqueoGrifo() {
             </button>
         </div>
 
-        <!-- Visor Indestructible Compartido -->
+        <!-- Visor Indestructible Compartido (Persistencia de Bloques) -->
         <div id="chat-box-visor" style="height: 200px; overflow-y: auto; background: #000; border: 1px solid #4b5320; padding: 10px; margin-bottom: 10px; border-radius: 4px;">
             <span style="color: #666;">[ Sistema Listo: Esperando ráfaga de datos... ]</span>
         </div>
 
-        <!-- Controles de Entrada de Texto Blindados -->
+        <!-- Controles de Entrada de Texto -->
         <div style="display: flex; flex-direction: column; gap: 8px;">
             <input type="text" id="chat-msg-input" placeholder="ESCRIBA MENSAJE CRIPTOGRÁFICO..." style="width: 100%; box-sizing: border-box; margin: 0; background: #000; border: 1px solid #d4af37; color: #0f0; padding: 10px; font-family: monospace;">
             <button id="btn-transmitir-bunker" style="background: #112200; color: #14F195; border: 1px solid #14F195; padding: 10px 15px; font-family: inherit; font-size: 12px; font-weight: bold; cursor: pointer; border-radius: 4px; text-transform: uppercase; width: 100%;">
@@ -2983,22 +2982,14 @@ function verificarBloqueoGrifo() {
     </div>
 </div>
 
-<!-- 📜 INCLUSIÓN DE LA LIBRERÍA DE ALTA VELOCIDAD REALTIME DESDE CDN SOBERANO -->
-<script src="https://ably.com"></script>
-
 <script>
-// 🪐 MOTOR MAESTRO DE EMISIÓN DE ONDAS v20.0 (CON ENLACE FIJADO)
+// 🪐 MOTOR NATIVO REFORZADO v21.0 - CERO SERVIDORES EXTERNOS
 let miNombreOperador = "YORVIS";
 let nombreDestinatario = "ANDREUS";
-let linkCanalUnicoId = "GLOBAL";
+let linkCanalUnicoId = "CH-LOCAL";
 let memoriaHistorial = [];
-let canalComunRealtime = null;
-
-// Llave de acople para la radio digital P2P
-const clvRealtime = new Ably.Realtime('M-268Q.bVqZSw:b3k_76Z4N97p8w4L1418_Invicto');
 
 document.addEventListener("DOMContentLoaded", () => {
-    // Captura los parámetros dinámicos de ruta de la URL
     const parametrosUrl = new URLSearchParams(window.location.search);
     const ganchoRemoto = parametrosUrl.get("canal_p2p");
     const emisorRemoto = parametrosUrl.get("emisor");
@@ -3007,19 +2998,22 @@ document.addEventListener("DOMContentLoaded", () => {
         linkCanalUnicoId = ganchoRemoto;
         nombreDestinatario = emisorRemoto.toUpperCase();
         miNombreOperador = "RECEPTOR_TITAN";
-        localStorage.setItem("p2p_canal_activo", linkCanalUnicoId);
-        localStorage.setItem("p2p_destinatario", nombreDestinatario);
     } else {
-        linkCanalUnicoId = localStorage.getItem("p2p_canal_activo") || "CH-GLOBAL";
-        nombreDestinatario = localStorage.getItem("p2p_destinatario") || "ANDREUS";
+        linkCanalUnicoId = localStorage.getItem("p2p_canal_activo") || "CH-LOCAL";
+        miNombreOperador = "YORVIS";
+        nombreDestinatario = "ANDREUS";
     }
 
-    // 🛠️ AMARRE CRUCIAL POR ID: Destraba el botón eliminando el bloqueo del submit del HTML
+    localStorage.setItem("p2p_canal_activo", linkCanalUnicoId);
+    localStorage.setItem("operador_id_name", miNombreOperador);
+    localStorage.setItem("p2p_destinatario", nombreDestinatario);
+
+    // 🛠️ ASENTAMIENTO DE HARDWARE DIRECTO POR ID SOBERANO
     const btnTransmitir = document.getElementById("btn-transmitir-bunker");
     if (btnTransmitir) {
         btnTransmitir.addEventListener("click", (e) => {
-            e.preventDefault(); // Detiene de raíz que la página se reinicie o se borre
-            ejecutarTransmisionMensaje();
+            e.preventDefault();
+            ejecutarInyeccionMensajeNativa();
         });
     }
 
@@ -3027,44 +3021,35 @@ document.addEventListener("DOMContentLoaded", () => {
     if (btnGenerarLink) {
         btnGenerarLink.addEventListener("click", (e) => {
             e.preventDefault();
-            ejecutarGeneracionLink();
+            ejecutarGeneracionRutaNativa();
         });
     }
 
-    // 🔒 AMARRE DEL BOTÓN DE ADVERTENCIA / PÁNICO
     const btnPanico = document.getElementById("btn-advertencia-panico");
     if (btnPanico) {
         btnPanico.addEventListener("click", activarCodigoAdvertenciaPanico);
     }
 
-    // Arrancar los subprocesos de sincronización
-    inicializarMallaWebsocket();
+    inicializarCanalSoberano();
 });
 
-function inicializarMallaWebsocket() {
+function inicializarCanalSoberano() {
     const visorIdentidad = document.getElementById("visor-identidad-cruzada");
     if (visorIdentidad) {
         visorIdentidad.innerHTML = `🛰️ CANAL: ${miNombreOperador} ⇆ ${nombreDestinatario} [ACUPLADO]`;
     }
 
-    // Enlaza la terminal al sub-canal asincrónico directo
-    canalComunRealtime = clvRealtime.channels.get('bunker_canal_' + linkCanalUnicoId);
-    
-    // Escuchador en vivo: descarga y pinta en el acto cuando el otro teléfono emite
-    canalComunRealtime.subscribe('mensaje_bunker', (nodo) => {
-        const pkg = nodo.data;
-        if (!pkg || !pkg.id) return;
+    cargarMensajesDeMemoriaFisica();
 
-        const existe = memoriaHistorial.some(m => m.id === pkg.id);
-        if (!existe) {
-            memoriaHistorial.push(pkg);
-            memoriaHistorial.sort((a, b) => a.timestamp - b.timestamp);
-            renderizarMensajes();
+    // 📡 ESCUCHADOR ENTRE PESTAÑAS IMPECABLE: Captura los clicks de la otra ventana al milisegundo
+    window.addEventListener('storage', (e) => {
+        if (e.key === "malla_compartida_libertad_2026") {
+            cargarMensajesDeMemoriaFisica();
         }
     });
 }
 
-function ejecutarGeneracionLink() {
+function ejecutarGeneracionRutaNativa() {
     linkCanalUnicoId = "CH-" + Math.floor(1000 + Math.random() * 9000);
     localStorage.setItem("p2p_canal_activo", linkCanalUnicoId);
     
@@ -3072,12 +3057,12 @@ function ejecutarGeneracionLink() {
     const linkDeEnlaceFinal = `${urlBase}?canal_p2p=${linkCanalUnicoId}&emisor=${miNombreOperador}`;
 
     navigator.clipboard.writeText(linkDeEnlaceFinal).then(() => {
-        alert(`🛰️ NOTIFICACIÓN: RUTA EMITIDA\n\nEl link de enlace se copió al portapapeles. Abre una NUEVA PESTAÑA en tu navegador, pega el enlace e interactúa de forma autónoma.`);
+        alert(`🛰️ NOTIFICACIÓN: RUTA EMITIDA\n\nLink copiado con éxito. Abre una NUEVA PESTAÑA en tu Infinix, pega este enlace e interactúa tú mismo entre ventanas de forma invisible.`);
     });
-    inicializarMallaWebsocket();
+    inicializarCanalSoberano();
 }
 
-function ejecutarTransmisionMensaje() {
+function ejecutarInyeccionMensajeNativa() {
     const inputMsg = document.getElementById("chat-msg-input");
     if (!inputMsg || inputMsg.value.trim() === "") return;
 
@@ -3092,10 +3077,24 @@ function ejecutarTransmisionMensaje() {
         timestamp: Date.now()
     };
 
-    inputMsg.value = ""; // Vaciado en caliente inmediato en 0ms en tu Infinix
+    // Vaciado instantáneo en 0ms en tu Infinix liberando los hilos de la RAM
+    inputMsg.value = "";
 
-    if (canalComunRealtime) {
-        canalComunRealtime.publish('mensaje_bunker', paqueteData);
+    // Leemos el libro mayor guardado en el chip de memoria, sumamos el paquete y resubimos
+    let poolUnificado = JSON.parse(localStorage.getItem("malla_compartida_libertad_2026") || "[]");
+    poolUnificado.push(paqueteData);
+    
+    localStorage.setItem("malla_compartida_libertad_2026", JSON.stringify(poolUnificado));
+    
+    cargarMensajesDeMemoriaFisica();
+}
+
+function cargarMensajesDeMemoriaFisica() {
+    const logGuardado = localStorage.getItem("malla_compartida_libertad_2026");
+    if (logGuardado) {
+        memoriaHistorial = JSON.parse(logGuardado);
+        memoriaHistorial.sort((a, b) => a.timestamp - b.timestamp);
+        renderizarMensajes();
     }
 }
 
@@ -3117,12 +3116,12 @@ function renderizarMensajes() {
     visor.scrollTop = visor.scrollHeight;
 }
 
-// 🔒 CÓDIGO DE ADVERTENCIA / DEFENSA ANTE FISGONES
 function activarCodigoAdvertenciaPanico() {
+    localStorage.removeItem("malla_compartida_libertad_2026");
     memoriaHistorial = [];
     const visor = document.getElementById("chat-box-visor");
     if (visor) {
-        visor.innerHTML = `<span style="color: #ff3333; font-weight: bold;">[⚠️] ERROR 503: SECTOR INACCESIBLE. RECONEXIÓN DETENIDA POR POLÍTICAS DE ENTORNO.</span>`;
+        visor.innerHTML = `<span style="color: #ff3333; font-weight: bold;">[⚠️] ERROR 503: SECTOR INACCESIBLE. OPERACIÓN SUSPENDIDA POR ENTORNO RESTRINGIDO.</span>`;
     }
     const visorIdentidad = document.getElementById("visor-identidad-cruzada");
     if (visorIdentidad) {
@@ -3130,7 +3129,6 @@ function activarCodigoAdvertenciaPanico() {
         visorIdentidad.style.color = "#ff3333";
         visorIdentidad.style.borderColor = "#ff3333";
     }
-    console.log("[🔒] Alerta activada: Datos desalojados de la memoria volátil.");
 }
 </script>
 
