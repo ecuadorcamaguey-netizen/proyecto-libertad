@@ -2993,20 +2993,25 @@ function verificarBloqueoGrifo() {
     </div>
 </div>
 
+
 <script>
-// 🪐 MOTOR UNIFICADO CON APAGADO DE RAM SEGURO v23.0 (INMUNE A COMPUERTAS ABIERTAS)
+// 🪐 MOTOR UNIFICADO REPARADO v23.2 - AMARRE DE CREDENCIALES SEPARADO
 let miNombreOperador = "YORVIS";
 let nombreDestinatario = "ANDREUS";
 let linkCanalUnicoId = "CH-LOCAL";
 let memoriaHistorial = [];
 
 document.addEventListener("DOMContentLoaded", () => {
-    // Si el operador ya se validó previamente, levanta el chasis de inmediato
+    // 🛠️ Control de arranque limpio: Si la llave está en el chip, abre directo
     if (localStorage.getItem("chat_token_autorizado") === "ACTIVE") {
         encenderCanalSoberanoVisual();
+    } else {
+        // Si no hay sesión, forzamos que la interfaz visual permanezca oculta
+        document.getElementById("bunker-abierto-panel").style.setProperty("display", "none", "important");
+        document.getElementById("capa-login-bunker").style.setProperty("display", "block", "important");
     }
     
-    // Configuración de los escuchadores tácticos de hardware
+    // Configuración de escuchadores tácticos nativos por ID de hardware
     const btnTransmitir = document.getElementById("btn-transmitir-bunker");
     if (btnTransmitir) {
         btnTransmitir.addEventListener("click", (e) => {
@@ -3023,23 +3028,25 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // 🔒 AMARRE DEL BOTÓN DE CLAUSURA MAESTRA
     const btnPanico = document.getElementById("btn-advertencia-panico");
     if (btnPanico) {
         btnPanico.addEventListener("click", ejecutarClausuraYBloqueoFuerte);
     }
 });
 
+// 🔑 FILTRO ALPHA TOTALMENTE DESTRABADO (EJECUCIÓN ASÍNCRONA LIMPIA)
 function ejecutarFiltroAlphaNativo() {
     const CLAVE_ALPHA_REAL = "ALPHA-2026";
+    
+    // Lanzamiento forzado del prompt en el navegador móvil
     const tokenIngresado = prompt("🛰️ VALIDACIÓN ALPHA-CHAT [PROYECTO LIBERTAD]\n\nIntroduzca el Código de Invitación para acceder al búnker:");
     
     if (tokenIngresado !== null && tokenIngresado.trim() === CLAVE_ALPHA_REAL) {
         localStorage.setItem("chat_token_autorizado", "ACTIVE");
-        alert("🟢 ACCESO PERMITIDO: Canal interconectado con éxito.");
+        alert("🟢 ACCESO PERMITIDO: Puerto Alpha desbloqueado.");
         encenderCanalSoberanoVisual();
     } else {
-        alert("❌ ACCESO RECHAZADO: Código inválido.");
+        alert("❌ ACCESO RECHAZADO: Código inválido o sector restringido.");
         localStorage.removeItem("chat_token_autorizado");
     }
 }
@@ -3063,6 +3070,7 @@ function encenderCanalSoberanoVisual() {
     localStorage.setItem("operador_id_name", miNombreOperador);
     localStorage.setItem("p2p_destinatario", nombreDestinatario);
 
+    // Activación limpia de capas ocultando el login y liberando el panel
     document.getElementById("capa-login-bunker").style.setProperty("display", "none", "important");
     document.getElementById("bunker-abierto-panel").style.setProperty("display", "block", "important");
     
@@ -3075,11 +3083,15 @@ function encenderCanalSoberanoVisual() {
 
     cargarMensajesDeMemoriaFisica();
 
-    window.addEventListener('storage', (e) => {
-        if (e.key === "malla_compartida_libertad_2026") {
-            cargarMensajesDeMemoriaFisica();
-        }
-    });
+    // Escuchador de hardware en memoria
+    window.removeEventListener('storage', manejarTransmisionCrossTab);
+    window.addEventListener('storage', manejarTransmisionCrossTab);
+}
+
+function manejarTransmisionCrossTab(e) {
+    if (e.key === "malla_compartida_libertad_2026") {
+        cargarMensajesDeMemoriaFisica();
+    }
 }
 
 function ejecutarGeneracionRutaNativa() {
@@ -3090,7 +3102,7 @@ function ejecutarGeneracionRutaNativa() {
     const linkDeEnlaceFinal = `${urlBase}?canal_p2p=${linkCanalUnicoId}&emisor=${miNombreOperador}`;
 
     navigator.clipboard.writeText(linkDeEnlaceFinal).then(() => {
-        alert(`🛰️ NOTIFICACIÓN: RUTA EMITIDA\n\nLink copiado con éxito. Abre una NUEVA PESTAÑA en Chrome, pega este enlace e interactúa tú mismo.`);
+        alert(`🛰️ NOTIFICACIÓN: RUTA EMITIDA\n\nLink copiado con éxito. Abre una NUEVA PESTAÑA en Chrome, pega este enlace e interactúa de forma soberana.`);
     });
     encenderCanalSoberanoVisual();
 }
@@ -3147,21 +3159,30 @@ function renderizarMensajes() {
     visor.scrollTop = visor.scrollHeight;
 }
 
-// 🔒 NUEVA FUNCIÓN: VENCE LA PERSISTENCIA Y FUERZA EL CIERRE ABSOLUTO
+// 🔒 REPARADO: VENCE LA PERSISTENCIA Y PERMITE EL REINGRESO MANUAL CON PROMPT
 function ejecutarClausuraYBloqueoFuerte() {
-    // 1. Trituramos de raíz el token de acceso autorizado del chip
     localStorage.removeItem("chat_token_autorizado");
     localStorage.removeItem("malla_compartida_libertad_2026");
     memoriaHistorial = [];
     
-    // 2. Colapsamos la interfaz visual al instante en 0ms
+    // Forzamos el colapso visual rígido al instante
     document.getElementById("bunker-abierto-panel").style.setProperty("display", "none", "important");
     document.getElementById("capa-login-bunker").style.setProperty("display", "block", "important");
+    
     const visor = document.getElementById("chat-box-visor");
-    if (visor) {visor.innerHTML = <span style="color: #ff3333; font-weight: bold;">[⚠️] ERROR 503: SESIÓN CLAUSURADA. ACCESO AL COPT COMPROMETIDO.</span>;}const visorIdentidad = document.getElementById("visor-identidad-cruzada");
-    if (visorIdentidad) {visorIdentidad.innerHTML = "[ 🔒 ACCESO RESTRINGIDO: REFIERA CREDENCIALES ]";visorIdentidad.style.color = "#ff3333";visorIdentidad.style.borderColor = "#ff3333";}
-    alert("🔒 BÚNKER CERRADO: La llave física ha sido removida de la caché. El sitio está bloqueado.");}            
+    if (visor) visor.innerHTML = `<span style="color: #ff3333; font-weight: bold;">[⚠️] ERROR 503: SESIÓN CLAUSURADA. ACCESO AL COMPUESTO RESTRINGIDO.</span>`;
+    
+    const visorIdentidad = document.getElementById("visor-identidad-cruzada");
+    if (visorIdentidad) {
+        visorIdentidad.innerHTML = "[ 🔒 ACCESO RESTRINGIDO: PORTAL BLOQUEADO ]";
+        visorIdentidad.style.color = "#ff3333";
+        visorIdentidad.style.borderColor = "#ff3333";
+    }
+    
+    alert("🔒 BÚNKER CERRADO: Sesión limpiada. Presione de nuevo el botón de desbloqueo para introducir la clave Alpha.");
+}
 </script>
+
 
 
                      
