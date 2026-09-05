@@ -2946,22 +2946,24 @@ function verificarBloqueoGrifo() {
 
 
 
-
-<!-- CHASSIS VISUAL DEL SÚPER CHAT v22.0 (CON DOBLE ESCUDO: CREDENCIALES + PÁNICO) -->
+<!-- CHASSIS VISUAL DEL SÚPER CHAT v23.0 (CON BOTÓN DE CLAUSURA AUTOMÁTICA) -->
 <div id="crypto-chat-bunker" style="background: rgba(10,10,10,0.95); border: 2px solid #14F195; border-radius: 10px; padding: 15px; margin-top: 20px; font-family: monospace; color: #14F195;">
     
-    <!-- ENCABEZADO CON BOTÓN DE ADVERTENCIA DE EMERGENCIA -->
+    <!-- ENCABEZADO CON BOTÓN TÁCTICO DE CERRAR Y BLOQUEAR -->
     <div style="border-bottom: 1px solid #4b5320; padding-bottom: 8px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
-        <h3 style="color: #d4af37; margin: 0;">🛰️ SÚPER CHAT: CONTROL ALPHA v22.0</h3>
-        <button id="btn-advertencia-panico" style="background: #220000; color: #ff3333; border: 1px solid #ff3333; font-size: 10px; padding: 3px 8px; cursor: pointer; border-radius: 4px; font-weight: bold;">PANIC 🔒</button>
+        <h3 style="color: #d4af37; margin: 0;">🛰️ SÚPER CHAT: CONTROL ALPHA v23.0</h3>
+        <!-- 🛠️ EL BOTÓN SOLICITADO: Borra la sesión, cierra el chat y bloquea el portal al 100% -->
+        <button id="btn-advertencia-panico" style="background: #220000; color: #ff3333; border: 1px solid #ff3333; font-size: 10px; padding: 5px 10px; cursor: pointer; border-radius: 4px; font-weight: bold; text-transform: uppercase;">
+            🔒 CERRAR Y BLOQUEAR
+        </button>
     </div>
 
     <!-- VISOR DE ESTADO CRIPTOGRÁFICO -->
     <div id="visor-identidad-cruzada" style="background: #000; border: 1px dashed #ff3333; padding: 6px; font-size: 11px; color: #ff3333; font-weight: bold; text-align: center; margin-bottom: 10px;">
-        [ 🔒 RESTRICCIÓN DE ENTORNO: BLOQUEADO CON CREDENCIALES ]
+        [ 🔒 RESTRICCIÓN DE ENTORNO: PORTAL BLOQUEADO ]
     </div>
     
-    <!-- INTERFAZ PROTEGIDA: Se activa únicamente tras validar la clave Alpha -->
+    <!-- PANEL OPERATIVO UNIFICADO (OCULTO POR DEFECTO) -->
     <div id="bunker-abierto-panel" style="display: none;">
         <div style="margin-bottom: 12px; text-align: center;">
             <button id="btn-generar-enlace-bunker" style="background: #220000; color: #14F195; border: 1px solid #14F195; padding: 6px 12px; font-family: inherit; font-size: 11px; font-weight: bold; cursor: pointer; border-radius: 4px; width: 100%;">
@@ -2992,19 +2994,19 @@ function verificarBloqueoGrifo() {
 </div>
 
 <script>
-// 🪐 MOTOR UNIFICADO INTAL-P2P CON CANDADO DE SEGURIDAD NATIVO v22.0
+// 🪐 MOTOR UNIFICADO CON APAGADO DE RAM SEGURO v23.0 (INMUNE A COMPUERTAS ABIERTAS)
 let miNombreOperador = "YORVIS";
 let nombreDestinatario = "ANDREUS";
 let linkCanalUnicoId = "CH-LOCAL";
 let memoriaHistorial = [];
 
 document.addEventListener("DOMContentLoaded", () => {
-    // Verificar si el token ya está memorizado en el chip del Infinix
+    // Si el operador ya se validó previamente, levanta el chasis de inmediato
     if (localStorage.getItem("chat_token_autorizado") === "ACTIVE") {
         encenderCanalSoberanoVisual();
     }
     
-    // Configuración automática de los escuchadores tácticos de los botones
+    // Configuración de los escuchadores tácticos de hardware
     const btnTransmitir = document.getElementById("btn-transmitir-bunker");
     if (btnTransmitir) {
         btnTransmitir.addEventListener("click", (e) => {
@@ -3021,13 +3023,13 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // 🔒 AMARRE DEL BOTÓN DE CLAUSURA MAESTRA
     const btnPanico = document.getElementById("btn-advertencia-panico");
     if (btnPanico) {
-        btnPanico.addEventListener("click", activarCodigoAdvertenciaPanico);
+        btnPanico.addEventListener("click", ejecutarClausuraYBloqueoFuerte);
     }
 });
 
-// 🔑 CERROJO ALPHA FILTRADO (REPARADO: Corre sin colisiones lógicas)
 function ejecutarFiltroAlphaNativo() {
     const CLAVE_ALPHA_REAL = "ALPHA-2026";
     const tokenIngresado = prompt("🛰️ VALIDACIÓN ALPHA-CHAT [PROYECTO LIBERTAD]\n\nIntroduzca el Código de Invitación para acceder al búnker:");
@@ -3057,12 +3059,10 @@ function encenderCanalSoberanoVisual() {
         nombreDestinatario = "ANDREUS";
     }
 
-    // Guardado de trazas en la memoria volátil local
     localStorage.setItem("p2p_canal_activo", linkCanalUnicoId);
     localStorage.setItem("operador_id_name", miNombreOperador);
     localStorage.setItem("p2p_destinatario", nombreDestinatario);
 
-    // Ajuste dinámico de las capas del Chasis Visual
     document.getElementById("capa-login-bunker").style.setProperty("display", "none", "important");
     document.getElementById("bunker-abierto-panel").style.setProperty("display", "block", "important");
     
@@ -3075,7 +3075,6 @@ function encenderCanalSoberanoVisual() {
 
     cargarMensajesDeMemoriaFisica();
 
-    // Escuchador de hardware entre pestañas
     window.addEventListener('storage', (e) => {
         if (e.key === "malla_compartida_libertad_2026") {
             cargarMensajesDeMemoriaFisica();
@@ -3145,31 +3144,24 @@ function renderizarMensajes() {
         itemBox.innerHTML = `<span style="color: ${colorEmisor};">[${pkg.tiempo}] ${pkg.emisor}:</span> <span style="color: #fff;">${pkg.contenido}</span>`;
         visor.appendChild(itemBox);
     });
-    visor.scrollTop = visor.scrollHeight; // Autoscroll directo
+    visor.scrollTop = visor.scrollHeight;
 }
 
-function activarCodigoAdvertenciaPanico() {
-    localStorage.removeItem("malla_compartida_libertad_2026");
+// 🔒 NUEVA FUNCIÓN: VENCE LA PERSISTENCIA Y FUERZA EL CIERRE ABSOLUTO
+function ejecutarClausuraYBloqueoFuerte() {
+    // 1. Trituramos de raíz el token de acceso autorizado del chip
     localStorage.removeItem("chat_token_autorizado");
+    localStorage.removeItem("malla_compartida_libertad_2026");
     memoriaHistorial = [];
     
-    const visor = document.getElementById("chat-box-visor");
-    if (visor) {
-        visor.innerHTML = `<span style="color: #ff3333; font-weight: bold;">[⚠️] ERROR 503: SECTOR INACCESIBLE. OPERACIÓN SUSPENDIDA POR ENTORNO RESTRINGIDO.</span>`;
-    }
+    // 2. Colapsamos la interfaz visual al instante en 0ms
     document.getElementById("bunker-abierto-panel").style.setProperty("display", "none", "important");
     document.getElementById("capa-login-bunker").style.setProperty("display", "block", "important");
-    const visorIdentidad = document.getElementById("visor-identidad-cruzada");
-   if (visorIdentidad) {visorIdentidad.innerHTML = "[ 🔒 ACCESO RESTRINGIDO: CAMPO ENCRIPTADO ]";
-                        visorIdentidad.style.color = "#ff3333";
-                        visorIdentidad.style.borderColor = "#ff3333";}}
+    const visor = document.getElementById("chat-box-visor");
+    if (visor) {visor.innerHTML = <span style="color: #ff3333; font-weight: bold;">[⚠️] ERROR 503: SESIÓN CLAUSURADA. ACCESO AL COPT COMPROMETIDO.</span>;}const visorIdentidad = document.getElementById("visor-identidad-cruzada");
+    if (visorIdentidad) {visorIdentidad.innerHTML = "[ 🔒 ACCESO RESTRINGIDO: REFIERA CREDENCIALES ]";visorIdentidad.style.color = "#ff3333";visorIdentidad.style.borderColor = "#ff3333";}
+    alert("🔒 BÚNKER CERRADO: La llave física ha sido removida de la caché. El sitio está bloqueado.");}            
 </script>
-
-
-
-
-                     
-
 
 
                      
