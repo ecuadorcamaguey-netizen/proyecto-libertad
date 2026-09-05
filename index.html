@@ -2947,35 +2947,34 @@ function verificarBloqueoGrifo() {
 
 
 
-
-<!-- CHASSIS VISUAL DEL SÚPER CHAT SOBERANO MUTACIÓN v21.2 (OPTIMIZACIÓN TOTAL) -->
+<!-- CHASSIS VISUAL DEL SÚPER CHAT v22.0 (CON DOBLE ESCUDO: CREDENCIALES + PÁNICO) -->
 <div id="crypto-chat-bunker" style="background: rgba(10,10,10,0.95); border: 2px solid #14F195; border-radius: 10px; padding: 15px; margin-top: 20px; font-family: monospace; color: #14F195;">
     
-    <!-- ENCABEZADO CON BOTÓN DE ADVERTENCIA DE PÁNICO CRUCIAL -->
+    <!-- ENCABEZADO CON BOTÓN DE ADVERTENCIA DE EMERGENCIA -->
     <div style="border-bottom: 1px solid #4b5320; padding-bottom: 8px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
-        <h3 style="color: #d4af37; margin: 0;">🛰️ SÚPER CHAT: ENTRAMADO SOBERANO</h3>
-        <!-- 🛠️ BOTÓN DE DEFENSA: Detona la purga destructiva de la RAM en 0ms -->
+        <h3 style="color: #d4af37; margin: 0;">🛰️ SÚPER CHAT: CONTROL ALPHA v22.0</h3>
         <button id="btn-advertencia-panico" style="background: #220000; color: #ff3333; border: 1px solid #ff3333; font-size: 10px; padding: 3px 8px; cursor: pointer; border-radius: 4px; font-weight: bold;">PANIC 🔒</button>
     </div>
 
-    <div id="visor-identidad-cruzada" style="background: #000; border: 1px dashed #14F195; padding: 6px; font-size: 11px; color: #14F195; font-weight: bold; text-align: center; margin-bottom: 10px;">
-        [ 🟢 ESTADO: NÚCLEO NATIVO P2P EN LÍNEA ]
+    <!-- VISOR DE ESTADO CRIPTOGRÁFICO -->
+    <div id="visor-identidad-cruzada" style="background: #000; border: 1px dashed #ff3333; padding: 6px; font-size: 11px; color: #ff3333; font-weight: bold; text-align: center; margin-bottom: 10px;">
+        [ 🔒 RESTRICCIÓN DE ENTORNO: BLOQUEADO CON CREDENCIALES ]
     </div>
     
-    <!-- PANEL OPERATIVO UNIFICADO -->
-    <div id="bunker-abierto-panel">
+    <!-- INTERFAZ PROTEGIDA: Se activa únicamente tras validar la clave Alpha -->
+    <div id="bunker-abierto-panel" style="display: none;">
         <div style="margin-bottom: 12px; text-align: center;">
             <button id="btn-generar-enlace-bunker" style="background: #220000; color: #14F195; border: 1px solid #14F195; padding: 6px 12px; font-family: inherit; font-size: 11px; font-weight: bold; cursor: pointer; border-radius: 4px; width: 100%;">
                 🔗 GENERAR LINK DE ENLACE COGNITIVO
             </button>
         </div>
 
-        <!-- Visor Indestructible Compartido (Persistencia con Autoscroll Ajustado) -->
-        <div id="chat-box-visor" style="height: 200px; overflow-y: auto; background: #000; border: 1px solid #4b5320; padding: 10px; margin-bottom: 10px; border-radius: 4px; scroll-behavior: smooth;">
-            <span style="color: #666;">[ Sistema Listo: Esperando ráfaga de datos... ]</span>
+        <!-- Visor Indestructible Compartido (Persistencia Local) -->
+        <div id="chat-box-visor" style="height: 180px; overflow-y: auto; background: #000; border: 1px solid #4b5320; padding: 10px; margin-bottom: 10px; border-radius: 4px; scroll-behavior: smooth;">
+            <span style="color: #666;">[ Malla Acoplada: Esperando ráfaga de datos... ]</span>
         </div>
 
-        <!-- Controles de Entrada de Texto Con Enfoque Automático -->
+        <!-- Controles de Entrada de Texto -->
         <div style="display: flex; flex-direction: column; gap: 8px;">
             <input type="text" id="chat-msg-input" placeholder="ESCRIBA MENSAJE CRIPTOGRÁFICO..." style="width: 100%; box-sizing: border-box; margin: 0; background: #000; border: 1px solid #d4af37; color: #0f0; padding: 10px; font-family: monospace;">
             <button id="btn-transmitir-bunker" style="background: #112200; color: #14F195; border: 1px solid #14F195; padding: 10px 15px; font-family: inherit; font-size: 12px; font-weight: bold; cursor: pointer; border-radius: 4px; text-transform: uppercase; width: 100%;">
@@ -2983,70 +2982,29 @@ function verificarBloqueoGrifo() {
             </button>
         </div>
     </div>
+    
+    <!-- CAPA DE REFUERZO DE LOGIN INTERNO -->
+    <div id="capa-login-bunker" style="display: block; text-align: center; padding: 20px 0;">
+        <button onclick="ejecutarFiltroAlphaNativo()" style="background: #4b5320; color: #fff; border: 1px solid #d4af37; padding: 10px 20px; font-family: monospace; font-size: 11px; font-weight: bold; cursor: pointer; text-transform: uppercase;">
+            DESBLOQUEAR PUERTO ALPHA
+        </button>
+    </div>
 </div>
 
-
-                     
-   <script>
-    // 🪐 SUBPROCESO SOBERANO: FILTRO DE CREDENCIALES ALPHA v1.0
-function verificarAccesoBunker() {
-    const CLAVE_ALPHA_REAL = "ALPHA-2026";
-    
-    // Si el token ya está activo en el chip del teléfono, no molesta al operador
-    if (localStorage.getItem("chat_token_autorizado") === "ACTIVE") {
-        return;
-    }
-    
-    // Forzado de bloqueo si no hay credenciales registradas
-    localStorage.removeItem("chat_token_autorizado");
-    const claveIngresada = prompt("🛰️ VALIDACIÓN ALPHA-CHAT [PROYECTO LIBERTAD]\n\nIntroduzca el Código de Invitación para acceder:");
-    
-    if (claveIngresada !== null && claveIngresada.trim() === CLAVE_ALPHA_REAL) {
-        localStorage.setItem("chat_token_autorizado", "ACTIVE");
-        alert("🟢 ACCESO PERMITIDO: Canal interconectado con éxito.");
-        location.reload(); // Recarga limpia para encender los motores del chat
-    } else {
-        alert("❌ ACCESO RECHAZADO: Código inválido. Sector bloqueado.");
-        document.getElementById("bunker-abierto-panel").style.setProperty("display", "none", "important");
-        location.reload();
-    }
-}
-
-// Ejecución automática al cargar el chasis
-document.addEventListener("DOMContentLoaded", () => {
-    // Para activar el cerrojo manual de las credenciales en tu próxima prueba, 
-    // solo debes borrar el '//' de la línea de abajo:
-    // verificarAccesoBunker();
-});  
-   </script>
-                     
 <script>
-// 🪐 MOTOR NATIVO MAESTRO v21.2 - INDEPENDIENTE DE SERVIDORES EXTERNOS
+// 🪐 MOTOR UNIFICADO INTAL-P2P CON CANDADO DE SEGURIDAD NATIVO v22.0
 let miNombreOperador = "YORVIS";
 let nombreDestinatario = "ANDREUS";
 let linkCanalUnicoId = "CH-LOCAL";
 let memoriaHistorial = [];
 
 document.addEventListener("DOMContentLoaded", () => {
-    const parametrosUrl = new URLSearchParams(window.location.search);
-    const ganchoRemoto = parametrosUrl.get("canal_p2p");
-    const emisorRemoto = parametrosUrl.get("emisor");
-
-    if (ganchoRemoto && emisorRemoto) {
-        linkCanalUnicoId = ganchoRemoto;
-        nombreDestinatario = emisorRemoto.toUpperCase();
-        miNombreOperador = "RECEPTOR_TITAN";
-    } else {
-        linkCanalUnicoId = localStorage.getItem("p2p_canal_activo") || "CH-LOCAL";
-        miNombreOperador = "YORVIS";
-        nombreDestinatario = "ANDREUS";
+    // Verificar si el token ya está memorizado en el chip del Infinix
+    if (localStorage.getItem("chat_token_autorizado") === "ACTIVE") {
+        encenderCanalSoberanoVisual();
     }
-
-    localStorage.setItem("p2p_canal_activo", linkCanalUnicoId);
-    localStorage.setItem("operador_id_name", miNombreOperador);
-    localStorage.setItem("p2p_destinatario", nombreDestinatario);
-
-    // 🛠️ ASENTAMIENTO DE ESCUCHADORES DE EVENTOS POR ID MAESTRO
+    
+    // Configuración automática de los escuchadores tácticos de los botones
     const btnTransmitir = document.getElementById("btn-transmitir-bunker");
     if (btnTransmitir) {
         btnTransmitir.addEventListener("click", (e) => {
@@ -3067,19 +3025,57 @@ document.addEventListener("DOMContentLoaded", () => {
     if (btnPanico) {
         btnPanico.addEventListener("click", activarCodigoAdvertenciaPanico);
     }
-
-    inicializarCanalSoberano();
 });
 
-function inicializarCanalSoberano() {
+// 🔑 CERROJO ALPHA FILTRADO (REPARADO: Corre sin colisiones lógicas)
+function ejecutarFiltroAlphaNativo() {
+    const CLAVE_ALPHA_REAL = "ALPHA-2026";
+    const tokenIngresado = prompt("🛰️ VALIDACIÓN ALPHA-CHAT [PROYECTO LIBERTAD]\n\nIntroduzca el Código de Invitación para acceder al búnker:");
+    
+    if (tokenIngresado !== null && tokenIngresado.trim() === CLAVE_ALPHA_REAL) {
+        localStorage.setItem("chat_token_autorizado", "ACTIVE");
+        alert("🟢 ACCESO PERMITIDO: Canal interconectado con éxito.");
+        encenderCanalSoberanoVisual();
+    } else {
+        alert("❌ ACCESO RECHAZADO: Código inválido.");
+        localStorage.removeItem("chat_token_autorizado");
+    }
+}
+
+function encenderCanalSoberanoVisual() {
+    const parametrosUrl = new URLSearchParams(window.location.search);
+    const ganchoRemoto = parametrosUrl.get("canal_p2p");
+    const emisorRemoto = parametrosUrl.get("emisor");
+
+    if (ganchoRemoto && emisorRemoto) {
+        linkCanalUnicoId = ganchoRemoto;
+        nombreDestinatario = emisorRemoto.toUpperCase();
+        miNombreOperador = "RECEPTOR_TITAN";
+    } else {
+        linkCanalUnicoId = localStorage.getItem("p2p_canal_activo") || "CH-LOCAL";
+        miNombreOperador = "YORVIS";
+        nombreDestinatario = "ANDREUS";
+    }
+
+    // Guardado de trazas en la memoria volátil local
+    localStorage.setItem("p2p_canal_activo", linkCanalUnicoId);
+    localStorage.setItem("operador_id_name", miNombreOperador);
+    localStorage.setItem("p2p_destinatario", nombreDestinatario);
+
+    // Ajuste dinámico de las capas del Chasis Visual
+    document.getElementById("capa-login-bunker").style.setProperty("display", "none", "important");
+    document.getElementById("bunker-abierto-panel").style.setProperty("display", "block", "important");
+    
     const visorIdentidad = document.getElementById("visor-identidad-cruzada");
     if (visorIdentidad) {
         visorIdentidad.innerHTML = `🛰️ CANAL: ${miNombreOperador} ⇆ ${nombreDestinatario} [ACUPLADO]`;
+        visorIdentidad.style.color = "#14F195";
+        visorIdentidad.style.borderColor = "#14F195";
     }
 
     cargarMensajesDeMemoriaFisica();
 
-    // 📡 ESCUCHADOR MÓVIL CROSS-TAB: Clona las ráfagas entre pestañas al milisegundo
+    // Escuchador de hardware entre pestañas
     window.addEventListener('storage', (e) => {
         if (e.key === "malla_compartida_libertad_2026") {
             cargarMensajesDeMemoriaFisica();
@@ -3095,9 +3091,9 @@ function ejecutarGeneracionRutaNativa() {
     const linkDeEnlaceFinal = `${urlBase}?canal_p2p=${linkCanalUnicoId}&emisor=${miNombreOperador}`;
 
     navigator.clipboard.writeText(linkDeEnlaceFinal).then(() => {
-        alert(`🛰️ NOTIFICACIÓN: RUTA EMITIDA\n\nLink copiado con éxito. Abre una NUEVA PESTAÑA en tu Infinix, pega este enlace e interactúa tú mismo libre de intermediarios.`);
+        alert(`🛰️ NOTIFICACIÓN: RUTA EMITIDA\n\nLink copiado con éxito. Abre una NUEVA PESTAÑA en Chrome, pega este enlace e interactúa tú mismo.`);
     });
-    inicializarCanalSoberano();
+    encenderCanalSoberanoVisual();
 }
 
 function ejecutarInyeccionMensajeNativa() {
@@ -3115,12 +3111,11 @@ function ejecutarInyeccionMensajeNativa() {
         timestamp: Date.now()
     };
 
-    inputMsg.value = ""; // Vaciado inmediato en 0ms
-    inputMsg.focus(); // Mantiene el cursor listo para la siguiente ráfaga
+    inputMsg.value = ""; // Vaciado instantáneo en 0ms
+    inputMsg.focus();
 
     let poolUnificado = JSON.parse(localStorage.getItem("malla_compartida_libertad_2026") || "[]");
     poolUnificado.push(paqueteData);
-    
     localStorage.setItem("malla_compartida_libertad_2026", JSON.stringify(poolUnificado));
     
     cargarMensajesDeMemoriaFisica();
@@ -3150,31 +3145,25 @@ function renderizarMensajes() {
         itemBox.innerHTML = `<span style="color: ${colorEmisor};">[${pkg.tiempo}] ${pkg.emisor}:</span> <span style="color: #fff;">${pkg.contenido}</span>`;
         visor.appendChild(itemBox);
     });
-    
-    // 🚀 AUTOSCROLL AUTOMÁTICO DE GRANDES LIGAS
-    visor.scrollTop = visor.scrollHeight;
+    visor.scrollTop = visor.scrollHeight; // Autoscroll directo
 }
 
 function activarCodigoAdvertenciaPanico() {
     localStorage.removeItem("malla_compartida_libertad_2026");
+    localStorage.removeItem("chat_token_autorizado");
     memoriaHistorial = [];
+    
     const visor = document.getElementById("chat-box-visor");
     if (visor) {
         visor.innerHTML = `<span style="color: #ff3333; font-weight: bold;">[⚠️] ERROR 503: SECTOR INACCESIBLE. OPERACIÓN SUSPENDIDA POR ENTORNO RESTRINGIDO.</span>`;
     }
+    document.getElementById("bunker-abierto-panel").style.setProperty("display", "none", "important");
+    document.getElementById("capa-login-bunker").style.setProperty("display", "block", "important");
     const visorIdentidad = document.getElementById("visor-identidad-cruzada");
-    if (visorIdentidad) {
-        visorIdentidad.innerHTML = "[ 🔒 ACCESO RESTRINGIDO: CAMPO ENCRIPTADO ]";
-        visorIdentidad.style.color = "#ff3333";
-        visorIdentidad.style.borderColor = "#ff3333";
-    }
-}
+   if (visorIdentidad) {visorIdentidad.innerHTML = "[ 🔒 ACCESO RESTRINGIDO: CAMPO ENCRIPTADO ]";
+                        visorIdentidad.style.color = "#ff3333";
+                        visorIdentidad.style.borderColor = "#ff3333";}}
 </script>
-
-
-
-
-
 
 
 
