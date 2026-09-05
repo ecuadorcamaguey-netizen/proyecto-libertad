@@ -2946,12 +2946,14 @@ function verificarBloqueoGrifo() {
 
 
 
-<!-- CHASSIS VISUAL DEL SÚPER CHAT SOBERANO MUTACIÓN v21.0 (INMUNE A BLOQUEOS) -->
+
+<!-- CHASSIS VISUAL DEL SÚPER CHAT SOBERANO MUTACIÓN v21.2 (OPTIMIZACIÓN TOTAL) -->
 <div id="crypto-chat-bunker" style="background: rgba(10,10,10,0.95); border: 2px solid #14F195; border-radius: 10px; padding: 15px; margin-top: 20px; font-family: monospace; color: #14F195;">
     
-    <!-- ENCABEZADO CON VISOR DE IDENTIDAD EN CALIENTE -->
+    <!-- ENCABEZADO CON BOTÓN DE ADVERTENCIA DE PÁNICO CRUCIAL -->
     <div style="border-bottom: 1px solid #4b5320; padding-bottom: 8px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
         <h3 style="color: #d4af37; margin: 0;">🛰️ SÚPER CHAT: ENTRAMADO SOBERANO</h3>
+        <!-- 🛠️ BOTÓN DE DEFENSA: Detona la purga destructiva de la RAM en 0ms -->
         <button id="btn-advertencia-panico" style="background: #220000; color: #ff3333; border: 1px solid #ff3333; font-size: 10px; padding: 3px 8px; cursor: pointer; border-radius: 4px; font-weight: bold;">PANIC 🔒</button>
     </div>
 
@@ -2967,12 +2969,12 @@ function verificarBloqueoGrifo() {
             </button>
         </div>
 
-        <!-- Visor Indestructible Compartido (Persistencia de Bloques) -->
-        <div id="chat-box-visor" style="height: 200px; overflow-y: auto; background: #000; border: 1px solid #4b5320; padding: 10px; margin-bottom: 10px; border-radius: 4px;">
+        <!-- Visor Indestructible Compartido (Persistencia con Autoscroll Ajustado) -->
+        <div id="chat-box-visor" style="height: 200px; overflow-y: auto; background: #000; border: 1px solid #4b5320; padding: 10px; margin-bottom: 10px; border-radius: 4px; scroll-behavior: smooth;">
             <span style="color: #666;">[ Sistema Listo: Esperando ráfaga de datos... ]</span>
         </div>
 
-        <!-- Controles de Entrada de Texto -->
+        <!-- Controles de Entrada de Texto Con Enfoque Automático -->
         <div style="display: flex; flex-direction: column; gap: 8px;">
             <input type="text" id="chat-msg-input" placeholder="ESCRIBA MENSAJE CRIPTOGRÁFICO..." style="width: 100%; box-sizing: border-box; margin: 0; background: #000; border: 1px solid #d4af37; color: #0f0; padding: 10px; font-family: monospace;">
             <button id="btn-transmitir-bunker" style="background: #112200; color: #14F195; border: 1px solid #14F195; padding: 10px 15px; font-family: inherit; font-size: 12px; font-weight: bold; cursor: pointer; border-radius: 4px; text-transform: uppercase; width: 100%;">
@@ -2983,7 +2985,7 @@ function verificarBloqueoGrifo() {
 </div>
 
 <script>
-// 🪐 MOTOR NATIVO REFORZADO v21.0 - CERO SERVIDORES EXTERNOS
+// 🪐 MOTOR NATIVO MAESTRO v21.2 - INDEPENDIENTE DE SERVIDORES EXTERNOS
 let miNombreOperador = "YORVIS";
 let nombreDestinatario = "ANDREUS";
 let linkCanalUnicoId = "CH-LOCAL";
@@ -3008,7 +3010,7 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem("operador_id_name", miNombreOperador);
     localStorage.setItem("p2p_destinatario", nombreDestinatario);
 
-    // 🛠️ ASENTAMIENTO DE HARDWARE DIRECTO POR ID SOBERANO
+    // 🛠️ ASENTAMIENTO DE ESCUCHADORES DE EVENTOS POR ID MAESTRO
     const btnTransmitir = document.getElementById("btn-transmitir-bunker");
     if (btnTransmitir) {
         btnTransmitir.addEventListener("click", (e) => {
@@ -3041,7 +3043,7 @@ function inicializarCanalSoberano() {
 
     cargarMensajesDeMemoriaFisica();
 
-    // 📡 ESCUCHADOR ENTRE PESTAÑAS IMPECABLE: Captura los clicks de la otra ventana al milisegundo
+    // 📡 ESCUCHADOR MÓVIL CROSS-TAB: Clona las ráfagas entre pestañas al milisegundo
     window.addEventListener('storage', (e) => {
         if (e.key === "malla_compartida_libertad_2026") {
             cargarMensajesDeMemoriaFisica();
@@ -3057,7 +3059,7 @@ function ejecutarGeneracionRutaNativa() {
     const linkDeEnlaceFinal = `${urlBase}?canal_p2p=${linkCanalUnicoId}&emisor=${miNombreOperador}`;
 
     navigator.clipboard.writeText(linkDeEnlaceFinal).then(() => {
-        alert(`🛰️ NOTIFICACIÓN: RUTA EMITIDA\n\nLink copiado con éxito. Abre una NUEVA PESTAÑA en tu Infinix, pega este enlace e interactúa tú mismo entre ventanas de forma invisible.`);
+        alert(`🛰️ NOTIFICACIÓN: RUTA EMITIDA\n\nLink copiado con éxito. Abre una NUEVA PESTAÑA en tu Infinix, pega este enlace e interactúa tú mismo libre de intermediarios.`);
     });
     inicializarCanalSoberano();
 }
@@ -3077,10 +3079,9 @@ function ejecutarInyeccionMensajeNativa() {
         timestamp: Date.now()
     };
 
-    // Vaciado instantáneo en 0ms en tu Infinix liberando los hilos de la RAM
-    inputMsg.value = "";
+    inputMsg.value = ""; // Vaciado inmediato en 0ms
+    inputMsg.focus(); // Mantiene el cursor listo para la siguiente ráfaga
 
-    // Leemos el libro mayor guardado en el chip de memoria, sumamos el paquete y resubimos
     let poolUnificado = JSON.parse(localStorage.getItem("malla_compartida_libertad_2026") || "[]");
     poolUnificado.push(paqueteData);
     
@@ -3113,6 +3114,8 @@ function renderizarMensajes() {
         itemBox.innerHTML = `<span style="color: ${colorEmisor};">[${pkg.tiempo}] ${pkg.emisor}:</span> <span style="color: #fff;">${pkg.contenido}</span>`;
         visor.appendChild(itemBox);
     });
+    
+    // 🚀 AUTOSCROLL AUTOMÁTICO DE GRANDES LIGAS
     visor.scrollTop = visor.scrollHeight;
 }
 
@@ -3131,6 +3134,10 @@ function activarCodigoAdvertenciaPanico() {
     }
 }
 </script>
+
+
+
+
 
 
 
